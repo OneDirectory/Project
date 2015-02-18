@@ -36,7 +36,6 @@ public class EventCauseREST {
 	
 	@GET
 	@Path("/add")
-//	@Consumes(MediaType.APPLICATION_JSON)
 	public void addEventCauses() throws IOException{
 		HSSFRow row;
 		FileInputStream fis = new FileInputStream(new File("/home/drrn/Project/data.xls"));
