@@ -9,5 +9,6 @@ import javax.ejb.Local;
 @Local
 public interface EventCauseServiceLocal {
 	public Collection<EventCause> getEventCauses();
+	public void addEventCause(EventCause eventCause);
 	public void addEventCauses(Collection<EventCause> eventCauseList);
 }

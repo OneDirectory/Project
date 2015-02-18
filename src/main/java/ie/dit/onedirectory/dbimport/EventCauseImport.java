@@ -1,16 +1,15 @@
 package ie.dit.onedirectory.dbimport;
 
 import ie.dit.onedirectory.entities.EventCause;
+import ie.dit.onedirectory.services.EventCauseServiceLocal;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.ejb.EJB;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -24,8 +23,11 @@ public class EventCauseImport {
 	static HSSFRow row;
 	private static ArrayList<EventCause> eventCauseList;
 	
-	@PersistenceContext
-	EntityManager entityManager;
+//	@PersistenceContext
+//	EntityManager entityManager;
+	
+	@EJB
+	EventCauseServiceLocal service;
 	
 	public EventCauseImport() throws IOException{
 		eventCauseList = new ArrayList<EventCause>();
@@ -44,8 +46,8 @@ public class EventCauseImport {
 				String description = cellIterator.next().getStringCellValue();
 				EventCause eventCause = new EventCause(causeCode, eventId, description);
 				System.out.println(eventCause.getEventId() + "\t" +  eventCause.getCauseCode() + "\t" + eventCause.getDescription());
-				eventCauseList.add(eventCause);
-				entityManager.persist(eventCause);
+				service.addEventCause(new EventCause(causeCode, eventId, description));
+				eventCauseList.add(new EventCause(causeCode, eventId, description));
 			}
 		}
 		System.out.println(eventCauseList.size());

@@ -10,5 +10,6 @@ import javax.ejb.Local;
 public interface EventCauseDAO {
 
 	Collection<EventCause> getAllEventCauses();
+	public void addEventCause(EventCause eventCause);
 	public void addEventCauses(Collection<EventCause> eventCauseList);
 }

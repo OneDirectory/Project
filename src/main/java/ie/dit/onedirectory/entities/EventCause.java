@@ -11,8 +11,7 @@ import javax.persistence.Table;
 @IdClass(EventCauseId.class)
 @Entity
 @Table(name = "event_cause")
-public class EventCause {
-
+public class EventCause { 
 	@Id
 	@Column(name = "cause_code")
 	private Integer causeCode;
