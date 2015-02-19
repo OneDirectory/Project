@@ -1,6 +1,6 @@
 package ie.dit.onedirectory.entities;
 
-import ie.dit.onedirectory.entities.compositeids.MarketOperatorId;
+import ie.dit.onedirectory.entities.pks.MarketOperatorId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

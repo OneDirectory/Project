@@ -1,6 +1,6 @@
 package ie.dit.onedirectory.entities;
 
-import ie.dit.onedirectory.entities.compositeids.EventCauseId;
+import ie.dit.onedirectory.entities.pks.EventCauseId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

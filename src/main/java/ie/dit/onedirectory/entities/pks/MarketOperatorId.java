@@ -1,4 +1,4 @@
-package ie.dit.onedirectory.entities.compositeids;
+package ie.dit.onedirectory.entities.pks;
 
 import java.io.Serializable;
 
