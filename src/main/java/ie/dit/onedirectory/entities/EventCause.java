@@ -1,5 +1,7 @@
 package ie.dit.onedirectory.entities;
 
+import java.io.Serializable;
+
 import ie.dit.onedirectory.entities.pks.EventCauseId;
 
 import javax.persistence.Column;
@@ -7,11 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @IdClass(EventCauseId.class)
 @Entity
+@XmlRootElement
 @Table(name = "event_cause")
-public class EventCause { 
+public class EventCause implements Serializable { 
 	@Id
 	@Column(name = "cause_code")
 	private Integer causeCode;
