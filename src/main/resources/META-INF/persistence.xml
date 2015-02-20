@@ -6,8 +6,6 @@
 	<persistence-unit name="projectPU">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:/mySQL</jta-data-source>
-		<class>ie.dit.onedirectory.entities.EventCause</class>
-		<class>ie.dit.onedirectory.entities.MarketOperator</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
 		</properties>
