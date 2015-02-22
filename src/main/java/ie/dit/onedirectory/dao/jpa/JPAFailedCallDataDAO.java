@@ -18,9 +18,8 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	@SuppressWarnings("unchecked")
 	public Collection<FailedCallData> getAllFailedCallData() {
-		Query q = entityManager.createQuery("select f from FailedCallData as f");
+		Query q = entityManager.createQuery("from FailedCallData");
 		return q.getResultList();
 	}
 	

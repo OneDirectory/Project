@@ -21,8 +21,8 @@ public class UserEquipmentServiceLocalEJB implements UserEquipmentServiceLocal {
 		this.dao = dao;
 	}
 	
-	public Collection<UserEquipment> getAllUserEquipments() {
-		return dao.getAllUserEquipments();
+	public Collection<UserEquipment> getAllUserEquipment() {
+		return dao.getAllUserEquipment();
 	}
 
 	public void addUserEquipment(UserEquipment userEquipment) {

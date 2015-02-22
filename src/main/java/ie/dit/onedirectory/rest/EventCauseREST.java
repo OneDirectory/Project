@@ -51,8 +51,6 @@ public class EventCauseREST {
 				Integer causeCode = Integer.valueOf(dataFormatter.formatCellValue(cellIterator.next()));
 				Integer eventId = Integer.valueOf(dataFormatter.formatCellValue(cellIterator.next()));
 				String description = cellIterator.next().getStringCellValue();
-				EventCause eventCause = new EventCause(causeCode, eventId, description);
-				System.out.println(eventCause.getEventId() + "\t" +  eventCause.getCauseCode() + "\t" + eventCause.getDescription());
 				service.addEventCause(new EventCause(causeCode, eventId, description));
 			}
 		}

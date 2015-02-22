@@ -38,7 +38,7 @@ public class FailureClassREST {
 	@Path("/add")
 	public void addFailureClasses() throws IOException {
 		HSSFRow row;
-		FileInputStream fis = new FileInputStream(new File("C:/oneDirectory/data.xls"));
+		FileInputStream fis = new FileInputStream(new File("/home/drrn/Project/data.xls"));
 		HSSFWorkbook workbook = new HSSFWorkbook(fis);
 		HSSFSheet sheet = workbook.getSheetAt(2);
 		Iterator<Row> rowIterator = sheet.iterator();
@@ -50,8 +50,6 @@ public class FailureClassREST {
 				DataFormatter dataFormatter = new DataFormatter();
 				Integer failureId = Integer.valueOf(dataFormatter.formatCellValue(cellIterator.next()));
 				String description = dataFormatter.formatCellValue(cellIterator.next());
-				FailureClass failureClass = new FailureClass(failureId, description);
-				System.out.println(failureClass.getFailureId() + "\t" + failureClass.getDescription());
 				service.addFailureClass(new FailureClass(failureId, description));
 			}
 		}
