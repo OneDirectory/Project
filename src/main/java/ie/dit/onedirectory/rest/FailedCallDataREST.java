@@ -1,20 +1,18 @@
 package ie.dit.onedirectory.rest;
 
-import ie.dit.onedirectory.entities.EventCause;
 import ie.dit.onedirectory.entities.FailedCallData;
 import ie.dit.onedirectory.services.FailedCallDataServiceLocal;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -25,7 +23,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.util.DateFormatConverter.DateFormatTokenizer;
 
 @Path("/failedcalldata")
 public class FailedCallDataREST {

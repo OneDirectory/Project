@@ -1,6 +1,5 @@
 package ie.dit.onedirectory.rest;
 
-import ie.dit.onedirectory.entities.EventCause;
 import ie.dit.onedirectory.entities.MarketOperator;
 import ie.dit.onedirectory.services.MarketOperatorServiceLocal;
 

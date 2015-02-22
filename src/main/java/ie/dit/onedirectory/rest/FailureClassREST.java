@@ -1,13 +1,13 @@
 package ie.dit.onedirectory.rest;
 
+import ie.dit.onedirectory.entities.FailureClass;
+import ie.dit.onedirectory.services.FailureClassServiceLocal;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
-
-import ie.dit.onedirectory.entities.FailureClass;
-import ie.dit.onedirectory.services.FailureClassServiceLocal;
 
 import javax.ejb.EJB;
 import javax.ws.rs.GET;

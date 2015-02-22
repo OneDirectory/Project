@@ -1,8 +1,6 @@
 package ie.dit.onedirectory.rest;
 
-import ie.dit.onedirectory.entities.FailureClass;
 import ie.dit.onedirectory.entities.UserEquipment;
-import ie.dit.onedirectory.services.FailureClassServiceLocal;
 import ie.dit.onedirectory.services.UserEquipmentServiceLocal;
 
 import java.io.File;
