@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,6 +14,7 @@ import javax.persistence.Table;
 public class FailedCallData {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private Integer id;
 	
@@ -51,11 +54,10 @@ public class FailedCallData {
 	public FailedCallData() {
 	}
 
-	public FailedCallData(Integer id, Date dateTime, Integer eventId,
+	public FailedCallData(Date dateTime, Integer eventId,
 			Integer failureId, Integer typeAllocationCode, Integer marketId,
 			Integer operatorId, Integer cellId, Integer duration,
 			Integer causeCode, String networkElementVersion, String imsi) {
-		this.id = id;
 		this.dateTime = dateTime;
 		this.eventId = eventId;
 		this.failureId = failureId;

@@ -18,9 +18,8 @@ public class JPAUserEquipmentDAO implements UserEquipmentDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	@SuppressWarnings("unchecked")
-	public Collection<UserEquipment> getAllUserEquipments() {
-		Query q = entityManager.createQuery("select u from UserEquipment as u");
+	public Collection<UserEquipment> getAllUserEquipment() {
+		Query q = entityManager.createQuery("from UserEquipment");
 		return q.getResultList();
 	}
 	
@@ -31,5 +30,6 @@ public class JPAUserEquipmentDAO implements UserEquipmentDAO {
 	public void addUserEquipments(Collection<UserEquipment> userEquipmentList) {
 		entityManager.persist(userEquipmentList);
 	}
+
 
 }

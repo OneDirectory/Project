@@ -53,8 +53,6 @@ public class MarketOperatorREST {
 				Integer operatorId = Integer.valueOf(dataFormatter.formatCellValue(cellIterator.next()));
 				String country = cellIterator.next().getStringCellValue();
 				String operatorName = cellIterator.next().getStringCellValue();
-//				EventCause eventCause = new EventCause(causeCode, eventId, description);
-//				System.out.println(eventCause.getEventId() + "\t" +  eventCause.getCauseCode() + "\t" + eventCause.getDescription());
 				service.addMarketOperator(new MarketOperator(marketId, operatorId, country, operatorName));
 			}
 		}

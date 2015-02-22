@@ -9,7 +9,7 @@ import javax.ejb.Local;
 @Local
 public interface UserEquipmentServiceLocal {
 
-	public Collection<UserEquipment> getAllUserEquipments();
+	public Collection<UserEquipment> getAllUserEquipment();
 	public void addUserEquipment(UserEquipment userEquipment);
 	public void addUserEquipments(Collection<UserEquipment> userEquipmentList);
 	
