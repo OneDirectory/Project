@@ -16,8 +16,6 @@ import javax.transaction.UserTransaction;
 import ie.dit.onedirectory.dao.FailedCallDataDAO;
 import ie.dit.onedirectory.dao.jpa.JPAFailedCallDataDAO;
 import ie.dit.onedirectory.entities.FailedCallData;
-import ie.dit.onedirectory.entities.pks.FailedCallDataId;
-import ie.dit.onedirectory.rest.FailedCallDataREST;
 import ie.dit.onedirectory.services.FailedCallDataServiceLocal;
 import ie.dit.onedirectory.services.ejbs.FailedCallDataServiceLocalEJB;
 
@@ -45,7 +43,9 @@ public class FailedCallDataTest {
 						FailedCallDataServiceLocal.class.getPackage(),
 						FailedCallDataDAO.class.getPackage(),
 						JPAFailedCallDataDAO.class.getPackage(),
+						//FailedCallDataREST.class.getPackage(),
 						FailedCallData.class.getPackage())
+						//FailedCallDataId.class.getPackage())
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
@@ -55,19 +55,33 @@ public class FailedCallDataTest {
 
 	@Inject
 	private UserTransaction utx;
-	
+
 	@EJB
 	FailedCallDataServiceLocal service;
 
-	static SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-	static String dateInString = "31-08-1982 10:20:56";
-	private static Date INITIAL_DATE  = sdf.parse(dateInString);
-	
-	private static String UPDATED_COUNTRY = "SWEDEN";
-	private static String INITIAL_OPERATOR_NAME = "VERIZON WIRELESS";
-	private static String UPDATED_OPERATOR_NAME = "ALIANT MOBILITY CA";
-	
-	
+	//private static Date INITIAL_DATE_TIME = new SimpleDateFormat( "yyyyMMdd").parse( "20100520");
+//	private static Date UPDATED_DATE_TIME = new SimpleDateFormat( "yyyyMMdd").parse( "20100620");
+	private static Integer INITIAL_EVENT_ID = 4099;
+	private static Integer UPDATED_EVENT_ID = 4021;
+	private static Integer INITIAL_FAILURE_ID = 1;
+	private static Integer UPDATED_FAILURE_ID = 0;
+	private static Integer INITIAL_TYPE_ALLOCATION_CODE = 21060800;
+	private static Integer UPDATED_TYPE_ALLOCATION_CODE	= 21060853;
+	private static Integer INITIAL_MARKET_ID = 344; 
+	private static Integer UPDATED_MARKET_ID = 314;
+	private static Integer INITIAL_OPERATOR_ID = 560;
+	private static Integer UPDATED_OPERATOR_ID= 21;
+	private static Integer INITIAL_CELL_ID = 999;
+	private static Integer UPDATED_CELL_ID = 21;
+	private static Integer INITIAL_DURATION= 596;
+	private static Integer UPDATED_DURATION= 879;
+	private static Integer INITIAL_CAUSE_CODE = 569;
+	private static Integer UPDATED_CAUSE_CODE = 222;
+	private static String INITIAL_NETWORK_ELEMENT_VERSION  = "11B";
+	private static String UPDATED_NETWORK_ELEMENT_VERSION = "12B";
+	private static String INITIAL_IMSI = "344930000000011";
+	private static String UPDATED_IMSI = "344930000000011";
+
 	@Before
 	public void preparePersistenceTest() throws Exception {
 		clearData();
@@ -82,42 +96,11 @@ public class FailedCallDataTest {
 	@Test
 	public void EntityTest() throws Exception {
 
-		FailedCallData ec = new FailedCallData(13, 47, INITIAL_COUNTRY, INITIAL_OPERATOR_NAME);
-		em.persist(ec);
-
-		FailedCallDataId ecID = new FailedCallDataId(13, 47); 
-
-		FailedCallData loadedEC = em.find(FailedCallData.class, ecID);
-		assertEquals("Insertion Failed", INITIAL_COUNTRY, loadedEC.getCountry());
-
-		loadedEC.setCountry(UPDATED_COUNTRY);
-		FailedCallData updatedEC = em.find(FailedCallData.class, ecID);
-
-		assertEquals("Update Failed", UPDATED_COUNTRY, loadedEC.getCountry());
-		
-		loadedEC.setOperatorName(UPDATED_OPERATOR_NAME);
-		updatedEC = em.find(FailedCallData.class, ecID);
-
-		assertEquals("Update Failed", UPDATED_OPERATOR_NAME, loadedEC.getOperatorName());
-
-		em.remove(updatedEC);
-		FailedCallData shouldBeNull = em.find(FailedCallData.class, ecID);
-		assertNull("Failed to Delete", shouldBeNull);
 	}
 
 	@Test
 	public void ServiceLocalTest() throws Exception {
 
-		FailedCallData ec = new FailedCallData(13, 47, INITIAL_COUNTRY, INITIAL_OPERATOR_NAME);
-		
-		service.addFailedCallData(ec);
-		
-		assertEquals("Failed to Add", service.getFailedCallDatas().size(), 1);
-
-		FailedCallData ec2 = new FailedCallData(17, 31,UPDATED_COUNTRY, UPDATED_OPERATOR_NAME);
-		service.addFailedCallData(ec2);
-		
-		assertEquals("Failed to Add", service.getFailedCallDatas().size(), 2);
 	}
 
 
