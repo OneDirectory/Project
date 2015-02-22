@@ -2,8 +2,10 @@ package ie.dit.onedirectory.entities.test;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -46,37 +48,66 @@ public class EventCauseTest {
 						EventCauseId.class.getPackage())
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
-		}
-	
+	}
+
 	@PersistenceContext
 	private EntityManager em;
 
 	@Inject
 	private UserTransaction utx;
 	
+	@EJB
+	EventCauseServiceLocal service;
+
 	private static String INITIAL_DESCRIPTION = "INITIAL CTXT SETUP-CSFB UNDEFINED MOB FREQ REL";
 	private static String UPDATED_DESCRIPTION = "UE CTXT RELEASE-UNKNOWN OR ALREADY ALLOCATED ENB UE S1AP ID";
-	
+
 	@Before
 	public void preparePersistenceTest() throws Exception {
-	    clearData();
-	   // insertData();
-	    startTransaction();
+		clearData();
+		// insertData();
+		startTransaction();
 	}
-	
+
 	@After
 	public void commitTransaction() throws Exception {
-	    utx.commit();
+		utx.commit();
 	}
-	
+
 	@Test
-	public void test() throws Exception {
+	public void EntityTest() throws Exception {
+
 		EventCause ec = new EventCause(13, 47, INITIAL_DESCRIPTION);
 		em.persist(ec);
 
-		assertTrue(true);
+		EventCauseId ecID = new EventCauseId(13, 47); 
+
+		EventCause loadedEC = em.find(EventCause.class, ecID);
+		assertEquals("Event Cause Insertion Failed", INITIAL_DESCRIPTION, loadedEC.getDescription());
+
+		loadedEC.setDescription(UPDATED_DESCRIPTION);
+		EventCause updatedEC = em.find(EventCause.class, ecID);
+
+		assertEquals("Event Cause Update Failed", UPDATED_DESCRIPTION, loadedEC.getDescription());
+
+		em.remove(updatedEC);
+		EventCause shouldBeNull = em.find(EventCause.class, ecID);
+		assertNull("Event Cause Failed to delete", shouldBeNull);
 	}
+
+	@Test
+	public void ServiceLocalTest() throws Exception {
+
+		EventCause ec = new EventCause(13, 47, INITIAL_DESCRIPTION);
+		Collection<EventCause> ecl = new ArrayList<EventCause>();
 		
+		service.addEventCause(ec);
+		
+		assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 1);
+
+	}
+
+
 	private void clearData() throws Exception {
 		utx.begin();
 		em.joinTransaction();
@@ -84,7 +115,7 @@ public class EventCauseTest {
 		em.createQuery("delete from EventCause").executeUpdate();
 		utx.commit();
 	}
-	
+
 	private void startTransaction() throws Exception {
 		utx.begin();
 		em.joinTransaction();
