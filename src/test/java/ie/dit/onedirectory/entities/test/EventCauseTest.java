@@ -65,7 +65,6 @@ public class EventCauseTest {
 	@Before
 	public void preparePersistenceTest() throws Exception {
 		clearData();
-		// insertData();
 		startTransaction();
 	}
 
@@ -99,7 +98,6 @@ public class EventCauseTest {
 	public void ServiceLocalTest() throws Exception {
 
 		EventCause ec = new EventCause(13, 47, INITIAL_DESCRIPTION);
-		Collection<EventCause> ecl = new ArrayList<EventCause>();
 		
 		service.addEventCause(ec);
 		
