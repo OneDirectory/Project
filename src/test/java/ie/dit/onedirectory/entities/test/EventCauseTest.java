@@ -1,16 +1,13 @@
 package ie.dit.onedirectory.entities.test;
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.Collection;
-
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
-
 import ie.dit.onedirectory.dao.EventCauseDAO;
 import ie.dit.onedirectory.dao.jpa.JPAEventCauseDAO;
 import ie.dit.onedirectory.entities.EventCause;
@@ -18,7 +15,6 @@ import ie.dit.onedirectory.entities.pks.EventCauseId;
 import ie.dit.onedirectory.rest.EventCauseREST;
 import ie.dit.onedirectory.services.EventCauseServiceLocal;
 import ie.dit.onedirectory.services.ejbs.EventCauseServiceLocalEJB;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -101,12 +97,12 @@ public class EventCauseTest {
 		
 		service.addEventCause(ec);
 		
-		assertEquals("EventCauseServiceLocal Failed to Add and Get", service.getEventCauses().size(), 1);
+		assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 1);
 
 		EventCause ec2 = new EventCause(17, 31, UPDATED_DESCRIPTION);
 		service.addEventCause(ec2);
 		
-		assertEquals("EventCauseServiceLocal Failed to Add and Get", service.getEventCauses().size(), 2);
+		assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 2);
 	}
 
 
