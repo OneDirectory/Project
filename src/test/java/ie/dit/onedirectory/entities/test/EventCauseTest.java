@@ -103,8 +103,12 @@ public class EventCauseTest {
 		
 		service.addEventCause(ec);
 		
-		assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 1);
+		assertEquals("EventCauseServiceLocal Failed to Add and Get", service.getEventCauses().size(), 1);
 
+		EventCause ec2 = new EventCause(17, 31, UPDATED_DESCRIPTION);
+		service.addEventCause(ec2);
+		
+		assertEquals("EventCauseServiceLocal Failed to Add and Get", service.getEventCauses().size(), 2);
 	}
 
 
