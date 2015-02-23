@@ -159,7 +159,7 @@ public class UserEquipmentTest {
 
 		service.addUserEquipment(ec);
 
-		assertEquals("UserEquipmentServiceLocal Failed to Add", service.getAllUserEquipments().size(), 1);
+		assertEquals("UserEquipmentServiceLocal Failed to Add", service.getAllUserEquipment().size(), 1);
 
 		UserEquipment ec2 = new UserEquipment(3, 
 				INITIAL_MARKETINGNAME,
@@ -173,7 +173,7 @@ public class UserEquipmentTest {
 				);
 		
 		service.addUserEquipment(ec2);
-		assertEquals("UserEquipmentServiceLocal Failed to Add", service.getAllUserEquipments().size(), 2);
+		assertEquals("UserEquipmentServiceLocal Failed to Add", service.getAllUserEquipment().size(), 2);
 	}
 
 
