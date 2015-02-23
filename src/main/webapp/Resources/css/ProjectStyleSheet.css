@@ -1,0 +1,127 @@
+
+
+/*an additional Project stylesheet*/
+
+body.index {
+	
+ background: url(../img/cellular.png);
+}
+
+body.adminPage{
+ background: url(../img/cellular.png);
+}
+
+body.page1.2{
+  background: url(img/celluar.png);
+}
+
+
+.brand {
+  display: inherit;
+  font-weight: 700;
+  font-size: 5em;
+  line-height: normal;
+  text-align: ;
+  margin: 55px;
+  padding: 30px 0 10px;
+  color: #1e5799;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+
+
+.page-header{
+     color: #ffffff;
+    background-color: #013F6A;
+    <!--background-image: url(img/shop3.jpeg);-->
+    background-size: cover;
+    position:static;
+    height:150px; 
+}
+
+.navbar-inverse {
+    min-height: 100px;
+}
+
+
+
+.nav navbar-nav navbar-center{
+    color:white;
+}
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+    color: #ffffff;
+    background-color: #013F6A;
+}
+
+div.transbox {
+  width:375px;
+  height:360px;
+  margin:30px -10px;
+  background-color:#e6e6e6;
+  border:1px  #8c3310;
+  opacity:0.6;
+  filter:alpha(opacity=60);
+  }
+
+div.imagebox {
+  width:375px;
+  height:360px;
+  margin:30px -10px;
+  border:1px  #8c3310;
+  }
+
+div.transbox p {
+  margin:30px 40px;
+  font-weight:bold;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color:#000000;
+  text-align: justify;
+  }
+
+div.transbox h2 {
+  color: #8c3310;
+}
+
+footer {
+margin: 5px 0;
+font-weight: bold;
+}
+
+/* the following sourced from http://getbootstrap.com/examples/signin*/
+.form-signin {
+  max-width: 330px;
+  padding: 30px;
+  margin: 1 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 5px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+

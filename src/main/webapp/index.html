@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+
+<html>
+
+	<head>
+	<!-- Bootstrap Core CSS -->
+    <link href="Resources/css/bootstrap1.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="Resources/css/simple-sidebar.css" rel="stylesheet">
+    <link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
+	</head>
+    
+    <script>
+    function pasuser(form) {
+        if (form.id.value=="user") { 
+        if (form.pass.value=="123") {              
+            location="addUserPage.html" 
+        } else {
+            alert("Invalid Password")
+            }
+        } else {  alert("Invalid UserID")
+               }
+    }
+    </script>
+
+    <body class="index">
+            
+            <div class="page-header">
+                <br>
+                <h2>Group one - One Directory <small>Project</small></h2>
+                <h2> Login Page</h2>
+            </div>
+	
+			<!-- building the Navbar  *** leaving this here in case we need a nav bar***
+			    <div class = "navbar navbar-inverse navbar-static-top">
+				      
+              			<div class = "container">
+					       	 <a href = "index.html" class = "navbar-brand">Group one  - One Directory.</a>
+					      	    <button class = "navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
+                			 <a class = "button-info">Menu</a>
+					       		 </button>
+                            
+					
+					       <div class = "collapse navbar-collapse navHeaderCollapse">
+                        	  <ul class = "nav navbar-nav navbar-center">
+							      <li><a href = "index.html">Home</a></li>
+							      <li><a href = "aboutUs.html">About us</a></li>
+							      <li><a href = "cakeGallery.html">Cakes</a></li>
+							      
+						       </ul>
+					       </div>
+				        </div>
+			    </div>	-->
+		                
+	            
+			 <!-- creating Sign in form, source (incl css): http://getbootstrap.com/examples/signin/ -->
+ 			    <!--<div class="container" "col-md-4 col-md-offset-4">-->
+                    <div class="col-md-4 col-md-offset-2"> <!-- sets the position-->
+     			       <form class="form-signin" role="form">
+        			       <h2 class="form-signin-heading">Please sign in</h2>
+        				     <br>       <!-- spaceing -->          
+
+       <input name="id" type="text" placeholder="Username" class="form-control"  required autofocus>
+    <br>  <!-- spaceing -->    
+
+        <input name="pass" type="password" placeholder="Password" class="form-control" required>
+    <br>  <!-- spaceing -->
+
+        <button class="btn btn-lg btn-primary btn-block" input type="button" value ="Login"  onClick="pasuser(this.form)">Sign in</button>
+    <br>  <!-- spaceing -->
+       				   
+      			        </form>
+
+       				      
+						<div data-role=footer>
+				                    <p>Authors: Calvin McGowan, Darren Kane, Peter Farrell, John Fleming, Brian Cowzer</p>
+				                </div>
+				            </div>
+				        </footer>
+
+
+					<script src="https://code.jquery.com/jquery.js"></script>   
+    				<script src="js/bootstrap.min.js"></script>
+
+
+		</body>
+
+
+</html>
+

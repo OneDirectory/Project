@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+
+<!-- Bootstrap Core CSS -->
+<link href="Resources/css/bootstrap1.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="Resources/css/simple-sidebar.css" rel="stylesheet">
+<link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
+</head>
+
+<body>
+<body class="adminPage">
+	<div class="page-header">
+		<br>
+		<h2>
+			Group one - One Directory <small>Project</small>
+		</h2>
+		<h2>Admin Page</h2>
+	</div>
+
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<div id="sidebar-wrapper">
+			<ul class="sidebar-nav">
+				<li class="sidebar-brand"><a href="#"> Menu </a></li>
+				<li><a href="#">About</a></li>
+				<li><a href="adduserPage.html">Add a user</a></li>
+				<li><a href="#">Search by IMSI</a></li>
+				<li><a href="importPage.html">Import data</a></li>
+				<li><a href="index.html">Log out</a></li>
+			</ul>
+			<br>
+		</div>
+		<!-- /#sidebar-wrapper -->
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1>Create New User</h1>
+						<!-- <form id = "userform" action="http://localhost:8080/versionOne/rest/user" method="POST">
+                        <fieldset>
+                            ID:<br> <input type="text" name="id"> <br>
+                            Password:<br> <input type="text" name="password"> <br>
+                            First Name:<br> <input type="text" name="firstname"> <br>
+                            Last Name: <br> <input type="text" name = "lastName"> <br>
+                            UserType:<br> <input type="radio" name="net" checked>Network Management Engineer <br>
+                            <input type="radio" name="eng">Support Engineer <br>
+                            <input type="radio" name="rep">Customer Service Rep<br><br>
+                            <input type="submit" name="but" value = "CreateUser">
+                        </fieldset>
+                       </form>-->
+
+						<form class="form-horizontal" role="form"
+							action="http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user" method="POST">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="ID">ID:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="ID"
+										placeholder="ID" autofocus>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="pwd">Password:</label>
+								<div class="col-sm-5">
+									<input type="password" class="form-control" id="password"
+										placeholder="Password">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="pwd">First
+									Name:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="firstname"
+										placeholder="First Name">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="pwd">Last
+									Name:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="lastname"
+										placeholder="Last Name">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-1 col-sm-10">
+									<div class="col-sm-10">
+										<label class="radio-inline"><input type="radio"
+											name="role" value="net">Network Management Engineer</label> <label
+											class="radio-inline"><input type="radio" name="role"
+											value="eng">Support Engineer</label> <label
+											class="radio-inline"><input type="radio" name="role"
+											value="rep">Customer Service Rep</label>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-sm-offset-4 col-sm-10">
+										<br>
+										<button type="submit" class="btn btn-primary" name="but">Create
+											User</button>
+									</div>
+								</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /#page-content-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<script>
+            $('#but').clickFunction(() {
+            var id = = $("#id").val();
+            var password = $("#password").val();
+            var fName = $("#firstname").val();
+            var sName = $("#lastname").val();
+            var uType = $("#uType").val();
+
+            $.ajax({
+		          url: '',
+		          type:'post',
+		          data:{id:id, password:password, firstname:fName, lastname:sName, uType:uType},
+		          dataType:'json',
+		          success: function(data){
+			     }
+                });
+            });
+        </script>
+
+	<!-- jQuery -->
+	<script src="js/jquery.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/bootstrap.min.js"></script>
+
+	<!-- Menu Toggle Script -->
+	<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+
+</body>
+
+</html>
