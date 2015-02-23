@@ -22,6 +22,10 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 
+// Darrens hard coded location
+//home/drrn/Project/data.xls
+
+
 @Path("/eventcauses")
 public class EventCauseREST {
 
@@ -38,7 +42,7 @@ public class EventCauseREST {
 	@Path("/add")
 	public void addEventCauses() throws IOException{
 		HSSFRow row;
-		FileInputStream fis = new FileInputStream(new File("/home/drrn/Project/data.xls"));
+		FileInputStream fis = new FileInputStream(new File("C://Users/Calvin21/Documents/Masters/Group Project/data.xls"));
 		HSSFWorkbook workbook = new HSSFWorkbook(fis);
 		HSSFSheet spreadsheet = workbook.getSheetAt(1);
 		Iterator<Row> rowIterator = spreadsheet.iterator();

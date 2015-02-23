@@ -5,8 +5,8 @@
         http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
     <container qualifier="jbossas-7-managed" default="true">
         <configuration>
-           <!-- <property name="jbossHome">C:\Java\jboss-as-7.1.1.Final</property> -->
-           <property name="jbossHome">/usr/local/share/jboss</property>
+           <property name="jbossHome">C:\Software\jboss-as-7.1.1.Final</property> 
+           <!-- property name="jbossHome">/usr/local/share/jboss</property>  -->
         </configuration>
     </container>
 </arquillian>
