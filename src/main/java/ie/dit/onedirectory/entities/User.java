@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
-@Table(name = "userTable")
+@Table(name = "user_table")
 public class User implements Serializable {
 
 	public User(int userID, String userType, String userPassword,
@@ -27,27 +27,27 @@ public class User implements Serializable {
 	}
 
 	@Id
-	@Column(name = "userID")
+	@Column(name = "user_id")
 	private int userID;
 
 	@NotNull
 	@Size(min = 1, max = 45)
-	@Column(name = "userType")
+	@Column(name = "user_type")
 	private String userType;
 
 	@NotNull
 	@Size(min = 4, max = 6)
-	@Column(name = "userPassword")
+	@Column(name = "user_password")
 	private String userPassword;
 
 	@NotNull
 	@Size(min = 1, max = 45)
-	@Column(name = "userFName")
+	@Column(name = "first_name")
 	private String userFName;
 
 	@NotNull
 	@Size(min = 1, max = 45)
-	@Column(name = "userSName")
+	@Column(name = "second_name")
 	private String userSName;
 
 	public int getUserID() {
