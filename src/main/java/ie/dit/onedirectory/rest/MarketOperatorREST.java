@@ -38,7 +38,7 @@ public class MarketOperatorREST {
 	@Path("/add")
 	public void addEventCauses() throws IOException{
 		HSSFRow row;
-		FileInputStream fis = new FileInputStream(new File("C://Users/Calvin21/Documents/Masters/Group Project/data.xls"));
+		FileInputStream fis = new FileInputStream(new File("C://oneDirectory/data.xls"));
 		HSSFWorkbook workbook = new HSSFWorkbook(fis);
 		HSSFSheet spreadsheet = workbook.getSheetAt(4);
 		Iterator<Row> rowIterator = spreadsheet.iterator();
