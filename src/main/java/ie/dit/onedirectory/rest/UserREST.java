@@ -36,7 +36,7 @@ public class UserREST {
 	@POST
 	@Path("/add")
 	@Consumes("application/x-www-form-urlencoded")
-	public void addUser(@FormParam("id") int id,
+	public void addUser(@FormParam("ID") int id,
 			@FormParam("password") String pass,
 			@FormParam("firstname") String fName,
 			@FormParam("lastname") String sName,

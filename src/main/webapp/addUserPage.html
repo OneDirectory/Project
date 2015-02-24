@@ -65,7 +65,7 @@
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="ID">ID:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" name="ID"
+									<input type="number" class="form-control" name="ID"
 										placeholder="ID" autofocus>
 								</div>
 							</div>
@@ -96,11 +96,11 @@
 								<div class="col-sm-offset-1 col-sm-10">
 									<div class="col-sm-10">
 										<label class="radio-inline"><input type="radio"
-											name="role" value="net">Network Management Engineer</label> <label
+											name="role" value="Network Management Engineer">Network Management Engineer</label> <label
 											class="radio-inline"><input type="radio" name="role"
-											value="eng">Support Engineer</label> <label
+											value="Support Engineer">Support Engineer</label> <label
 											class="radio-inline"><input type="radio" name="role"
-											value="rep">Customer Service Rep</label>
+											value="Customer Service Rep">Customer Service Rep</label>
 									</div>
 								</div>
 
@@ -121,24 +121,24 @@
 	</div>
 	<!-- /#wrapper -->
 
-			alert("Whats up");
+<!-- 			alert("Whats up"); -->
 
-            $('#but').clickFunction(() {
-            var id = = $("#id").val();
-            var password = $("#password").val();
-            var fName = $("#firstname").val();
-            var sName = $("#lastname").val();
-            var uType = $("#uType").val();
+<!--             $('#but').clickFunction(() { -->
+<!--             var id = = $("#id").val(); -->
+<!--             var password = $("#password").val(); -->
+<!--             var fName = $("#firstname").val(); -->
+<!--             var sName = $("#lastname").val(); -->
+<!--             var uType = $("#uType").val(); -->
 
-            $.ajax({
-		          url: '',
-		          type:'post',
-		          data:{id:id, password:password, firstname:fName, lastname:sName, uType:uType},
-		          dataType:'json',
-		          success: function(data){
-			     }
-                });
-            });
+<!--             $.ajax({ -->
+<!-- 		          url: '', -->
+<!-- 		          type:'post', -->
+<!-- 		          data:{id:id, password:password, firstname:fName, lastname:sName, uType:uType}, -->
+<!-- 		          dataType:'json', -->
+<!-- 		          success: function(data){ -->
+<!-- 			     } -->
+<!--                 }); -->
+<!--             }); -->
         </script>
 
 	<!-- jQuery -->
