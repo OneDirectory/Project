@@ -33,13 +33,13 @@
 //	public static Archive<?> createDeployment()
 //	{		
 //		return ShrinkWrap.create(WebArchive.class, "test.war")
-//				.addPackages(true, 
-//						CellHierarchyServiceLocalEJB.class.getPackage(),
-//						CellHierarchyServiceLocal.class.getPackage(),
-//						CellHierarchyDAO.class.getPackage(),
-//						JPACellHierarchyDAO.class.getPackage(),
-//						CellHierarchyREST.class.getPackage(),
-//						CellHierarchy.class.getPackage())
+//				.addClasses( 
+//						CellHierarchyServiceLocalEJB.class,
+//						CellHierarchyServiceLocal.class,
+//						CellHierarchyDAO.class,
+//						JPACellHierarchyDAO.class,
+//						CellHierarchyREST.class,
+//						CellHierarchy.class)
 //						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 //						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 //	}

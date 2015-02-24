@@ -34,14 +34,14 @@ public class MarketOperatorTest {
 	public static Archive<?> createDeployment()
 	{		
 		return ShrinkWrap.create(WebArchive.class, "test.war")
-				.addPackages(true, 
-						MarketOperatorServiceLocalEJB.class.getPackage(),
-						MarketOperatorServiceLocal.class.getPackage(),
-						MarketOperatorDAO.class.getPackage(),
-						JPAMarketOperatorDAO.class.getPackage(),
-						MarketOperatorREST.class.getPackage(),
-						MarketOperator.class.getPackage(),
-						MarketOperatorId.class.getPackage())
+				.addClasses( 
+						MarketOperatorServiceLocalEJB.class,
+						MarketOperatorServiceLocal.class,
+						MarketOperatorDAO.class,
+						JPAMarketOperatorDAO.class,
+						MarketOperatorREST.class,
+						MarketOperator.class,
+						MarketOperatorId.class)
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
