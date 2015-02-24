@@ -30,9 +30,13 @@ import org.junit.After;
 @RunWith(Arquillian.class)
 public class EventCauseTest {
 
+	
+	//Webarchieve change to
 	@Deployment
 	public static Archive<?> createDeployment()
 	{		
+		
+		//Skipper ZipImpoeter.class
 		return ShrinkWrap.create(WebArchive.class, "test.war")
 				.addClasses(
 						EventCauseServiceLocalEJB.class,
@@ -44,7 +48,12 @@ public class EventCauseTest {
 						EventCauseId.class)
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+		
+		//importFrom
+		//.asWebAchieveclass
 	}
+	
+	
 
 	@PersistenceContext
 	private EntityManager em;
