@@ -38,14 +38,12 @@ public class FailedCallDataTest {
 	public static Archive<?> createDeployment()
 	{		
 		return ShrinkWrap.create(WebArchive.class, "test.war")
-				.addPackages(true, 
-						FailedCallDataServiceLocalEJB.class.getPackage(),
-						FailedCallDataServiceLocal.class.getPackage(),
-						FailedCallDataDAO.class.getPackage(),
-						JPAFailedCallDataDAO.class.getPackage(),
-						//FailedCallDataREST.class.getPackage(),
-						FailedCallData.class.getPackage())
-						//FailedCallDataId.class.getPackage())
+				.addClasses(
+						FailedCallDataServiceLocalEJB.class,
+						FailedCallDataServiceLocal.class,
+						FailedCallDataDAO.class,
+						JPAFailedCallDataDAO.class,
+						FailedCallData.class)
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}

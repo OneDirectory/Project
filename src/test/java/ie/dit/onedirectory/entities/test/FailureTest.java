@@ -36,14 +36,12 @@ public class FailureTest {
 	public static Archive<?> createDeployment()
 	{		
 		return ShrinkWrap.create(WebArchive.class, "test.war")
-				.addPackages(true, 
-						FailureClassServiceLocalEJB.class.getPackage(),
-						FailureClassServiceLocal.class.getPackage(),
-						FailureClassDAO.class.getPackage(),
-						JPAFailureClassDAO.class.getPackage(),
-						//FailureClassREST.class.getPackage(),
-						FailureClass.class.getPackage())
-						//FailureClassId.class.getPackage())
+				.addClasses(
+						FailureClassServiceLocalEJB.class,
+						FailureClassServiceLocal.class,
+						FailureClassDAO.class,
+						JPAFailureClassDAO.class,
+						FailureClass.class)
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}

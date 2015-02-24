@@ -30,28 +30,37 @@ import org.junit.After;
 @RunWith(Arquillian.class)
 public class EventCauseTest {
 
+	
+	//Webarchieve change to
 	@Deployment
 	public static Archive<?> createDeployment()
 	{		
+		
+		//Skipper ZipImpoeter.class
 		return ShrinkWrap.create(WebArchive.class, "test.war")
-				.addPackages(true, 
-						EventCauseServiceLocalEJB.class.getPackage(),
-						EventCauseServiceLocal.class.getPackage(),
-						EventCauseDAO.class.getPackage(),
-						JPAEventCauseDAO.class.getPackage(),
-						EventCauseREST.class.getPackage(),
-						EventCause.class.getPackage(),
-						EventCauseId.class.getPackage())
+				.addClasses(
+						EventCauseServiceLocalEJB.class,
+						EventCauseServiceLocal.class,
+						EventCauseDAO.class,
+						JPAEventCauseDAO.class,
+						EventCauseREST.class,
+						EventCause.class,
+						EventCauseId.class)
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+		
+		//importFrom
+		//.asWebAchieveclass
 	}
+	
+	
 
 	@PersistenceContext
 	private EntityManager em;
 
 	@Inject
 	private UserTransaction utx;
-	
+
 	@EJB
 	EventCauseServiceLocal service;
 
@@ -94,14 +103,14 @@ public class EventCauseTest {
 	public void ServiceLocalTest() throws Exception {
 
 		EventCause ec = new EventCause(13, 47, INITIAL_DESCRIPTION);
-		
+
 		service.addEventCause(ec);
-		
+
 		assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 1);
 
 		EventCause ec2 = new EventCause(17, 31, UPDATED_DESCRIPTION);
 		service.addEventCause(ec2);
-		
+
 		assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 2);
 	}
 
