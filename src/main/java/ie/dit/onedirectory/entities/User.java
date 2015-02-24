@@ -25,6 +25,12 @@ public class User implements Serializable {
 		this.userPassword = userPassword;
 
 	}
+	
+	public User(){
+		
+	}
+	
+	
 
 	@Id
 	@Column(name = "user_id")

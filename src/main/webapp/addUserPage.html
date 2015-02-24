@@ -61,18 +61,18 @@
                        </form>-->
 
 						<form class="form-horizontal" role="form"
-							action="http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user" method="POST">
+							action="http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user/add" method="POST">
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="ID">ID:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" id="ID"
+									<input type="text" class="form-control" name="ID"
 										placeholder="ID" autofocus>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="pwd">Password:</label>
 								<div class="col-sm-5">
-									<input type="password" class="form-control" id="password"
+									<input type="password" class="form-control" name="password"
 										placeholder="Password">
 								</div>
 							</div>
@@ -80,7 +80,7 @@
 								<label class="control-label col-sm-2" for="pwd">First
 									Name:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" id="firstname"
+									<input type="text" class="form-control" name="firstname"
 										placeholder="First Name">
 								</div>
 							</div>
@@ -88,7 +88,7 @@
 								<label class="control-label col-sm-2" for="pwd">Last
 									Name:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" id="lastname"
+									<input type="text" class="form-control" name="lastname"
 										placeholder="Last Name">
 								</div>
 							</div>
@@ -107,7 +107,7 @@
 								<div class="form-group">
 									<div class="col-sm-offset-4 col-sm-10">
 										<br>
-										<button type="submit" class="btn btn-primary" name="but">Create
+										<button type="submit" class="btn btn-primary" >Create
 											User</button>
 									</div>
 								</div>
@@ -121,7 +121,8 @@
 	</div>
 	<!-- /#wrapper -->
 
-	<script>
+			alert("Whats up");
+
             $('#but').clickFunction(() {
             var id = = $("#id").val();
             var password = $("#password").val();

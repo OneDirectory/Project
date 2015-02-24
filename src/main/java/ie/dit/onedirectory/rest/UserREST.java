@@ -21,8 +21,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
-
 @Path("/user")
 public class UserREST {
 
@@ -36,36 +34,36 @@ public class UserREST {
 	}
 
 	@POST
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	//@Produces(MediaType.APPLICATION_JSON)
 	@Path("/add")
-	public void addUser(@FormParam ("id") int id, @FormParam("password") String pass,
-			@FormParam("firstname") String fName, @FormParam("lastname") String sName) {
-		
-		System.out.println(id);
-		
-		User user = new User(id,"hsdbfvhsu",pass, fName, sName);
-		
-		
-		
-		//Response.ResponseBuilder builder = null;
-		
+	@Consumes("application/x-www-form-urlencoded")
+	public void addUser(@FormParam("id") int id,
+			@FormParam("password") String pass,
+			@FormParam("firstname") String fName,
+			@FormParam("lastname") String sName,
+			@FormParam("role") String uType) {
+
+		System.out.println("jhgcdkhgxcdkhggx");
+
+		 User user = new User(id,uType,pass, fName, sName);
+
+		// Response.ResponseBuilder builder = null;
+
 		service.addUser(user);
-		//return null;
-		
+		// return null;
+
 	}
-	
-//	/protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-//			throws ServletException, IOException {
-//		
-//		int iD = request.getParameter("ID");
-//		String password = request.getParameter("password");
-//		String fName = request.getParameter("fName");
-//		String sName = request.getParameter("sName");
-//		String uType = request.getParameter("uType");
-//		System.out.println(fName+" "+sName);
-//		}
-//	
-	
+
+	// /protected void doPost(HttpServletRequest request, HttpServletResponse
+	// response)
+	// throws ServletException, IOException {
+	//
+	// int iD = request.getParameter("ID");
+	// String password = request.getParameter("password");
+	// String fName = request.getParameter("fName");
+	// String sName = request.getParameter("sName");
+	// String uType = request.getParameter("uType");
+	// System.out.println(fName+" "+sName);
+	// }
+	//
 
 }
