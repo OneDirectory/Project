@@ -21,6 +21,12 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 		this.dao = dao;
 	}
 
+	// TODO - Peter
+//	public Collection<FailedCallData> getEventCauseByModel() {
+//		// TODO Auto-generated method stub
+//		return dao.getEventCauseByModel();
+//	}
+	
 	public Collection<FailedCallData> getAllFailedCallData() {
 		return dao.getAllFailedCallData();
 	}
@@ -33,5 +39,6 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 			Collection<FailedCallData> failedCallDataList) {
 		dao.addFailedCalledData(failedCallDataList);
 	}
+
 
 }

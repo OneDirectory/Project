@@ -13,6 +13,7 @@ import java.util.Iterator;
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -35,6 +36,14 @@ public class FailedCallDataREST {
 	public Collection<FailedCallData> getFailedCallData(){
 		return service.getAllFailedCallData();
 	}
+	
+//	TODO - Peter
+//	@GET
+//	@Path("/{model}")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Collection<FailedCallData> getEventCauseByModel(@PathParam("model") String model){
+//		return service.getEventCauseByModel();
+//	}
 	
 	//TODO
 //	@GET

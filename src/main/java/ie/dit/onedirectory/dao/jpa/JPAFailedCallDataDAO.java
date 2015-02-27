@@ -23,6 +23,12 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		return q.getResultList();
 	}
 	
+	// TODO - Peter
+//	public Collection<FailedCallData> getEventCauseByModel() {
+//		Query q = entityManager.createQuery("from FailedCallData order by event_id");
+//		return q.getResultList();
+//	}
+	
 	public void addFailedCalledDatum(FailedCallData failedCallData) {
 		entityManager.persist(failedCallData);
 	}
