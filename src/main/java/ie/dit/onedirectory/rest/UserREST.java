@@ -5,12 +5,16 @@ import ie.dit.onedirectory.services.UserServiceLocal;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ejb.EJB;
+import javax.persistence.NoResultException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ValidationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -36,34 +40,59 @@ public class UserREST {
 	@POST
 	@Path("/add")
 	@Consumes("application/x-www-form-urlencoded")
-	public void addUser(@FormParam("ID") int id,
+	public Response addUser(@FormParam("ID") int id,
 			@FormParam("password") String pass,
 			@FormParam("firstname") String fName,
-			@FormParam("lastname") String sName,
-			@FormParam("role") String uType) {
+			@FormParam("lastname") String sName, @FormParam("role") String uType) {
 
-		System.out.println("jhgcdkhgxcdkhggx");
+		User user = new User(id, uType, pass, fName, sName);
 
-		 User user = new User(id,uType,pass, fName, sName);
+		Response.ResponseBuilder builder;
 
-		// Response.ResponseBuilder builder = null;
+		try {
 
-		service.addUser(user);
-		// return null;
+			// validateUser(user);
+			service.addUser(user);
+			builder = Response.ok();
+
+		}
+
+		catch (ValidationException e) {
+			// Handle the unique constrain violation
+			Map<String, String> responseObj = new HashMap<String, String>();
+			responseObj.put("userID", "ID Exists already");
+			builder = Response.status(Response.Status.CONFLICT).entity(
+					responseObj);
+		}
+
+		catch (Exception e) {
+
+			Map<String, String> responseObj = new HashMap<String, String>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(
+					responseObj);
+		}
+
+		return builder.build();
 
 	}
 
-	// /protected void doPost(HttpServletRequest request, HttpServletResponse
-	// response)
-	// throws ServletException, IOException {
-	//
-	// int iD = request.getParameter("ID");
-	// String password = request.getParameter("password");
-	// String fName = request.getParameter("fName");
-	// String sName = request.getParameter("sName");
-	// String uType = request.getParameter("uType");
-	// System.out.println(fName+" "+sName);
-	// }
-	//
+	public void validateUser(User user) {
+
+		if (idAlreadyExists(user.getUserID())) {
+			throw new ValidationException("ID already exists");
+		}
+
+	}
+
+	public boolean idAlreadyExists(Integer id) {
+		User user = null;
+		try {
+			user = service.findByID(id);
+		} catch (NoResultException e) {
+			// ignore
+		}
+		return user != null;
+	}
 
 }

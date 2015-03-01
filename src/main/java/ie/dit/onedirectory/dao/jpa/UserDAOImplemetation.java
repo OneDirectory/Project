@@ -10,6 +10,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 
 @Stateless
@@ -27,6 +30,15 @@ public class UserDAOImplemetation implements UserDAO {
 	public void addUser(User user) {
 		em.persist(user);
 
+	}
+	
+	public User findByID(Integer id) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<User> criteria = cb.createQuery(User.class);
+		Root<User> user = criteria.from(User.class);
+
+		criteria.select(user).where(cb.equal(user.get("user_id"), id));
+		return em.createQuery(criteria).getSingleResult();
 	}
 
 }
