@@ -10,8 +10,6 @@ import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 
-
-
 @Stateless
 @Local
 public class UserServiceEJB implements UserServiceLocal {
@@ -27,6 +25,10 @@ public class UserServiceEJB implements UserServiceLocal {
 	public void addUser(User user) {
 		dao.addUser(user);
 
+	}
+
+	public User findByID(Integer id) {
+		return dao.findByID(id);
 	}
 
 }

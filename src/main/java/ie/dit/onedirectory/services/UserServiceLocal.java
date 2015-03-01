@@ -13,4 +13,6 @@ public interface UserServiceLocal {
 	public Collection<User> getUserList();
 	
 	public void addUser(User user);
+	
+	public User findByID(Integer id);
 }
