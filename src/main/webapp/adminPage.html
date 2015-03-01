@@ -49,7 +49,8 @@
 						<h1>Create New User</h1>
 
 						<form class="form-horizontal" role="form"
-							action="http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user/add" method="POST">
+							action="http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user/add"
+							method="POST">
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="ID">ID:</label>
 								<div class="col-sm-5">
@@ -84,18 +85,19 @@
 								<div class="col-sm-offset-1 col-sm-10">
 									<div class="col-sm-10">
 										<label class="radio-inline"><input type="radio"
-											name="role" value="Network Management Engineer">Network Management Engineer</label> <label
-											class="radio-inline"><input type="radio" name="role"
-											value="Support Engineer">Support Engineer</label> <label
-											class="radio-inline"><input type="radio" name="role"
-											value="Customer Service Rep">Customer Service Rep</label>
+											name="role" value="Network Management Engineer">Network
+											Management Engineer</label> <label class="radio-inline"><input
+											type="radio" name="role" value="Support Engineer">Support
+											Engineer</label> <label class="radio-inline"><input
+											type="radio" name="role" value="Customer Service Rep">Customer
+											Service Rep</label>
 									</div>
 								</div>
 
 								<div class="form-group">
 									<div class="col-sm-offset-4 col-sm-10">
 										<br>
-										<button type="submit" class="btn btn-primary" >Create
+										<button type="submit" class="btn btn-primary">Create
 											User</button>
 									</div>
 								</div>
@@ -109,40 +111,57 @@
 	</div>
 	<!-- /#wrapper -->
 
-<!-- 			alert("Whats up"); -->
+	<div class="table">
+		<ul id="user"></ul>
 
-<!--             $('#but').clickFunction(() { -->
-<!--             var id = = $("#id").val(); -->
-<!--             var password = $("#password").val(); -->
-<!--             var fName = $("#firstname").val(); -->
-<!--             var sName = $("#lastname").val(); -->
-<!--             var uType = $("#uType").val(); -->
+		<div>
 
-<!--             $.ajax({ -->
-<!-- 		          url: '', -->
-<!-- 		          type:'post', -->
-<!-- 		          data:{id:id, password:password, firstname:fName, lastname:sName, uType:uType}, -->
-<!-- 		          dataType:'json', -->
-<!-- 		          success: function(data){ -->
-<!-- 			     } -->
-<!--                 }); -->
-<!--             }); -->
-        </script>
 
-	<!-- jQuery -->
-	<script src="Resources/js/jquery-1.6.1.min.js"></script>
+			<!-- jQuery -->
+			<script src="Resources/js/jquery-1.6.1.min.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script src="Resources/js/bootstrap.min.js"></script>
+			<!-- Bootstrap Core JavaScript -->
+			<script src="Resources/js/bootstrap.min.js"></script>
 
-	<!-- Menu Toggle Script -->
-	<script>
+			<!-- Menu Toggle Script -->
+			<script>
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
     </script>
 
+			<script>
+
+// 	Ok lads, type is the type of request, default is get,
+// 	url is the rest address where you want the request to go.
+// 	success is what happens if it has been a success.
+// 	Function(users) here users is the data i.e. json object.
+// 	users variable is cached to reference back to the html element
+// 	.each means for every json object i.e. we recive a load of them
+// 	and an array of them is returned and i and user just mean iterations
+// 	and a way to get data from json to html
+
+// Below means this runs when page has loaded, could easily be called by a button also
+	$(function(){
+		alert("");
+
+    var $users = $('#user');
+
+	$.ajax({
+		type: 'GET',
+		url:'http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user',
+		success: function(users){
+			$.each(users, function(i, user){
+			$users.append('<li>ID: '+user.userID+' name: '+user.userFName+' '+user.userSName+' Type: '+user.userType+' </li>');
+				});
+			}
+
+		});
+
+	});
+
+	</script>
 </body>
 
 </html>
