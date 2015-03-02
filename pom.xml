@@ -63,6 +63,12 @@
 			<artifactId>poi-excelant</artifactId>
 			<version>3.11</version>
 		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
+
 		<!-- Added by john fleming -->
 		<dependency>
 			<groupId>junit</groupId>
