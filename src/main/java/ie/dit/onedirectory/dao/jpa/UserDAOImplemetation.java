@@ -37,7 +37,7 @@ public class UserDAOImplemetation implements UserDAO {
 		CriteriaQuery<User> criteria = cb.createQuery(User.class);
 		Root<User> user = criteria.from(User.class);
 
-		criteria.select(user).where(cb.equal(user.get("user_id"), id));
+		criteria.select(user).where(cb.equal(user.get("userID"), id));
 		return em.createQuery(criteria).getSingleResult();
 	}
 

@@ -22,8 +22,12 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 @Path("/user")
 public class UserREST {
@@ -35,6 +39,22 @@ public class UserREST {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<User> getAllUsers() {
 		return service.getUserList();
+	}
+
+	@GET
+	@Path("/{userID}")
+	@Produces(MediaType.APPLICATION_JSON)
+	//@Consumes(MediaType.APPLICATION_JSON)
+	public User findUserByID(@PathParam("userID") int userID){
+		
+		//Integer id = (Integer) inputJsonObj.get("id");
+		//String password = (String) inputJsonObj.get("password");
+		
+		User user = service.findByID(userID);
+		//if(user.getUserPassword().equals(password)){
+			//return user;
+		//}else
+			return user;
 	}
 
 	@POST
@@ -51,7 +71,7 @@ public class UserREST {
 
 		try {
 
-			// validateUser(user);
+			validateUser(user);
 			service.addUser(user);
 			builder = Response.ok();
 
