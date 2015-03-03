@@ -13,7 +13,6 @@ import java.util.Iterator;
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -58,7 +57,7 @@ public class FailedCallDataREST {
 	@Path("/add")
 	public void addFailedCallData() throws IOException{
 		HSSFRow row;
-		FileInputStream fis = new FileInputStream(new File("C://oneDirectory/data.xls"));
+		FileInputStream fis = new FileInputStream(new File("/Users/Darren/Project/data.xls"));
 		HSSFWorkbook workbook = new HSSFWorkbook(fis);
 		HSSFSheet spreadsheet = workbook.getSheetAt(0);
 		Iterator<Row> rowIterator = spreadsheet.iterator();
@@ -93,8 +92,12 @@ public class FailedCallDataREST {
 				}
 				String networkElementVersion = dataFormatter.formatCellValue(cellIterator.next());
 				String imsi = dataFormatter.formatCellValue(cellIterator.next());
+				String hier3Id = dataFormatter.formatCellValue(cellIterator.next());
+				String hier32Id = dataFormatter.formatCellValue(cellIterator.next());
+				String hier321Id = dataFormatter.formatCellValue(cellIterator.next());
+				
 				service.addFailedCalledDatum(new FailedCallData(dateTime, eventId, failureId, typeAllocationCode, 
-						marketId, operatorId, cellId, duration, causeCode, networkElementVersion, imsi));
+						marketId, operatorId, cellId, duration, causeCode, networkElementVersion, imsi, hier3Id, hier32Id, hier321Id));
 				break;
 			}
 		}

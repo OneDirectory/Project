@@ -20,7 +20,7 @@ public class JPAFailureClassDAO implements FailureClassDAO {
 
 	@SuppressWarnings("unchecked")
 	public Collection<FailureClass> getAllFailureClasses() {
-		Query q = entityManager.createQuery("select f from FailureClass as f");
+		Query q = entityManager.createQuery("from FailureClass");
 		return q.getResultList();
 	}
 

@@ -39,7 +39,7 @@ public class UserEquipmentREST {
 	@Path("/add")
 	public void addFailureClasses() throws IOException {
 		HSSFRow row;
-		FileInputStream fis = new FileInputStream(new File("C://oneDirectory/data.xls"));
+		FileInputStream fis = new FileInputStream(new File("/Users/Darren/Project/data.xls"));
 		HSSFWorkbook workbook = new HSSFWorkbook(fis);
 		HSSFSheet sheet = workbook.getSheetAt(3);
 		Iterator<Row> rowIterator = sheet.iterator();
