@@ -1,9 +1,14 @@
 package ie.dit.onedirectory.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name="failure_class")
@@ -15,6 +20,9 @@ public class FailureClass {
 	
 	@Column(name="description")
 	private String description;
+	
+	@OneToMany(mappedBy="failureClass")
+	private List<FailedCallData> failedCallData;
 	
 	public FailureClass() {
 	}
@@ -39,4 +47,29 @@ public class FailureClass {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	@JsonIgnore
+	public List<FailedCallData> getFailedCallData() {
+		return failedCallData;
+	}
+
+	public void setFailedCallData(List<FailedCallData> failedCallData) {
+		this.failedCallData = failedCallData;
+	}
+	
+	public FailedCallData addFailedCallData(FailedCallData failedCallData) {
+		getFailedCallData().add(failedCallData);
+		failedCallData.setFailureClass(this);
+
+		return failedCallData;
+	}
+
+	public FailedCallData removeFailedCallData(FailedCallData failedCallData) {
+		getFailedCallData().remove(failedCallData);
+		failedCallData.setFailureClass(null);
+
+		return failedCallData;
+	}
+	
+	
 }

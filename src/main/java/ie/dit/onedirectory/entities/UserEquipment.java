@@ -1,9 +1,14 @@
 package ie.dit.onedirectory.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name="user_equipment")
@@ -36,6 +41,9 @@ public class UserEquipment {
 	
 	@Column(name="input_mode")
 	private String inputMode;
+	
+	@OneToMany(mappedBy="userEquipment")
+	private List<FailedCallData> failedCallData;
 	
 	public UserEquipment() {
 	}
@@ -124,6 +132,29 @@ public class UserEquipment {
 
 	public void setInputMode(String inputMode) {
 		this.inputMode = inputMode;
+	}
+	
+	@JsonIgnore
+	public List<FailedCallData> getFailedCallData() {
+		return this.failedCallData;
+	}
+
+	public void setFailedCallData(List<FailedCallData> failedCallData) {
+		this.failedCallData = failedCallData;
+	}
+
+	public FailedCallData addFailedCallData(FailedCallData failedCallData) {
+		getFailedCallData().add(failedCallData);
+		failedCallData.setUserEquipment(this);
+
+		return failedCallData;
+	}
+
+	public FailedCallData removeFailedCallData(FailedCallData failedCallData) {
+		getFailedCallData().remove(failedCallData);
+		failedCallData.setUserEquipment(null);
+
+		return failedCallData;
 	}
 
 }
