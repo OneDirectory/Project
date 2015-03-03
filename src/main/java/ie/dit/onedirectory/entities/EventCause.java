@@ -6,25 +6,30 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @IdClass(EventCauseId.class)
 @Entity
-@XmlRootElement
 @Table(name = "event_cause")
 public class EventCause implements Serializable {
 	
 	@Id
-	@Column(name = "cause_code")
-	private Integer causeCode;
-	@Id
-	@Column(name = "event_id")
+	@Column(name="event_id")
 	private Integer eventId;
+	
+	@Id
+	@Column(name="cause_code")
+	private Integer causeCode;
+	
 	@Column(name = "description")
 	private String description;
 
@@ -35,25 +40,25 @@ public class EventCause implements Serializable {
 	}
 	
 	public EventCause(Integer causeCode, Integer eventId, String description){
-		this.causeCode = causeCode;
 		this.eventId = eventId;
+		this.causeCode = causeCode;
 		this.description = description;
 	}
 	
-	public Integer getCauseCode() {
-		return causeCode;
-	}
-
-	public void setCauseCode(Integer causeCode) {
-		this.causeCode = causeCode;
-	}
-
 	public Integer getEventId() {
 		return eventId;
 	}
 
 	public void setEventId(Integer eventId) {
 		this.eventId = eventId;
+	}
+
+	public Integer getCauseCode() {
+		return causeCode;
+	}
+
+	public void setCauseCode(Integer causeCode) {
+		this.causeCode = causeCode;
 	}
 
 	public String getDescription() {
@@ -64,6 +69,7 @@ public class EventCause implements Serializable {
 		this.description = description;
 	}
 	
+	@JsonIgnore
 	public List<FailedCallData> getFailedCallData() {
 		return this.failedCallData;
 	}

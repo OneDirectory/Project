@@ -2,10 +2,15 @@ package ie.dit.onedirectory.entities.pks;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
+@Embeddable
 public class EventCauseId implements Serializable {
 	
+	@Column(name="cause_code")
 	private Integer causeCode;
+	@Column(name="event_id")
 	private Integer eventId;
 	
 	public EventCauseId(){
@@ -16,6 +21,23 @@ public class EventCauseId implements Serializable {
 		this.causeCode = causeCode;
 		this.eventId = eventId;
 	}
+
+	public Integer getCauseCode() {
+		return causeCode;
+	}
+
+	public void setCauseCode(Integer causeCode) {
+		this.causeCode = causeCode;
+	}
+
+	public Integer getEventId() {
+		return eventId;
+	}
+
+	public void setEventId(Integer eventId) {
+		this.eventId = eventId;
+	}
+	
 
 	@Override
 	public int hashCode() {
@@ -48,23 +70,5 @@ public class EventCauseId implements Serializable {
 			return false;
 		return true;
 	}
-
-	public Integer getCauseCode() {
-		return causeCode;
-	}
-
-	public void setCauseCode(Integer causeCode) {
-		this.causeCode = causeCode;
-	}
-
-	public Integer getEventId() {
-		return eventId;
-	}
-
-	public void setEventId(Integer eventId) {
-		this.eventId = eventId;
-	}
-	
-	
 	
 }

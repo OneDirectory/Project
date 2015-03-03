@@ -1,9 +1,13 @@
 package ie.dit.onedirectory.entities;
 
+import ie.dit.onedirectory.entities.pks.EventCauseId;
+
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
@@ -16,11 +20,6 @@ import javax.persistence.TemporalType;
 @Table(name="failed_call_data")
 public class FailedCallData {
 
-//	@Id
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
-//	@Column(name="id")
-//	private Integer id;
-//	
 //	@Column(name="date_time")
 //	private Date dateTime;
 //	
@@ -55,12 +54,15 @@ public class FailedCallData {
 //	private String imsi;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private Integer id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="date_time")
 	private Date dateTime;
 
+	@Column(name="cell_id")
 	private Integer cellId;
 	
 	private Integer duration;
@@ -114,7 +116,8 @@ public class FailedCallData {
 	public FailedCallData(Date dateTime, Integer eventId,
 			Integer failureId, Integer typeAllocationCode, Integer marketId,
 			Integer operatorId, Integer cellId, Integer duration,
-			Integer causeCode, String networkElementVersion, String imsi, String hier3Id, String hier32Id, String hier321Id) {
+			Integer causeCode, String networkElementVersion, String imsi, 
+			String hier3Id, String hier32Id, String hier321Id) {
 		this.dateTime = dateTime;
 		this.eventCause = new EventCause();
 		this.eventCause.setEventId(eventId);

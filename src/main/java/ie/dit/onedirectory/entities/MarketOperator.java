@@ -2,11 +2,16 @@ package ie.dit.onedirectory.entities;
 
 import ie.dit.onedirectory.entities.pks.MarketOperatorId;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @IdClass(MarketOperatorId.class)
 @Entity
@@ -22,6 +27,8 @@ public class MarketOperator {
 	private String country;
 	@Column(name = "operator_name")
 	private String operatorName;
+	@OneToMany(mappedBy = "marketOperator")
+	private List<FailedCallData> failedCallData;
 	
 	public MarketOperator(){
 	}
@@ -65,4 +72,27 @@ public class MarketOperator {
 		this.operatorName = operatorName;
 	}
 
+	@JsonIgnore
+	public List<FailedCallData> getFailedCallData() {
+		return this.failedCallData;
+	}
+
+	public void setFailedCallData(List<FailedCallData> failedCallData) {
+		this.failedCallData = failedCallData;
+	}
+
+	public FailedCallData addFailedCallData(FailedCallData failedCallData) {
+		getFailedCallData().add(failedCallData);
+		failedCallData.setMarketOperator(this);
+
+		return failedCallData;
+	}
+
+	public FailedCallData removeFailedCallData(FailedCallData failedCallData) {
+		getFailedCallData().remove(failedCallData);
+		failedCallData.setMarketOperator(null);
+
+		return failedCallData;
+	}
+	
 }
