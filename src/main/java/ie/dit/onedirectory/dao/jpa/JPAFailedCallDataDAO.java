@@ -30,6 +30,11 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		List<FailedCallData> result = query.getResultList();
 		return query.getResultList();
 	}
+
+	public Collection<FailedCallData> getEventIdAndCauseCodeByModel() {
+		Query q = entityManager.createQuery("select eventId, causeCode from FailedCallData order by typeAllocationCode");
+		return q.getResultList();
+	}
 	
 	public void addFailedCalledDatum(FailedCallData failedCallData) {
 		entityManager.persist(failedCallData);

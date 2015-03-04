@@ -9,6 +9,7 @@ import javax.ejb.Local;
 @Local
 public interface FailedCallDataDAO {
 
+	public Collection<FailedCallData> getEventIdAndCauseCodeByModel();
 	public Collection<FailedCallData> getAllFailedCallData();
 	public Collection<FailedCallData> getFailedCallDataByModel(String model);
 	public void addFailedCalledDatum(FailedCallData failedCallData);
