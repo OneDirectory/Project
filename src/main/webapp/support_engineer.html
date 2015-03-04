@@ -102,6 +102,13 @@
             </div>
         </div>
         
+        
+<div class="table">
+<h1>Event Cause Table</h1>
+		<ul id="user"></ul>
+
+		<div>
+        
         <!-- /#page-content-wrapper -->
 
     </div>
@@ -109,20 +116,25 @@
     
    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
-    $("#modelForm").serialize() 
-    
-  function getAllPeople(){
-  alert("getall");
+     $(function(){
+         
+   /* $("#modelForm").serialize() */
+  var $users = $('#user');
+
 	$.ajax({
-		  type: 'GET',
-		  url: 'http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/failedcalldata/getFailedCallDataByModel/',
-		   data: $("#modelForm").serialize(),
-		  success: handleResponseJQuery,
-		  contentType: 'application/json'
-		 
+		type: 'GET',
+		url:'http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/failedcalldata/getFailedCallDataByModel',
+		  data: { model: "G410"} ,
+		success: function(users){
+			$.each(users, function(i, user){
+			$users.append('<li>ID: '+user.model+' name: '+user.vendorName+'</li>');
+				});
+			}
+
+		});
+
 	});
-	
-}
+
 
 
 function handleResponseJQuery(myData) {
@@ -142,9 +154,9 @@ function handleResponseJQuery(myData) {
 
 </script>
 
-<h1>Event Cause Table</h1>
+
 	
-	<table id="table" class="table table-striped">
+	<!--<table id="table" class="table table-striped">
 		<thead>
 			<th>model</th>
 			<th>vendor name</th>
@@ -152,7 +164,7 @@ function handleResponseJQuery(myData) {
 		</thead>
 		<tbody  id="table-body">
 		</tbody>
-	</table>
+	</table>-->
         
        
 

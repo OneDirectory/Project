@@ -1,6 +1,7 @@
 package ie.dit.onedirectory.dao.jpa;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -23,11 +24,12 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		return q.getResultList();
 	}
 	
-	// TODO - Peter
-//	public Collection<FailedCallData> getEventCauseByModel() {
-//		Query q = entityManager.createQuery("from FailedCallData order by event_id");
-//		return q.getResultList();
-//	}
+	public Collection<FailedCallData> getFailedCallDataByModel(String model) {
+		Query query  = entityManager.createQuery("from UserEquipment m where m.model= :model");
+		query.setParameter("model", model);
+		List<FailedCallData> result = query.getResultList();
+		return query.getResultList();
+	}
 	
 	public void addFailedCalledDatum(FailedCallData failedCallData) {
 		entityManager.persist(failedCallData);

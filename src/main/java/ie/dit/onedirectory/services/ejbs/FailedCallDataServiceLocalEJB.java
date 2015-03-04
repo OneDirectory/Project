@@ -30,6 +30,10 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 	public Collection<FailedCallData> getAllFailedCallData() {
 		return dao.getAllFailedCallData();
 	}
+	
+	public Collection<FailedCallData> getFailedCallDataByModel(String model){
+		return dao.getFailedCallDataByModel(model);
+	}
 
 	public void addFailedCalledDatum(FailedCallData failedCallData) {
 		dao.addFailedCalledDatum(failedCallData);

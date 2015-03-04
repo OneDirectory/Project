@@ -13,6 +13,7 @@ public interface FailedCallDataServiceLocal {
 //	public Collection<FailedCallData> getEventCauseByModel();
 //	
 	public Collection<FailedCallData> getAllFailedCallData();
+	public Collection<FailedCallData> getFailedCallDataByModel(String model);
 	public void addFailedCalledDatum(FailedCallData failedCallData);
 	public void addFailedCalledData(Collection<FailedCallData> failedCallDataList);
 }

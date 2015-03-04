@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -51,6 +52,13 @@ public class FailedCallDataREST {
 //	public Collection<FailedCallData> getEventCauseByIMSI(@PathParam("imsi") String imsi){
 //		return service.getEventCauseByIMSI(imsi);
 //	}
+	
+	@GET
+	@Path ("/{getFailedCallDataByModel}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<FailedCallData> getFailedCallDataByModel(@QueryParam("model") String model){
+		return service.getFailedCallDataByModel(model);
+	}
 	
 	
 	@GET
