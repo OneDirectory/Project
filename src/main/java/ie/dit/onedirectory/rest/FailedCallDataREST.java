@@ -36,13 +36,12 @@ public class FailedCallDataREST {
 		return service.getAllFailedCallData();
 	}
 	
-//	TODO - Peter
-//	@GET
-//	@Path("/{model}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<FailedCallData> getEventCauseByModel(@PathParam("model") String model){
-//		return service.getEventCauseByModel();
-//	}
+	@GET
+	@Path("/{model}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<FailedCallData> getEventIdAndCauseCodeByModel(@PathParam("model") String model){
+		return service.getEventIdAndCauseCodeByModel();
+	}
 	
 	//TODO
 //	@GET
