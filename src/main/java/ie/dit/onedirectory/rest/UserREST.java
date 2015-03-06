@@ -4,6 +4,7 @@ import ie.dit.onedirectory.entities.User;
 import ie.dit.onedirectory.services.UserServiceLocal;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,17 +45,17 @@ public class UserREST {
 	@GET
 	@Path("/{userID}")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@Consumes(MediaType.APPLICATION_JSON)
+	// @Consumes(MediaType.APPLICATION_JSON)
 	public User findUserByID(@PathParam("userID") int userID) {
-		
-		//Integer id = (Integer) obj.get("id");
-		//String password = (String) obj.get("password");
-		
+
+		// Integer id = (Integer) obj.get("id");
+		// String password = (String) obj.get("password");
+
 		User user = service.findByID(userID);
-		//if(user.getUserPassword().equals(password)){
-			return user;
-		//}else
-			//return user;
+		// if(user.getUserPassword().equals(password)){
+		return user;
+		// }else
+		// return user;
 	}
 
 	@POST
@@ -73,7 +74,12 @@ public class UserREST {
 
 			validateUser(user);
 			service.addUser(user);
-			builder = Response.ok();
+			// builder = Response.ok();
+
+			builder = Response
+					.created(URI
+							.create("http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user/"
+									+ id));
 
 		}
 
@@ -107,12 +113,14 @@ public class UserREST {
 
 	public boolean idAlreadyExists(Integer id) {
 		User user = null;
-		try {
-			user = service.findByID(id);
-		} catch (NoResultException e) {
-			// ignore
-		}
-		return user != null;
+
+		user = service.findByID(id);
+
+		if (user != null) {
+			return true;
+		} else
+			return false;
+
 	}
 
 }
