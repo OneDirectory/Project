@@ -1,6 +1,7 @@
 package ie.dit.onedirectory.services.ejbs;
 
 import java.util.Collection;
+import java.util.List;
 
 import ie.dit.onedirectory.dao.FailedCallDataDAO;
 import ie.dit.onedirectory.entities.FailedCallData;
@@ -32,6 +33,10 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 	public Collection<FailedCallData> getFailedCallDataByModel(String model){
 		return dao.getFailedCallDataByModel(model);
 	}
+	
+	public Collection getEventIdAndCauseCodeByIMSI(String imsi) {
+		return dao.getEventIdAndCauseCodeByIMSI(imsi);
+	}
 
 	public void addFailedCalledDatum(FailedCallData failedCallData) {
 		dao.addFailedCalledDatum(failedCallData);
@@ -41,6 +46,9 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 			Collection<FailedCallData> failedCallDataList) {
 		dao.addFailedCalledData(failedCallDataList);
 	}
+
+	
+	
 
 
 }
