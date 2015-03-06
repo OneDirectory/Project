@@ -66,16 +66,20 @@
 			dataType: 'json',
 			contentType: "application/json",
 			success: function(retData){
-					
+
+				if(retData!=null){
 					var realPass= retData.userPassword;
 					var type = retData.userType;
-					
 					if(realPass===pass)	{
 						goToUserPage(type);
+					}else
+						alert('Incorrect Password');
+					
 					}
-					else{
-						location="index.html";
-					}
+			
+				else{
+					alert('User ID does not exist');
+				}
 					
 				}
 			});
@@ -84,7 +88,7 @@
 
 	function goToUserPage(type){
 		if(type==="Support Engineer"){
-			location="SEPage.html";
+			location="support_engineer.html";
 		}
 		else if(type==="Network Management Engineer"){
 			location="NMEPage.html";
@@ -92,9 +96,8 @@
 		else if(type==="Customer Service Rep"){
 			location="CSRPage.html";
 		}
-		else
-			location="adminPage.html"
-		
+		else 
+			location="adminPage.html"	
 		}
 
 	</script>
