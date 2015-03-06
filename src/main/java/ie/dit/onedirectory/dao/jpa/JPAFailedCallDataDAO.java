@@ -8,6 +8,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.Tuple;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import ie.dit.onedirectory.dao.FailedCallDataDAO;
 import ie.dit.onedirectory.entities.FailedCallData;
@@ -23,23 +27,35 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		Query q = entityManager.createQuery("from FailedCallData");
 		return q.getResultList();
 	}
-	
+
 	public Collection<FailedCallData> getFailedCallDataByModel(String model) {
-		Query query  = entityManager.createQuery("from UserEquipment m where m.model= :model");
+		Query query = entityManager
+				.createQuery("from UserEquipment m where m.model= :model");
 		query.setParameter("model", model);
 		List<FailedCallData> result = query.getResultList();
 		return query.getResultList();
 	}
 
 	public Collection<FailedCallData> getEventIdAndCauseCodeByModel() {
-		Query q = entityManager.createQuery("select eventId, causeCode from FailedCallData order by typeAllocationCode");
+		Query q = entityManager
+				.createQuery("select causeCode from FailedCallData order by typeAllocationCode");
 		return q.getResultList();
 	}
-	
+
+	public Collection getEventIdAndCauseCodeByIMSI(String imsi) {
+		Query query = entityManager
+				.createQuery("select fd.eventCause.causeCode, "
+						+ "fd.eventCause.eventId from FailedCallData fd where fd.imsi= :imsi");
+		query.setParameter("imsi", imsi);
+		List result = query.getResultList();
+		return result;
+
+	}
+
 	public void addFailedCalledDatum(FailedCallData failedCallData) {
 		entityManager.persist(failedCallData);
 	}
-	
+
 	public void addFailedCalledData(
 			Collection<FailedCallData> failedCallDataList) {
 		entityManager.persist(failedCallDataList);

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
@@ -39,22 +40,22 @@ public class FailedCallDataREST {
 	}
 	
 	@GET
-	@Path("/{model}")
+	@Path("/model/{model}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<FailedCallData> getEventIdAndCauseCodeByModel(@PathParam("model") String model){
 		return service.getEventIdAndCauseCodeByModel();
 	}
 	
-	//TODO
-//	@GET
-//	@Path("/{imsi}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Collection<FailedCallData> getEventCauseByIMSI(@PathParam("imsi") String imsi){
-//		return service.getEventCauseByIMSI(imsi);
-//	}
 	
 	@GET
-	@Path ("/{getFailedCallDataByModel}")
+	@Path("/imsi/{imsi}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection getEventCauseByIMSI(@PathParam("imsi") String imsi){
+		return service.getEventIdAndCauseCodeByIMSI(imsi);
+	}
+	
+	@GET
+	@Path ("/models/{getFailedCallDataByModel}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<FailedCallData> getFailedCallDataByModel(@QueryParam("model") String model){
 		return service.getFailedCallDataByModel(model);
