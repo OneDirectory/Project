@@ -45,17 +45,11 @@ public class UserREST {
 	@GET
 	@Path("/{userID}")
 	@Produces(MediaType.APPLICATION_JSON)
-	// @Consumes(MediaType.APPLICATION_JSON)
 	public User findUserByID(@PathParam("userID") int userID) {
 
-		// Integer id = (Integer) obj.get("id");
-		// String password = (String) obj.get("password");
-
 		User user = service.findByID(userID);
-		// if(user.getUserPassword().equals(password)){
+
 		return user;
-		// }else
-		// return user;
 	}
 
 	@POST

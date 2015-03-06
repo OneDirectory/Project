@@ -96,7 +96,10 @@ public class UserTest {
 		assertEquals("UserService Failed to Add", service.getUserList().size(), 1);
 		
 		service.addUser(userTwo);
+		
 		assertEquals("UserService Failed to Add", service.getUserList().size(), 2);
+		
+		assertEquals("Calvin",service.findByID(1).getUserFName());
 
 	}
 
