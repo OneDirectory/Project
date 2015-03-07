@@ -14,6 +14,7 @@ public interface FailedCallDataDAO {
 	public Collection<FailedCallData> getAllFailedCallData();
 	public Collection<FailedCallData> getFailedCallDataByModel(String model);
 	public Collection getEventIdAndCauseCodeByIMSI(String imsi);
+	public Collection<String> getAllIMSI();
 	public void addFailedCalledDatum(FailedCallData failedCallData);
 	public void addFailedCalledData(Collection<FailedCallData> failedCallDataList);
 	

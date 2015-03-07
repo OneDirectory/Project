@@ -37,7 +37,11 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 	public Collection getEventIdAndCauseCodeByIMSI(String imsi) {
 		return dao.getEventIdAndCauseCodeByIMSI(imsi);
 	}
-
+	
+	public Collection<String> getAllIMSI(){
+		return dao.getAllIMSI();
+	}
+	
 	public void addFailedCalledDatum(FailedCallData failedCallData) {
 		dao.addFailedCalledDatum(failedCallData);
 	}
