@@ -55,6 +55,13 @@ public class FailedCallDataREST {
 	}
 	
 	@GET
+	@Path("/imsi")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<String> getAllIMSI(){
+		return service.getAllIMSI();
+	}
+	
+	@GET
 	@Path ("/models/{getFailedCallDataByModel}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<FailedCallData> getFailedCallDataByModel(@QueryParam("model") String model){

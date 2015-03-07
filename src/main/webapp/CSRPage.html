@@ -32,9 +32,7 @@
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
 				<li><a href="#">About</a></li>
-				<li><a href="#">Add a user</a></li>
 				<li><a href="#">Search by IMSI</a></li>
-				<li><a href="importPage.html">Import data</a></li>
 				<li><a href="index.html">Log out</a></li>
 			</ul>
 			<br>
@@ -46,61 +44,24 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<h1>Create New User</h1>
+						<h1>Search EventId, CauseCode by IMSI</h1>
 
-						<form class="form-horizontal" role="form"
-							action="http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user/add"
-							method="POST">
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="ID">ID:</label>
-								<div class="col-sm-5">
-									<input type="number" class="form-control" name="ID"
-										placeholder="ID" autofocus>
-								</div>
+						<form class="form-horizontal" role="form" method="POST">
+							<div class="form-group" id="myDiv">
+								<label class="control-label col-sm-2" for="ID">IMSI:</label> <select
+									class="col-sm-5" id="select">
+									<option value='milk'>Milk</option>
+									<option value='milk'>Coffee</option>
+									<option value='milk'>Suger</option>
+								</select>
 							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="pwd">Password:</label>
-								<div class="col-sm-5">
-									<input type="password" class="form-control" name="password"
-										placeholder="Password">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="pwd">First
-									Name:</label>
-								<div class="col-sm-5">
-									<input type="text" class="form-control" name="firstname"
-										placeholder="First Name">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="pwd">Last
-									Name:</label>
-								<div class="col-sm-5">
-									<input type="text" class="form-control" name="lastname"
-										placeholder="Last Name">
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-offset-1 col-sm-10">
-									<div class="col-sm-10">
-										<label class="radio-inline"><input type="radio"
-											name="role" value="Network Management Engineer">Network
-											Management Engineer</label> <label class="radio-inline"><input
-											type="radio" name="role" value="Support Engineer">Support
-											Engineer</label> <label class="radio-inline"><input
-											type="radio" name="role" value="Customer Service Rep">Customer
-											Service Rep</label>
-									</div>
-								</div>
 
-								<div class="form-group">
-									<div class="col-sm-offset-4 col-sm-10">
-										<br>
-										<button type="submit" class="btn btn-primary">Create
-											User</button>
-									</div>
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-10">
+									<br>
+									<button type="submit" class="btn btn-primary">Search</button>
 								</div>
+							</div>
 						</form>
 					</div>
 				</div>
@@ -131,38 +92,32 @@
         $("#wrapper").toggleClass("toggled");
     });
     
-    </script>
+</script>
 
-			<script>
+<script>
 
-// 	Ok lads, type is the type of request, default is get,
-// 	url is the rest address where you want the request to go.
-// 	success is what happens if it has been a success.
-// 	Function(users) here users is the data i.e. json object.
-// 	users variable is cached to reference back to the html element
-// 	.each means for every json object i.e. we recive a load of them
-// 	and an array of them is returned and i and user just mean iterations
-// 	and a way to get data from json to html
 
-// Below means this runs when page has loaded, could easily be called by a button also
 	$(function(){
 
-    var $users = $('#user');
+    var $select = $('#select');
 
 	$.ajax({
 		type: 'GET',
-		url:'http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user',
+		url:'http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/failedcalldata/imsi',
 		success: function(users){
-			$.each(users, function(i, user){
-			$users.append('<li>ID: '+user.userID+' name: '+user.userFName+' '+user.userSName+' Type: '+user.userType+' </li>');
+			$.each(users, function(i, sentImsi){
+				var imsi=document.createElement('option');
+				imsi.setAttribute('value', sentImsi);
+				imsi.innerHTML=sentImsi;
+			$select.appendChild(imsi);
 				});
 			}
 
 		});
 
 	});
-
-	</script>
+	
+</script>
 </body>
 
 </html>
