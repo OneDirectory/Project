@@ -43,18 +43,16 @@
 		<div id="page-content-wrapper">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-lg-12" id='container'>
 						<h1>Search EventId, CauseCode by IMSI</h1>
 
 <!-- 						<form class="form-horizontal" role="form" method="POST"> -->
 							<div class="form-group" id="myDiv">
 								<label class="control-label col-sm-2" for="ID">IMSI:</label> <select
 									class="col-sm-5" id="ID">
-									<option value='344930000000011'>344930000000011</option>
-<!-- 									<option value='310560000000012'>310560000000012</option> -->
-<!-- 									<option value='240210000000013'>240210000000013</option> -->
+									
 								</select>
-							</div>
+							
 
 							<div class="form-group">
 								<div class="col-sm-offset-4 col-sm-10">
@@ -62,6 +60,7 @@
 									<button id='submit' name='submit' class="btn btn-primary">Search</button>
 								</div>
 							</div>
+						</div>
 <!-- 						</form> -->
 					</div>
 				</div>
@@ -74,11 +73,12 @@
 
 	
 	<table class="table" id='table' name='table'>
-		<tr>
-				<th>EventID</th>
-				<th>CauseCode</th>
-				<th>IMSI</th>
-		</tr>
+		
+<!-- 		<tr> -->
+<!-- 				<th>EventID</th> -->
+<!-- 				<th>CauseCode</th> -->
+<!-- 				<th>IMSI</th> -->
+<!-- 		</tr> -->
 
 		</table>
 
@@ -95,12 +95,14 @@
     
 </script>
 
-			<script>
+<script>
 
+var $table = $('#table');
 
 	$(function(){
 
     var $select = $('#ID');
+   
 
 	$.ajax({
 		type: 'GET',
@@ -127,12 +129,16 @@
 
 $(function(){
 
-	var $table = $('#table');
 
 	$( "#submit" ).click(function(e) {
+
+	
 		
 	var x=document.getElementById("ID");
 	var selected=x.options[x.selectedIndex].text;
+
+	createTable();
+	createButton();
 
 	$.ajax({
 
@@ -151,7 +157,45 @@ $(function(){
 	  });
    });
 });
-    
+
+
+function createTable(){
+	
+	var row=document.createElement('tr');
+	row.setAttribute('id', 'head');
+	var colOne=document.createElement('th');
+	var colTwo=document.createElement('th');
+	var colThree=document.createElement('th');
+
+	colOne.innerHTML='Cause Code';
+	colTwo.innerHTML='Event ID';
+	colThree.innerHTML='IMSI';
+
+	row.appendChild(colOne);
+	row.appendChild(colTwo);
+	row.appendChild(colThree);
+
+	$table.append(row);
+	
+}
+
+function createButton(){
+	var button=document.createElement(button);
+	button.setAttribute('id', 'tableButton');
+	button.setAttribute('class','buttonMy');
+	button.innerHTML='Search Again';
+	button.addEventListener('click', removeData);
+	$table.append(button);
+	
+}
+
+function removeData(){
+	var removeHead=document.getElementById('head');
+	var removeButton=document.getElementById('tableButton');
+	$table.empty();
+	//$table.remove(removeHead);
+	//$table.remove(removeButton);
+}
 </script>
 
 
