@@ -53,7 +53,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	}
 	
 	public Collection getAllIMSI(){
-		Query query = entityManager.createQuery("select fd.imsi from FailedCallData fd");
+		Query query = entityManager.createQuery("select distinct fd.imsi from FailedCallData fd");
 		Collection result = query.getResultList();
 		return result;	
 	}

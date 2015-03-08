@@ -33,7 +33,6 @@
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
 				<li><a href="#">About</a></li>
 				<li><a href="#">Add a user</a></li>
-				<li><a href="#">Search by IMSI</a></li>
 				<li><a href="importPage.html">Import data</a></li>
 				<li><a href="index.html">Log out</a></li>
 			</ul>
@@ -111,11 +110,14 @@
 	</div>
 	<!-- /#wrapper -->
 
-	<div class="table">
-		<ul id="user"></ul>
-
-		<div>
-
+	<table class="table" id='table' name='table'>
+		<tr>
+				<th>UserID</th>
+				<th>Name</th>
+				<th>UserType</th>
+				
+		</tr>
+</table>
 
 			<!-- jQuery -->
 			<script src="Resources/js/jquery-1.6.1.min.js"></script>
@@ -147,14 +149,14 @@
 // Below means this runs when page has loaded, could easily be called by a button also
 	$(function(){
 
-    var $users = $('#user');
+    var $users = $('#table');
 
 	$.ajax({
 		type: 'GET',
 		url:'http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user',
 		success: function(users){
 			$.each(users, function(i, user){
-			$users.append('<li>ID: '+user.userID+' name: '+user.userFName+' '+user.userSName+' Type: '+user.userType+' </li>');
+			$users.append('<tr><td>'+user.userID+'</td><td>'+user.userFName+' '+user.userSName+'</td><td>'+user.userType+'</td></tr>');
 				});
 			}
 

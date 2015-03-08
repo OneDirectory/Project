@@ -72,15 +72,15 @@
 	</div>
 	<!-- /#wrapper -->
 
-	<div class="table">
-		<ul id="cause/event"></ul>
-
-		</div>
 	
-	<div class="table">
-		<ul id="table"></ul>
+	<table class="table" id='table' name='table'>
+		<tr>
+				<th>EventID</th>
+				<th>CauseCode</th>
+				<th>IMSI</th>
+		</tr>
 
-		<div>
+		</table>
 
 
 			<script src="Resources/js/jquery-1.6.1.min.js"></script>
@@ -134,8 +134,6 @@ $(function(){
 	var x=document.getElementById("ID");
 	var selected=x.options[x.selectedIndex].text;
 
-	alert(selected);
-
 	$.ajax({
 
 		type:'GET',
@@ -146,14 +144,14 @@ $(function(){
 		success:function(data){
 			
 			$.each(data, function(key, value){
-				$table.append('<li>CauseCode: '+value[0]+' EventID: '+value[1]+' for IMSI:'+selected+' </li>');
+				
+				$table.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+selected+'</td></tr>');
 			});
 		}
 	  });
    });
 });
     
-$users.append('<li>ID: '+user.userID+' name: '+user.userFName+' '+user.userSName+' Type: '+user.userType+' </li>');
 </script>
 
 
