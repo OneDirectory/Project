@@ -95,7 +95,7 @@ public class FailedCallDataTest {
 
 	@Test
 	public void EntityTest() throws Exception {
-
+		 
 	}
 
 	@Test

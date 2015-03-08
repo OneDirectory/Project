@@ -1,3 +1,16 @@
+/**
+ * This class provides access from the client side via a
+ * RESTful web service to insert failed call data into the
+ * database and to return queries by the client from the database.
+ * 
+ * A service interface is injected to provide access to the service
+ * layer.
+ * 
+ * Returns a list of all IMSIs
+ * Returns a list of all unique cause code and eventID combinations
+ * affecting an IMSI.
+ * 
+ */
 package ie.dit.onedirectory.rest;
 
 import ie.dit.onedirectory.entities.FailedCallData;
@@ -29,52 +42,69 @@ import org.apache.poi.ss.usermodel.Row;
 
 @Path("/failedcalldata")
 public class FailedCallDataREST {
-	
+
 	@EJB
 	FailedCallDataServiceLocal service;
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<FailedCallData> getFailedCallData(){
+	public Collection<FailedCallData> getFailedCallData() {
 		return service.getAllFailedCallData();
 	}
-	
+
 	@GET
 	@Path("/model/{model}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<FailedCallData> getEventIdAndCauseCodeByModel(@PathParam("model") String model){
+	public Collection<FailedCallData> getEventIdAndCauseCodeByModel(
+			@PathParam("model") String model) {
 		return service.getEventIdAndCauseCodeByModel();
 	}
-	
-	
+
+	/**
+	 * 
+	 * @param imsi
+	 *            Takes a String specifying which IMSI should be sent to the
+	 *            service layer for the query.
+	 * @return An object containing eventID and CauseCode in JSON format to the
+	 *         client from the service layer.
+	 */
+
 	@GET
 	@Path("/imsi/{imsi}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection getEventCauseByIMSI(@PathParam("imsi") String imsi){
+	public Collection getEventCauseByIMSI(@PathParam("imsi") String imsi) {
 		return service.getEventIdAndCauseCodeByIMSI(imsi);
 	}
-	
+
+	/**
+	 * 
+	 * @return A a collection of String JSON representations of all IMSIs to the
+	 *         client from the service layer.
+	 * 
+	 */
+
 	@GET
 	@Path("/imsi")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection getAllIMSI(){
-		
+	public Collection getAllIMSI() {
+
 		return service.getAllIMSI();
 	}
-	
+
 	@GET
-	@Path ("/models/{getFailedCallDataByModel}")
+	@Path("/models/{getFailedCallDataByModel}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<FailedCallData> getFailedCallDataByModel(@QueryParam("model") String model){
+	public Collection<FailedCallData> getFailedCallDataByModel(
+			@QueryParam("model") String model) {
 		return service.getFailedCallDataByModel(model);
 	}
-	
-	
+
 	@GET
 	@Path("/add")
-	public void addFailedCallData() throws IOException{
+	public void addFailedCallData() throws IOException {
 		HSSFRow row;
-		FileInputStream fis = new FileInputStream(new File("/Users/Darren/Project/data.xls"));
+		FileInputStream fis = new FileInputStream(new File(
+				"/Users/Darren/Project/data.xls"));
 		HSSFWorkbook workbook = new HSSFWorkbook(fis);
 		HSSFSheet spreadsheet = workbook.getSheetAt(0);
 		Iterator<Row> rowIterator = spreadsheet.iterator();
@@ -84,41 +114,56 @@ public class FailedCallDataREST {
 			Iterator<Cell> cellIterator = row.cellIterator();
 			while (cellIterator.hasNext()) {
 				DataFormatter dataFormatter = new DataFormatter();
-				Date dateTime = HSSFDateUtil.getJavaDate(cellIterator.next().getNumericCellValue());
-				Integer eventId = Integer.valueOf(dataFormatter.formatCellValue(cellIterator.next()));
-				String failureString = dataFormatter.formatCellValue(cellIterator.next());
+				Date dateTime = HSSFDateUtil.getJavaDate(cellIterator.next()
+						.getNumericCellValue());
+				Integer eventId = Integer.valueOf(dataFormatter
+						.formatCellValue(cellIterator.next()));
+				String failureString = dataFormatter
+						.formatCellValue(cellIterator.next());
 				Integer failureId;
-				if(failureString.equals("(null)")){
+				if (failureString.equals("(null)")) {
 					break;
-				}
-				else {
+				} else {
 					failureId = Integer.valueOf(failureString);
 				}
-				Integer typeAllocationCode = Integer.valueOf(dataFormatter.formatCellValue(cellIterator.next()));
-				Integer marketId = Integer.valueOf(dataFormatter.formatCellValue(cellIterator.next()));
-				Integer operatorId = Integer.valueOf(dataFormatter.formatCellValue(cellIterator.next()));
-				Integer cellId = Integer.valueOf(dataFormatter.formatCellValue(cellIterator.next()));
-				Integer duration = Integer.valueOf(dataFormatter.formatCellValue(cellIterator.next()));
-				String causeString = dataFormatter.formatCellValue(cellIterator.next());
+				Integer typeAllocationCode = Integer.valueOf(dataFormatter
+						.formatCellValue(cellIterator.next()));
+				Integer marketId = Integer.valueOf(dataFormatter
+						.formatCellValue(cellIterator.next()));
+				Integer operatorId = Integer.valueOf(dataFormatter
+						.formatCellValue(cellIterator.next()));
+				Integer cellId = Integer.valueOf(dataFormatter
+						.formatCellValue(cellIterator.next()));
+				Integer duration = Integer.valueOf(dataFormatter
+						.formatCellValue(cellIterator.next()));
+				String causeString = dataFormatter.formatCellValue(cellIterator
+						.next());
 				Integer causeCode;
-				if(failureString.equals("(null)")){
+				if (failureString.equals("(null)")) {
 					break;
-				}
-				else {
+				} else {
 					causeCode = Integer.valueOf(causeString);
 				}
-				String networkElementVersion = dataFormatter.formatCellValue(cellIterator.next());
-				String imsi = dataFormatter.formatCellValue(cellIterator.next());
-				String hier3Id = dataFormatter.formatCellValue(cellIterator.next());
-				String hier32Id = dataFormatter.formatCellValue(cellIterator.next());
-				String hier321Id = dataFormatter.formatCellValue(cellIterator.next());
-				
-				service.addFailedCalledDatum(new FailedCallData(dateTime, eventId, failureId, typeAllocationCode, 
-						marketId, operatorId, cellId, duration, causeCode, networkElementVersion, imsi, hier3Id, hier32Id, hier321Id));
+				String networkElementVersion = dataFormatter
+						.formatCellValue(cellIterator.next());
+				String imsi = dataFormatter
+						.formatCellValue(cellIterator.next());
+				String hier3Id = dataFormatter.formatCellValue(cellIterator
+						.next());
+				String hier32Id = dataFormatter.formatCellValue(cellIterator
+						.next());
+				String hier321Id = dataFormatter.formatCellValue(cellIterator
+						.next());
+
+				service.addFailedCalledDatum(new FailedCallData(dateTime,
+						eventId, failureId, typeAllocationCode, marketId,
+						operatorId, cellId, duration, causeCode,
+						networkElementVersion, imsi, hier3Id, hier32Id,
+						hier321Id));
 				break;
 			}
 		}
 		fis.close();
 	}
-	
+
 }
