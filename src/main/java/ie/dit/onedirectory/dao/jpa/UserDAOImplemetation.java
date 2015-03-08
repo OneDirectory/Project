@@ -1,10 +1,16 @@
+/**
+ * 
+ * This class allows us to use an entity manager to link
+ * our entity objects with the database objects and return data
+ * from our queries.
+ * 
+ * 
+ */
 package ie.dit.onedirectory.dao.jpa;
 
 import ie.dit.onedirectory.dao.UserDAO;
 import ie.dit.onedirectory.entities.User;
-
 import java.util.Collection;
-
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,16 +28,32 @@ public class UserDAOImplemetation implements UserDAO {
 	@PersistenceContext
 	private EntityManager em;
 
+	/**
+	 * 
+	 * @return Queries the DB to return all records from the table
+	 * 
+	 */
 	public Collection<User> getUserList() {
 		Query query = em.createQuery("from User");
 		return query.getResultList();
 	}
 
+	/**
+	 * 
+	 * Uses the entity manager to store the user to the DB
+	 * 
+	 */
 	public void addUser(User user) {
 		em.persist(user);
 
 	}
 
+	/**
+	 * Builds the criteria using the user entity and returns a user if the ID is
+	 * matched in the DB. Returns a null object if as expected the user may not
+	 * actually exist yet when the query returns an empty list.
+	 * 
+	 */
 	public User findByID(Integer id) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();

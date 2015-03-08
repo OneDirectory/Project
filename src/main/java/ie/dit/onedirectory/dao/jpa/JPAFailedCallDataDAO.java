@@ -1,18 +1,19 @@
+/**
+ * 
+ * This class allows us to perform queries on the database for 
+ * failed call data and uses an entity manager linking our entities
+ * with the database under the hood.
+ * 
+ */
 package ie.dit.onedirectory.dao.jpa;
 
 import java.util.Collection;
 import java.util.List;
-
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.Tuple;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
 import ie.dit.onedirectory.dao.FailedCallDataDAO;
 import ie.dit.onedirectory.entities.FailedCallData;
 
@@ -42,6 +43,12 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		return q.getResultList();
 	}
 
+	/**
+	 * Returns a collection of objects(event id and cause code) where they are
+	 * identified as having a passed IMSI String. The combo is grouped so as to
+	 * only send back unique combinations.
+	 * 
+	 */
 	public Collection getEventIdAndCauseCodeByIMSI(String imsi) {
 		Query query = entityManager
 				.createQuery("select fd.eventCause.causeCode, "
@@ -52,11 +59,17 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		return result;
 
 	}
-	
-	public Collection getAllIMSI(){
-		Query query = entityManager.createQuery("select distinct fd.imsi from FailedCallData fd");
+
+	/**
+	 * Returns a list of all unique imsis affected by failed call data
+	 * 
+	 */
+
+	public Collection getAllIMSI() {
+		Query query = entityManager
+				.createQuery("select distinct fd.imsi from FailedCallData fd");
 		Collection result = query.getResultList();
-		return result;	
+		return result;
 	}
 
 	public void addFailedCalledDatum(FailedCallData failedCallData) {

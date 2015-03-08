@@ -1,10 +1,16 @@
+/**
+ * 
+ * Our user class entity consisting of an ID, first and second name
+ * password and user type/role. User ID is the primary key and no field 
+ * can be null with a password having a 4-6 character spec.
+ * 
+ */
 package ie.dit.onedirectory.entities;
 
 import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -25,12 +31,10 @@ public class User implements Serializable {
 		this.userPassword = userPassword;
 
 	}
-	
-	public User(){
-		
+
+	public User() {
+
 	}
-	
-	
 
 	@Id
 	@Column(name = "user_id")

@@ -1,3 +1,11 @@
+/**
+ * 
+ * A DAO interface is injected to provide access to
+ * the DAO layer and implements an interface to link
+ * with the RESTful web service.
+ * 
+ */
+
 package ie.dit.onedirectory.services.ejbs;
 
 import java.util.Collection;

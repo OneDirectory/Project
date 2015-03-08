@@ -1,3 +1,9 @@
+/**
+ * 
+ * Provides the link to the service layer.
+ * 
+ */
+
 package ie.dit.onedirectory.dao;
 
 import ie.dit.onedirectory.entities.FailedCallData;
