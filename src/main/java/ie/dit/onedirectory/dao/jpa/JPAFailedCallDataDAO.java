@@ -45,7 +45,8 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	public Collection getEventIdAndCauseCodeByIMSI(String imsi) {
 		Query query = entityManager
 				.createQuery("select fd.eventCause.causeCode, "
-						+ "fd.eventCause.eventId from FailedCallData fd where fd.imsi= :imsi");
+						+ "fd.eventCause.eventId from FailedCallData fd where fd.imsi= :imsi group by "
+						+ "fd.eventCause.causeCode,fd.eventCause.eventId");
 		query.setParameter("imsi", imsi);
 		List result = query.getResultList();
 		return result;
