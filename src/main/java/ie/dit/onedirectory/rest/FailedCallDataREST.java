@@ -51,7 +51,6 @@ public class FailedCallDataREST {
 	@Path("/imsi/{imsi}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection getEventCauseByIMSI(@PathParam("imsi") String imsi){
-		
 		return service.getEventIdAndCauseCodeByIMSI(imsi);
 	}
 	

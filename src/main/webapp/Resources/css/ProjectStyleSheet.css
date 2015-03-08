@@ -17,9 +17,31 @@ body.page1.2{
 
 .table{
 	font-size: 20px;
+	width: 800px;
+	font-family: verdana,arial,sans-serif;
+	color:#333333;
 	position: relative;
 	top: 80px;
-	right: 20px;
+	right: 5px;
+	left:20px;
+	border-width: 3px;
+	border-collapse: collapse;
+}
+
+.table th{
+	border-width: 3px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+
+.table td{
+	border-width: 3px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
 }
 
 .brand {
@@ -32,13 +54,6 @@ body.page1.2{
   padding: 30px 0 10px;
   color: #1e5799;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.table{
-	font-size: 20px;
-	position: relative;
-	top: 80px;
-	right: 20px;
 }
 
 .page-header{
