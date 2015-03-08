@@ -12,7 +12,7 @@ public interface FailedCallDataServiceLocal {
 
 	public Collection<FailedCallData> getEventIdAndCauseCodeByModel();
 	public Collection getEventIdAndCauseCodeByIMSI(String imsi);
-	public Collection<String> getAllIMSI();
+	public Collection getAllIMSI();
 	public Collection<FailedCallData> getAllFailedCallData();
 	public Collection<FailedCallData> getFailedCallDataByModel(String model);
 	public void addFailedCalledDatum(FailedCallData failedCallData);
