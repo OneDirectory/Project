@@ -22,6 +22,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "event_cause")
 public class EventCause implements Serializable {
 	
+	// This is a comment which I will delete later. : D
+	
 	@Id
 	@Column(name="event_id")
 	private Integer eventId;
