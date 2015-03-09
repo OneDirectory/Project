@@ -7,13 +7,17 @@
  */
 package ie.dit.onedirectory.dao.jpa;
 
+import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
+
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
+
 import ie.dit.onedirectory.dao.FailedCallDataDAO;
 import ie.dit.onedirectory.entities.FailedCallData;
 
@@ -38,11 +42,13 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	}
 
 	/**
-	 * Returns a list of phone models from the FailedCallData table. This list is
-	 * organised with respect to event ID and cause code for each dropped call.
+	 * Returns a list of phone models from the FailedCallData table. This list
+	 * is organised with respect to event ID and cause code for each dropped
+	 * call.
 	 */
-	
-	public Collection<FailedCallData> getEventIdAndCauseCodeByModel(String typeAllocationCode) {
+
+	public Collection<FailedCallData> getEventIdAndCauseCodeByModel(
+			String typeAllocationCode) {
 		Query q = entityManager
 				.createQuery("from FailedCallData f where f.typeAllocationCode = :typeAllocationCode");
 		q.setParameter("typeAllocationCode", typeAllocationCode);
@@ -65,6 +71,16 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		List result = query.getResultList();
 		return result;
 
+	}
+
+	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to) {
+		Query query = entityManager.createQuery("select fd.imsi, count(fd.imsi)"
+				+ "from FailedCallData fd where fd.dateTime between :fromDate  and :toDate"
+				+ " group by fd.imsi");
+		query.setParameter("fromDate", from, TemporalType.DATE);
+		query.setParameter("toDate", to, TemporalType.DATE);
+		List result = query.getResultList();
+		return result;
 	}
 
 	/**

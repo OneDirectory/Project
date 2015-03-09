@@ -20,6 +20,8 @@ import ie.dit.onedirectory.services.FailedCallDataServiceLocal;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -83,6 +85,20 @@ public class FailedCallDataREST {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection getEventCauseByIMSI(@PathParam("imsi") String imsi) {
 		return service.getEventIdAndCauseCodeByIMSI(imsi);
+	}
+	@GET
+	@Path("/count")
+	@Produces
+	public Collection getCountBetweenDatesForAllIMSI() throws ParseException{
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String date = "10/01/2013 10:20:56";
+		Date from = sdf.parse(date);
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+		String date1 = "12/01/2013 10:20:56";
+		Date to = sdf1.parse(date1);
+		java.sql.Date sqlDateFrom = new java.sql.Date(from.getTime());
+		java.sql.Date sqlDateTo = new java.sql.Date(to.getTime());
+		return service.getCountBetweenDatesForAllIMSI(sqlDateFrom, sqlDateTo);
 	}
 
 	/**
