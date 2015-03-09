@@ -8,6 +8,7 @@
 
 package ie.dit.onedirectory.services.ejbs;
 
+import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
 
@@ -57,6 +58,11 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 	public void addFailedCalledData(
 			Collection<FailedCallData> failedCallDataList) {
 		dao.addFailedCalledData(failedCallDataList);
+	}
+
+	
+	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to) {
+		return dao.getCountBetweenDatesForAllIMSI(from, to);
 	}
 
 }
