@@ -11,6 +11,7 @@
  * affecting an IMSI.
  * 
  */
+
 package ie.dit.onedirectory.rest;
 
 import ie.dit.onedirectory.entities.FailedCallData;
@@ -52,21 +53,29 @@ public class FailedCallDataREST {
 		return service.getAllFailedCallData();
 	}
 
+	/**
+	 * @param typeAllocationCode
+	 * Takes a String that specifies which model of phone is being examined
+	 * @return An object containing eventID and CauseCode in JSON format to the
+	 * client from the service layer.
+	 * 
+	 */
+	
 	@GET
-	@Path("/model/{model}")
+	@Path("/model/{getEventIdAndCauseCodeByModel}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<FailedCallData> getEventIdAndCauseCodeByModel(
-			@PathParam("model") String model) {
-		return service.getEventIdAndCauseCodeByModel();
+			@PathParam("model") String typeAllocationCode) {
+		return service.getEventIdAndCauseCodeByModel(typeAllocationCode);
 	}
 
 	/**
-	 * 
 	 * @param imsi
 	 *            Takes a String specifying which IMSI should be sent to the
 	 *            service layer for the query.
 	 * @return An object containing eventID and CauseCode in JSON format to the
 	 *         client from the service layer.
+	 *         
 	 */
 
 	@GET
@@ -77,7 +86,6 @@ public class FailedCallDataREST {
 	}
 
 	/**
-	 * 
 	 * @return A a collection of String JSON representations of all IMSIs to the
 	 *         client from the service layer.
 	 * 

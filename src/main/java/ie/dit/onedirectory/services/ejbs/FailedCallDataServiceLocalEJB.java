@@ -30,8 +30,8 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 		this.dao = dao;
 	}
 
-	public Collection<FailedCallData> getEventIdAndCauseCodeByModel() {
-		return dao.getEventIdAndCauseCodeByModel();
+	public Collection<FailedCallData> getEventIdAndCauseCodeByModel(String typeAllocationCode) {
+		return dao.getEventIdAndCauseCodeByModel(typeAllocationCode);
 	}
 	
 	public Collection<FailedCallData> getAllFailedCallData() {
@@ -58,9 +58,5 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 			Collection<FailedCallData> failedCallDataList) {
 		dao.addFailedCalledData(failedCallDataList);
 	}
-
-	
-	
-
 
 }
