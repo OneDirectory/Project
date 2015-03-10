@@ -73,8 +73,10 @@
 	
 	<table class="table" id='table' name='table'>
 		
-
+<div id="butDiv"></div>
 		</table>
+		
+	
 
 
 			<script src="Resources/js/jquery-1.6.1.min.js"></script>
@@ -92,6 +94,7 @@
 <script>
 
 var $table = $('#table');
+
 
 	$(function(){
 
@@ -127,7 +130,7 @@ $(function(){
 	$( "#submit" ).click(function(e) {
 
 	
-		
+	removeData();	
 	var x=document.getElementById("ID");
 	var selected=x.options[x.selectedIndex].text;
 
@@ -174,12 +177,18 @@ function createTable(){
 }
 
 function createButton(){
+
+	var butDiv=document.createElement('div');
+	butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
 	var button=document.createElement(button);
 	button.setAttribute('id', 'tableButton');
-	button.setAttribute('class','buttonMy');
+	button.setAttribute('class','btn btn-primary');
+	button.setAttribute('position', 'absolute');
+	button.setAttribute('top', '50%');
 	button.innerHTML='Search Again';
 	button.addEventListener('click', removeData);
-	$table.append(button);
+	butDiv.appendChild(button);
+	$table.append(butDiv);
 	
 }
 
@@ -187,8 +196,7 @@ function removeData(){
 	var removeHead=document.getElementById('head');
 	var removeButton=document.getElementById('tableButton');
 	$table.empty();
-	//$table.remove(removeHead);
-	//$table.remove(removeButton);
+	
 }
 </script>
 

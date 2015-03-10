@@ -94,7 +94,7 @@ public class FailedCallDataREST {
 	public Collection getCountBetweenDatesForAllIMSI(
 			@PathParam("dates") String datesPassed) throws ParseException {
 		
-		String[] dates = datesPassed.split("8");
+		String[] dates = datesPassed.split("£");
 		String fromDate = dates[0];
 		String toDate = dates[1];
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
