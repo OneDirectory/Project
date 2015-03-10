@@ -65,7 +65,7 @@ public class FailedCallDataREST {
 	 */
 
 	@GET
-	@Path("/model/{getEventIdAndCauseCodeByModel}")
+	@Path("/models/{getEventIdAndCauseCodeByModel}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<FailedCallData> getEventIdAndCauseCodeByModel(
 			@PathParam("model") String typeAllocationCode) {
@@ -133,7 +133,7 @@ public class FailedCallDataREST {
 	public void addFailedCallData() throws IOException {
 		HSSFRow row;
 		FileInputStream fis = new FileInputStream(new File(
-				"/Users/Darren/Project/data.xls"));
+				"C:/oneDirectory/data.xls"));
 		HSSFWorkbook workbook = new HSSFWorkbook(fis);
 		HSSFSheet spreadsheet = workbook.getSheetAt(0);
 		Iterator<Row> rowIterator = spreadsheet.iterator();
@@ -168,7 +168,7 @@ public class FailedCallDataREST {
 				String causeString = dataFormatter.formatCellValue(cellIterator
 						.next());
 				Integer causeCode;
-				if (failureString.equals("(null)")) {
+				if (causeString.equals("(null)")) {
 					break;
 				} else {
 					causeCode = Integer.valueOf(causeString);
@@ -189,6 +189,7 @@ public class FailedCallDataREST {
 						operatorId, cellId, duration, causeCode,
 						networkElementVersion, imsi, hier3Id, hier32Id,
 						hier321Id));
+				
 				break;
 			}
 		}
