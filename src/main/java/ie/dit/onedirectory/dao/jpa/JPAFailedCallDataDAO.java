@@ -72,6 +72,13 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		return result;
 
 	}
+	
+	/**
+	 * 
+	 * Returns the a list of all IMSIs with the total number of failures associated
+	 * with it between a given dates.
+	 * 
+	 */
 
 	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to) {
 		Query query = entityManager.createQuery("select fd.imsi, count(fd.imsi)"
