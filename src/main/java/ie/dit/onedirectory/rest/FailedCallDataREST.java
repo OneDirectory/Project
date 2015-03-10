@@ -57,12 +57,13 @@ public class FailedCallDataREST {
 
 	/**
 	 * @param typeAllocationCode
-	 * Takes a String that specifies which model of phone is being examined
+	 *            Takes a String that specifies which model of phone is being
+	 *            examined
 	 * @return An object containing eventID and CauseCode in JSON format to the
-	 * client from the service layer.
+	 *         client from the service layer.
 	 * 
 	 */
-	
+
 	@GET
 	@Path("/model/{getEventIdAndCauseCodeByModel}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -77,7 +78,7 @@ public class FailedCallDataREST {
 	 *            service layer for the query.
 	 * @return An object containing eventID and CauseCode in JSON format to the
 	 *         client from the service layer.
-	 *         
+	 * 
 	 */
 
 	@GET
@@ -86,16 +87,20 @@ public class FailedCallDataREST {
 	public Collection getEventCauseByIMSI(@PathParam("imsi") String imsi) {
 		return service.getEventIdAndCauseCodeByIMSI(imsi);
 	}
+
 	@GET
-	@Path("/count")
-	@Produces
-	public Collection getCountBetweenDatesForAllIMSI() throws ParseException{
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		String date = "10/01/2013 10:20:56";
-		Date from = sdf.parse(date);
-		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
-		String date1 = "12/01/2013 10:20:56";
-		Date to = sdf1.parse(date1);
+	@Path("/count/{dates}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection getCountBetweenDatesForAllIMSI(
+			@PathParam("dates") String datesPassed) throws ParseException {
+		
+		String[] dates = datesPassed.split("8");
+		String fromDate = dates[0];
+		String toDate = dates[1];
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date from = sdf.parse(fromDate);
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		Date to = sdf1.parse(toDate);
 		java.sql.Date sqlDateFrom = new java.sql.Date(from.getTime());
 		java.sql.Date sqlDateTo = new java.sql.Date(to.getTime());
 		return service.getCountBetweenDatesForAllIMSI(sqlDateFrom, sqlDateTo);
