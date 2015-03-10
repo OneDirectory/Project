@@ -132,7 +132,7 @@
  	 			createTable();
  	 			createButton();
  	 			$.each(data, function(key, value){
- 	 				$table.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');
+ 	 				$table.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td></tr>');
  	 	 			});
 	 	 			isValid=false;
  	 	 		}
@@ -181,12 +181,15 @@
  		row.setAttribute('id', 'head');
  		var colOne=document.createElement('th');
  		var colTwo=document.createElement('th');
+ 		var colThree=document.createElement('th');
 
  		colOne.innerHTML='IMSI';
  		colTwo.innerHTML='Number Of Failures';
+ 		colThree.innerHTML='Duration';
 
  		row.appendChild(colOne);
  		row.appendChild(colTwo);
+ 		row.appendChild(colThree);
 
  		$table.append(row);
  		

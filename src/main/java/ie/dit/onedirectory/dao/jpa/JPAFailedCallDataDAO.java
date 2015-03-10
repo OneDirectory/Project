@@ -81,7 +81,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	 */
 
 	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to) {
-		Query query = entityManager.createQuery("select fd.imsi, count(fd.imsi)"
+		Query query = entityManager.createQuery("select fd.imsi, count(fd.imsi), sum(fd.duration)"
 				+ "from FailedCallData fd where fd.dateTime between :fromDate  and :toDate"
 				+ " group by fd.imsi");
 		query.setParameter("fromDate", from, TemporalType.DATE);
