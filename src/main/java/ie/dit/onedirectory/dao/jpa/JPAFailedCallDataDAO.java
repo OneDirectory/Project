@@ -112,11 +112,15 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	}
 
 	//JF addition
-	public Collection getIMSIWithTime(String imsi) {
+	public Collection getAllIMSIWithCallFailuresBetweenDates(Date from, Date to) {
 
 		Query query = entityManager
-				.createQuery(" from FailedCallData f where f.imsi = :imsi");
-
+				.createQuery("select fd.imsi "
+		+ "from FailedCallData fd where fd.dateTime between :fromDate  and :toDate"
+		+ " group by fd.imsi");
+		
+		query.setParameter("fromDate", from, TemporalType.DATE);
+		query.setParameter("toDate", to, TemporalType.DATE);
 		List result = query.getResultList();
 		return result;
 	}

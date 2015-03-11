@@ -67,8 +67,8 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 	
 	// JF Addition
 
-	public Collection getIMSIWithTime(String imsi) {
-		return dao.getIMSIWithTime(imsi);
+	public Collection getAllIMSIWithCallFailuresBetweenDates(Date from, Date to) {
+		return dao.getAllIMSIWithCallFailuresBetweenDates(from, to);
 	}
 	
 }

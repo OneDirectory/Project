@@ -16,7 +16,8 @@ import javax.ejb.Local;
 public interface FailedCallDataDAO {
 
 	// JF addition
-	public Collection getIMSIWithTime(String imsi);
+	public Collection getAllIMSIWithCallFailuresBetweenDates(Date from, Date to);
+	
 	public Collection<FailedCallData> getEventIdAndCauseCodeByModel(String typeAllocationCode);
 	public Collection<FailedCallData> getAllFailedCallData();
 	public Collection<FailedCallData> getFailedCallDataByModel(String model);

@@ -91,12 +91,21 @@ public class FailedCallDataREST {
 
 	//JF addition
 	@GET
-	@Path("/imsi/{failedCall}")
+	@Path("/imsi/{getAllIMSIWithCallFailuresBetweenDates}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection getIMSIWithTime(
-			@PathParam("imsi")  String imsi
-			) {
-		return service.getIMSIWithTime(imsi);
+	public Collection getAllIMSIWithCallFailuresBetweenDates(
+			@PathParam("dates")  String datesPassed) throws ParseException {
+		
+		String[] dates = datesPassed.split("£");
+		String fromDate = dates[0];
+		String toDate = dates[1];
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date from = sdf.parse(fromDate);
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		Date to = sdf1.parse(toDate);
+		java.sql.Date sqlDateFrom = new java.sql.Date(from.getTime());
+		java.sql.Date sqlDateTo = new java.sql.Date(to.getTime());
+		return service.getAllIMSIWithCallFailuresBetweenDates(sqlDateFrom, sqlDateTo);
 	}
 
 	@GET
