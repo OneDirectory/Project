@@ -47,7 +47,7 @@
 						<h1>Create New User</h1>
 
 						<form class="form-horizontal" role="form"
-							action="http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user/add"
+							action="http://localhost:8080/project/rest/user/add"
 							method="POST" onsubmit="return check_form();">
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="ID">ID:</label>
@@ -122,8 +122,14 @@
 	<!-- /#wrapper -->
 
 	<div id="import">
-		<h1>INSERT IMPORT HTML CODE INSIDE THIS DIV</h1>
-
+		<h1>Import Failed Call Data</h1>
+		<form action="rest/failedcalldata/upload" method="post"
+		enctype="multipart/form-data">
+		<p>
+			Please select file: <input type="file" name="selectedFile" />
+		</p>
+		<input type="submit" value="Upload" />
+	</form>
 	</div>
 
 
@@ -213,7 +219,7 @@ var fieldLName = document.getElementById("lName").value;
 
 	$.ajax({
 		type: 'GET',
-		url:'http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user',
+		url:'http://localhost:8080/project/rest/user',
 		success: function(users){
 			$.each(users, function(i, user){
 			$users.append('<tr><td>'+user.userID+'</td><td>'+user.userFName+' '+user.userSName+'</td><td>'+user.userType+'</td></tr>');
