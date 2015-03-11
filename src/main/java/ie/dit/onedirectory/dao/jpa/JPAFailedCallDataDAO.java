@@ -72,7 +72,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		return result;
 
 	}
-	
+
 	/**
 	 * 
 	 * Returns the a list of all IMSIs with the total number of failures associated
@@ -109,6 +109,16 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	public void addFailedCalledData(
 			Collection<FailedCallData> failedCallDataList) {
 		entityManager.persist(failedCallDataList);
+	}
+
+	//JF addition
+	public Collection getIMSIWithTime(String imsi) {
+
+		Query query = entityManager
+				.createQuery(" from FailedCallData f where f.imsi = :imsi");
+
+		List result = query.getResultList();
+		return result;
 	}
 
 }

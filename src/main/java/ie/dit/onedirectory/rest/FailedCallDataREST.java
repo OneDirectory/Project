@@ -48,7 +48,7 @@ public class FailedCallDataREST {
 
 	@EJB
 	FailedCallDataServiceLocal service;
-
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<FailedCallData> getFailedCallData() {
@@ -63,7 +63,7 @@ public class FailedCallDataREST {
 	 *         client from the service layer.
 	 * 
 	 */
-
+	
 	@GET
 	@Path("/models/{getEventIdAndCauseCodeByModel}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -86,6 +86,17 @@ public class FailedCallDataREST {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection getEventCauseByIMSI(@PathParam("imsi") String imsi) {
 		return service.getEventIdAndCauseCodeByIMSI(imsi);
+	}
+	
+
+	//JF addition
+	@GET
+	@Path("/imsi/{failedCall}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection getIMSIWithTime(
+			@PathParam("imsi")  String imsi
+			) {
+		return service.getIMSIWithTime(imsi);
 	}
 
 	@GET
@@ -132,9 +143,10 @@ public class FailedCallDataREST {
 	@Path("/add")
 	public void addFailedCallData() throws IOException {
 		HSSFRow row;
-		FileInputStream fis = new FileInputStream(new File(
-				"C:/oneDirectory/data.xls"));
-		HSSFWorkbook workbook = new HSSFWorkbook(fis);
+		FileInputStream fis =
+				//"C:/oneDirectory/data.xls"));
+				 new FileInputStream(new File("~/Project/data.xls"));
+				HSSFWorkbook workbook = new HSSFWorkbook(fis);
 		HSSFSheet spreadsheet = workbook.getSheetAt(0);
 		Iterator<Row> rowIterator = spreadsheet.iterator();
 		rowIterator.next();
