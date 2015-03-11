@@ -31,9 +31,8 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
-				<li><a href="#">About</a></li>
-				<li><a href="#">Add a user</a></li>
-				<li><a href="importPage.html">Import data</a></li>
+				<li><a href="#" onclick="toggle('createUser');">Add a user</a></li>
+				<li><a href="#" onclick="toggle('import');">Import data</a></li>
 				<li><a href="index.html">Log out</a></li>
 			</ul>
 			<br>
@@ -41,7 +40,7 @@
 		<!-- /#sidebar-wrapper -->
 
 		<!-- Page Content -->
-		<div id="page-content-wrapper">
+		<div id="createUser">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
@@ -84,7 +83,8 @@
 								<div class="col-sm-offset-1 col-sm-10">
 									<div class="col-sm-10">
 										<label class="radio-inline"><input type="radio"
-											name="role" checked="checked" value="Network Management Engineer">Network
+											name="role" checked="checked"
+											value="Network Management Engineer">Network
 											Management Engineer</label> <label class="radio-inline"><input
 											type="radio" name="role" value="Support Engineer">Support
 											Engineer</label> <label class="radio-inline"><input
@@ -104,83 +104,111 @@
 					</div>
 				</div>
 			</div>
+			
+			<table class="table" id='table' name='table'>
+			<tr>
+				<th>UserID</th>
+				<th>Name</th>
+				<th>UserType</th>
+
+			</tr>
+			</table>
+		
 		</div>
 		<!-- /#page-content-wrapper -->
+		
 
 	</div>
 	<!-- /#wrapper -->
 
-	<table class="table" id='table' name='table'>
-		<tr>
-			<th>UserID</th>
-			<th>Name</th>
-			<th>UserType</th>
+	<div id="import">
+		<h1>INSERT IMPORT HTML CODE INSIDE THIS DIV</h1>
 
-		</tr>
-	</table>
+	</div>
 
-	<!-- jQuery -->
-	<script src="Resources/js/jquery-1.6.1.min.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script src="Resources/js/bootstrap.min.js"></script>
 
-	<!-- Menu Toggle Script -->
-	<script>
+<!-- jQuery -->
+<script src="Resources/js/jquery-1.6.1.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="Resources/js/bootstrap.min.js"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+var divs = ["createUser","import"];
+var visibleDiv = null;
+
+
+$(function(){
+
+	document.getElementById("createUser").style.display='none';
+	document.getElementById("import").style.display='none';
 	
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    
-    </script>
+});
 
-	<script>
+function toggle(divId){
+	if(visibleDiv === divId) {
+		  visibleDiv = null;
+	} else {
+		    visibleDiv = divId;
+		}
 
-			function check_form(){
+	hideOtherDivs();
+}
+
+function hideOtherDivs(){
+	var i, divId, div;
+
+	for(i = 0; i <divs.length; i++){
+		divId = divs[i];
+		div = document.getElementById(divId);
+
+		if(visibleDiv == divId){
+			div.style.display = 'block';
+		}else{
+			div.style.display = 'none';
+		}
+	}
+}
+
+<!-- CheckFormScript -->
+function check_form(){
 				
-				var fieldID = document.getElementById("id").value;		
-				var fieldPassword = document.getElementById("password").value;
-				var fieldFName = document.getElementById("fName").value;
-				var fieldLName = document.getElementById("lName").value;
-				//var fieldType = document.getElementById(elementId);
+var fieldID = document.getElementById("id").value;		
+var fieldPassword = document.getElementById("password").value;
+var fieldFName = document.getElementById("fName").value;
+var fieldLName = document.getElementById("lName").value;
+//var fieldType = document.getElementById(elementId);
 
-				if(fieldID.match(/^[0-9]+$/) && (fieldID.length<4 || field.length>6) ){
+	if(fieldID.match(/^[0-9]+$/) && (fieldID.length<4 || field.length>6) ){
 					
-				}else{
-					alert('Please enter numeric ID between 4-6 length');
-					return false;
-					}
-				if(fieldPassword.length<4 || fieldPassword.length>6){
-					alert('Please enter a password of 4-6 charachters');
-					return false;
-				}
+	}else{
+		alert('Please enter numeric ID between 4-6 length');
+		return false;
+		}
+	if(fieldPassword.length<4 || fieldPassword.length>6){
+		alert('Please enter a password of 4-6 charachters');
+		return false;
+	}
 				
-				if(fieldFName.length===0){
-					alert('Enter a first name');
-					return false;
-				}
-				if(fieldLName.length===0){
-					alert('Enter a last name');
-					return false;
-				}
+	if(fieldFName.length===0){
+		alert('Enter a first name');
+		return false;
+	}
+	if(fieldLName.length===0){
+		alert('Enter a last name');
+		return false;
+	}
 				
-				return true;
+	return true;
 
-				}
+}
 
-// 	Ok lads, type is the type of request, default is get,
-// 	url is the rest address where you want the request to go.
-// 	success is what happens if it has been a success.
-// 	Function(users) here users is the data i.e. json object.
-// 	users variable is cached to reference back to the html element
-// 	.each means for every json object i.e. we recive a load of them
-// 	and an array of them is returned and i and user just mean iterations
-// 	and a way to get data from json to html
-
-// Below means this runs when page has loaded, could easily be called by a button also
+<!-- RequestUserAndDisplayScript -->
 	$(function(){
 
+		
     var $users = $('#table');
 
 	$.ajax({
@@ -196,7 +224,7 @@
 
 	});
 
-	</script>
+</script>
 </body>
 
 </html>
