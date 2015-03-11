@@ -31,10 +31,8 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
-				<li><a href="#">About</a></li>
-				<li><a href="#">Add a user</a></li>
-				<li><a href="#">Search by IMSI</a></li>
-				<li><a href="importPage.html">Import data</a></li>
+				<li><a href="#" onclick="toggle('imsiCount');">Affected IMSI with Count</a></li>
+				<li><a href="#" onclick="toggle('petersQuery');">PetersQuery</a></li>
 				<li><a href="index.html">Log out</a></li>
 			</ul>
 			<br>
@@ -42,125 +40,211 @@
 		<!-- /#sidebar-wrapper -->
 
 		<!-- Page Content -->
-		<div id="page-content-wrapper">
+		<div id="imsiCount">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<h1>Create New User</h1>
+						<h1>Total number of failures per IMSI</h1>
 
-						<form class="form-horizontal" role="form"
-							action="http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user/add"
-							method="POST">
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="ID">ID:</label>
-								<div class="col-sm-5">
-									<input type="number" class="form-control" name="ID"
-										placeholder="ID" autofocus>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="pwd">Password:</label>
-								<div class="col-sm-5">
-									<input type="password" class="form-control" name="password"
-										placeholder="Password">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="pwd">First
-									Name:</label>
-								<div class="col-sm-5">
-									<input type="text" class="form-control" name="firstname"
-										placeholder="First Name">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="pwd">Last
-									Name:</label>
-								<div class="col-sm-5">
-									<input type="text" class="form-control" name="lastname"
-										placeholder="Last Name">
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-offset-1 col-sm-10">
-									<div class="col-sm-10">
-										<label class="radio-inline"><input type="radio"
-											name="role" value="Network Management Engineer">Network
-											Management Engineer</label> <label class="radio-inline"><input
-											type="radio" name="role" value="Support Engineer">Support
-											Engineer</label> <label class="radio-inline"><input
-											type="radio" name="role" value="Customer Service Rep">Customer
-											Service Rep</label>
-									</div>
-								</div>
+						<label class="control-label col-sm-2" for="ID">FROM:</label><br>
 
-								<div class="form-group">
-									<div class="col-sm-offset-4 col-sm-10">
-										<br>
-										<button type="submit" class="btn btn-primary">Create
-											User</button>
-									</div>
-								</div>
-						</form>
+						<div>
+							<input type="datetime-local" id='from' class="form-control"
+								name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
+						</div>
+
+						<label class="control-label col-sm-2" for="ID">TO:</label>
+
+						<div>
+							<input type="datetime-local" id='to' class="form-control"
+								name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
+						</div>
+
+
+
+						<div class="col-sm-offset-4 col-sm-10">
+							<br>
+							<button id="submit" type="submit" class="btn btn-primary">Search</button>
+						</div>
+
+
 					</div>
 				</div>
+				<table class="table" id='table' name='table'></table>
 			</div>
+			
+			
 		</div>
 		<!-- /#page-content-wrapper -->
 
 	</div>
 	<!-- /#wrapper -->
 
-	<div class="table">
-		<ul id="user"></ul>
+	<div id="petersQuery">
+		<h1>INSERT  HTML CODE FOR QUERY INSIDE THIS DIV</h1>
 
-		<div>
+	</div>
 
 
-			<!-- jQuery -->
-			<script src="Resources/js/jquery-1.6.1.min.js"></script>
+	<!-- jQuery -->
+	<script src="Resources/js/jquery-1.6.1.min.js"></script>
 
-			<!-- Bootstrap Core JavaScript -->
-			<script src="Resources/js/bootstrap.min.js"></script>
+	<!-- Bootstrap Core JavaScript -->
+	<script src="Resources/js/bootstrap.min.js"></script>
 
-			<!-- Menu Toggle Script -->
-			<script>
+<!-- Menu Toggle Script -->
+<script>
+var divs = ["imsiCount","petersQuery"];
+var visibleDiv = null;
+
+$(function(){
+
+	document.getElementById("imsiCount").style.display='none';
+	document.getElementById("petersQuery").style.display='none';
 	
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    
-    </script>
+});
 
-			<script>
+function toggle(divId){
+	if(visibleDiv === divId) {
+		  visibleDiv = null;
+	} else {
+		    visibleDiv = divId;
+		}
 
-// 	Ok lads, type is the type of request, default is get,
-// 	url is the rest address where you want the request to go.
-// 	success is what happens if it has been a success.
-// 	Function(users) here users is the data i.e. json object.
-// 	users variable is cached to reference back to the html element
-// 	.each means for every json object i.e. we recive a load of them
-// 	and an array of them is returned and i and user just mean iterations
-// 	and a way to get data from json to html
+	hideOtherDivs();
+}
 
-// Below means this runs when page has loaded, could easily be called by a button also
-	$(function(){
+function hideOtherDivs(){
+	var i, divId, div;
 
-    var $users = $('#user');
+	for(i = 0; i <divs.length; i++){
+		divId = divs[i];
+		div = document.getElementById(divId);
 
-	$.ajax({
-		type: 'GET',
-		url:'http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user',
-		success: function(users){
-			$.each(users, function(i, user){
-			$users.append('<li>ID: '+user.userID+' name: '+user.userFName+' '+user.userSName+' Type: '+user.userType+' </li>');
-				});
-			}
+		if(visibleDiv == divId){
+			div.style.display = 'block';
+		}else{
+			div.style.display = 'none';
+		}
+	}
+}
+</script>
+	<script>
+	var $table = $('#table');
 
-		});
+ 	$(function(){
 
-	});
+ 		$( "#submit" ).click(function(e) {
+
+ 	 		
+ 	removeData();	
+	var fromDate=$('#from').val();
+	var toDate=$('#to').val();
+	var myurl;
+	var isValid=false;
+	
+	if(validateEntry(fromDate, toDate)){	
+		myurl='http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/failedcalldata/count/'+fromDate+'£'+toDate;
+		isValid=true;
+		}
+
+	else{
+		myurl= 'http://localhost:8080/Project-0.0.1-SNAPSHOT/NMEPage.html';
+		isValid=false;
+		}
+
+ 	$.ajax({
+ 		type: 'GET',
+ 		url: myurl,
+ 		success: function(data){
+ 	 	
+ 	 		if(isValid && data.length>0){
+ 	 			createTable();
+ 	 			createButton();
+ 	 			$.each(data, function(key, value){
+ 	 				$table.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td></tr>');
+ 	 	 			});
+	 	 			isValid=false;
+ 	 	 		}
+ 	 		else if(isValid && data.length===0){
+				alert('No available data for selected dates');
+ 	 	 		}
+ 			}
+
+ 		});
+ 	});
+ 	});
+
+	function validateEntry(from, to){
+		if(from===''){
+			alert('Invalid FROM DateTime');
+			return false;
+		}
+		else if(to===''){
+			alert('Invalid TO DateTime');
+			return false;
+		}
+		else if(isFromGtrTo(from, to)){
+			alert('FROM date id greater than TO date');
+			return false;
+		}
+		
+		else
+			return true;
+	}
+
+	function isFromGtrTo(from, to){
+			
+			var date1 = new Date(from);
+			var date2 = new Date(to);
+			
+			if(date2.getTime()<=date1.getTime())
+				return true;
+			else
+				return false;
+	}
+
+	
+ 	function createTable(){
+ 		
+ 		var row=document.createElement('tr');
+ 		row.setAttribute('id', 'head');
+ 		var colOne=document.createElement('th');
+ 		var colTwo=document.createElement('th');
+ 		var colThree=document.createElement('th');
+
+ 		colOne.innerHTML='IMSI';
+ 		colTwo.innerHTML='Number Of Failures';
+ 		colThree.innerHTML='Duration';
+
+ 		row.appendChild(colOne);
+ 		row.appendChild(colTwo);
+ 		row.appendChild(colThree);
+
+ 		$table.append(row);
+ 		
+ 	}
+
+ 	function createButton(){
+ 		var butDiv=document.createElement('div');
+ 		butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
+ 		var button=document.createElement(button);
+ 		button.setAttribute('id', 'tableButton');
+ 		button.setAttribute('class','btn btn-primary');
+ 		button.innerHTML='Search Again';
+ 		button.addEventListener('click', removeData);
+ 		butDiv.appendChild(button);
+ 		$table.append(butDiv);
+ 		
+ 	}
+
+ 	function removeData(){
+ 		var removeHead=document.getElementById('head');
+ 		var removeButton=document.getElementById('tableButton');
+ 		$table.empty();
+ 		
+ 	}
+ 	 	
 
 	</script>
 </body>

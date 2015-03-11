@@ -8,6 +8,7 @@ package ie.dit.onedirectory.services;
 
 import ie.dit.onedirectory.entities.FailedCallData;
 
+import java.sql.Date;
 import java.util.Collection;
 
 import javax.ejb.Local;
@@ -18,6 +19,7 @@ public interface FailedCallDataServiceLocal {
 	public Collection getEventIdAndCauseCodeByModel(Integer typeAllocationCode);
 	public Collection getEventIdAndCauseCodeByIMSI(String imsi);
 	public Collection getAllIMSI();
+	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to);
 	public Collection<FailedCallData> getAllFailedCallData();
 	public Collection<FailedCallData> getFailedCallDataByModel(String model);
 	public void addFailedCalledDatum(FailedCallData failedCallData);
