@@ -1,7 +1,5 @@
 package ie.dit.onedirectory.entities;
 
-import ie.dit.onedirectory.entities.pks.EventCauseId;
-
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -19,39 +17,6 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="failed_call_data")
 public class FailedCallData {
-
-//	@Column(name="date_time")
-//	private Date dateTime;
-//	
-//	@Column(name="event_id")
-//	private Integer eventId;
-//	
-//	@Column(name="failure_id")
-//	private Integer failureId;
-//	
-//	@Column(name="type_allocation_code")
-//	private Integer typeAllocationCode;
-//	
-//	@Column(name="market_id")
-//	private Integer marketId;
-//	
-//	@Column(name="operator_id")
-//	private Integer operatorId;
-//	
-//	@Column(name="cell_id")
-//	private Integer cellId;
-//	
-//	@Column(name="duration")
-//	private Integer duration;
-//	
-//	@Column(name="cause_code")
-//	private Integer causeCode;
-//	
-//	@Column(name="network_element_version")
-//	private String networkElementVersion;
-//	
-//	@Column(name="imsi")
-//	private String imsi;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -242,6 +207,4 @@ public class FailedCallData {
 		this.hier321Id = hier321Id;
 	}
 
-	
-	
 }
