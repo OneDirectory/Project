@@ -21,7 +21,7 @@
 	<div class="page-header">
 		<br>
 		<h2>
-			Group one - One Directory <small>Project</small>
+			Group One - One Directory <small>Project</small>
 		</h2>
 		<h2>Network Management Engineer Page</h2>
 	</div>
@@ -31,8 +31,9 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
-				<li><a href="#" onclick="toggle('imsiCount');">Affected IMSI with Count</a></li>
+				<li><a href="#" onclick="toggle('imsiCount');">Call Failures in Time Period</a></li>
 				<li><a href="#" onclick="toggle('petersQuery');">PetersQuery</a></li>
+				<li><a href="#" onclick="toggle('johnsQuery');">List Call Failures by IMSI</a></li>
 				<li><a href="index.html">Log out</a></li>
 			</ul>
 			<br>
@@ -81,8 +82,26 @@
 	<!-- /#wrapper -->
 
 	<div id="petersQuery">
+	
 		<h1>INSERT  HTML CODE FOR QUERY INSIDE THIS DIV</h1>
 
+	</div>
+		
+		<div id="johnsQuery">
+	 
+	 <h1>INSERT  HTML CODE FOR QUERY INSIDE THIS DIV</h1> 
+
+<label class="control-label col-sm-2" for="ID">TO:</label>
+
+						<div>
+							<input type="datetime-local" id='to' class="form-control"
+								name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
+						</div>
+						
+						<div class="col-sm-offset-4 col-sm-10">
+							<br>
+							<button id="submit" type="submit" class="btn btn-primary">Search</button>
+						</div>
 	</div>
 
 
@@ -101,7 +120,7 @@ $(function(){
 
 	document.getElementById("imsiCount").style.display='none';
 	document.getElementById("petersQuery").style.display='none';
-	
+	document.getElementById("johnsQuery").style.display='none';
 });
 
 function toggle(divId){

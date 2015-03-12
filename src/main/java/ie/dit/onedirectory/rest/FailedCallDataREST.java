@@ -100,10 +100,10 @@ public class FailedCallDataREST {
 
 	//JF addition
 	@GET
-	@Path("/imsi/{getAllIMSIWithCallFailuresBetweenDates}")
+	@Path("/dateIMSI/{getAllIMSIWithCallFailuresBetweenDates}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection getAllIMSIWithCallFailuresBetweenDates(
-			@PathParam("dates")  String datesPassed) throws ParseException {
+			@PathParam("getAllIMSIWithCallFailuresBetweenDates")  String datesPassed) throws ParseException {
 		
 		String[] dates = datesPassed.split("£");
 		String fromDate = dates[0];
@@ -263,7 +263,7 @@ public class FailedCallDataREST {
 		HSSFRow row;
 		FileInputStream fis =
 				//"C:/oneDirectory/data.xls"));
-				 new FileInputStream(new File("~/Project/data.xls"));
+				 new FileInputStream(new File("/home/drrn/Project/data.xls"));
 				HSSFWorkbook workbook = new HSSFWorkbook(fis);
 
 		HSSFSheet spreadsheet = workbook.getSheetAt(0);

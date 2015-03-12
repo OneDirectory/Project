@@ -43,7 +43,7 @@ public class EventCauseREST {
 	public void addEventCauses() throws IOException{
 		HSSFRow row;
 		//FileInputStream fis = new FileInputStream(new File("C:/oneDirectory/data.xls"));
-		FileInputStream fis = new FileInputStream(new File("~/Project/data.xls"));
+		FileInputStream fis = new FileInputStream(new File("/home/drrn/Project/data.xls"));
 		HSSFWorkbook workbook = new HSSFWorkbook(fis);
 		HSSFSheet spreadsheet = workbook.getSheetAt(1);
 		Iterator<Row> rowIterator = spreadsheet.iterator();
