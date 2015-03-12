@@ -36,6 +36,13 @@ public class UserEquipmentREST {
 	}
 	
 	@GET
+	@Path("/{getAllModelsFromUserEquipment}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<UserEquipment> getAllModelsFromUserEquipment(){
+		return service.getAllModelsFromUserEquipment();		
+	}
+	
+	@GET
 	@Path("/add")
 	public void addFailureClasses() throws IOException {
 		HSSFRow row;

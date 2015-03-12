@@ -129,11 +129,12 @@ public class FailedCallDataREST {
 	}
 
 	@GET
-	@Path("/models/{getFailedCallDataByModel}")
+	@Path("{getFailedCallDataByModel}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<FailedCallData> getFailedCallDataByModel(
-			@QueryParam("model") String model) {
-		return service.getFailedCallDataByModel(model);
+			@QueryParam("model") String model, @QueryParam("fromDate") java.sql.Date fromDate, @QueryParam("toDate")
+			java.sql.Date toDate){
+		return service.getFailedCallDataByModel(model, fromDate, toDate);
 	}
 	// TODO - Peter
 	// @GET

@@ -23,6 +23,13 @@ public class JPAUserEquipmentDAO implements UserEquipmentDAO {
 		return q.getResultList();
 	}
 	
+	public Collection<UserEquipment> getAllModelsFromUserEquipment(){
+		Query query = entityManager.createQuery("Select model from UserEquipment");
+		return query.getResultList();
+	}
+	
+	
+	
 	public void addUserEquipment(UserEquipment userEquipment) {
 		entityManager.persist(userEquipment);
 	}
