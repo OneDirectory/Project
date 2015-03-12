@@ -31,9 +31,12 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
-				<li><a href="#" onclick="toggle('imsiCount');">Call Failures in Time Period</a></li>
-				<li><a href="#" onclick="toggle('petersQuery');">PetersQuery</a></li>
+
 			<!-- <li><a href="#" onclick="toggle('johnsQuery');">List Call Failures by IMSI</a></li> -->
+
+				<li><a href="#" onclick="toggle('imsiCount');">Affected IMSI with Count</a></li>
+				<li><a href="#" onclick="toggle('tacCount');">Call Failure by TAC</a></li>
+
 				<li><a href="index.html">Log out</a></li>
 			</ul>
 			<br>
@@ -81,10 +84,28 @@
 	</div>
 	<!-- /#wrapper -->
 
-	<div id="petersQuery">
-	
-		<h1>INSERT  HTML CODE FOR QUERY INSIDE THIS DIV</h1>
 
+	<div id="tacCount">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>Call Failures by TAC with respect to event ID and cause code</h1>
+						
+						<label class="control-label col-sm-2" for="ID">TAC: </label>
+
+						<div>
+							<input type="text" id='tacInput' class="form-group"
+								name="tac" placeholder="type allocation code" autofocus>
+						</div>
+						
+						<div class="col-sm-offset-4 col-sm-10">
+							<!--  <br> -->
+							<button id="submit" type="submit" class="btn btn-primary">Search</button>
+						</div>
+					
+				</div>
+			</div>
+		</div>
 	</div>
 <!-- 	
 		<div id="johnsQuery">
@@ -113,14 +134,18 @@
 
 <!-- Menu Toggle Script -->
 <script>
-var divs = ["imsiCount","petersQuery"];
+var divs = ["imsiCount","tacCount"];
 var visibleDiv = null;
 
 $(function(){
 
 	document.getElementById("imsiCount").style.display='none';
-	document.getElementById("petersQuery").style.display='none';
+
 <!--	document.getElementById("johnsQuery").style.display='none'; -->
+
+	document.getElementById("tacCount").style.display='none';
+	
+
 });
 
 function toggle(divId){
