@@ -42,18 +42,19 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	}
 
 	/**
-	 * Returns a list of phone models from the FailedCallData table. This list
-	 * is organised with respect to event ID and cause code for each dropped
-	 * call.
+	 * Returns a list of phone models from the FailedCallData table according to
+	 * their type allocation code (TAC). This list is organised with respect to
+	 * event ID and cause code for each dropped call.
 	 */
-
-	public Collection<FailedCallData> getEventIdAndCauseCodeByModel(
-			String typeAllocationCode) {
-		Query q = entityManager
-				.createQuery("from FailedCallData f where f.typeAllocationCode = :typeAllocationCode");
-		q.setParameter("typeAllocationCode", typeAllocationCode);
-		List<FailedCallData> result = q.getResultList();
-		return q.getResultList();
+	
+	public Collection getEventIdAndCauseCodeByModel(Integer typeAllocationCode) {
+		Query query = entityManager
+				.createQuery("select fd.eventCause.eventId, fd.eventCause.causeCode "
+						+ "from FailedCallData fd where fd.userEquipment.tac = :typeAllocationCode "
+						+ "group by fd.eventCause.eventId, fd.eventCause.causeCode");
+		query.setParameter("typeAllocationCode", typeAllocationCode);
+		List result = query.getResultList();
+		return result;
 	}
 
 	/**

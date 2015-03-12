@@ -74,10 +74,10 @@ public class FailedCallDataREST {
 	 */
 	
 	@GET
-	@Path("/models/{getEventIdAndCauseCodeByModel}")
+	@Path("/tac/{typeAllocationCode}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<FailedCallData> getEventIdAndCauseCodeByModel(
-			@PathParam("model") String typeAllocationCode) {
+	public Collection getEventIdAndCauseCodeByModel(
+			@PathParam("typeAllocationCode") Integer typeAllocationCode) {
 		return service.getEventIdAndCauseCodeByModel(typeAllocationCode);
 	}
 
