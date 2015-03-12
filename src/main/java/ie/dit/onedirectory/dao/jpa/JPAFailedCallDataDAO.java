@@ -37,7 +37,9 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		Query query = entityManager
 				.createQuery("select count (fd.id)"
 						+ "from FailedCallData fd where fd.dateTime between :fromDate and :toDate"
-						+ "fd.type_allocation_code");
+						+ "and fd.tac = Exists"
+						+ "(select ue.tac from userEquipment ue"
+						+ "where model - :model");
 		query.setParameter("model", model);
 		query.setParameter("fromDate", fromDate, TemporalType.DATE);
 		query.setParameter("toDate", toDate, TemporalType.DATE);
