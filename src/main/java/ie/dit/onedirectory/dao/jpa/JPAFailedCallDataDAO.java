@@ -38,8 +38,8 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 				.createQuery("select count (fd.id)"
 						+ "from FailedCallData fd where fd.dateTime between :fromDate and :toDate"
 						+ "and fd.tac = Exists"
-						+ "(select ue.tac from userEquipment ue"
-						+ "where model - :model");
+						+ "(select 'found' from userEquipment ue"
+						+ "where fd.tac = ue.model: =model");
 		query.setParameter("model", model);
 		query.setParameter("fromDate", fromDate, TemporalType.DATE);
 		query.setParameter("toDate", toDate, TemporalType.DATE);
