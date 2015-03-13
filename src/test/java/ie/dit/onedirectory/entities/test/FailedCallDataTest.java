@@ -84,6 +84,9 @@ public class FailedCallDataTest {
 	private static String UPDATED_NETWORK_ELEMENT_VERSION = "12B";
 	private static String INITIAL_IMSI = "344930000000011";
 	private static String UPDATED_IMSI = "344930000000122";
+	
+	private static String INITIAL_MODEL = "VEA3";
+	private static String UPDATED_MODEL = "Dirland Miniphone";
 
 	@Before
 	public void preparePersistenceTest() throws Exception {
@@ -117,7 +120,7 @@ public class FailedCallDataTest {
 				INITIAL_FAILURE_ID, INITIAL_TYPE_ALLOCATION_CODE,
 				INITIAL_MARKET_ID, INITIAL_OPERATOR_ID, INITIAL_CELL_ID,
 				INITIAL_DURATION, INITIAL_CAUSE_CODE,
-				INITIAL_NETWORK_ELEMENT_VERSION, INITIAL_IMSI, "", "", "");
+				INITIAL_NETWORK_ELEMENT_VERSION, INITIAL_IMSI, "INITIAL_MODEL", "", "");
 
 		em.persist(fcd);
 
@@ -194,6 +197,7 @@ public class FailedCallDataTest {
 		
 		UserEquipment ue = new UserEquipment();
 		ue.setTac(INITIAL_TYPE_ALLOCATION_CODE);
+		ue.setModel(INITIAL_MODEL);
 		
 		em.persist(evt);
 		em.persist(mko);
@@ -205,15 +209,15 @@ public class FailedCallDataTest {
 				INITIAL_FAILURE_ID, INITIAL_TYPE_ALLOCATION_CODE,
 				INITIAL_MARKET_ID, INITIAL_OPERATOR_ID, INITIAL_CELL_ID,
 				INITIAL_DURATION, INITIAL_CAUSE_CODE,
-				INITIAL_NETWORK_ELEMENT_VERSION, INITIAL_IMSI, "", "", "");
+				INITIAL_NETWORK_ELEMENT_VERSION, INITIAL_IMSI, "INITIAL_MODEL", "", "");
 
 		FailedCallData fcd2 = new FailedCallData(dateTwo, INITIAL_EVENT_ID,
 				INITIAL_FAILURE_ID, INITIAL_TYPE_ALLOCATION_CODE,
 				INITIAL_MARKET_ID, INITIAL_OPERATOR_ID, INITIAL_CELL_ID,
 				INITIAL_DURATION, INITIAL_CAUSE_CODE,
-				INITIAL_NETWORK_ELEMENT_VERSION, UPDATED_IMSI, "", "", "");
+				INITIAL_NETWORK_ELEMENT_VERSION, UPDATED_IMSI, "UPDATED_MODEL", "", "");
 
-		em.persist(fcd);
+		service.addFailedCalledDatum(fcd);
 		//em.persist(fcd2);
 
 		assertEquals("Failed", service.getAllIMSI().size(), 1);
@@ -226,6 +230,8 @@ public class FailedCallDataTest {
 				"Failed",
 				service.getCountBetweenDatesForAllIMSI(dateOne, dateTwo).size(),
 				1);
+		
+		assertEquals("Failed", service.getEventIdAndCauseCodeByModel(INITIAL_MODEL).size(), 1);
 
 	}
 

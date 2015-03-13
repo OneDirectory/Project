@@ -33,21 +33,33 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		return q.getResultList();
 	}
 
-	public Collection<FailedCallData> getFailedCallDataByModel(String model) {
+	public Collection<FailedCallData> getFailedCallDataByModel(String model, Date fromDate, Date toDate) {
 		Query query = entityManager
-				.createQuery("from UserEquipment m where m.model= :model");
+				.createQuery("select count (fd.id)"
+						+ "from FailedCallData fd where fd.dateTime between :fromDate and :toDate"
+						+ "and fd.tac = Exists"
+						+ "(select 'found' from userEquipment ue"
+						+ "where fd.tac = ue.model: =model");
 		query.setParameter("model", model);
+		query.setParameter("fromDate", fromDate, TemporalType.DATE);
+		query.setParameter("toDate", toDate, TemporalType.DATE);
 		List<FailedCallData> result = query.getResultList();
 		return query.getResultList();
 	}
 
 	/**
 	 * Returns a list of phone models from the FailedCallData table according to
-	 * their type allocation code (TAC). This list is organised with respect to
-	 * event ID and cause code for each dropped call.
+	 * their type allocation code (TAC) which is mapped directly to the phone model.
+	 * This list is organised with respect to event ID and cause code for each 
+	 * dropped call.
 	 */
 	
-	public Collection getEventIdAndCauseCodeByModel(Integer typeAllocationCode) {
+	public Collection getEventIdAndCauseCodeByModel(String modelName) {
+		Query tacQuery = entityManager
+				.createQuery("select ue.tac from UserEquipment ue where "
+						+ "ue.model = :modelName");
+		tacQuery.setParameter("modelName", modelName);
+		Integer typeAllocationCode = (Integer) tacQuery.getResultList().get(0);
 		Query query = entityManager
 				.createQuery("select fd.eventCause.eventId, fd.eventCause.causeCode "
 						+ "from FailedCallData fd where fd.userEquipment.tac = :typeAllocationCode "

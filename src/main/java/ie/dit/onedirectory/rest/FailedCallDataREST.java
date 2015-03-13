@@ -65,7 +65,7 @@ public class FailedCallDataREST {
 	}
 
 	/**
-	 * @param typeAllocationCode
+	 * @param model
 	 *            Takes a String that specifies which model of phone is being
 	 *            examined
 	 * @return An object containing eventID and CauseCode in JSON format to the
@@ -74,11 +74,11 @@ public class FailedCallDataREST {
 	 */
 	
 	@GET
-	@Path("/tac/{typeAllocationCode}")
+	@Path("/model/{model}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection getEventIdAndCauseCodeByModel(
-			@PathParam("typeAllocationCode") Integer typeAllocationCode) {
-		return service.getEventIdAndCauseCodeByModel(typeAllocationCode);
+			@PathParam("model") String modelName) {
+		return service.getEventIdAndCauseCodeByModel(modelName);
 	}
 
 	/**
@@ -149,12 +149,25 @@ public class FailedCallDataREST {
 	}
 
 	@GET
-	@Path("/models/{getFailedCallDataByModel}")
+	@Path("{getFailedCallDataByModel}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<FailedCallData> getFailedCallDataByModel(
-			@QueryParam("model") String model) {
-		return service.getFailedCallDataByModel(model);
-	}
+			@QueryParam("model") String model, @QueryParam ("dates") String datesPassed) throws ParseException
+			{	String[] dates = datesPassed.split("£");
+				String fromDate = dates[0];
+				String toDate = dates[1];
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Date from = sdf.parse(fromDate);
+				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+				Date to = sdf1.parse(toDate);
+				java.sql.Date sqlFromDate = new java.sql.Date(from.getTime());
+				java.sql.Date sqlToDate = new java.sql.Date(to.getTime());
+				return service.getFailedCallDataByModel(model, sqlFromDate, sqlToDate);	
+			}
+
+	
+	
+	
 	// TODO - Peter
 	// @GET
 	// @Path("/{model}")
