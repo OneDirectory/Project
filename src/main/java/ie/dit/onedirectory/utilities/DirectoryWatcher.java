@@ -16,7 +16,6 @@ import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.ejb.AccessTimeout;
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.EJB;
@@ -59,14 +58,12 @@ public class DirectoryWatcher {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-//		 timerService.createSingleActionTimer(new Date(), new TimerConfig());
 		 timerService.createIntervalTimer(new Date(), new Date().getTime(), new TimerConfig());
 	}
 
-//	@AccessTimeout(value=)
 	@Lock(LockType.READ)
 	@Schedule(hour = "*", minute = "*", second = "*/10")
-	public void run() throws InterruptedException {
+	public void onRun() throws InterruptedException {
 		try {
 			key = watcher.take();
 		} catch (InterruptedException ex) {
@@ -78,8 +75,6 @@ public class DirectoryWatcher {
 			WatchEvent<Path> ev = (WatchEvent<Path>) event;
 			Path fileName = ev.context();
 			String extension = FilenameUtils.getExtension(fileName.toString());
-			System.out.println(extension);
-			// System.out.println(kind.name() + ": " + fileName);
 			if (kind == ENTRY_CREATE) {
 				System.out.println("File Created.");
 				if (extension.equals("xls")) {
@@ -113,7 +108,7 @@ public class DirectoryWatcher {
 		}
 
 	}
-
+	
 	@Timeout
 	public void onTimeout(Timer timer) {
 		System.out.println("Bean timed out");
