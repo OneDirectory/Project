@@ -10,6 +10,7 @@
 		<skipTests>true</skipTests>
 	</properties>
 	<build>
+		<finalName>project</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
