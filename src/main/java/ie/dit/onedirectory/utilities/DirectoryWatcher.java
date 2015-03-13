@@ -16,6 +16,7 @@ import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.ejb.AccessTimeout;
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.EJB;
@@ -25,6 +26,7 @@ import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.Timeout;
+import javax.ejb.Timer;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 import javax.ejb.TransactionManagement;
@@ -61,6 +63,7 @@ public class DirectoryWatcher {
 		 timerService.createIntervalTimer(new Date(), new Date().getTime(), new TimerConfig());
 	}
 
+//	@AccessTimeout(value=)
 	@Lock(LockType.READ)
 	@Schedule(hour = "*", minute = "*", second = "*/10")
 	public void run() throws InterruptedException {
@@ -111,7 +114,7 @@ public class DirectoryWatcher {
 	}
 
 	@Timeout
-	public void onTimeout() {
+	public void onTimeout(Timer timer) {
 		System.out.println("Bean timed out");
 	}
 
