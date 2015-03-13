@@ -8,6 +8,8 @@ package ie.dit.onedirectory.services;
 
 import ie.dit.onedirectory.entities.FailedCallData;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.Collection;
 
@@ -22,6 +24,7 @@ public interface FailedCallDataServiceLocal {
 	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to);
 	public Collection<FailedCallData> getAllFailedCallData();
 	public Collection<FailedCallData> getFailedCallDataByModel(String model, Date fromDate, Date toDate);
+	public void addFromFile(String fileName) throws IOException;
 	public void addFailedCalledDatum(FailedCallData failedCallData);
 	public void addFailedCalledData(Collection<FailedCallData> failedCallDataList);
 }
