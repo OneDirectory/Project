@@ -33,10 +33,16 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		return q.getResultList();
 	}
 
-	public Collection<FailedCallData> getFailedCallDataByModel(String model) {
+	public Collection<FailedCallData> getFailedCallDataByModel(String model, Date fromDate, Date toDate) {
 		Query query = entityManager
-				.createQuery("from UserEquipment m where m.model= :model");
+				.createQuery("select count (fd.id)"
+						+ "from FailedCallData fd where fd.dateTime between :fromDate and :toDate"
+						+ "and fd.tac = Exists"
+						+ "(select 'found' from userEquipment ue"
+						+ "where fd.tac = ue.model: =model");
 		query.setParameter("model", model);
+		query.setParameter("fromDate", fromDate, TemporalType.DATE);
+		query.setParameter("toDate", toDate, TemporalType.DATE);
 		List<FailedCallData> result = query.getResultList();
 		return query.getResultList();
 	}

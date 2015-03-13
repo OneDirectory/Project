@@ -21,7 +21,7 @@ public interface FailedCallDataServiceLocal {
 	public Collection getAllIMSI();
 	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to);
 	public Collection<FailedCallData> getAllFailedCallData();
-	public Collection<FailedCallData> getFailedCallDataByModel(String model);
+	public Collection<FailedCallData> getFailedCallDataByModel(String model, Date fromDate, Date toDate);
 	public void addFailedCalledDatum(FailedCallData failedCallData);
 	public void addFailedCalledData(Collection<FailedCallData> failedCallDataList);
 }
