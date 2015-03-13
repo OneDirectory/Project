@@ -16,7 +16,7 @@
 <link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
 </head>
 
-<body>
+
 <body class="adminPage">
 	<div class="page-header">
 		<br>
@@ -31,8 +31,6 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
-
-			<!-- <li><a href="#" onclick="toggle('johnsQuery');">List Call Failures by IMSI</a></li> -->
 
 				<li><a href="#" onclick="toggle('imsiCount');">Affected IMSI with Count</a></li>
 				<li><a href="#" onclick="toggle('tacCount');">Call Failure by TAC</a></li>
@@ -107,25 +105,7 @@
 			</div>
 		</div>
 	</div>
-<!-- 	
-		<div id="johnsQuery">
-	 
-	 <h1>INSERT  HTML CODE FOR QUERY INSIDE THIS DIV</h1> 
 
-<label class="control-label col-sm-2" for="ID">TO:</label>
-
-						<div>
-							<input type="datetime-local" id='to' class="form-control"
-								name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
-						</div>
-						
-						<div class="col-sm-offset-4 col-sm-10">
-							<br>
-							<button id="submit" type="submit" class="btn btn-primary">Search</button>
-						</div>
-	</div>
-
--->
 	<!-- jQuery -->
 	<script src="Resources/js/jquery-1.6.1.min.js"></script>
 
@@ -216,7 +196,7 @@ function hideOtherDivs(){
 
  		});
  	});
- 	});
+ 		});
 
 	function validateEntry(from, to){
 		if(from===''){

@@ -2,185 +2,247 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
 
 <!-- Bootstrap Core CSS -->
-    <link href="Resources/css/bootstrap1.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="Resources/css/simple-sidebar.css" rel="stylesheet">
-    <link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
-    
+<link href="Resources/css/bootstrap1.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="Resources/css/simple-sidebar.css" rel="stylesheet">
+<link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
 </head>
 
 
-    
-    <body class="importPage">           
-            <div class="page-header">
-                <br>
-                <h2>Group one - One Directory <small>Project</small></h2>
-                <h2> Support Engineer</h2>           
-            </div>
+<body class="importPage">
+	<div class="page-header">
+		<br>
+		<h2>
+			Group One - One Directory <small>Project</small>
+		</h2>
+		<h2>Support Engineer Page</h2>
+	</div>
 
-    <div id="wrapper">
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                     <a href="#">
-                        Menu
-                    </a>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="addUserPage.html">Add a user</a>
-                </li>
-                <li>
-                    <a href="#">Search by IMSI</a>
-                </li>
-                <li>
-                    <a href="#">Import data</a>
-                </li>
-                <li>
-                    <a href="index.html">Log out</a>
-                </li>
-            </ul>
-            <br>
-        </div>
-        <!-- /#sidebar-wrapper -->
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<div id="sidebar-wrapper">
+			<ul class="sidebar-nav">
+				<li class="sidebar-brand"><a href="#"> Menu </a></li>
 
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1>Number of Call Failures by Phone Model</h1>  
-                        
-                        
-                
-                     
-                                      
-        <form class="form-horizontal" id="modelForm" role="form">
-  <div class="form-group">
-    <label class="control-label col-sm-2" for="model">Phone Model</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" id="model" name="model" value="" placeholder="model" autofocus>
-    </div>
-  </div>
-  <!--<div class="form-group">
-    <label class="control-label col-sm-2" for="time1">Date - from:</label>
-    <div class="col-sm-5">
-      <input type="datetime-local" name="from">
-    </div>
-  </div>
-    <div class="form-group">
-    <label class="control-label col-sm-2" for="pwd">Date - to:</label>
-    <div class="col-sm-5">
-<input type="text" class="form-control" id="time2" placeholder="to:">
-        <input type="datetime-local" name="to">
-    </div>
-  </div>-->
+				<li><a href="#" onclick="toggle('callFailures');">List Call
+						Failures by IMSI</a></li>
 
-  
-  <div class="form-group">
-    <div class="col-sm-offset-4 col-sm-10">
-        <br>
-      <button onclick="getAllPeople()" class="btn btn-primary">submit</button>
-    </div>
-  </div>
-                         
-</form>
+				<li><a href="index.html">Log out</a></li>
+			</ul>
+			<br>
+		</div>
+		<!-- /#sidebar-wrapper -->
 
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        
-<div class="table">
-<h1>Event Cause Table</h1>
-		<ul id="user"></ul>
+		<!-- Page Content -->
+		<div id="callFailures">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1>Call Failures</h1>
 
-		<div>
-        
-        <!-- /#page-content-wrapper -->
+						<label class="control-label col-sm-2" for="ID">FROM:</label><br>
 
-    </div>
-    <!-- /#wrapper -->
-    
-   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script type="text/javascript">
-     $(function(){
-         
-   /* $("#modelForm").serialize() */
-  var $users = $('#user');
+						<div>
+							<input type="datetime-local" id='from' class="form-control"
+								name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
+						</div>
 
-	$.ajax({
-		type: 'GET',
-		url:'http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/failedcalldata/getFailedCallDataByModel',
-		  data: { model: "G410"} ,
-		success: function(users){
-			$.each(users, function(i, user){
-			$users.append('<li>ID: '+user.model+' name: '+user.vendorName+'</li>');
-				});
-			}
+						<label class="control-label col-sm-2" for="ID">TO:</label>
+
+						<div>
+							<input type="datetime-local" id='to' class="form-control"
+								name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
+						</div>
+
+						<div class="col-sm-offset-4 col-sm-10">
+							<br>
+							<button id="submit" type="submit" class="btn btn-primary">Search</button>
+						</div>
+
+					</div>
+				</div>
+				
+				<table class="table" id='table' name='table'></table>
+			</div>
+
+		</div>
+		<!-- /#page-content-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- jQuery -->
+	<script src="Resources/js/jquery-1.6.1.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="Resources/js/bootstrap.min.js"></script>
+
+	<!-- Menu Toggle Script -->
+	<script>
+	
+		var divs = [ "callFailures" ];
+		var visibleDiv = null;
+
+		$(function() {
+
+			document.getElementById("callFailures").style.display = 'none';
 
 		});
 
-	});
+		function toggle(divId) {
+			
+			if (visibleDiv === divId) {
+				
+				visibleDiv = null;
+				
+			} else {
+				
+				visibleDiv = divId;
+				
+			}
 
+			hideOtherDivs();
+			
+		}
 
+		function hideOtherDivs() {
+			
+			var i, divId, div;
 
-function handleResponseJQuery(myData) {
-	alert("handle");
-	for(var i = 0 ; i <myData.length; i++){
-	
-		 $('#table-body').append(
-                 "<tr>" +
-                 "<td>" + myData[i].model+ "</td>" +
-                 "<td>" + myData[i].vendorName + "</td>" +
-                 "<td>" + myData[i].tac+ "</td>" +
-                 "</tr>");
-             };
+			for (i = 0; i < divs.length; i++) {
+				divId = divs[i];
+				div = document.getElementById(divId);
+
+				if (visibleDiv == divId) {
+					div.style.display = 'block';
+				} else {
+					div.style.display = 'none';
+				}
+			}
+		}
+	</script>
+
+	<script>
+	var $table = $('#table');
+
+	$(function(){
 		
-}
+		$( "#submit" ).click(function(e) {
+			
+		 	removeData();	
+			var fromDate=$('#from').val();
+			var toDate=$('#to').val();
+			var myurl;
+			var isValid=false;
+			
+			if(validateEntry(fromDate, toDate)){	
+				myurl='http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/failedcalldata/dateIMSI/'+fromDate+'£'+toDate;
+				isValid=true;
+				}
+			
+			else{
+				myurl= 'http://localhost:8080/Project-0.0.1-SNAPSHOT/support_engineer.html';
+				isValid=false;
+				}
+			
+			$.ajax({
+		 		type: 'GET',
+		 		url: myurl,
+		 		success: function(data){
+		 			
+		 	 		if(isValid && data.length>0){
+		 	 			createTable();
+		 	 			createButton();
+		 	 			$.each(data, function(key, value){
+		 	 				//$table.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td></tr>');
+		 	 				$table.append('<tr><td>'+value+'</td></tr>');
+		 	 	 			});
+			 	 			isValid=false;
+		 	 	 		}
+		 	 		else if(isValid && data.length===0){
+						alert('No available data for selected dates');
+		 	 	 		}
+		 			}
 
-
-</script>
-
-
+		 		});
+			});
+		});
 	
-	<!--<table id="table" class="table table-striped">
-		<thead>
-			<th>model</th>
-			<th>vendor name</th>
-			<th>tac</th>
-		</thead>
-		<tbody  id="table-body">
-		</tbody>
-	</table>-->
-        
-       
+	function validateEntry(from, to){
+		if(from===''){
+			alert('Invalid FROM DateTime');
+			return false;
+		}
+		else if(to===''){
+			alert('Invalid TO DateTime');
+			return false;
+		}
+		else if(isFromGtrTo(from, to)){
+			alert('FROM date id greater than TO date');
+			return false;
+		}
+		
+		else
+			return true;
+	}
+	
+	function isFromGtrTo(from, to){
+		
+		var date1 = new Date(from);
+		var date2 = new Date(to);
+		
+		if(date2.getTime()<=date1.getTime())
+			return true;
+		else
+			return false;
+}
+	
+ 	function createTable(){
+ 		
+ 		var row = document.createElement('tr');
+ 		
+ 		row.setAttribute('id', 'head');
+ 		
+ 		var colOne=document.createElement('th');
 
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+ 		colOne.innerHTML='IMSI';
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+ 		row.appendChild(colOne);
 
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
+ 		$table.append(row);
+ 		
+ 	}
+ 	
+
+ 	function createButton(){
+ 		var butDiv=document.createElement('div');
+ 		butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
+ 		var button=document.createElement(button);
+ 		button.setAttribute('id', 'tableButton');
+ 		button.setAttribute('class','btn btn-primary');
+ 		button.innerHTML='Search Again';
+ 		button.addEventListener('click', removeData);
+ 		butDiv.appendChild(button);
+ 		$table.append(butDiv);
+ 		
+ 	}
+
+ 	function removeData(){
+ 		var removeHead=document.getElementById('head');
+ 		var removeButton=document.getElementById('tableButton');
+ 		$table.empty();
+ 		
+ 	}
+ 	
+ 	</script>
 
 </body>
 

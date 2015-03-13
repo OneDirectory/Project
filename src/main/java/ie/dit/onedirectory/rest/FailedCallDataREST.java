@@ -100,14 +100,14 @@ public class FailedCallDataREST {
 
 	//JF addition
 	@GET
-	@Path("/dateIMSI/{getAllIMSIWithCallFailuresBetweenDates}")
+	@Path("/dateIMSI/{dates2}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection getAllIMSIWithCallFailuresBetweenDates(
-			@PathParam("getAllIMSIWithCallFailuresBetweenDates")  String datesPassed) throws ParseException {
+			@PathParam("dates2")  String datesPassed) throws ParseException {
 		
-		String[] dates = datesPassed.split("£");
-		String fromDate = dates[0];
-		String toDate = dates[1];
+		String[] dates2 = datesPassed.split("£");
+		String fromDate = dates2[0];
+		String toDate = dates2[1];
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date from = sdf.parse(fromDate);
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");

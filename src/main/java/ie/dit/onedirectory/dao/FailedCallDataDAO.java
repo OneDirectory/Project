@@ -19,7 +19,6 @@ public interface FailedCallDataDAO {
 	// JF addition
 	public Collection getAllIMSIWithCallFailuresBetweenDates(Date from, Date to);
 	
-
 	public Collection getEventIdAndCauseCodeByModel(Integer typeAllocationCode);
 
 	public Collection<FailedCallData> getAllFailedCallData();
