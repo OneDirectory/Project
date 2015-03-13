@@ -65,7 +65,7 @@ public class FailedCallDataREST {
 	}
 
 	/**
-	 * @param typeAllocationCode
+	 * @param model
 	 *            Takes a String that specifies which model of phone is being
 	 *            examined
 	 * @return An object containing eventID and CauseCode in JSON format to the
@@ -74,11 +74,11 @@ public class FailedCallDataREST {
 	 */
 
 	@GET
-	@Path("/tac/{typeAllocationCode}")
+	@Path("/model/{model}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection getEventIdAndCauseCodeByModel(
-			@PathParam("typeAllocationCode") Integer typeAllocationCode) {
-		return service.getEventIdAndCauseCodeByModel(typeAllocationCode);
+			@PathParam("model") String modelName) {
+		return service.getEventIdAndCauseCodeByModel(modelName);
 	}
 
 	/**

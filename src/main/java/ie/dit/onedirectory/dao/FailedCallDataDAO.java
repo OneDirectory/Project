@@ -15,7 +15,7 @@ import javax.ejb.Local;
 @Local
 public interface FailedCallDataDAO {
 
-	public Collection getEventIdAndCauseCodeByModel(Integer typeAllocationCode);
+	public Collection getEventIdAndCauseCodeByModel(String modelName);
 	public Collection<FailedCallData> getAllFailedCallData();
 	public Collection<FailedCallData> getFailedCallDataByModel(String model, Date fromDate, Date toDate);
 	public Collection getEventIdAndCauseCodeByIMSI(String imsi);

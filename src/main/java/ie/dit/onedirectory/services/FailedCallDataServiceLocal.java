@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface FailedCallDataServiceLocal {
 
-	public Collection getEventIdAndCauseCodeByModel(Integer typeAllocationCode);
+	public Collection getEventIdAndCauseCodeByModel(String modelName);
 	public Collection getEventIdAndCauseCodeByIMSI(String imsi);
 	public Collection getAllIMSI();
 	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to);
