@@ -33,9 +33,29 @@
 					<ejbVersion>3.1</ejbVersion>
 				</configuration>
 			</plugin>
+			<!-- Added by JF Sprint 1 -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.3-SNAPSHOT</version>
+			</plugin>
+			<!-- END OF added by JF Sprint 1 -->
 		</plugins>
 	</build>
 	<dependencies>
+		<!-- Added by JF Sprint 1-->
+			<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>org.jacoco.core</artifactId>
+			<version>0.7.2.201409121644</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.extension</groupId>
+			<artifactId>arquillian-jacoco</artifactId>
+			<version>1.0.0.Alpha7</version>
+			<scope>test</scope>
+		</dependency>
+	<!--  END OF added by JF Sprint 1 -->
 		<dependency>
 			<groupId>org.jboss.spec</groupId>
 			<artifactId>jboss-javaee-7.0</artifactId>
@@ -80,21 +100,21 @@
 			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.jboss.arquillian.junit</groupId>
 			<artifactId>arquillian-junit-container</artifactId>
 			<version>1.0.3.Final</version>
 			<scope>test</scope>
 		</dependency>
-		
- 		<dependency>
+
+		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
 			<version>3.0.4.Final</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-multipart-provider</artifactId>

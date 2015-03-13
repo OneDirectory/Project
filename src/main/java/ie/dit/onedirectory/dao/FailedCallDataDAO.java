@@ -15,12 +15,8 @@ import javax.ejb.Local;
 @Local
 public interface FailedCallDataDAO {
 
-
-	// JF addition
 	public Collection getAllIMSIWithCallFailuresBetweenDates(Date from, Date to);
-	
 	public Collection getEventIdAndCauseCodeByModel(Integer typeAllocationCode);
-
 	public Collection<FailedCallData> getAllFailedCallData();
 	public Collection<FailedCallData> getFailedCallDataByModel(String model);
 	public Collection getEventIdAndCauseCodeByIMSI(String imsi);
@@ -28,6 +24,5 @@ public interface FailedCallDataDAO {
 	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to);
 	public void addFailedCalledDatum(FailedCallData failedCallData);
 	public void addFailedCalledData(Collection<FailedCallData> failedCallDataList);
-	
-	
+		
 }
