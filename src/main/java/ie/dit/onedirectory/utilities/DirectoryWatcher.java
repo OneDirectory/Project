@@ -79,32 +79,33 @@ public class DirectoryWatcher {
 			Path fileName = ev.context();
 			String extension = FilenameUtils.getExtension(fileName.toString());
 			System.out.println(extension);
-//			// System.out.println(kind.name() + ": " + fileName);
-//			if (kind == ENTRY_CREATE) {
-//				System.out.println("File Created.");
-//				if (extension.equals("xls")) {
-//					try {
-//						service.addFromFile(fileDirectory + fileName);
-//					} catch (IOException e) {
-//						System.out.println(fileName + " has incorrect layout for upload.");
-//					}
-//				} else {
-//					System.out.println("File " + fileName + " is not a valid file type for upload.");
-//				}
-//			} else if (kind == ENTRY_MODIFY) {
-//				System.out.println("File Modified");
-//				if (extension.equals("xls")) {
-//					try {
-//						service.addFromFile(fileDirectory + fileName);
-//					} catch (IOException e) {
-//						System.out.println(fileName + " does not contain correct layout.");
-//					}
-//				} else {
-//					System.out.println("File " + fileName + " is not a valid file type for upload.");
-//				}
-//			} else if (kind == ENTRY_DELETE) {
-//				System.out.println("File " + fileName + " Deleted!");
-//			}
+			// System.out.println(kind.name() + ": " + fileName);
+			if (kind == ENTRY_CREATE) {
+				System.out.println("File Created.");
+				if (extension.equals("xls")) {
+					try {
+						service.addFromFile(fileDirectory + fileName);
+						System.out.println("Data from file " + fileName + " added successfully");
+					} catch (IOException e) {
+						System.out.println(fileName + " has incorrect layout for upload.");
+					}
+				} else {
+					System.out.println("File " + fileName + " is not a valid file type for upload.");
+				}
+			} else if (kind == ENTRY_MODIFY) {
+				System.out.println("File Modified");
+				if (extension.equals("xls")) {
+					try {
+						service.addFromFile(fileDirectory + fileName);
+					} catch (IOException e) {
+						System.out.println(fileName + " does not contain correct layout.");
+					}
+				} else {
+					System.out.println("File " + fileName + " is not a valid file type for upload.");
+				}
+			} else if (kind == ENTRY_DELETE) {
+				System.out.println("File " + fileName + " Deleted!");
+			}
 		}
 		boolean valid = key.reset();
 		if (!valid) {
