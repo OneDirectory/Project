@@ -25,11 +25,13 @@ public class JPAMarketOperatorDAO implements MarketOperatorDAO{
 	}
 
 	public void addMarketOperator(MarketOperator marketOperator) {
-		entityManager.persist(marketOperator);
+		if(!entityManager.contains(marketOperator)){
+			entityManager.persist(marketOperator);
+		}
 	}
 
 	public void addMarketOperators(Collection<MarketOperator> marketOperators) {
-		entityManager.persist(marketOperators);
+		entityManager.merge(marketOperators);
 	}
 	
 }

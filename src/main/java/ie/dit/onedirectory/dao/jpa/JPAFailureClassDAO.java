@@ -25,11 +25,13 @@ public class JPAFailureClassDAO implements FailureClassDAO {
 	}
 
 	public void addFailureClass(FailureClass failureClass) {
-		entityManager.persist(failureClass);
+		if(!entityManager.contains(failureClass)){
+			entityManager.persist(failureClass);
+		}
 	}
 
 	public void addFailureClasses(Collection<FailureClass> failureClassList) {
-		entityManager.persist(failureClassList);		
+		entityManager.merge(failureClassList);		
 	}
 
 }

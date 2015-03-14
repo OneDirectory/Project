@@ -25,11 +25,15 @@ public class JPAEventCauseDAO implements EventCauseDAO {
 	}
 
 	public void addEventCause(EventCause eventCause){
-		entityManager.persist(eventCause);
+		if(!entityManager.contains(eventCause)){
+			entityManager.persist(eventCause);
+		}
 	}
 	
 	public void addEventCauses(Collection<EventCause> eventCauseList) {
-		entityManager.persist(eventCauseList);
+		if(!entityManager.contains(eventCauseList)){
+			entityManager.persist(eventCauseList);
+		}
 	}
 
 }
