@@ -20,6 +20,7 @@ import java.util.List;
 import ie.dit.onedirectory.dao.FailedCallDataDAO;
 import ie.dit.onedirectory.entities.FailedCallData;
 import ie.dit.onedirectory.services.FailedCallDataServiceLocal;
+import ie.dit.onedirectory.utilities.DataValidator;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -39,6 +40,9 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 
 	@EJB
 	private FailedCallDataDAO dao;
+	
+	@EJB
+	DataValidator validator;
 	
 	public void setDao(FailedCallDataDAO dao) {
 		this.dao = dao;
@@ -131,11 +135,16 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 				String hier321Id = dataFormatter.formatCellValue(cellIterator
 						.next());
 
-				addFailedCalledDatum(new FailedCallData(dateTime,
+				FailedCallData failedCallData = new FailedCallData(dateTime,
 						eventId, failureId, typeAllocationCode, marketId,
 						operatorId, cellId, duration, causeCode,
 						networkElementVersion, imsi, hier3Id, hier32Id,
-						hier321Id));
+						hier321Id);
+				
+				if(validator.isValid(failedCallData)){
+					System.out.println("passed");
+					dao.addFailedCalledDatum(failedCallData);
+				}
 				
 				break;
 			}

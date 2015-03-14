@@ -63,7 +63,7 @@ public class DirectoryWatcher {
 
 	@Lock(LockType.READ)
 	@Schedule(hour = "*", minute = "*", second = "*/10")
-	public void onRun() throws InterruptedException {
+	public void run() throws InterruptedException {
 		try {
 			key = watcher.take();
 		} catch (InterruptedException ex) {

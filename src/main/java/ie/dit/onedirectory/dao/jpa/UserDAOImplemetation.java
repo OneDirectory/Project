@@ -44,8 +44,7 @@ public class UserDAOImplemetation implements UserDAO {
 	 * 
 	 */
 	public void addUser(User user) {
-		em.persist(user);
-
+		em.merge(user);
 	}
 
 	/**

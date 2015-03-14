@@ -24,11 +24,13 @@ public class JPAUserEquipmentDAO implements UserEquipmentDAO {
 	}
 	
 	public void addUserEquipment(UserEquipment userEquipment) {
-		entityManager.persist(userEquipment);
+		if(!entityManager.contains(userEquipment)){
+			entityManager.persist(userEquipment);
+		}
 	}
 
 	public void addUserEquipments(Collection<UserEquipment> userEquipmentList) {
-		entityManager.persist(userEquipmentList);
+		entityManager.merge(userEquipmentList);
 	}
 
 

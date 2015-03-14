@@ -16,6 +16,7 @@ package ie.dit.onedirectory.rest;
 
 import ie.dit.onedirectory.entities.FailedCallData;
 import ie.dit.onedirectory.services.FailedCallDataServiceLocal;
+import ie.dit.onedirectory.utilities.DataValidator;
 import ie.dit.onedirectory.utilities.FileUploadForm;
 
 import java.io.ByteArrayInputStream;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -56,7 +58,11 @@ public class FailedCallDataREST {
 
 	@EJB
 	FailedCallDataServiceLocal service;
-
+	
+	@EJB
+	DataValidator validator;
+	
+	
 	@GET
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -158,7 +164,7 @@ public class FailedCallDataREST {
 	@Consumes("multipart/form-data")
 	public Response uploadFailedCallData(@MultipartForm FileUploadForm form)
 			throws IOException {
-		
+		List<FailedCallData> failedCallDataList = new ArrayList<FailedCallData>();
 		HSSFRow row;
 		ByteArrayInputStream stream = new ByteArrayInputStream(form.getFileData());
 		HSSFWorkbook workbook= new HSSFWorkbook(stream);
@@ -210,31 +216,20 @@ public class FailedCallDataREST {
 						.next());
 				String hier321Id = dataFormatter.formatCellValue(cellIterator
 						.next());
-
-				service.addFailedCalledDatum(new FailedCallData(dateTime,
+				FailedCallData failedCallData = new FailedCallData(dateTime,
 						eventId, failureId, typeAllocationCode, marketId,
 						operatorId, cellId, duration, causeCode,
 						networkElementVersion, imsi, hier3Id, hier32Id,
-						hier321Id));
+						hier321Id);
+				if(validator.isValid(failedCallData)){
+					service.addFailedCalledDatum(failedCallData);
+				}
 				break;
 			}
 		}
 		stream.close();
 		workbook.close();
 		return Response.status(200).entity("Data successfully imported.\n").build();
-	}
-
-	private String parseFileName(MultivaluedMap<String, String> headers) {
-		String[] contentDispositionHeader = headers.getFirst(
-				"Content-Disposition").split(";");
-		for (String name : contentDispositionHeader) {
-			if ((name.trim().startsWith("fileName"))) {
-				String[] tmp = name.split("=");
-				String fileName = tmp[1].trim().replaceAll("\"", "");
-				return fileName;
-			}
-		}
-		return "randomName";
 	}
 
 	@GET
@@ -292,12 +287,16 @@ public class FailedCallDataREST {
 						.next());
 				String hier321Id = dataFormatter.formatCellValue(cellIterator
 						.next());
-
-				service.addFailedCalledDatum(new FailedCallData(dateTime,
+				
+				FailedCallData failedCallData = new FailedCallData(dateTime,
 						eventId, failureId, typeAllocationCode, marketId,
 						operatorId, cellId, duration, causeCode,
 						networkElementVersion, imsi, hier3Id, hier32Id,
-						hier321Id));
+						hier321Id);
+				
+				if(validator.isValid(failedCallData)){
+					service.addFailedCalledDatum(failedCallData);
+				}
 				
 				break;
 			}
