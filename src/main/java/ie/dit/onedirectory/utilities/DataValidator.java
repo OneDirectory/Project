@@ -10,8 +10,13 @@ import ie.dit.onedirectory.entities.FailureClass;
 import ie.dit.onedirectory.entities.MarketOperator;
 import ie.dit.onedirectory.entities.UserEquipment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -19,6 +24,8 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
+
+import org.xnio.channels.SimpleAcceptingChannel;
 
 @Startup
 @Singleton
@@ -40,10 +47,25 @@ public class DataValidator {
 	static private ArrayList<FailureClass> validFailureClassList = new ArrayList<FailureClass>();
 	static private ArrayList<MarketOperator> validMarketOperatorList = new ArrayList<MarketOperator>();
 	static private ArrayList<UserEquipment> validUserEquipmentList = new ArrayList<UserEquipment>();
+	private Logger logger;
+	private FileHandler fileHandler;
 	
 	@PostConstruct
 	public void onStart(){
-//		ArrayList<EventCause> eventCauseList = (ArrayList<EventCause>) eventCauseDAO.getAllEventCauses();
+		logger = Logger.getLogger("ErrorLog");
+		try {
+			fileHandler = new FileHandler("/Users/Darren/Project/errors.log");
+			logger.addHandler(fileHandler);
+			SimpleFormatter formatter = new SimpleFormatter();
+			fileHandler.setFormatter(formatter);
+			logger.info("Log created on " + new Date());
+		}
+		catch(SecurityException secEx){
+			secEx.printStackTrace();
+		}
+		catch(IOException ioEx){
+			ioEx.printStackTrace();
+		}
 		for(EventCause eventCause: eventCauseDAO.getAllEventCauses()){
 			EventCause validEventCause = new EventCause();
 			System.out.println("DAO EventCause:" + eventCause.getCauseCode() + " " + eventCause.getEventId());
@@ -95,6 +117,7 @@ public class DataValidator {
 		}
 		
 		if(!eventCauseValid){
+			logger.log(Level.INFO, "Invalid Entries for Event ID: " + eventIdToCheck + "  and Cause Code: " + causeCodeToCheck, failedCallData);
 			return false;
 		}
 		
@@ -106,6 +129,7 @@ public class DataValidator {
 		}
 		
 		if(!failureClassValid){
+			logger.log(Level.INFO, "Invalid Failure ID Entry: " + failureIdToCheck, failedCallData);
 			return false;
 		}
 		
@@ -118,6 +142,7 @@ public class DataValidator {
 		}
 		
 		if(!marketOperatorValid){
+			logger.log(Level.INFO, "Invalid Market ID: " + marketIdToCheck + "  and Operator Id: " + operatorIdToCheck + " entries.", failedCallData);
 			return false;
 		}
 		
@@ -129,10 +154,12 @@ public class DataValidator {
 		}
 		
 		if(!userEquipmentValid){
+			logger.log(Level.INFO, "Invalid Type Allocation Code Entry: " + tacToCheck, failedCallData);
 			return false;
 		}
 		
 		if(dateToCheck.after(new Date())){
+			logger.log(Level.INFO, "Invalid Date Entry: " + dateToCheck, failedCallData);
 			return false;
 		}
 		
