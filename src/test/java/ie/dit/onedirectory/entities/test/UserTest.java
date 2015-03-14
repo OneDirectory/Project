@@ -37,7 +37,8 @@ public class UserTest {
 				.create(WebArchive.class, "test.war")
 				.addPackages(true, UserServiceLocal.class.getPackage(),
 						UserServiceEJB.class.getPackage(),
-						UserREST.class.getPackage(), User.class.getPackage(),
+						//UserREST.class.getPackage(), 
+						User.class.getPackage(),
 						UserDAOImplemetation.class.getPackage(),
 						UserDAO.class.getPackage())
 				.addAsResource("test-persistence.xml",
@@ -54,8 +55,6 @@ public class UserTest {
 	@EJB
 	private UserServiceLocal service;
 	
-	
-
 	@Before
 	public void preparePersistenceTest() throws Exception {
 		clearData();

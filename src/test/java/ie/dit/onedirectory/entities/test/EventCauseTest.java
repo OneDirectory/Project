@@ -39,7 +39,7 @@ public class EventCauseTest {
 						EventCauseServiceLocal.class.getPackage(),
 						EventCauseDAO.class.getPackage(),
 						JPAEventCauseDAO.class.getPackage(),
-						EventCauseREST.class.getPackage(),
+						//EventCauseREST.class.getPackage(),
 						EventCause.class.getPackage(),
 						EventCauseId.class.getPackage())
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
@@ -90,6 +90,7 @@ public class EventCauseTest {
 		assertNull("Event Cause Failed to delete", shouldBeNull);
 	}
 
+	
 	@Test
 	public void ServiceLocalTest() throws Exception {
 
@@ -104,7 +105,6 @@ public class EventCauseTest {
 		
 		assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 2);
 	}
-
 
 	private void clearData() throws Exception {
 		utx.begin();

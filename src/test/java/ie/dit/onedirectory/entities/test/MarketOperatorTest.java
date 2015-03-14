@@ -39,7 +39,7 @@ public class MarketOperatorTest {
 						MarketOperatorServiceLocal.class.getPackage(),
 						MarketOperatorDAO.class.getPackage(),
 						JPAMarketOperatorDAO.class.getPackage(),
-						MarketOperatorREST.class.getPackage(),
+					//	MarketOperatorREST.class.getPackage(),
 						MarketOperator.class.getPackage(),
 						MarketOperatorId.class.getPackage())
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
