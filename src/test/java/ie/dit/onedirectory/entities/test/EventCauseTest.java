@@ -1,13 +1,16 @@
 package ie.dit.onedirectory.entities.test;
 
 import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
+
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
+
 import ie.dit.onedirectory.dao.EventCauseDAO;
 import ie.dit.onedirectory.dao.jpa.JPAEventCauseDAO;
 import ie.dit.onedirectory.entities.EventCause;
@@ -15,6 +18,8 @@ import ie.dit.onedirectory.entities.pks.EventCauseId;
 import ie.dit.onedirectory.rest.EventCauseREST;
 import ie.dit.onedirectory.services.EventCauseServiceLocal;
 import ie.dit.onedirectory.services.ejbs.EventCauseServiceLocalEJB;
+import ie.dit.onedirectory.utilities.DataValidator;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -41,7 +46,8 @@ public class EventCauseTest {
 						JPAEventCauseDAO.class.getPackage(),
 						EventCauseREST.class.getPackage(),
 						EventCause.class.getPackage(),
-						EventCauseId.class.getPackage())
+						EventCauseId.class.getPackage(),
+						DataValidator.class.getPackage())
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}

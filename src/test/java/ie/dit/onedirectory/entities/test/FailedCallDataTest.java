@@ -23,6 +23,7 @@ import ie.dit.onedirectory.entities.MarketOperator;
 import ie.dit.onedirectory.entities.UserEquipment;
 import ie.dit.onedirectory.services.FailedCallDataServiceLocal;
 import ie.dit.onedirectory.services.ejbs.FailedCallDataServiceLocalEJB;
+import ie.dit.onedirectory.utilities.DataValidator;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -48,7 +49,8 @@ public class FailedCallDataTest {
 						FailedCallDataDAO.class.getPackage(),
 						JPAFailedCallDataDAO.class.getPackage(),
 						// FailedCallDataREST.class.getPackage(),
-						FailedCallData.class.getPackage())
+						FailedCallData.class.getPackage(),
+						DataValidator.class.getPackage())
 				// FailedCallDataId.class.getPackage())
 				.addAsResource("test-persistence.xml",
 						"META-INF/persistence.xml")
@@ -232,8 +234,11 @@ public class FailedCallDataTest {
 				1);
 		
 		assertEquals("Failed", service.getEventIdAndCauseCodeByModel(INITIAL_MODEL).size(), 1);
+		
+		assertEquals("Failed", service.getFailedCallDataByModel(INITIAL_MODEL, dateOne, dateTwo).size(),1);
 
 	}
+	
 
 	private void clearData() throws Exception {
 		utx.begin();

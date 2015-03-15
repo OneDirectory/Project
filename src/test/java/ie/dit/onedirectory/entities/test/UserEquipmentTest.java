@@ -16,6 +16,7 @@ import ie.dit.onedirectory.dao.jpa.JPAUserEquipmentDAO;
 import ie.dit.onedirectory.entities.UserEquipment;
 import ie.dit.onedirectory.services.UserEquipmentServiceLocal;
 import ie.dit.onedirectory.services.ejbs.UserEquipmentServiceLocalEJB;
+import ie.dit.onedirectory.utilities.DataValidator;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -42,7 +43,8 @@ public class UserEquipmentTest {
 						UserEquipmentDAO.class.getPackage(),
 						JPAUserEquipmentDAO.class.getPackage(),
 						//UserEquipmentREST.class.getPackage(),
-						UserEquipment.class.getPackage())
+						UserEquipment.class.getPackage(),
+						DataValidator.class.getPackage())
 						//UserEquipmentId.class.getPackage())
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
