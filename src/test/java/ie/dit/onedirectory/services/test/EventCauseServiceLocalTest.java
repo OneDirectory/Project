@@ -82,7 +82,6 @@ public void AddEventCauseTest() throws Exception {
 	assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 2);
 	
 }
-
 	
 	@Test
 	public void AddEventCausesTest() throws Exception {

@@ -2,6 +2,7 @@ package ie.dit.onedirectory.entities.test;
 
 import static org.junit.Assert.*;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,12 +48,10 @@ public class FailedCallDataTest {
 						FailedCallDataServiceLocal.class.getPackage(),
 						FailedCallDataDAO.class.getPackage(),
 						JPAFailedCallDataDAO.class.getPackage(),
-						// FailedCallDataREST.class.getPackage(),
 						FailedCallData.class.getPackage())
-				// FailedCallDataId.class.getPackage())
-				.addAsResource("test-persistence.xml",
-						"META-INF/persistence.xml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+						.addAsResource("test-persistence.xml",
+								"META-INF/persistence.xml")
+								.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 
 	@PersistenceContext
@@ -84,7 +83,7 @@ public class FailedCallDataTest {
 	private static String UPDATED_NETWORK_ELEMENT_VERSION = "12B";
 	private static String INITIAL_IMSI = "344930000000011";
 	private static String UPDATED_IMSI = "344930000000122";
-	
+
 	private static String INITIAL_MODEL = "VEA3";
 	private static String UPDATED_MODEL = "Dirland Miniphone";
 
@@ -190,21 +189,21 @@ public class FailedCallDataTest {
 		EventCause evt = new EventCause();
 		evt.setCauseCode(INITIAL_CAUSE_CODE);
 		evt.setEventId(INITIAL_EVENT_ID);
-		
+
 		MarketOperator mko = new MarketOperator(INITIAL_MARKET_ID, INITIAL_OPERATOR_ID,"country","name");
-		
+
 		FailureClass fc = new FailureClass(INITIAL_FAILURE_ID,"description");
-		
+
 		UserEquipment ue = new UserEquipment();
 		ue.setTac(INITIAL_TYPE_ALLOCATION_CODE);
 		ue.setModel(INITIAL_MODEL);
-		
+
 		em.persist(evt);
 		em.persist(mko);
 		em.persist(fc);
 		em.persist(ue);
-		
-		
+
+
 		FailedCallData fcd = new FailedCallData(dateOne, INITIAL_EVENT_ID,
 				INITIAL_FAILURE_ID, INITIAL_TYPE_ALLOCATION_CODE,
 				INITIAL_MARKET_ID, INITIAL_OPERATOR_ID, INITIAL_CELL_ID,
@@ -230,9 +229,36 @@ public class FailedCallDataTest {
 				"Failed",
 				service.getCountBetweenDatesForAllIMSI(dateOne, dateTwo).size(),
 				1);
-		
+
 		assertEquals("Failed", service.getEventIdAndCauseCodeByModel(INITIAL_MODEL).size(), 1);
 
+	}
+	
+	@Test
+	public void getAllIMSIWithCallFailuresBetweenDatesTest() throws Exception {
+		
+		String dateString = "2013-11-11";
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = sdf1.parse(dateString);
+		String dateString2 = "2013-12-11";
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+		Date date2 = sdf2.parse(dateString);
+		java.sql.Date dateOne = new java.sql.Date(date.getTime());
+		java.sql.Date dateTwo = new java.sql.Date(date2.getTime());
+		
+		FailedCallData fcd = new FailedCallData(dateOne, INITIAL_EVENT_ID,
+				INITIAL_FAILURE_ID, INITIAL_TYPE_ALLOCATION_CODE,
+				INITIAL_MARKET_ID, INITIAL_OPERATOR_ID, INITIAL_CELL_ID,
+				INITIAL_DURATION, INITIAL_CAUSE_CODE,
+				INITIAL_NETWORK_ELEMENT_VERSION, INITIAL_IMSI, "INITIAL_MODEL", "", "");
+		
+		service.addFailedCalledDatum(fcd);
+		
+		assertEquals(
+				"Failed",
+				service.getAllIMSIWithCallFailuresBetweenDates(dateOne, dateTwo).size(),
+				1);
+		
 	}
 
 	private void clearData() throws Exception {
@@ -247,5 +273,5 @@ public class FailedCallDataTest {
 		utx.begin();
 		em.joinTransaction();
 	}
-	
+
 }
