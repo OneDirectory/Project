@@ -119,9 +119,10 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		entityManager.persist(failedCallData);
 	}
 
-	public void addFailedCalledData(
-			Collection<FailedCallData> failedCallDataList) {
-		entityManager.persist(failedCallDataList);
+	public void addFailedCalledData(Collection<FailedCallData> failedCallDataList) {
+		for(Object failedCallData: failedCallDataList){
+			entityManager.persist(failedCallDataList);
+		}
 	}
 
 	public Collection getAllIMSIWithCallFailuresBetweenDates(Date from, Date to) {
