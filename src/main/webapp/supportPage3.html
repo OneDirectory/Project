@@ -10,10 +10,11 @@
 
 
     <!-- Bootstrap Core CSS -->
-        <link href="Resources/css/bootstrap1.min.css" rel="stylesheet">
-<!-- Custom CSS -->
-		<link href="Resources/css/simple-sidebar.css" rel="stylesheet">
-		<link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
+   <link href="Resources/css/bootstrap1.min.css" rel="stylesheet">
+   <!-- Custom CSS -->
+   <link href="Resources/css/simple-sidebar.css" rel="stylesheet">
+   <link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
+        <script src="js/selectize.js"></script>
     </head>
 
     <body>
@@ -56,26 +57,23 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                    <label class="control-label col-sm-2" for="pwd">Date - from:</label>
-                                <div class="col-sm-5">
-                                    <input type="datetime-local" name="from" id="from">
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                    <label class="control-label col-sm-2" for="pwd">Date - to:</label>
-                                <div class="col-sm-5">
-                                            <!--<input type="text" class="form-control" id="firstname" placeholder="to:">-->
-                                    <input type="datetime-local" name="to" id="to">
-                                </div>
-                            </div>
+                        	<div>
+							<input type="datetime-local" id='from' class="form-control"
+								name="from" placeholder="yyyy-dd-mm hh:mm" autofocus>
+						</div>
+
+						<label class="control-label col-sm-2" for="ID">TO:</label>
+
+						<div>
+							<input type="datetime-local" id='to' class="form-control"
+								name="to" placeholder="yyyy-dd-mm hh:mm" autofocus>
+						</div>
 
 
-                            <div class="form-group">
-                                <div class="col-sm-offset-4 col-sm-10">
-                                    <br>
-                                    <button id='submit' name='submit' class="btn btn-primary">Search</button>
+
+						<div class="col-sm-offset-4 col-sm-10">
+							<br>
+							<button id="submit" type="submit" class="btn btn-primary">Search</button>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +122,7 @@
 
         $.ajax({
             type: 'GET',
-            url:'http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/userequipment/getAllModelsFromUserEquipment',
+            url:'http://localhost:8080/project/rest/userequipment/getAllModelsFromUserEquipment',
             success: function(mydata){
                 var data=mydata;
                 var length=data.length;
@@ -144,33 +142,27 @@
 
 
     <script>
+$(function(){
 
-    $(function(){
-
-
-        $( "#submit" ).click(function(e) {
-
-        removeData();	
-	    var fromDate=$('#from').val();
-	    var toDate=$('#to').val();
-	    var myurl;
-	    var isValid=false;
-
-        var x=document.getElementById("ID");
-        var selected=x.options[x.selectedIndex].text;
-        
-        if(validateEntry(fromDate, toDate)){	
-		myurl='http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/failedcalldataByModel/'+selected+fromDate+'£'+toDate;
+ 		$( "#submit" ).click(function(e) {	
+	var fromDate=$('#from').val();
+	var toDate=$('#to').val();
+	var myurl;
+	var x=document.getElementById("ID");
+    var selected=x.options[x.selectedIndex].text;
+	var isValid=false;
+	
+	if(validateEntry(fromDate, toDate)){	
+		myurl='http://localhost:8080/project/rest/failedcalldata/getFailedCallDataByModel/'+selected+'£'+fromDate+'£'+toDate;
 		isValid=true;
 		}
 
 	else{
-		myurl= 'http://localhost:8080/Project-0.0.1-SNAPSHOT/NMEPage.html';
+		myurl= 'http://localhost:8080/project/support_engineer.html';
 		isValid=false;
 		}
 
-        createTable();
-        createButton();
+ 
 
         $.ajax({
 
@@ -180,12 +172,11 @@
             contentType: "application/json",
 
             success:function(data){
-
               if(isValid && data.length>0){
  	 			createTable();
  	 			createButton();
  	 			$.each(data, function(key, value){
- 	 				$table.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td></tr>');
+ 	 				$table.append('<tr><td>'+data+'</td></tr>');
  	 	 			});
 	 	 			isValid=false;
  	 	 		}
@@ -229,22 +220,18 @@
 
 
     function createTable(){
-    	var x=document.getElementById("ID");
+		var x=document.getElementById("ID");
         var selected=x.options[x.selectedIndex].text;
-
         var row=document.createElement('tr');
         row.setAttribute('id', 'head');
         var colOne=document.createElement('th');
-        var colTwo=document.createElement('th');
-        var colThree=document.createElement('th');
+     
 
-        colOne.innerHTML='number of failure for'+' '+selected;
-        colTwo.innerHTML='Event ID';
-        colThree.innerHTML='IMSI';
+        colOne.innerHTML='Count of failed calls for '+selected;
+        
 
         row.appendChild(colOne);
-        row.appendChild(colTwo);
-        row.appendChild(colThree);
+       
 
         $table.append(row);
 

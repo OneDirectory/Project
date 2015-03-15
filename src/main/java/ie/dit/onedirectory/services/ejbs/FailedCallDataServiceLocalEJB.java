@@ -56,7 +56,7 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 		return dao.getAllFailedCallData();
 	}
 	
-	public Collection<FailedCallData> getFailedCallDataByModel(String model, Date fromDate, Date toDate){
+	public Collection getFailedCallDataByModel(String model, Date fromDate, Date toDate){
 		return dao.getFailedCallDataByModel(model, fromDate, toDate);
 	}
 	
