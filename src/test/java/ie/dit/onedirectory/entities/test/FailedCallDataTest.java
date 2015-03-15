@@ -234,8 +234,11 @@ public class FailedCallDataTest {
 				1);
 		
 		assertEquals("Failed", service.getEventIdAndCauseCodeByModel(INITIAL_MODEL).size(), 1);
+		
+		assertEquals("Failed", service.getFailedCallDataByModel(INITIAL_MODEL, dateOne, dateTwo).size(),1);
 
 	}
+	
 
 	private void clearData() throws Exception {
 		utx.begin();
