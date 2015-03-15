@@ -245,18 +245,17 @@ public class FailedCallDataTest {
 		Date date2 = sdf2.parse(dateString);
 		java.sql.Date dateOne = new java.sql.Date(date.getTime());
 		java.sql.Date dateTwo = new java.sql.Date(date2.getTime());
-		
+				
 		FailedCallData fcd = new FailedCallData(dateOne, INITIAL_EVENT_ID,
 				INITIAL_FAILURE_ID, INITIAL_TYPE_ALLOCATION_CODE,
 				INITIAL_MARKET_ID, INITIAL_OPERATOR_ID, INITIAL_CELL_ID,
 				INITIAL_DURATION, INITIAL_CAUSE_CODE,
 				INITIAL_NETWORK_ELEMENT_VERSION, INITIAL_IMSI, "INITIAL_MODEL", "", "");
-		
+				
 		service.addFailedCalledDatum(fcd);
 		
-		assertEquals(
-				"Failed",
-				service.getAllIMSIWithCallFailuresBetweenDates(dateOne, dateTwo).size(),
+		assertEquals("Failed", 
+				service.getAllIMSIWithCallFailuresBetweenDates(dateOne, dateTwo).size(), 
 				1);
 		
 	}
