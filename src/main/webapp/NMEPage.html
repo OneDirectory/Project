@@ -33,7 +33,7 @@
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
 
 				<li><a href="#" onclick="toggle('imsiCount');">Affected IMSI with Count</a></li>
-				<li><a href="#" onclick="toggle('modelCount');">Call Failure by TAC</a></li>
+				<li><a href="#" onclick="toggle('modelCount');">Call Failure by Model</a></li>
 
 				<li><a href="index.html">Log out</a></li>
 			</ul>
@@ -114,7 +114,7 @@
 
 <!-- Menu Toggle Script -->
 <script>
-var divs = ["imsiCount","tacCount"];
+var divs = ["imsiCount","modelCount"];
 var visibleDiv = null;
 
 $(function(){
@@ -123,7 +123,7 @@ $(function(){
 
 <!--	document.getElementById("johnsQuery").style.display='none'; -->
 
-	document.getElementById("tacCount").style.display='none';
+	document.getElementById("modelCount").style.display='none';
 	
 
 });
@@ -167,12 +167,12 @@ function hideOtherDivs(){
 	var isValid=false;
 	
 	if(validateEntry(fromDate, toDate)){	
-		myurl='http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/failedcalldata/count/'+fromDate+'£'+toDate;
+		myurl='http://localhost:8080/project/rest/failedcalldata/count/'+fromDate+'£'+toDate;
 		isValid=true;
 		}
 
 	else{
-		myurl= 'http://localhost:8080/Project-0.0.1-SNAPSHOT/NMEPage.html';
+		myurl= 'http://localhost:8080/project/NMEPage.html';
 		isValid=false;
 		}
 
@@ -270,18 +270,99 @@ function hideOtherDivs(){
  	 	
 	</script>
 	
-	<!-- US 10: show models in dropdown -->
+	<!-- US 10 -->
+	<!-- Function to show models -->
 	<script>
-		$(function()) {
-			var $select = $('#modelInput');
+	$(function()) {
+		$("#modelSubmit").click(function(e)) {
+			
+			removeModelData();
+			var x = document.getElementById("modelInput");
+			var selected = x.options[x.selectedIndex].text;
+			
+			createModelTable();
+			createModelButton();
 			
 			$.ajax({
 				type:'GET',
-				url:'http://localhost:8080/project/'
-			})
+				url:'http://localhost:8080/project/rest/failedcalldata/model'+selected,
+				dataType:'json',
+				contentType:"application/json",
+				
+				success:function(data) {
+					$.each(data, function(key, value) {
+						$table.append('<tr><td>' + value[0] + '<tr><td>' + value[1] + '<tr><td>' + selected + '<tr><td>')
+					});
+				}
+			});
 		}
+	}
+	
+	function createModelTable() {
+		
+		var row=document.createElement('tr');
+		row.setAttribute('id', 'head');
+		var colOne=document.createElement('th');
+		var colTwo=document.createElement('th');
+		var colThree=document.createElement('th');
+
+		colOne.innerHTML='Cause Code';
+		colTwo.innerHTML='Event ID';
+		colThree.innerHTML='Model';
+
+		row.appendChild(colOne);
+		row.appendChild(colTwo);
+		row.appendChild(colThree);
+
+		$table.append(row);
+	}
+	
+	function createModelButton() {
+		
+		var butDiv=document.createElement('div');
+		butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
+		var button=document.createElement(button);
+		button.setAttribute('id', 'modelTableButton');
+		button.setAttribute('class','btn btn-primary');
+		button.setAttribute('position', 'absolute');
+		button.setAttribute('top', '50%');
+		button.innerHTML='Search Again';
+		button.addEventListener('click', removeModelData);
+		butDiv.appendChild(button);
+		$table.append(butDiv);
+	}
+	
+	function removeModelData() {
+		
+		var removeHead=document.getElementById('head');
+		var removeButton=document.getElementById('modelTableButton');
+		$table.empty();
+	}
 	</script>
 	
+	<!-- Function to add phone models to dropdown menu -->
+	<script>
+		$(function(){
+
+	    var $select = $('#modelInput');
+
+	    $.ajax({
+	        type: 'GET',
+	        url:'http://localhost:8080/project/rest/userequipment/getAllModelsFromUserEquipment',
+	        success: function(mydata){
+	            var data=mydata;
+	            var length=data.length;
+
+	            for(var i=0; i<length; i++){
+	                var x=data[i];
+	                var option=document.createElement('option');	
+	                option.text=x;	
+	                $select.append(option);			
+	                }					
+	            }
+	        });
+	    });
+	</script>
 	
 </body>
 
