@@ -1,4 +1,4 @@
-package ie.dit.onedirectory.entities.test;
+package ie.dit.onedirectory.services.test;
 
 import static org.junit.Assert.*;
 
@@ -36,7 +36,7 @@ import org.junit.Before;
 import org.junit.After;
 
 @RunWith(Arquillian.class)
-public class FailedCallDataTest {
+public class FailedCallDataServiceLocalTest {
 
 	@Deployment
 	public static Archive<?> createDeployment() {
@@ -100,7 +100,7 @@ public class FailedCallDataTest {
 	}
 
 	@Test
-	public void EntityTest() throws Exception {
+	public void entityTest() throws Exception {
 
 		String dateString = "2013-11-11";
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -176,7 +176,7 @@ public class FailedCallDataTest {
 	}
 
 	@Test
-	public void ServiceLocalTest() throws Exception {
+	public void serviceLocalTest() throws Exception {
 
 		String dateString = "2013-11-11";
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -234,12 +234,17 @@ public class FailedCallDataTest {
 		assertEquals("Failed", service.getEventIdAndCauseCodeByModel(INITIAL_MODEL).size(), 1);
 
 	}
+	
+	@Test
+	public void  getAllIMSIWithCallFailuresBetweenDatesTest(){
+		
+	}
 
 	private void clearData() throws Exception {
 		utx.begin();
 		em.joinTransaction();
 		System.out.println("Dumping old records...");
-		em.createQuery("delete from FailedCallData").executeUpdate();
+		em.createQuery("deleting old tables...").executeUpdate();
 		utx.commit();
 	}
 

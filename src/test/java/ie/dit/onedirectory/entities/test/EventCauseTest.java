@@ -72,14 +72,17 @@ public class EventCauseTest {
 	public void EntityTest() throws Exception {
 
 		EventCause ec = new EventCause(13, 47, INITIAL_DESCRIPTION);
+		
 		em.persist(ec);
 
 		EventCauseId ecID = new EventCauseId(13, 47); 
 
 		EventCause loadedEC = em.find(EventCause.class, ecID);
+		
 		assertEquals("Event Cause Insertion Failed", INITIAL_DESCRIPTION, loadedEC.getDescription());
 
 		loadedEC.setDescription(UPDATED_DESCRIPTION);
+		
 		EventCause updatedEC = em.find(EventCause.class, ecID);
 
 		assertEquals("Event Cause Update Failed", UPDATED_DESCRIPTION, loadedEC.getDescription());
@@ -87,37 +90,12 @@ public class EventCauseTest {
 		em.remove(updatedEC);
 		
 		EventCause shouldBeNull = em.find(EventCause.class, ecID);
+		
 		assertNull("Event Cause Failed to delete", shouldBeNull);
+		
+		
 	}
 
-	
-	@Test
-	public void EventCauseServiceLocalTest() throws Exception {
-
-		EventCause ec = new EventCause(13, 47, INITIAL_DESCRIPTION);
-		EventCause ec2 = new EventCause(17, 43, UPDATED_DESCRIPTION);
-		EventCause ec3 = new EventCause(19, 41, UPDATED_DESCRIPTION);
-		EventCause ec4 = new EventCause(23, 37, UPDATED_DESCRIPTION);
-		
-		Collection<EventCause> eventCauseList = new ArrayList<EventCause>();
-		
-		eventCauseList.add(ec3);
-		eventCauseList.add(ec4);
-		
-		service.addEventCause(ec);
-		
-		assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 1);
-
-		service.addEventCause(ec2);
-		
-		assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 2);
-		
-		service.addEventCauses(eventCauseList);
-		
-		assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 4);
-	}
-	
-	
 
 	private void clearData() throws Exception {
 		utx.begin();

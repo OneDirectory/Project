@@ -124,6 +124,10 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		entityManager.persist(failedCallDataList);
 	}
 
+	/**
+	 * Returns a list of all IMSIs with call failures between the from and to dates.
+	 */
+	
 	public Collection getAllIMSIWithCallFailuresBetweenDates(Date from, Date to) {
 
 		Query query = entityManager

@@ -34,10 +34,10 @@ public class EventCause implements Serializable {
 	@OneToMany(mappedBy="eventCause")
 	private List<FailedCallData> failedCallData;
 	
-	public EventCause(){
+	public EventCause() {
 	}
 	
-	public EventCause(Integer causeCode, Integer eventId, String description){
+	public EventCause(Integer causeCode, Integer eventId, String description) {
 		this.eventId = eventId;
 		this.causeCode = causeCode;
 		this.description = description;

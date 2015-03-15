@@ -19,14 +19,23 @@ import javax.ejb.Local;
 public interface FailedCallDataServiceLocal {
 
 	public Collection getAllIMSIWithCallFailuresBetweenDates(Date from, Date to);
+	
 	public Collection getEventIdAndCauseCodeByModel(String modelName);
+	
 	public Collection getEventIdAndCauseCodeByIMSI(String imsi);
+	
 	public Collection getAllIMSI();
+	
 	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to);
+	
 	public Collection<FailedCallData> getAllFailedCallData();
+	
 	public Collection<FailedCallData> getFailedCallDataByModel(String model, Date fromDate, Date toDate);
+	
 	public void addFromFile(String fileName) throws IOException;
+	
 	public void addFailedCalledDatum(FailedCallData failedCallData);
+	
 	public void addFailedCalledData(Collection<FailedCallData> failedCallDataList);
 	
 }
