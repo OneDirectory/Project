@@ -1,4 +1,4 @@
-package ie.dit.onedirectory.entities.test;
+package ie.dit.onedirectory.services.test;
 
 import static org.junit.Assert.*;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import org.junit.After;
 
 
 @RunWith(Arquillian.class)
-public class EventCauseTest {
+public class EventCauseServiceLocalTest {
 
 	@Deployment
 	public static Archive<?> createDeployment()
@@ -68,31 +68,24 @@ public class EventCauseTest {
 		utx.commit();
 	}
 
-	@Test
-	public void EntityTest() throws Exception {
+@Test
+public void AddEventCauseTest() throws Exception {
+	EventCause ec = new EventCause(13, 47, INITIAL_DESCRIPTION);
+	EventCause ec2 = new EventCause(17, 43, UPDATED_DESCRIPTION);
+	
+	service.addEventCause(ec);
+	
+	assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 1);
 
-		EventCause ec = new EventCause(13, 47, INITIAL_DESCRIPTION);
-		em.persist(ec);
-
-		EventCauseId ecID = new EventCauseId(13, 47); 
-
-		EventCause loadedEC = em.find(EventCause.class, ecID);
-		assertEquals("Event Cause Insertion Failed", INITIAL_DESCRIPTION, loadedEC.getDescription());
-
-		loadedEC.setDescription(UPDATED_DESCRIPTION);
-		EventCause updatedEC = em.find(EventCause.class, ecID);
-
-		assertEquals("Event Cause Update Failed", UPDATED_DESCRIPTION, loadedEC.getDescription());
-
-		em.remove(updatedEC);
-		
-		EventCause shouldBeNull = em.find(EventCause.class, ecID);
-		assertNull("Event Cause Failed to delete", shouldBeNull);
-	}
+	service.addEventCause(ec2);
+	
+	assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 2);
+	
+}
 
 	
 	@Test
-	public void EventCauseServiceLocalTest() throws Exception {
+	public void AddEventCausesTest() throws Exception {
 
 		EventCause ec = new EventCause(13, 47, INITIAL_DESCRIPTION);
 		EventCause ec2 = new EventCause(17, 43, UPDATED_DESCRIPTION);
@@ -101,16 +94,10 @@ public class EventCauseTest {
 		
 		Collection<EventCause> eventCauseList = new ArrayList<EventCause>();
 		
+		eventCauseList.add(ec);
+		eventCauseList.add(ec2);
 		eventCauseList.add(ec3);
 		eventCauseList.add(ec4);
-		
-		service.addEventCause(ec);
-		
-		assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 1);
-
-		service.addEventCause(ec2);
-		
-		assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 2);
 		
 		service.addEventCauses(eventCauseList);
 		

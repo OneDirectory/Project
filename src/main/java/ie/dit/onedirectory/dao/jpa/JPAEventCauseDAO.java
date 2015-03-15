@@ -17,7 +17,7 @@ public class JPAEventCauseDAO implements EventCauseDAO {
 
 	@PersistenceContext
 	EntityManager entityManager;
-	
+
 	public Collection<EventCause> getAllEventCauses() {
 		Query query = entityManager.createQuery("from EventCause");
 		Collection<EventCause> eventCauses = query.getResultList();
@@ -27,9 +27,12 @@ public class JPAEventCauseDAO implements EventCauseDAO {
 	public void addEventCause(EventCause eventCause){
 		entityManager.persist(eventCause);
 	}
-	
+
 	public void addEventCauses(Collection<EventCause> eventCauseList) {
-		entityManager.persist(eventCauseList);
+		//entityManager.persist(eventCauseList);
+		for(EventCause ec : eventCauseList) {
+			entityManager.persist(ec);
+		}
 	}
 
 }
