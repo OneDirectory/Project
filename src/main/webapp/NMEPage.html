@@ -33,7 +33,7 @@
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
 
 				<li><a href="#" onclick="toggle('imsiCount');">Affected IMSI with Count</a></li>
-				<li><a href="#" onclick="toggle('tacCount');">Call Failure by TAC</a></li>
+				<li><a href="#" onclick="toggle('modelCount');">Call Failure by TAC</a></li>
 
 				<li><a href="index.html">Log out</a></li>
 			</ul>
@@ -83,22 +83,22 @@
 	<!-- /#wrapper -->
 
 
-	<div id="tacCount">
+	<div id="modelCount">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Call Failures by TAC with respect to event ID and cause code</h1>
+					<h1>Call Failures by Model</h1>
 						
-						<label class="control-label col-sm-2" for="ID">TAC: </label>
+						<label class="control-label col-sm-2" for="modelInput">Model: </label>
 
 						<div>
-							<input type="text" id='tacInput' class="form-group"
-								name="tac" placeholder="type allocation code" autofocus>
+							<select class="col-sm-5" id="modelInput">
+							</select>
 						</div>
 						
 						<div class="col-sm-offset-4 col-sm-10">
 							<!--  <br> -->
-							<button id="submit" type="submit" class="btn btn-primary">Search</button>
+							<button id="modelSubmit" type="submit" class="btn btn-primary">Search</button>
 						</div>
 					
 				</div>
@@ -269,6 +269,20 @@ function hideOtherDivs(){
  	}
  	 	
 	</script>
+	
+	<!-- US 10: show models in dropdown -->
+	<script>
+		$(function()) {
+			var $select = $('#modelInput');
+			
+			$.ajax({
+				type:'GET',
+				url:'http://localhost:8080/project/'
+			})
+		}
+	</script>
+	
+	
 </body>
 
 </html>
