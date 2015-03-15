@@ -20,7 +20,6 @@ import ie.dit.onedirectory.services.EventCauseServiceLocal;
 import ie.dit.onedirectory.services.ejbs.EventCauseServiceLocalEJB;
 import ie.dit.onedirectory.utilities.DataValidator;
 
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;

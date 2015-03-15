@@ -238,11 +238,7 @@ public class FailedCallDataTest {
 		assertEquals("Failed", service.getFailedCallDataByModel(INITIAL_MODEL, dateOne, dateTwo).size(),1);
 
 	}
-	
-<<<<<<< HEAD
-=======
-
->>>>>>> master
+		
 	private void clearData() throws Exception {
 		utx.begin();
 		em.joinTransaction();

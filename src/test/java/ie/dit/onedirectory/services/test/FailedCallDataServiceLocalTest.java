@@ -24,6 +24,7 @@ import ie.dit.onedirectory.entities.MarketOperator;
 import ie.dit.onedirectory.entities.UserEquipment;
 import ie.dit.onedirectory.services.FailedCallDataServiceLocal;
 import ie.dit.onedirectory.services.ejbs.FailedCallDataServiceLocalEJB;
+import ie.dit.onedirectory.utilities.DataValidator;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -48,10 +49,11 @@ public class FailedCallDataServiceLocalTest {
 						FailedCallDataServiceLocal.class.getPackage(),
 						FailedCallDataDAO.class.getPackage(),
 						JPAFailedCallDataDAO.class.getPackage(),
-						FailedCallData.class.getPackage())
+						FailedCallData.class.getPackage(),
+						DataValidator.class.getPackage())
 						.addAsResource("test-persistence.xml",
-								"META-INF/persistence.xml")
-								.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+						"META-INF/persistence.xml")
+						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 
 	@PersistenceContext
