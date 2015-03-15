@@ -154,21 +154,22 @@ public class FailedCallDataREST {
 	}
 
 	@GET
-	@Path("{getFailedCallDataByModel}")
+	@Path("/getFailedCallDataByModel/{params}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<FailedCallData> getFailedCallDataByModel(
-			@QueryParam("model") String model, @QueryParam ("dates") String datesPassed) throws ParseException
-			{	String[] dates = datesPassed.split("£");
-				String fromDate = dates[0];
-				String toDate = dates[1];
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				Date from = sdf.parse(fromDate);
-				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-				Date to = sdf1.parse(toDate);
-				java.sql.Date sqlFromDate = new java.sql.Date(from.getTime());
-				java.sql.Date sqlToDate = new java.sql.Date(to.getTime());
-				return service.getFailedCallDataByModel(model, sqlFromDate, sqlToDate);	
-			}
+	public Collection getFailedCallDataByModel(
+			@PathParam("params") String paramsPassed) throws ParseException {
+		String[] params = paramsPassed.split("£");
+		String model = params[0];
+		String fromDate = params[1];
+		String toDate = params[2];
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date from = sdf.parse(fromDate);
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		Date to = sdf1.parse(toDate);
+		java.sql.Date sqlFromDate = new java.sql.Date(from.getTime());
+		java.sql.Date sqlToDate = new java.sql.Date(to.getTime());
+		return service.getFailedCallDataByModel(model, sqlFromDate, sqlToDate);
+	}
 
 	
 	
