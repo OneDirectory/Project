@@ -15,6 +15,7 @@ import ie.dit.onedirectory.entities.User;
 import ie.dit.onedirectory.rest.UserREST;
 import ie.dit.onedirectory.services.UserServiceLocal;
 import ie.dit.onedirectory.services.ejbs.UserServiceEJB;
+import ie.dit.onedirectory.utilities.DataValidator;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -40,7 +41,8 @@ public class UserTest {
 						//UserREST.class.getPackage(), 
 						User.class.getPackage(),
 						UserDAOImplemetation.class.getPackage(),
-						UserDAO.class.getPackage())
+						UserDAO.class.getPackage(),
+						DataValidator.class.getPackage())
 				.addAsResource("test-persistence.xml",
 						"META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");

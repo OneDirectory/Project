@@ -1,13 +1,16 @@
 package ie.dit.onedirectory.entities.test;
 
 import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
+
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
+
 import ie.dit.onedirectory.dao.MarketOperatorDAO;
 import ie.dit.onedirectory.dao.jpa.JPAMarketOperatorDAO;
 import ie.dit.onedirectory.entities.MarketOperator;
@@ -15,6 +18,8 @@ import ie.dit.onedirectory.entities.pks.MarketOperatorId;
 import ie.dit.onedirectory.rest.MarketOperatorREST;
 import ie.dit.onedirectory.services.MarketOperatorServiceLocal;
 import ie.dit.onedirectory.services.ejbs.MarketOperatorServiceLocalEJB;
+import ie.dit.onedirectory.utilities.DataValidator;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -41,7 +46,8 @@ public class MarketOperatorTest {
 						JPAMarketOperatorDAO.class.getPackage(),
 					//	MarketOperatorREST.class.getPackage(),
 						MarketOperator.class.getPackage(),
-						MarketOperatorId.class.getPackage())
+						MarketOperatorId.class.getPackage(),
+						DataValidator.class.getPackage())
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}

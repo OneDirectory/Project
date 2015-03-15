@@ -16,6 +16,7 @@ package ie.dit.onedirectory.rest;
 
 import ie.dit.onedirectory.entities.FailedCallData;
 import ie.dit.onedirectory.services.FailedCallDataServiceLocal;
+import ie.dit.onedirectory.utilities.DataValidator;
 import ie.dit.onedirectory.utilities.FileUploadForm;
 
 import java.io.ByteArrayInputStream;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -56,6 +58,9 @@ public class FailedCallDataREST {
 
 	@EJB
 	FailedCallDataServiceLocal service;
+	
+	@EJB
+	DataValidator validator;
 	
 	@GET
 	@Path("/get")
@@ -149,21 +154,22 @@ public class FailedCallDataREST {
 	}
 
 	@GET
-	@Path("{getFailedCallDataByModel}")
+	@Path("/getFailedCallDataByModel/{params}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<FailedCallData> getFailedCallDataByModel(
-			@QueryParam("model") String model, @QueryParam ("dates") String datesPassed) throws ParseException
-			{	String[] dates = datesPassed.split("£");
-				String fromDate = dates[0];
-				String toDate = dates[1];
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				Date from = sdf.parse(fromDate);
-				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-				Date to = sdf1.parse(toDate);
-				java.sql.Date sqlFromDate = new java.sql.Date(from.getTime());
-				java.sql.Date sqlToDate = new java.sql.Date(to.getTime());
-				return service.getFailedCallDataByModel(model, sqlFromDate, sqlToDate);	
-			}
+	public Collection getFailedCallDataByModel(
+			@PathParam("params") String paramsPassed) throws ParseException {
+		String[] params = paramsPassed.split("£");
+		String model = params[0];
+		String fromDate = params[1];
+		String toDate = params[2];
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date from = sdf.parse(fromDate);
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		Date to = sdf1.parse(toDate);
+		java.sql.Date sqlFromDate = new java.sql.Date(from.getTime());
+		java.sql.Date sqlToDate = new java.sql.Date(to.getTime());
+		return service.getFailedCallDataByModel(model, sqlFromDate, sqlToDate);
+	}
 
 	
 	
@@ -191,7 +197,7 @@ public class FailedCallDataREST {
 	@Consumes("multipart/form-data")
 	public Response uploadFailedCallData(@MultipartForm FileUploadForm form)
 			throws IOException {
-		
+		List<FailedCallData> failedCallDataList = new ArrayList<FailedCallData>();
 		HSSFRow row;
 		ByteArrayInputStream stream = new ByteArrayInputStream(form.getFileData());
 		HSSFWorkbook workbook= new HSSFWorkbook(stream);
@@ -243,12 +249,14 @@ public class FailedCallDataREST {
 						.next());
 				String hier321Id = dataFormatter.formatCellValue(cellIterator
 						.next());
-
-				service.addFailedCalledDatum(new FailedCallData(dateTime,
+				FailedCallData failedCallData = new FailedCallData(dateTime,
 						eventId, failureId, typeAllocationCode, marketId,
 						operatorId, cellId, duration, causeCode,
 						networkElementVersion, imsi, hier3Id, hier32Id,
-						hier321Id));
+						hier321Id);
+				if(validator.isValid(failedCallData)){
+					service.addFailedCalledDatum(failedCallData);
+				}
 				break;
 			}
 		}
@@ -257,26 +265,11 @@ public class FailedCallDataREST {
 		return Response.status(200).entity("Data successfully imported.\n").build();
 	}
 
-	private String parseFileName(MultivaluedMap<String, String> headers) {
-		String[] contentDispositionHeader = headers.getFirst(
-				"Content-Disposition").split(";");
-		for (String name : contentDispositionHeader) {
-			if ((name.trim().startsWith("fileName"))) {
-				String[] tmp = name.split("=");
-				String fileName = tmp[1].trim().replaceAll("\"", "");
-				return fileName;
-			}
-		}
-		return "randomName";
-	}
-
 	@GET
 	@Path("/add")
 	public void addFailedCallData() throws IOException {
 		HSSFRow row;
-		FileInputStream fis =
-				//"C:/oneDirectory/data.xls"));
-				 new FileInputStream(new File("/home/drrn/Project/data.xls"));
+		FileInputStream fis = new FileInputStream(new File("/Users/Darren/Project/data.xls"));
 				HSSFWorkbook workbook = new HSSFWorkbook(fis);
 
 		HSSFSheet spreadsheet = workbook.getSheetAt(0);
@@ -327,12 +320,16 @@ public class FailedCallDataREST {
 						.next());
 				String hier321Id = dataFormatter.formatCellValue(cellIterator
 						.next());
-
-				service.addFailedCalledDatum(new FailedCallData(dateTime,
+				
+				FailedCallData failedCallData = new FailedCallData(dateTime,
 						eventId, failureId, typeAllocationCode, marketId,
 						operatorId, cellId, duration, causeCode,
 						networkElementVersion, imsi, hier3Id, hier32Id,
-						hier321Id));
+						hier321Id);
+				
+				if(validator.isValid(failedCallData)){
+					service.addFailedCalledDatum(failedCallData);
+				}
 				
 				break;
 			}

@@ -30,9 +30,9 @@ public interface FailedCallDataServiceLocal {
 	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to);
 	
 	public Collection<FailedCallData> getAllFailedCallData();
-	
-	public Collection<FailedCallData> getFailedCallDataByModel(String model, Date fromDate, Date toDate);
-	
+
+	public Collection getFailedCallDataByModel(String model, Date fromDate, Date toDate);
+
 	public void addFromFile(String fileName) throws IOException;
 	
 	public void addFailedCalledDatum(FailedCallData failedCallData);

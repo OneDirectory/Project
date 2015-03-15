@@ -18,6 +18,8 @@ import ie.dit.onedirectory.entities.pks.EventCauseId;
 import ie.dit.onedirectory.rest.EventCauseREST;
 import ie.dit.onedirectory.services.EventCauseServiceLocal;
 import ie.dit.onedirectory.services.ejbs.EventCauseServiceLocalEJB;
+import ie.dit.onedirectory.utilities.DataValidator;
+
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -44,7 +46,8 @@ public class EventCauseTest {
 						EventCauseDAO.class.getPackage(),
 						JPAEventCauseDAO.class.getPackage(),
 						EventCause.class.getPackage(),
-						EventCauseId.class.getPackage())
+						EventCauseId.class.getPackage(),
+						DataValidator.class.getPackage())
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
