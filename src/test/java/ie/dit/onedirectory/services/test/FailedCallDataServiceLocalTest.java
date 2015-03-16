@@ -1,4 +1,4 @@
-package ie.dit.onedirectory.entities.test;
+package ie.dit.onedirectory.services.test;
 
 import static org.junit.Assert.*;
 
@@ -38,7 +38,7 @@ import org.junit.Before;
 import org.junit.After;
 
 @RunWith(Arquillian.class)
-public class FailedCallDataTest {
+public class FailedCallDataServiceLocalTest {
 
 	@Deployment
 	public static Archive<?> createDeployment() {
@@ -54,7 +54,6 @@ public class FailedCallDataTest {
 						.addAsResource("test-persistence.xml",
 						"META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
-
 	}
 
 	@PersistenceContext
@@ -100,10 +99,10 @@ public class FailedCallDataTest {
 	public void commitTransaction() throws Exception {
 		utx.commit();
 	}
-
+	
 	@Test
-	public void EntityTest() throws Exception {
-
+	public void getAllIMSIWithCallFailuresBetweenDatesTest() throws Exception {
+		
 		String dateString = "2013-11-11";
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = sdf1.parse(dateString);
@@ -112,83 +111,7 @@ public class FailedCallDataTest {
 		Date date2 = sdf2.parse(dateString);
 		java.sql.Date dateOne = new java.sql.Date(date.getTime());
 		java.sql.Date dateTwo = new java.sql.Date(date2.getTime());
-
-		EventCause evtCause = new EventCause(1, 1, "");
-		FailureClass failureClass = new FailureClass(1, "");
-		UserEquipment ue = new UserEquipment();
-		ue.setTac(100);
-
-		FailedCallData fcd = new FailedCallData(dateOne, INITIAL_EVENT_ID,
-				INITIAL_FAILURE_ID, INITIAL_TYPE_ALLOCATION_CODE,
-				INITIAL_MARKET_ID, INITIAL_OPERATOR_ID, INITIAL_CELL_ID,
-				INITIAL_DURATION, INITIAL_CAUSE_CODE,
-				INITIAL_NETWORK_ELEMENT_VERSION, INITIAL_IMSI, "INITIAL_MODEL", "", "");
-
-		em.persist(fcd);
-
-		Integer id = fcd.getId();
-
-		FailedCallData loadedEC = em.find(FailedCallData.class, id);
-		assertEquals("Insertion Failed", dateOne, loadedEC.getDateTime());
-
-		loadedEC.setDuration(UPDATED_DURATION);
-		FailedCallData updatedEC = em.find(FailedCallData.class, id);
-		assertEquals("Update Failed", UPDATED_DURATION, loadedEC.getDuration());
-
-		loadedEC.setEventCause(evtCause);
-		updatedEC = em.find(FailedCallData.class, id);
-		assertEquals("Update Failed", evtCause.getEventId(), loadedEC
-				.getEventCause().getEventId());
-
-		loadedEC.setEventCause(evtCause);
-		updatedEC = em.find(FailedCallData.class, id);
-		assertEquals("Update Failed", evtCause.getCauseCode(), loadedEC
-				.getEventCause().getCauseCode());
-
-		loadedEC.setImsi(UPDATED_IMSI);
-		updatedEC = em.find(FailedCallData.class, id);
-		assertEquals("Update Failed", UPDATED_IMSI, loadedEC.getImsi());
-
-		loadedEC.setNetworkElementVersion(UPDATED_NETWORK_ELEMENT_VERSION);
-		updatedEC = em.find(FailedCallData.class, id);
-		assertEquals("Update Failed", UPDATED_NETWORK_ELEMENT_VERSION,
-				loadedEC.getNetworkElementVersion());
-
-		loadedEC.setFailureClass(failureClass);
-		updatedEC = em.find(FailedCallData.class, id);
-		assertEquals("Update Failed", failureClass.getFailureId(), loadedEC
-				.getFailureClass().getFailureId());
-
-		loadedEC.setFailureClass(failureClass);
-		;
-		updatedEC = em.find(FailedCallData.class, id);
-		assertEquals("Update Failed", failureClass.getDescription(), loadedEC
-				.getFailureClass().getDescription());
-
-		loadedEC.setUserEquipment(ue);
-		;
-		updatedEC = em.find(FailedCallData.class, id);
-		assertEquals("Update Failed", ue.getTac(), loadedEC.getUserEquipment()
-				.getTac());
-
-		em.remove(updatedEC);
-		FailedCallData shouldBeNull = em.find(FailedCallData.class, 0);
-		assertNull("Failed to delete", shouldBeNull);
-
-	}
-
-	@Test
-	public void ServiceLocalTest() throws Exception {
-
-		String dateString = "2013-11-11";
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = sdf1.parse(dateString);
-		String dateString2 = "2013-12-11";
-		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-		Date date2 = sdf2.parse(dateString);
-		java.sql.Date dateOne = new java.sql.Date(date.getTime());
-		java.sql.Date dateTwo = new java.sql.Date(date2.getTime());
-
+				
 		EventCause evt = new EventCause();
 		evt.setCauseCode(INITIAL_CAUSE_CODE);
 		evt.setEventId(INITIAL_EVENT_ID);
@@ -205,40 +128,21 @@ public class FailedCallDataTest {
 		em.persist(mko);
 		em.persist(fc);
 		em.persist(ue);
-
-
+		
 		FailedCallData fcd = new FailedCallData(dateOne, INITIAL_EVENT_ID,
 				INITIAL_FAILURE_ID, INITIAL_TYPE_ALLOCATION_CODE,
 				INITIAL_MARKET_ID, INITIAL_OPERATOR_ID, INITIAL_CELL_ID,
 				INITIAL_DURATION, INITIAL_CAUSE_CODE,
 				INITIAL_NETWORK_ELEMENT_VERSION, INITIAL_IMSI, "INITIAL_MODEL", "", "");
-
-		FailedCallData fcd2 = new FailedCallData(dateTwo, INITIAL_EVENT_ID,
-				INITIAL_FAILURE_ID, INITIAL_TYPE_ALLOCATION_CODE,
-				INITIAL_MARKET_ID, INITIAL_OPERATOR_ID, INITIAL_CELL_ID,
-				INITIAL_DURATION, INITIAL_CAUSE_CODE,
-				INITIAL_NETWORK_ELEMENT_VERSION, UPDATED_IMSI, "UPDATED_MODEL", "", "");
-
+				
 		service.addFailedCalledDatum(fcd);
-		//em.persist(fcd2);
-
-		assertEquals("Failed", service.getAllIMSI().size(), 1);
-
-
-		assertEquals("Failed",
-				service.getEventIdAndCauseCodeByIMSI(INITIAL_IMSI).size(), 1);
-
-		assertEquals(
-				"Failed",
-				service.getCountBetweenDatesForAllIMSI(dateOne, dateTwo).size(),
+		
+		assertEquals("Failed", 
+				service.getAllIMSIWithCallFailuresBetweenDates(dateOne, dateTwo).size(), 
 				1);
-
-		assertEquals("Failed", service.getEventIdAndCauseCodeByModel(INITIAL_MODEL).size(), 1);
 		
-		assertEquals("Failed", service.getFailedCallDataByModel(INITIAL_MODEL, dateOne, dateTwo).size(),1);
-
 	}
-		
+
 	private void clearData() throws Exception {
 		utx.begin();
 		em.joinTransaction();

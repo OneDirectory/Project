@@ -20,8 +20,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "event_cause")
 public class EventCause implements Serializable {
 	
-	// This is a comment which I will delete later. : D
-	
 	@Id
 	@Column(name="event_id")
 	private Integer eventId;
@@ -36,10 +34,10 @@ public class EventCause implements Serializable {
 	@OneToMany(mappedBy="eventCause")
 	private List<FailedCallData> failedCallData;
 	
-	public EventCause(){
+	public EventCause() {
 	}
 	
-	public EventCause(Integer causeCode, Integer eventId, String description){
+	public EventCause(Integer causeCode, Integer eventId, String description) {
 		this.eventId = eventId;
 		this.causeCode = causeCode;
 		this.description = description;

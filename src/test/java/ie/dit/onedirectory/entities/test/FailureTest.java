@@ -16,6 +16,7 @@ import ie.dit.onedirectory.dao.jpa.JPAFailureClassDAO;
 import ie.dit.onedirectory.entities.FailureClass;
 import ie.dit.onedirectory.services.FailureClassServiceLocal;
 import ie.dit.onedirectory.services.ejbs.FailureClassServiceLocalEJB;
+import ie.dit.onedirectory.utilities.DataValidator;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -42,7 +43,8 @@ public class FailureTest {
 						FailureClassDAO.class.getPackage(),
 						JPAFailureClassDAO.class.getPackage(),
 						//FailureClassREST.class.getPackage(),
-						FailureClass.class.getPackage())
+						FailureClass.class.getPackage(),
+						DataValidator.class.getPackage())
 						//FailureClassId.class.getPackage())
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
