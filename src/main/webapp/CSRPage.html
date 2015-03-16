@@ -103,7 +103,7 @@ var $table = $('#table');
 
 	$.ajax({
 		type: 'GET',
-		url:'http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/failedcalldata/imsi',
+		url:'http://localhost:8080/project/rest/failedcalldata/imsi',
 		success: function(mydata){
 			var data=mydata;
 			var length=data.length;
@@ -140,7 +140,7 @@ $(function(){
 	$.ajax({
 
 		type:'GET',
-		url:'http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/failedcalldata/imsi/'+selected,
+		url:'http://localhost:8080/project/rest/failedcalldata/imsi/'+selected,
 		dataType: 'json',
 		contentType: "application/json",
 

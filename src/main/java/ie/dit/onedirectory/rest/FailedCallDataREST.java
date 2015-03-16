@@ -216,11 +216,6 @@ public class FailedCallDataREST {
 				String failureString = dataFormatter
 						.formatCellValue(cellIterator.next());
 				Integer failureId;
-				if (failureString.equals("(null)")) {
-					break;
-				} else {
-					failureId = Integer.valueOf(failureString);
-				}
 				Integer typeAllocationCode = Integer.valueOf(dataFormatter
 						.formatCellValue(cellIterator.next()));
 				Integer marketId = Integer.valueOf(dataFormatter
@@ -234,11 +229,6 @@ public class FailedCallDataREST {
 				String causeString = dataFormatter.formatCellValue(cellIterator
 						.next());
 				Integer causeCode;
-				if (failureString.equals("(null)")) {
-					break;
-				} else {
-					causeCode = Integer.valueOf(causeString);
-				}
 				String networkElementVersion = dataFormatter
 						.formatCellValue(cellIterator.next());
 				String imsi = dataFormatter
@@ -249,6 +239,15 @@ public class FailedCallDataREST {
 						.next());
 				String hier321Id = dataFormatter.formatCellValue(cellIterator
 						.next());
+				
+				if(validator.validFailureIdAndCauseCodeTypes(failureString, causeString)){
+					causeCode = Integer.valueOf(causeString);
+					failureId = Integer.valueOf(failureString);
+				}
+				else {
+					break;
+				}
+				
 				FailedCallData failedCallData = new FailedCallData(dateTime,
 						eventId, failureId, typeAllocationCode, marketId,
 						operatorId, cellId, duration, causeCode,

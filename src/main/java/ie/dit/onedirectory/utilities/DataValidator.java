@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -162,6 +163,29 @@ public class DataValidator {
 		return true;
 	}
 
+	public boolean validFailureIdAndCauseCodeTypes(String failureIdString, String causeCodeString){
+		try{
+			Integer failureId = Integer.valueOf(failureIdString);
+		}
+		catch(NumberFormatException nfEx){
+			logger.log(Level.INFO, "Invalid entry for FailureID: " + failureIdString);
+			return false;
+		}
+		try{
+			Integer causeCode = Integer.valueOf(causeCodeString);
+		}
+		catch(NumberFormatException nfEx){
+			logger.log(Level.INFO, "Invalid entry for CauseCode: " + causeCodeString);
+			return false;
+		}
+		return true;
+	}
+	
+	@PreDestroy
+	public void onDestroy(){
+		
+	}
+	
 	public ArrayList<EventCause> getValidEventCauseList() {
 		return validEventCauseList;
 	}
