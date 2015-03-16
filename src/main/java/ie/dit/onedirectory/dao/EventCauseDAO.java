@@ -11,5 +11,4 @@ public interface EventCauseDAO {
 
 	Collection<EventCause> getAllEventCauses();
 	public void addEventCause(EventCause eventCause);
-	public void addEventCauses(Collection<EventCause> eventCauseList);
 }

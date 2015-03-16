@@ -1,19 +1,23 @@
 package ie.dit.onedirectory.utilities.test;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.UserTransaction;
-
+import static org.junit.Assert.*;
 import ie.dit.onedirectory.dao.EventCauseDAO;
 import ie.dit.onedirectory.dao.FailureClassDAO;
 import ie.dit.onedirectory.dao.MarketOperatorDAO;
 import ie.dit.onedirectory.dao.UserEquipmentDAO;
 import ie.dit.onedirectory.entities.EventCause;
 import ie.dit.onedirectory.entities.FailedCallData;
-import ie.dit.onedirectory.entities.MarketOperator;
 import ie.dit.onedirectory.entities.FailureClass;
+import ie.dit.onedirectory.entities.MarketOperator;
 import ie.dit.onedirectory.utilities.DataValidator;
+
+import java.util.Date;
+
+import javax.ejb.EJB;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -54,6 +58,9 @@ public class DataValidatorTest {
 	@Inject
 	private UserTransaction utx;
 	
+	@EJB
+	DataValidator validator;
+	
 	@Before
 	public void onStart() throws Exception{
 		clearData();
@@ -62,6 +69,10 @@ public class DataValidatorTest {
 	
 	@Test
 	public void testValidation() {
+		FailedCallData fcd = new FailedCallData();
+		fcd.setDateTime(new Date());
+		assertEquals(true, validator.validFailureIdAndCauseCodeTypes("123", "123"));
+		assertEquals(false, validator.validFailureIdAndCauseCodeTypes("notanumber", "notanumber"));
 		
 	}
 	

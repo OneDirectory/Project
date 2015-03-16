@@ -30,8 +30,4 @@ public class JPAFailureClassDAO implements FailureClassDAO {
 		}
 	}
 
-	public void addFailureClasses(Collection<FailureClass> failureClassList) {
-		entityManager.merge(failureClassList);		
-	}
-
 }

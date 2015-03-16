@@ -11,6 +11,4 @@ public interface FailureClassDAO {
 	
 	public Collection<FailureClass> getAllFailureClasses();
 	public void addFailureClass(FailureClass failureClass);
-	public void addFailureClasses(Collection<FailureClass> failureClassList);
-
 }

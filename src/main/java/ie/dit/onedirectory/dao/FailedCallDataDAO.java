@@ -23,6 +23,5 @@ public interface FailedCallDataDAO {
 	public Collection getAllIMSI();
 	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to);
 	public void addFailedCalledDatum(FailedCallData failedCallData);
-	public void addFailedCalledData(Collection<FailedCallData> failedCallDataList);
 		
 }

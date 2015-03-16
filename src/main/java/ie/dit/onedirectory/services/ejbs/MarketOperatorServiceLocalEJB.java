@@ -28,11 +28,5 @@ public class MarketOperatorServiceLocalEJB implements MarketOperatorServiceLocal
 	public void addMarketOperator(MarketOperator marketOperator) {
 		dao.addMarketOperator(marketOperator);
 	}
-
-	public void addMarketOperators(Collection<MarketOperator> marketOperators) {
-		dao.addMarketOperators(marketOperators);
-	}
-
-	
 	
 }
