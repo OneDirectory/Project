@@ -104,6 +104,10 @@
 				</div>
 			</div>
 		</div>
+		
+		</div>
+				<table class="table" id='tablePeter' name='table'></table>
+			</div>
 	</div>
 
 	<!-- jQuery -->
@@ -116,8 +120,11 @@
 <script>
 var divs = ["imsiCount","modelCount"];
 var visibleDiv = null;
+var $modelTable = $('#tablePeter')
 
 $(function(){
+	
+	
 
 	document.getElementById("imsiCount").style.display='none';
 
@@ -129,6 +136,8 @@ $(function(){
 });
 
 function toggle(divId){
+	removeData();
+ 	removeModelData();
 	if(visibleDiv === divId) {
 		  visibleDiv = null;
 	} else {
@@ -160,7 +169,8 @@ function hideOtherDivs(){
 
  		$( "#submit" ).click(function(e) {
 
- 	removeData();	
+ 	removeData();
+ 	removeModelData();
 	var fromDate=$('#from').val();
 	var toDate=$('#to').val();
 	var myurl;
@@ -273,10 +283,11 @@ function hideOtherDivs(){
 	<!-- US 10 -->
 	<!-- Function to show models -->
 	<script>
-	$(function()) {
-		$("#modelSubmit").click(function(e)) {
+	$(function() {
+		$("#modelSubmit").click(function(e) {
 			
 			removeModelData();
+			removeData();
 			var x = document.getElementById("modelInput");
 			var selected = x.options[x.selectedIndex].text;
 			
@@ -285,18 +296,18 @@ function hideOtherDivs(){
 			
 			$.ajax({
 				type:'GET',
-				url:'http://localhost:8080/project/rest/failedcalldata/model'+selected,
+				url:'http://localhost:8080/project/rest/failedcalldata/model/'+selected,
 				dataType:'json',
 				contentType:"application/json",
 				
 				success:function(data) {
 					$.each(data, function(key, value) {
-						$table.append('<tr><td>' + value[0] + '<tr><td>' + value[1] + '<tr><td>' + selected + '<tr><td>')
+						$modelTable.append('<tr><td>' + value[0] + '</td><td>' + value[1] + '</td><td>' + selected + '</td></tr>')
 					});
 				}
 			});
-		}
-	}
+		});
+	});
 	
 	function createModelTable() {
 		
@@ -314,7 +325,7 @@ function hideOtherDivs(){
 		row.appendChild(colTwo);
 		row.appendChild(colThree);
 
-		$table.append(row);
+		$modelTable.append(row);
 	}
 	
 	function createModelButton() {
@@ -329,14 +340,14 @@ function hideOtherDivs(){
 		button.innerHTML='Search Again';
 		button.addEventListener('click', removeModelData);
 		butDiv.appendChild(button);
-		$table.append(butDiv);
+		$modelTable.append(butDiv);
 	}
 	
 	function removeModelData() {
 		
 		var removeHead=document.getElementById('head');
 		var removeButton=document.getElementById('modelTableButton');
-		$table.empty();
+		$modelTable.empty();
 	}
 	</script>
 	
