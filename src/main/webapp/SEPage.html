@@ -102,14 +102,14 @@
 					<label class="control-label col-sm-2" for="ID">FROM:</label><br>
 
 					<div>
-						<input type="datetime-local" id='from' class="form-control"
+						<input type="datetime-local" id='IMSIFrom' class="form-control"
 							name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
 					</div>
 
 					<label class="control-label col-sm-2" for="ID">TO:</label>
 
 					<div>
-						<input type="datetime-local" id='to' class="form-control"
+						<input type="datetime-local" id='IMSITo' class="form-control"
 							name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
 					</div>
 
@@ -311,8 +311,8 @@ $(function(){
 			
 			removeData();
 		 	removeDataJohn();	
-			var fromDate=$('#from').val();
-			var toDate=$('#to').val();
+			var fromDate=$('#IMSIFrom').val();
+			var toDate=$('#IMSITo').val();
 			var myurl;
 			var isValid=false;
 			

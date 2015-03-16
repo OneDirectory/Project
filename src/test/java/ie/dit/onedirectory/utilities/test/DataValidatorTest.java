@@ -1,10 +1,18 @@
 package ie.dit.onedirectory.utilities.test;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
+
 import ie.dit.onedirectory.dao.EventCauseDAO;
 import ie.dit.onedirectory.dao.FailureClassDAO;
 import ie.dit.onedirectory.dao.MarketOperatorDAO;
 import ie.dit.onedirectory.dao.UserEquipmentDAO;
+import ie.dit.onedirectory.entities.EventCause;
 import ie.dit.onedirectory.entities.FailedCallData;
+import ie.dit.onedirectory.entities.MarketOperator;
+import ie.dit.onedirectory.entities.FailureClass;
 import ie.dit.onedirectory.utilities.DataValidator;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -13,6 +21,7 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -29,6 +38,9 @@ public class DataValidatorTest {
 						MarketOperatorDAO.class.getPackage(),
 						UserEquipmentDAO.class.getPackage(),
 						FailedCallData.class.getPackage(),
+						EventCause.class.getPackage(),
+						FailureClass.class.getPackage(),
+						MarketOperator.class.getPackage(),
 						DataValidator.class.getPackage())
 						.addAsResource("test-persistence.xml",
 						"META-INF/persistence.xml")
@@ -36,9 +48,34 @@ public class DataValidatorTest {
 
 	}
 	
+	@PersistenceContext
+	private EntityManager em;
+
+	@Inject
+	private UserTransaction utx;
+	
+	@Before
+	public void onStart() throws Exception{
+		clearData();
+		startTransaction();
+	}
+	
 	@Test
 	public void testValidation() {
 		
+	}
+	
+	private void clearData() throws Exception {
+		utx.begin();
+		em.joinTransaction();
+		System.out.println("Dumping old records...");
+		em.createQuery("delete from FailedCallData").executeUpdate();
+		utx.commit();
+	}
+
+	private void startTransaction() throws Exception {
+		utx.begin();
+		em.joinTransaction();
 	}
 
 }
