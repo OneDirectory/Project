@@ -33,27 +33,30 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		return q.getResultList();
 	}
 
-	public Collection getFailedCallDataByModel(String model, Date fromDate, Date toDate) {
-		Query tacQ = entityManager.createQuery("select ue.tac from UserEquipment ue where ue.model = :model");
+	public Collection getFailedCallDataByModel(String model, Date fromDate,
+			Date toDate) {
+		Query tacQ = entityManager
+				.createQuery("select ue.tac from UserEquipment ue where ue.model = :model");
 		tacQ.setParameter("model", model);
 		Integer tac = (Integer) tacQ.getResultList().get(0);
-		Query query = entityManager.createQuery("select count(fd.imsi)"
-		+ "from FailedCallData fd where fd.userEquipment.tac = :modelTac "
-		+ "and fd.dateTime between :fromDate and :toDate");
+		Query query = entityManager
+				.createQuery("select count(fd.imsi)"
+						+ "from FailedCallData fd where fd.userEquipment.tac = :modelTac "
+						+ "and fd.dateTime between :fromDate and :toDate");
 		query.setParameter("modelTac", tac);
 		query.setParameter("fromDate", fromDate, TemporalType.DATE);
 		query.setParameter("toDate", toDate, TemporalType.DATE);
 		List result = query.getResultList();
 		return result;
-		}
+	}
 
 	/**
 	 * Returns a list of phone models from the FailedCallData table according to
-	 * their type allocation code (TAC) which is mapped directly to the phone model.
-	 * This list is organised with respect to event ID and cause code for each 
-	 * dropped call.
+	 * their type allocation code (TAC) which is mapped directly to the phone
+	 * model. This list is organised with respect to event ID and cause code for
+	 * each dropped call.
 	 */
-	
+
 	public Collection getEventIdAndCauseCodeByModel(String modelName) {
 		Query tacQuery = entityManager
 				.createQuery("select ue.tac from UserEquipment ue where "
@@ -61,7 +64,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		tacQuery.setParameter("modelName", modelName);
 		Integer typeAllocationCode = (Integer) tacQuery.getResultList().get(0);
 		Query query = entityManager
-				.createQuery("select fd.eventCause.eventId, fd.eventCause.causeCode "
+				.createQuery("select fd.eventCause.eventId, fd.eventCause.causeCode, fd.eventCause.description "
 						+ "from FailedCallData fd where fd.userEquipment.tac = :typeAllocationCode "
 						+ "group by fd.eventCause.eventId, fd.eventCause.causeCode");
 		query.setParameter("typeAllocationCode", typeAllocationCode);
@@ -78,7 +81,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	public Collection getEventIdAndCauseCodeByIMSI(String imsi) {
 		Query query = entityManager
 				.createQuery("select fd.eventCause.causeCode, "
-						+ "fd.eventCause.eventId from FailedCallData fd where fd.imsi= :imsi group by "
+						+ "fd.eventCause.eventId, fd.eventCause.description from FailedCallData fd where fd.imsi= :imsi group by "
 						+ "fd.eventCause.causeCode,fd.eventCause.eventId");
 		query.setParameter("imsi", imsi);
 		List result = query.getResultList();
@@ -88,15 +91,16 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 
 	/**
 	 * 
-	 * Returns the a list of all IMSIs with the total number of failures associated
-	 * with it between a given dates.
+	 * Returns the a list of all IMSIs with the total number of failures
+	 * associated with it between a given dates.
 	 * 
 	 */
 
 	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to) {
-		Query query = entityManager.createQuery("select fd.imsi, count(fd.imsi), sum(fd.duration)"
-				+ "from FailedCallData fd where fd.dateTime between :fromDate  and :toDate"
-				+ " group by fd.imsi");
+		Query query = entityManager
+				.createQuery("select fd.imsi, count(fd.imsi), sum(fd.duration)"
+						+ "from FailedCallData fd where fd.dateTime between :fromDate  and :toDate"
+						+ " group by fd.imsi");
 		query.setParameter("fromDate", from, TemporalType.DATE);
 		query.setParameter("toDate", to, TemporalType.DATE);
 		List result = query.getResultList();
@@ -120,16 +124,17 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	}
 
 	/**
-	 * Returns a list of all IMSIs with call failures between the from and to dates.
+	 * Returns a list of all IMSIs with call failures between the from and to
+	 * dates.
 	 */
-	
+
 	public Collection getAllIMSIWithCallFailuresBetweenDates(Date from, Date to) {
 
 		Query query = entityManager
 				.createQuery("select fd.imsi"
-		+ " from FailedCallData fd where fd.dateTime between :fromDate  and :toDate"
-		+ " group by fd.imsi");
-		
+						+ " from FailedCallData fd where fd.dateTime between :fromDate  and :toDate"
+						+ " group by fd.imsi");
+
 		query.setParameter("fromDate", from, TemporalType.DATE);
 		query.setParameter("toDate", to, TemporalType.DATE);
 		List result = query.getResultList();
