@@ -10,5 +10,4 @@ import javax.ejb.Local;
 public interface MarketOperatorServiceLocal {
 	public Collection<MarketOperator> getMarketOperators();
 	public void addMarketOperator(MarketOperator marketOperator);
-	public void addMarketOperators(Collection<MarketOperator> marketOperators);
 }

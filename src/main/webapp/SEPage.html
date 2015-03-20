@@ -25,7 +25,7 @@
 		<h2>
 			Group one - One Directory <small>Project</small>
 		</h2>
-		<h2>Support Engineer Page</h2>
+		<h2>Support Engineer</h2>
 	</div>
 
 	<div id="wrapper">
@@ -50,7 +50,6 @@
 					<div class="col-lg-12" id='container'>
 						<h1>Search failed data by model</h1>
 
-						<!-- 						<form class="form-horizontal" role="form" method="POST"> -->
 						<div class="form-group" id="myDiv">
 							<div class="col-sm-5">
 								<label class="control-label col-sm-2" for="ID">Model:</label> <select
@@ -61,7 +60,7 @@
 							</div>
 						</div>
 
-						<div>
+						<div >
 							<input type="datetime-local" id='from' class="form-control"
 								name="from" placeholder="yyyy-dd-mm hh:mm" autofocus>
 						</div>
@@ -102,14 +101,14 @@
 					<label class="control-label col-sm-2" for="ID">FROM:</label><br>
 
 					<div>
-						<input type="datetime-local" id='from' class="form-control"
+						<input type="datetime-local" id='IMSIFrom' class="form-control"
 							name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
 					</div>
 
 					<label class="control-label col-sm-2" for="ID">TO:</label>
 
 					<div>
-						<input type="datetime-local" id='to' class="form-control"
+						<input type="datetime-local" id='IMSITo' class="form-control"
 							name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
 					</div>
 
@@ -159,6 +158,8 @@
 		});
 
 		function toggle(divId){
+			removeData();
+		 	removeDataJohn();
 			if(visibleDiv === divId) {
 				  visibleDiv = null;
 			} else {
@@ -282,6 +283,9 @@ $(function(){
 
     function createButton(){
         var button=document.createElement(button);
+        button.setAttribute('class', "col-sm-offset-12 col-sm-10");
+        button.setAttribute('position', 'absolute');
+    	button.setAttribute('top', '50%');
         button.setAttribute('id', 'tableButton');
         button.setAttribute('class','buttonMy');
         button.innerHTML='Search Again';
@@ -294,8 +298,7 @@ $(function(){
         var removeHead=document.getElementById('head');
         var removeButton=document.getElementById('tableButton');
         $table.empty();
-        //$table.remove(removeHead);
-        //$table.remove(removeButton);
+
     }
     </script>
 
@@ -309,8 +312,8 @@ $(function(){
 			
 			removeData();
 		 	removeDataJohn();	
-			var fromDate=$('#from').val();
-			var toDate=$('#to').val();
+			var fromDate=$('#IMSIFrom').val();
+			var toDate=$('#IMSITo').val();
 			var myurl;
 			var isValid=false;
 			

@@ -46,12 +46,12 @@
 					<div class="col-lg-12" id='container'>
 						<h1>Search EventId, CauseCode by IMSI</h1>
 
-							<div class="form-group" id="myDiv">
-								<label class="control-label col-sm-2" for="ID">IMSI:</label> <select
-									class="col-sm-5" id="ID">
-									
-								</select>
-							
+						<div class="form-group" id="myDiv">
+							<label class="control-label col-sm-2" for="ID">IMSI:</label> <select
+								class="col-sm-5" id="ID">
+
+							</select>
+
 
 							<div class="form-group">
 								<div class="col-sm-offset-4 col-sm-10">
@@ -70,28 +70,21 @@
 	</div>
 	<!-- /#wrapper -->
 
-	
+
 	<table class="table" id='table' name='table'>
-		
-<div id="butDiv"></div>
-		</table>
-		
+
+		<div id="butDiv"></div>
+	</table>
+
+
+
+
+	<script src="Resources/js/jquery-1.6.1.min.js"></script>
+	<script src="Resources/js/bootstrap.min.js"></script>
+
 	
 
-
-			<script src="Resources/js/jquery-1.6.1.min.js"></script>
-			<script src="Resources/js/bootstrap.min.js"></script>
-
-			<script>
-	
- $("#menu-toggle").click(function(e) {
-     e.preventDefault();
-     $("#wrapper").toggleClass("toggled");
-  });
-    
-</script>
-
-<script>
+	<script>
 
 var $table = $('#table');
 
@@ -122,7 +115,7 @@ var $table = $('#table');
 
 
 
-<script>
+	<script>
 
 $(function(){
 
@@ -148,7 +141,7 @@ $(function(){
 			
 			$.each(data, function(key, value){
 				
-				$table.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+selected+'</td></tr>');
+				$table.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td><td>'+selected+'</td></tr>');
 			});
 		}
 	  });
@@ -163,14 +156,17 @@ function createTable(){
 	var colOne=document.createElement('th');
 	var colTwo=document.createElement('th');
 	var colThree=document.createElement('th');
+	var colFour=document.createElement('th');
 
 	colOne.innerHTML='Cause Code';
 	colTwo.innerHTML='Event ID';
-	colThree.innerHTML='IMSI';
+	colThree.innerHTML='Description';
+	colFour.innerHTML ='IMSI'
 
 	row.appendChild(colOne);
 	row.appendChild(colTwo);
 	row.appendChild(colThree);
+	row.appendChild(colFour);
 
 	$table.append(row);
 	

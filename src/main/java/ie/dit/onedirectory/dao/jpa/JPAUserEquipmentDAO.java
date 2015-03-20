@@ -36,9 +36,4 @@ public class JPAUserEquipmentDAO implements UserEquipmentDAO {
 		}
 	}
 
-	public void addUserEquipments(Collection<UserEquipment> userEquipmentList) {
-		entityManager.merge(userEquipmentList);
-	}
-
-
 }

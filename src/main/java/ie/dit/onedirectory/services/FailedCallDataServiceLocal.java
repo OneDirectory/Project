@@ -37,6 +37,4 @@ public interface FailedCallDataServiceLocal {
 	
 	public void addFailedCalledDatum(FailedCallData failedCallData);
 	
-	public void addFailedCalledData(Collection<FailedCallData> failedCallDataList);
-	
 }

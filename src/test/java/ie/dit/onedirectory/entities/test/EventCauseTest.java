@@ -116,26 +116,6 @@ public class EventCauseTest {
 
 	}
 
-	@Test
-	public void AddEventCausesTest() throws Exception {
-
-		EventCause ec = new EventCause(13, 47, INITIAL_DESCRIPTION);
-		EventCause ec2 = new EventCause(17, 43, UPDATED_DESCRIPTION);
-		EventCause ec3 = new EventCause(19, 41, UPDATED_DESCRIPTION);
-		EventCause ec4 = new EventCause(23, 37, UPDATED_DESCRIPTION);
-
-		Collection<EventCause> eventCauseList = new ArrayList<EventCause>();
-
-		eventCauseList.add(ec);
-		eventCauseList.add(ec2);
-		eventCauseList.add(ec3);
-		eventCauseList.add(ec4);
-
-		service.addEventCauses(eventCauseList);
-
-		assertEquals("EventCauseServiceLocal Failed to Add", service.getEventCauses().size(), 4);
-	}
-
 	private void clearData() throws Exception {
 		utx.begin();
 		em.joinTransaction();

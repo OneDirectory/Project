@@ -28,9 +28,6 @@ import javax.ejb.Startup;
 @Singleton
 public class DataValidator {
 	
-//	@PersistenceContext
-//	EntityManager entityManager;
-	
 	@EJB
 	EventCauseDAO eventCauseDAO;
 	@EJB

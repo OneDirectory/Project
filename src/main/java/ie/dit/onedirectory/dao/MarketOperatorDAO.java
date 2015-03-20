@@ -11,6 +11,4 @@ public interface MarketOperatorDAO {
 	
 	Collection<MarketOperator> getAllMarketOperators();
 	public void addMarketOperator(MarketOperator marketOperator);
-	public void addMarketOperators(Collection<MarketOperator> marketOperators);
-	
 }

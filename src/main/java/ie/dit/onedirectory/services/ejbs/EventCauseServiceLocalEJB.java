@@ -29,8 +29,4 @@ public class EventCauseServiceLocalEJB implements EventCauseServiceLocal {
 		dao.addEventCause(eventCause);
 	}
 
-	public void addEventCauses(Collection<EventCause> eventCauseList) {
-		dao.addEventCauses(eventCauseList);
-	}
-
 }

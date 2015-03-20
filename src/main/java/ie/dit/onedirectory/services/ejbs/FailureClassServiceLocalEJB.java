@@ -29,8 +29,4 @@ public class FailureClassServiceLocalEJB implements FailureClassServiceLocal {
 		dao.addFailureClass(failureClass);
 	}
 
-	public void addFailureClasses(Collection<FailureClass> failureClassList) {
-		dao.addFailureClasses(failureClassList);
-	}
-
 }

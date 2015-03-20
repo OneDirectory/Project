@@ -33,8 +33,4 @@ public class UserEquipmentServiceLocalEJB implements UserEquipmentServiceLocal {
 		dao.addUserEquipment(userEquipment);
 	}
 
-	public void addUserEquipments(Collection<UserEquipment> userEquipmentList) {
-		dao.addUserEquipments(userEquipmentList);
-	}
-
 }
