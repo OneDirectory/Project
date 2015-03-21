@@ -48,7 +48,7 @@ public class DataValidator {
 	public void onStart(){
 		logger = Logger.getLogger("ErrorLog");
 		try {
-			fileHandler = new FileHandler("/Users/Darren/Project/errors.log");
+			fileHandler = new FileHandler("/home/drrn/Project/errors.log");
 			logger.addHandler(fileHandler);
 			SimpleFormatter formatter = new SimpleFormatter();
 			fileHandler.setFormatter(formatter);

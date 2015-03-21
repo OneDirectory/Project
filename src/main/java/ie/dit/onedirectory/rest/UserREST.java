@@ -99,7 +99,7 @@ public class UserREST {
 
 			builder = Response
 					.created(URI
-							.create("http://localhost:8080/project/rest/user/"
+							.create("http://localhost:8080/Project-0.0.1-SNAPSHOT/rest/user/"
 									+ id));
 
 		}
