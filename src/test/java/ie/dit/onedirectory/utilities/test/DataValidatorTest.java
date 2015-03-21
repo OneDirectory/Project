@@ -9,6 +9,7 @@ import ie.dit.onedirectory.entities.EventCause;
 import ie.dit.onedirectory.entities.FailedCallData;
 import ie.dit.onedirectory.entities.FailureClass;
 import ie.dit.onedirectory.entities.MarketOperator;
+import ie.dit.onedirectory.services.FailedCallDataServiceLocal;
 import ie.dit.onedirectory.utilities.DataValidator;
 
 import java.util.Date;
@@ -45,7 +46,8 @@ public class DataValidatorTest {
 						EventCause.class.getPackage(),
 						FailureClass.class.getPackage(),
 						MarketOperator.class.getPackage(),
-						DataValidator.class.getPackage())
+						DataValidator.class.getPackage(),
+						FailedCallDataServiceLocal.class.getPackage())
 						.addAsResource("test-persistence.xml",
 						"META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
@@ -60,6 +62,9 @@ public class DataValidatorTest {
 	
 	@EJB
 	DataValidator validator;
+	
+	@EJB
+	FailedCallDataServiceLocal service;
 	
 	@Before
 	public void onStart() throws Exception{
