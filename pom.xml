@@ -30,6 +30,13 @@
 					<ejbVersion>3.1</ejbVersion>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.0.201403182114</version>
+			</plugin>
+			
 		</plugins>
 	</build>
 	<dependencies>
@@ -73,6 +80,24 @@
 			<version>1.0.3.Final</version>
 			<scope>test</scope>
 		</dependency>
+		
+				<!-- JaCoCo Core APIs and implementations -->
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>org.jacoco.core</artifactId>
+			<version>0.7.2.201409121644</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Jacoco integration to add code coverage to Arquillian -->
+		<dependency>
+			<groupId>org.jboss.arquillian.extension</groupId>
+			<artifactId>arquillian-jacoco</artifactId>
+			<version>1.0.0.Alpha7</version>
+			<scope>test</scope>
+		</dependency>
+		
+		
 	</dependencies>
 	<profiles>
 		<profile>
