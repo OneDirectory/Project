@@ -16,8 +16,25 @@
 <link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
 </head>
 
-<body>
+
+
 <body class="adminPage">
+
+<%
+	String user = null;
+	if(session.getAttribute("user")==null){
+		response.sendRedirect("index.html");
+	}else user = (String) session.getAttribute("user");
+	String userName = null;
+	String sessionID = null;
+	Cookie[] cookies = request.getCookies();
+	if(cookies !=null){
+	for(Cookie cookie : cookies){
+    if(cookie.getName().equals("user")) userName = cookie.getValue();
+    if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+	}
+}
+%>
 	<div class="page-header">
 		<br>
 		<h2>
