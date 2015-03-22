@@ -51,7 +51,7 @@
 				<li><a href="#" onclick="toggle('imsiCount');">Affected IMSI with Count</a></li>
 				<li><a href="#" onclick="toggle('modelCount');">Call Failure by Model</a></li>
 
-				<li><a href="index.html">Log out</a></li>
+				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
 		</div>

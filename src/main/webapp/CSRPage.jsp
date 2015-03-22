@@ -50,7 +50,7 @@
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
 				<li><a href="#">About</a></li>
 				<li><a href="#">Search by IMSI</a></li>
-				<li><a href="index.html">Log out</a></li>
+				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
 		</div>
