@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +19,25 @@
 
 <body>
 <body class="adminPage">
+
+<%
+	String user = null;
+	if(session.getAttribute("user")==null){
+		response.sendRedirect("index.html");
+	}else user = (String) session.getAttribute("user");
+	String userName = null;
+	String sessionID = null;
+	Cookie[] cookies = request.getCookies();
+	if(cookies !=null){
+	for(Cookie cookie : cookies){
+    if(cookie.getName().equals("user")) userName = cookie.getValue();
+    if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+	}
+}
+%>
+
+
+
 	<div class="page-header">
 		<br>
 		<h2>
@@ -181,7 +201,7 @@ function hideOtherDivs(){
 
 
 
-<!-- CheckFormScript -->
+
 function check_form(){
 				
 var fieldID = document.getElementById("id").value;		
@@ -225,7 +245,7 @@ var idTaken = false;
 
 }
 
-<!-- RequestUserAndDisplayScript -->
+
 	$(function(){
 
 		
