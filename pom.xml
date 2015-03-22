@@ -7,7 +7,7 @@
 	<packaging>war</packaging>
 	<name>Project</name>
 	<properties>
-		<skipTests>false</skipTests>
+		<skipTests>true</skipTests>
 	</properties>
 	<build>
 		<finalName>project</finalName>

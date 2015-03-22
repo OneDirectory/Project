@@ -31,6 +31,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
 
 
@@ -95,12 +96,18 @@ public class UserREST {
 
 			validateUser(user);
 			service.addUser(user);
-			// builder = Response.ok();
-
-			builder = Response
-					.created(URI
-							.create("http://localhost:8080/project/rest/user/"
-									+ id));
+			
+			
+			
+			UriBuilder uri = UriBuilder.fromUri("http://localhost:8080/project/adminPage.html");
+			URI location = uri.build();
+			builder = Response.seeOther(location);
+			return builder.build();
+			
+			
+//			builder = Response
+//					.created(URI
+//							.create(location.toString()));
 
 		}
 
@@ -135,6 +142,8 @@ public class UserREST {
 		}
 
 	}
+	
+	
 	
 	/**
 	 * 
