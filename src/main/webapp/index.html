@@ -22,7 +22,7 @@
 
 	<!-- creating Sign in form, source (incl css): http://getbootstrap.com/examples/signin/ -->
 	<!--<div class="container" "col-md-4 col-md-offset-4">-->
-	<form action="http://localhost:8080/project/LoginServlet" method="post">
+	<form action="http://localhost:8080/project/LoginServlet" method="post" onsubmit="return check_form();">
 		<div class="col-md-4 col-md-offset-2">
 
 			<h2 class="form-signin-heading">Please sign in</h2>
@@ -52,12 +52,10 @@
 
 	<script>
 
-	$(function(){
-		var $users = $('#user');
-
-		$( "#submit" ).click(function(e) {
-		
+function check_form(){
+				
 		var pass= $("#pass").val();
+		var userID;
 
 		$.ajax({
 			type: 'GET',
@@ -70,34 +68,35 @@
 					var realPass= retData.userPassword;
 					var type = retData.userType;
 					if(realPass===pass)	{
-						goToUserPage(type);
+						return true;
 					}else
 						alert('Incorrect Password');
+						return false;
 					
 					}
 			
 				else{
 					alert('User ID does not exist');
+					return false;
 				}
 					
 				}
 			});
-		});
-	});
-
-	function goToUserPage(type){
-		if(type==="Support Engineer"){
-			location="SEPage.jsp";
-		}
-		else if(type==="Network Management Engineer"){
-			location="NMEPage.jsp";
-		}
-		else if(type==="Customer Service Rep"){
-			location="CSRPage.jsp";
-		}
-		else 
-			location="adminPage.jsp"	
-		}
+		
+	}
+// 	function goToUserPage(type){
+// 		if(type==="Support Engineer"){
+// 			location="SEPage.jsp";
+// 		}
+// 		else if(type==="Network Management Engineer"){
+// 			location="NMEPage.jsp";
+// 		}
+// 		else if(type==="Customer Service Rep"){
+// 			location="CSRPage.jsp";
+// 		}
+// 		else 
+// 			location="adminPage.jsp"	
+// 		}
 
 	</script>
 </body>

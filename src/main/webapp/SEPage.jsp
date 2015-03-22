@@ -54,7 +54,7 @@
 						data by model</a></li>
 				<li><a href="#" onclick="toggle('johnsQuery');">List Call
 						Failures by IMSI</a></li>
-				<li><a href="index.html">Log out</a></li>
+				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
 		</div>

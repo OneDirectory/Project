@@ -53,7 +53,10 @@
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
 				<li><a href="#" onclick="toggle('createUser');">Add a user</a></li>
 				<li><a href="#" onclick="toggle('import');">Import data</a></li>
-				<li><a href="index.html">Log out</a></li>
+				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
+				
+	
+				
 			</ul>
 			<br>
 		</div>
