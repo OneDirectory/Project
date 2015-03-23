@@ -20,6 +20,7 @@ public class LogOutServlet extends HttpServlet {
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("JSESSIONID")) {
+					// Can write to logs here
 					break;
 				}
 			}
@@ -28,6 +29,6 @@ public class LogOutServlet extends HttpServlet {
         if(session != null){
             session.invalidate();
         }
-		response.sendRedirect("http://localhost:8080/project/index.html");
+		response.sendRedirect("http://localhost:8080/project/index.jsp");
 	}
 }
