@@ -138,11 +138,13 @@
 
 
 			</div>
+			<div style="height:250px; width:800px; overflow:auto;">
+			
 			<table class="table" id='tableJohn' name='table'>
 
 
 			</table>
-
+</div>
 
 		</div>
 		<!-- /#wrapper -->
@@ -244,7 +246,7 @@ $(function(){
 	var isValid=false;
 	
 	if(validateEntry(fromDate, toDate)){	
-		myurl='http://localhost:8080/project/rest/failedcalldata/getFailedCallDataByModel/'+selected+'Â£'+fromDate+'Â£'+toDate;
+		myurl='http://localhost:8080/project/rest/failedcalldata/getFailedCallDataByModel/'+selected+'£'+fromDate+'£'+toDate;
 		isValid=true;
 		}
 
@@ -335,7 +337,7 @@ $(function(){
 			var isValid=false;
 			
 			if(validateEntry(fromDate, toDate)){	
-				myurl='http://localhost:8080/project/rest/failedcalldata/dateIMSI/'+fromDate+'Â£'+toDate;
+				myurl='http://localhost:8080/project/rest/failedcalldata/dateIMSI/'+fromDate+'£'+toDate;
 				isValid=true;
 				}
 			
@@ -400,7 +402,7 @@ $(function(){
  		var row = document.createElement('tr');
  		
  		row.setAttribute('id', 'head');
- 		
+ 		row.setAttribute('display', 'block');
  		var colOne=document.createElement('th');
 
  		colOne.innerHTML='IMSI';

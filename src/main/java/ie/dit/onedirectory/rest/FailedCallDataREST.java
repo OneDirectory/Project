@@ -122,6 +122,10 @@ public class FailedCallDataREST {
 		return service.getAllIMSIWithCallFailuresBetweenDates(sqlDateFrom, sqlDateTo);
 	}
 
+	
+	// This method has been heavily modified to accommodate a hacky
+	// way of paginating a table. This is not the end result of this
+	// Needs refactored.
 	@GET
 	@Path("/count/{dates}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -131,13 +135,30 @@ public class FailedCallDataREST {
 		String[] dates = datesPassed.split("£");
 		String fromDate = dates[0];
 		String toDate = dates[1];
+		int indexFrom = Integer.parseInt(dates[2]);
+		int indexTo = Integer.parseInt(dates[3]);
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date from = sdf.parse(fromDate);
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		Date to = sdf1.parse(toDate);
 		java.sql.Date sqlDateFrom = new java.sql.Date(from.getTime());
 		java.sql.Date sqlDateTo = new java.sql.Date(to.getTime());
-		return service.getCountBetweenDatesForAllIMSI(sqlDateFrom, sqlDateTo);
+		
+		ArrayList list = (ArrayList) service.getCountBetweenDatesForAllIMSI(sqlDateFrom, sqlDateTo);
+		
+		int length = list.size();
+		Collection listReturn = new ArrayList();
+		
+		if(length>10){
+			for(int i=indexFrom ; i<indexTo ; i++){
+				listReturn.add(list.get(i));
+			}
+		}
+		
+		return listReturn;
+		
+		
 	}
 
 	/**
