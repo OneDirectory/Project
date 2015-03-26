@@ -81,7 +81,7 @@ public class FailureClassRESTIT{
         .statusCode(200).contentType(ContentType.JSON)
         .log().ifError()
      .when()
-     .get("/rest/FailureClasses");
+     .get("/rest/failureclasses");
     }
     
     @Test
@@ -90,7 +90,7 @@ public class FailureClassRESTIT{
         .statusCode(204)
         .log().ifError()
      .when()
-     .get("/rest/FailureClasses/add");
+     .get("/rest/failureclasses/add");
     }
     
 }
