@@ -18,6 +18,22 @@
 
 
 <body class="adminPage">
+
+<%
+	String user = null;
+	if(session.getAttribute("user")==null){
+		response.sendRedirect("index.jsp");
+	}else user = (String) session.getAttribute("user");
+	String userName = null;
+	String sessionID = null;
+	Cookie[] cookies = request.getCookies();
+	if(cookies !=null){
+	for(Cookie cookie : cookies){
+    if(cookie.getName().equals("user")) userName = cookie.getValue();
+    if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+	}
+}
+%>
 	<div class="page-header">
 		<br>
 		<h2>
@@ -35,7 +51,7 @@
 				<li><a href="#" onclick="toggle('imsiCount');">Affected IMSI with Count</a></li>
 				<li><a href="#" onclick="toggle('modelCount');">Call Failure by Model</a></li>
 
-				<li><a href="index.html">Log out</a></li>
+				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
 		</div>
@@ -120,6 +136,10 @@
 var divs = ["imsiCount","modelCount"];
 var visibleDiv = null;
 var $modelTable = $('#tablePeter')
+var indexFrom=0;
+var indexTo=5
+var fromDate;
+var toDate;
 
 $(function(){
 	
@@ -169,13 +189,13 @@ function hideOtherDivs(){
 
  	removeData();
  	removeModelData();
-	var fromDate=$('#from').val();
-	var toDate=$('#to').val();
+	fromDate=$('#from').val();
+	toDate=$('#to').val();
 	var myurl;
 	var isValid=false;
 	
 	if(validateEntry(fromDate, toDate)){	
-		myurl='http://localhost:8080/project/rest/failedcalldata/count/'+fromDate+'Â£'+toDate;
+		myurl='http://localhost:8080/project/rest/failedcalldata/count/'+fromDate+'£'+toDate+'£0£5';
 		isValid=true;
 		}
 
@@ -266,8 +286,37 @@ function hideOtherDivs(){
  		button.addEventListener('click', removeData);
  		butDiv.appendChild(button);
  		$table.append(butDiv);
+
+ 		// This button added for pagination
+ 		// all logic in click method
+ 		var moreButton = document.createElement('button');
+ 		moreButton.setAttribute('class','btn btn-primary');
+ 		moreButton.innerHTML='LoadMore';
+ 		moreButton.addEventListener('click', getMoreRecords);
+ 		butDiv.appendChild(moreButton)
  		
  	}
+
+ 	// we increase by 5 both indexes as these are the new limits we require
+ 	// that will satisfy our table size
+ 	function getMoreRecords(){
+ 	 	$table.empty();
+ 	 	indexFrom = indexFrom+5;
+ 	 	indexTo = indexTo+5;
+
+ 	 	$.ajax({
+
+ 	 		type: 'GET',
+ 	 		url: 'http://localhost:8080/project/rest/failedcalldata/count/'+fromDate+'£'+toDate+'£'+indexFrom+'£'+indexTo,
+ 	 		success: function(data){
+ 	 	 			createTable();
+ 	 	 			createButton();
+ 	 	 			$.each(data, function(key, value){
+ 	 	 				$table.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td></tr>');
+ 	 	 	 		});
+ 	 	 	 	} 	 					
+ 	 	 });
+ 	 }
 
  	function removeData(){
  		var removeHead=document.getElementById('head');

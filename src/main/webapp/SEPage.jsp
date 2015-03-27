@@ -18,8 +18,25 @@
 <script src="js/selectize.js"></script>
 </head>
 
-<body>
+
 <body class="adminPage">
+<%
+	String user = null;
+	if(session.getAttribute("user")==null){
+		response.sendRedirect("index.jsp");
+	}else user = (String) session.getAttribute("user");
+	String userName = null;
+	String sessionID = null;
+	Cookie[] cookies = request.getCookies();
+	if(cookies !=null){
+	for(Cookie cookie : cookies){
+    if(cookie.getName().equals("user")) userName = cookie.getValue();
+    if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+	}
+}
+%>
+
+
 	<div class="page-header">
 		<br>
 		<h2>
@@ -37,7 +54,7 @@
 						data by model</a></li>
 				<li><a href="#" onclick="toggle('johnsQuery');">List Call
 						Failures by IMSI</a></li>
-				<li><a href="index.html">Log out</a></li>
+				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
 		</div>
@@ -121,11 +138,13 @@
 
 
 			</div>
+			<div style="height:250px; width:800px; overflow:auto;">
+			
 			<table class="table" id='tableJohn' name='table'>
 
 
 			</table>
-
+</div>
 
 		</div>
 		<!-- /#wrapper -->
@@ -227,7 +246,7 @@ $(function(){
 	var isValid=false;
 	
 	if(validateEntry(fromDate, toDate)){	
-		myurl='http://localhost:8080/project/rest/failedcalldata/getFailedCallDataByModel/'+selected+'Â£'+fromDate+'Â£'+toDate;
+		myurl='http://localhost:8080/project/rest/failedcalldata/getFailedCallDataByModel/'+selected+'£'+fromDate+'£'+toDate;
 		isValid=true;
 		}
 
@@ -318,7 +337,7 @@ $(function(){
 			var isValid=false;
 			
 			if(validateEntry(fromDate, toDate)){	
-				myurl='http://localhost:8080/project/rest/failedcalldata/dateIMSI/'+fromDate+'Â£'+toDate;
+				myurl='http://localhost:8080/project/rest/failedcalldata/dateIMSI/'+fromDate+'£'+toDate;
 				isValid=true;
 				}
 			
@@ -383,7 +402,7 @@ $(function(){
  		var row = document.createElement('tr');
  		
  		row.setAttribute('id', 'head');
- 		
+ 		row.setAttribute('display', 'block');
  		var colOne=document.createElement('th');
 
  		colOne.innerHTML='IMSI';

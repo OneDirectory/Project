@@ -16,8 +16,25 @@
 <link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
 </head>
 
-<body>
+
+
 <body class="adminPage">
+
+<%
+	String user = null;
+	if(session.getAttribute("user")==null){
+		response.sendRedirect("index.jsp");
+	}else user = (String) session.getAttribute("user");
+	String userName = null;
+	String sessionID = null;
+	Cookie[] cookies = request.getCookies();
+	if(cookies !=null){
+	for(Cookie cookie : cookies){
+    if(cookie.getName().equals("user")) userName = cookie.getValue();
+    if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+	}
+}
+%>
 	<div class="page-header">
 		<br>
 		<h2>
@@ -33,7 +50,7 @@
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
 				<li><a href="#">About</a></li>
 				<li><a href="#">Search by IMSI</a></li>
-				<li><a href="index.html">Log out</a></li>
+				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
 		</div>

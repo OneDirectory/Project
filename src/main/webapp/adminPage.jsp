@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +19,25 @@
 
 <body>
 <body class="adminPage">
+
+<%
+	String user = null;
+	if(session.getAttribute("user")==null){
+		response.sendRedirect("index.jsp");
+	}else user = (String) session.getAttribute("user");
+	String userName = null;
+	String sessionID = null;
+	Cookie[] cookies = request.getCookies();
+	if(cookies !=null){
+	for(Cookie cookie : cookies){
+    if(cookie.getName().equals("user")) userName = cookie.getValue();
+    if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+	}
+}
+%>
+
+
+
 	<div class="page-header">
 		<br>
 		<h2>
@@ -33,7 +53,10 @@
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
 				<li><a href="#" onclick="toggle('createUser');">Add a user</a></li>
 				<li><a href="#" onclick="toggle('import');">Import data</a></li>
-				<li><a href="index.html">Log out</a></li>
+				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
+				
+	
+				
 			</ul>
 			<br>
 		</div>
@@ -104,19 +127,19 @@
 					</div>
 				</div>
 			</div>
-			
-			<table class="table" id='table' name='table'>
-			<tr>
-				<th>UserID</th>
-				<th>Name</th>
-				<th>UserType</th>
 
-			</tr>
+			<table class="table" id='table' name='table'>
+				<tr>
+					<th>UserID</th>
+					<th>Name</th>
+					<th>UserType</th>
+
+				</tr>
 			</table>
-		
+
 		</div>
 		<!-- /#page-content-wrapper -->
-		
+
 
 	</div>
 	<!-- /#wrapper -->
@@ -124,26 +147,27 @@
 	<div id="import">
 		<h1>Import Failed Call Data</h1>
 		<form action="rest/failedcalldata/upload" method="post"
-		enctype="multipart/form-data">
-		<p>
-			Please select file: <input type="file" name="selectedFile" />
-		</p>
-		<input type="submit" value="Upload" />
-	</form>
+			enctype="multipart/form-data">
+			<p>
+				Please select file: <input type="file" name="selectedFile" />
+			</p>
+			<input type="submit" value="Upload" />
+		</form>
 	</div>
 
 
 
-<!-- jQuery -->
-<script src="Resources/js/jquery-1.6.1.min.js"></script>
+	<!-- jQuery -->
+	<script src="Resources/js/jquery-1.6.1.min.js"></script>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="Resources/js/bootstrap.min.js"></script>
+	<!-- Bootstrap Core JavaScript -->
+	<script src="Resources/js/bootstrap.min.js"></script>
 
-<!-- Menu Toggle Script -->
-<script>
+	<!-- Menu Toggle Script -->
+	<script>
 var divs = ["createUser","import"];
 var visibleDiv = null;
+var ids = [];
 
 
 $(function(){
@@ -178,19 +202,31 @@ function hideOtherDivs(){
 	}
 }
 
-<!-- CheckFormScript -->
+
+
+
 function check_form(){
 				
 var fieldID = document.getElementById("id").value;		
 var fieldPassword = document.getElementById("password").value;
 var fieldFName = document.getElementById("fName").value;
 var fieldLName = document.getElementById("lName").value;
-//var fieldType = document.getElementById(elementId);
+var idTaken = false;
 
-	if(fieldID.match(/^[0-9]+$/) && (fieldID.length<4 || field.length>6) ){
+
+	
+
+
+	if(fieldID.match(/^[0-9]+$/)){
+		for (var i = 0; i < ids.length; i++) {
+	    	if(fieldID==ids[i]){
+	        	alert("ID is already Taken")
+	        	return false;
+	        	}
+		}
 					
 	}else{
-		alert('Please enter numeric ID between 4-6 length');
+		alert('Please enter numeric ID');
 		return false;
 		}
 	if(fieldPassword.length<4 || fieldPassword.length>6){
@@ -206,16 +242,18 @@ var fieldLName = document.getElementById("lName").value;
 		alert('Enter a last name');
 		return false;
 	}
-				
+
+	alert("User Added to Database");			
 	return true;
 
 }
 
-<!-- RequestUserAndDisplayScript -->
+
 	$(function(){
 
 		
     var $users = $('#table');
+    
 
 	$.ajax({
 		type: 'GET',
@@ -223,7 +261,8 @@ var fieldLName = document.getElementById("lName").value;
 		success: function(users){
 			$.each(users, function(i, user){
 			$users.append('<tr><td>'+user.userID+'</td><td>'+user.userFName+' '+user.userSName+'</td><td>'+user.userType+'</td></tr>');
-				});
+				ids[i] = user.userID;
+			});
 			}
 
 		});

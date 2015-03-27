@@ -7,8 +7,12 @@ http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 		<configuration>
 			<!-- <property name="jbossHome">C:\JavaMy\jboss-as-7.1.1.Final</property> -->
 			<!-- <property name="jbossHome">/usr/local/share/jboss</property> -->
+
  			 <property name="jbossHome">/opt/jboss</property>  
 			<!-- <property name="jbossHome">/usr/local/jboss</property> -->
+<!-- 			 <property name="jbossHome">/opt/jboss</property>  -->
+		<!-- 	<property name="jbossHome">C:\Software\jboss-as-7.1.1.Final</property> -->
+
 			<!-- peter's location -->
 		    <!-- <property name="jbossHome">C:\jboss-as-7.1.1.Final</property> -->
 		</configuration>
