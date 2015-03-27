@@ -218,7 +218,6 @@ public class FailedCallDataREST {
 	@Consumes("multipart/form-data")
 	public Response uploadFailedCallData(@MultipartForm FileUploadForm form)
 			throws IOException {
-		List<FailedCallData> failedCallDataList = new ArrayList<FailedCallData>();
 		HSSFRow row;
 		ByteArrayInputStream stream = new ByteArrayInputStream(form.getFileData());
 		HSSFWorkbook workbook= new HSSFWorkbook(stream);
