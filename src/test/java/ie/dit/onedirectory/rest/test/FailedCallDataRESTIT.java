@@ -81,7 +81,7 @@ public class FailedCallDataRESTIT{
         .statusCode(200).contentType(ContentType.JSON)
         .log().ifError()
      .when()
-     .get("/rest/FailedCallData");
+     .get("/rest/failedcalldata");
     }
     
     @Test
@@ -90,7 +90,7 @@ public class FailedCallDataRESTIT{
         .statusCode(204)
         .log().ifError()
      .when()
-     .get("/rest/FailedCallData/add");
+     .get("/rest/failedcalldata/add");
     }
     
 }
