@@ -1,24 +1,41 @@
-package ie.dit.onedirectory.REST.test;
+package ie.dit.onedirectory.rest.test;
 
 import static com.jayway.restassured.RestAssured.expect;
 import static com.jayway.restassured.RestAssured.config;
+import static com.jayway.restassured.RestAssured.with;
+import ie.dit.onedirectory.utilities.FileUploadForm;
+import static com.jayway.restassured.RestAssured.given;
+
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.poi.util.IOUtils;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Before;
+
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.config.LogConfig;
+
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import com.jayway.restassured.http.ContentType;
 
+
+
 @RunWith(Arquillian.class)
-public class FailureClassRESTIT{
+public class MarketOperatorRESTIT{
+
+	private static final String TEST_FILE = "src/test/resources/data.xls";
 
 	@Deployment
 	public static WebArchive createDeployment() {
@@ -39,7 +56,9 @@ public class FailureClassRESTIT{
 						.setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 
-		File[] libs = Maven.resolver()
+		File[] libs;
+
+		libs = Maven.resolver()
 				.resolve("com.jayway.restassured:rest-assured:2.4.0")
 				.withTransitivity().as(File.class);
 		archive.addAsLibraries(libs);
@@ -48,49 +67,36 @@ public class FailureClassRESTIT{
 				.withTransitivity().as(File.class);
 		archive.addAsLibraries(libs);
 
-		libs = Maven.resolver().resolve("org.apache.commons:commons-io:1.3.2")
-				.withTransitivity().as(File.class);
-		archive.addAsLibraries(libs);
-
-		libs = Maven.resolver()
-				.resolve("commons-logging:commons-logging:1.1.3")
-				.withTransitivity().as(File.class);
-		archive.addAsLibraries(libs);
-
-		libs = Maven.resolver()
-				.resolve("org.glassfish:javax.json:1.0")
-				.withTransitivity().as(File.class);
-		archive.addAsLibraries(libs);
-
 		return archive;
+	}
 
-	}
-	
 	@Before
-	public void setUp() throws InterruptedException{
-	RestAssured.config = config()
-			.logConfig(new LogConfig(System.out, true));
-	RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-	RestAssured.basePath = "test";
-	RestAssured.port = 8080;
+	public void setUp() throws InterruptedException, IOException{
+		RestAssured.config = config()
+				.logConfig(new LogConfig(System.out, true));
+		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+		RestAssured.basePath = "test";
+		RestAssured.port = 8080;
 	}
-	
-    @Test
-    public void testEndPoint() {
-    	expect()
-        .statusCode(200).contentType(ContentType.JSON)
-        .log().ifError()
-     .when()
-     .get("/rest/failureclasses");
-    }
-    
-    @Test
-    public void testAdd() {
-    	expect()
-        .statusCode(204)
-        .log().ifError()
-     .when()
-     .get("/rest/failureclasses/add");
-    }
-    
+
+	@Test
+	public void testEndPoint() {
+		expect()
+		.statusCode(200)
+		.contentType(ContentType.JSON)
+		.log().ifError()
+		.when()
+		.get("/rest/marketoperators");
+	}
+
+	@Test
+	public void testUpload() throws IOException {	
+		given()
+		.multiPart("selectedFile", new File(TEST_FILE))
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.post("/rest/marketoperators/upload");	
+	}
 }

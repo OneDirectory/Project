@@ -39,14 +39,16 @@ public class MarketOperatorTest {
 	public static Archive<?> createDeployment()
 	{		
 		return ShrinkWrap.create(WebArchive.class, "test.war")
-				.addPackages(true, 
-						MarketOperatorServiceLocalEJB.class.getPackage(),
-						MarketOperatorServiceLocal.class.getPackage(),
-						MarketOperatorDAO.class.getPackage(),
-						JPAMarketOperatorDAO.class.getPackage(),
-						MarketOperator.class.getPackage(),
-						MarketOperatorId.class.getPackage(),
-						DataValidator.class.getPackage())
+				.addPackages(true,
+						"ie.dit.onedirectory.dao",
+						"ie.dit.onedirectory.dao.jpa",
+						"ie.dit.onedirectory.entities",
+						"ie.dit.onedirectory.entities.pks",
+						"ie.dit.onedirectory.rest",
+						"ie.dit.onedirectory.services",
+						"ie.dit.onedirectory.services.ejbs",
+						"ie.dit.onedirectory.utilities"
+						)
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
@@ -56,7 +58,7 @@ public class MarketOperatorTest {
 
 	@Inject
 	private UserTransaction utx;
-	
+
 	@EJB
 	MarketOperatorServiceLocal service;
 
@@ -64,8 +66,8 @@ public class MarketOperatorTest {
 	private static String UPDATED_COUNTRY = "SWEDEN";
 	private static String INITIAL_OPERATOR_NAME = "VERIZON WIRELESS";
 	private static String UPDATED_OPERATOR_NAME = "ALIANT MOBILITY CA";
-	
-	
+
+
 	@Before
 	public void preparePersistenceTest() throws Exception {
 		clearData();
@@ -92,7 +94,7 @@ public class MarketOperatorTest {
 		MarketOperator updatedEC = em.find(MarketOperator.class, ecID);
 
 		assertEquals("Update Failed", UPDATED_COUNTRY, loadedEC.getCountry());
-		
+
 		loadedEC.setOperatorName(UPDATED_OPERATOR_NAME);
 		updatedEC = em.find(MarketOperator.class, ecID);
 
@@ -107,14 +109,14 @@ public class MarketOperatorTest {
 	public void ServiceLocalTest() throws Exception {
 
 		MarketOperator ec = new MarketOperator(13, 47, INITIAL_COUNTRY, INITIAL_OPERATOR_NAME);
-		
+
 		service.addMarketOperator(ec);
-		
+
 		assertEquals("Failed to Add", service.getMarketOperators().size(), 1);
 
 		MarketOperator ec2 = new MarketOperator(17, 31,UPDATED_COUNTRY, UPDATED_OPERATOR_NAME);
 		service.addMarketOperator(ec2);
-		
+
 		assertEquals("Failed to Add", service.getMarketOperators().size(), 2);
 	}
 

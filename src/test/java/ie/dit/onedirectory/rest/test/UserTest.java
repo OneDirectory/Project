@@ -1,4 +1,4 @@
-package ie.dit.onedirectory.REST.test;
+package ie.dit.onedirectory.rest.test;
 
 import ie.dit.onedirectory.dao.UserDAO;
 import ie.dit.onedirectory.dao.jpa.UserDAOImplemetation;

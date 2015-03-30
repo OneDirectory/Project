@@ -1,4 +1,4 @@
-package ie.dit.onedirectory.REST.test;
+package ie.dit.onedirectory.rest.test;
 
 import static com.jayway.restassured.RestAssured.expect;
 import static com.jayway.restassured.RestAssured.config;
@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
 import com.jayway.restassured.http.ContentType;
 
 @RunWith(Arquillian.class)
-public class EventCauseRESTIT{
+public class FailedCallDataRESTIT{
 
 	@Deployment
 	public static WebArchive createDeployment() {
@@ -81,7 +81,7 @@ public class EventCauseRESTIT{
         .statusCode(200).contentType(ContentType.JSON)
         .log().ifError()
      .when()
-     .get("/rest/EventCauses");
+     .get("/rest/failedcalldata");
     }
     
     @Test
@@ -90,7 +90,7 @@ public class EventCauseRESTIT{
         .statusCode(204)
         .log().ifError()
      .when()
-     .get("/rest/EventCauses/add");
+     .get("/rest/failedcalldata/add");
     }
     
 }

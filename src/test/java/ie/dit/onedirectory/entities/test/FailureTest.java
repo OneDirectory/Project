@@ -37,15 +37,16 @@ public class FailureTest {
 	public static Archive<?> createDeployment()
 	{		
 		return ShrinkWrap.create(WebArchive.class, "test.war")
-				.addPackages(true, 
-						FailureClassServiceLocalEJB.class.getPackage(),
-						FailureClassServiceLocal.class.getPackage(),
-						FailureClassDAO.class.getPackage(),
-						JPAFailureClassDAO.class.getPackage(),
-						//FailureClassREST.class.getPackage(),
-						FailureClass.class.getPackage(),
-						DataValidator.class.getPackage())
-						//FailureClassId.class.getPackage())
+				.addPackages(true,
+						"ie.dit.onedirectory.dao",
+						"ie.dit.onedirectory.dao.jpa",
+						"ie.dit.onedirectory.entities",
+						"ie.dit.onedirectory.entities.pks",
+						"ie.dit.onedirectory.rest",
+						"ie.dit.onedirectory.services",
+						"ie.dit.onedirectory.services.ejbs",
+						"ie.dit.onedirectory.utilities"
+						)
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
@@ -79,7 +80,7 @@ public class FailureTest {
 		FailureClass ec = new FailureClass(13, 
 				INITIAL_DESCRIPTION
 				);
-		
+
 		em.persist(ec);
 
 		Integer ecID = 13; 
@@ -90,7 +91,7 @@ public class FailureTest {
 		loadedEC.setDescription(UPDATED_DESCRIPTION);
 		FailureClass updatedEC = em.find(FailureClass.class, ecID);
 		assertEquals("Update Failed", UPDATED_DESCRIPTION, loadedEC.getDescription());
-		
+
 		em.remove(updatedEC);
 		FailureClass shouldBeNull = em.find(FailureClass.class, ecID);
 		assertNull("Event Cause Failed to delete", shouldBeNull);
@@ -110,7 +111,7 @@ public class FailureTest {
 		FailureClass ec2 = new FailureClass(3, 
 				INITIAL_DESCRIPTION
 				);
-		
+
 		service.addFailureClass(ec2);
 		assertEquals("FailureClassServiceLocal Failed to Add", service.getAllFailureClasses().size(), 2);
 	}
