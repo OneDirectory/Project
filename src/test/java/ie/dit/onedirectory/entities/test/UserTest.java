@@ -36,16 +36,19 @@ public class UserTest {
 
 		return ShrinkWrap
 				.create(WebArchive.class, "test.war")
-				.addPackages(true, UserServiceLocal.class.getPackage(),
-						UserServiceEJB.class.getPackage(),
-						//UserREST.class.getPackage(), 
-						User.class.getPackage(),
-						UserDAOImplemetation.class.getPackage(),
-						UserDAO.class.getPackage(),
-						DataValidator.class.getPackage())
-				.addAsResource("test-persistence.xml",
-						"META-INF/persistence.xml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+				.addPackages(true,
+						"ie.dit.onedirectory.dao",
+						"ie.dit.onedirectory.dao.jpa",
+						"ie.dit.onedirectory.entities",
+						"ie.dit.onedirectory.entities.pks",
+						"ie.dit.onedirectory.rest",
+						"ie.dit.onedirectory.services",
+						"ie.dit.onedirectory.services.ejbs",
+						"ie.dit.onedirectory.utilities"
+						)
+						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
+						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+		
 	}
 
 	@PersistenceContext
@@ -56,7 +59,7 @@ public class UserTest {
 
 	@EJB
 	private UserServiceLocal service;
-	
+
 	@Before
 	public void preparePersistenceTest() throws Exception {
 		clearData();
@@ -72,12 +75,12 @@ public class UserTest {
 	public void entityTest() throws Exception {
 		User user = new User(1, "admin", "pass", "Calvin", "McGowan");
 		em.persist(user);
-		
+
 		Integer findNum = 1;
-		
+
 		User getUser = em.find(User.class, findNum);
 		assertEquals("Insertion Failed", "Calvin", getUser.getUserFName());
-		
+
 		getUser.setUserFName("Brian");
 		User checkUpdatedUser = em.find(User.class, findNum);
 		assertEquals("Update Failed", "Brian", checkUpdatedUser.getUserFName());
@@ -93,13 +96,13 @@ public class UserTest {
 		User user = new User(1, "admin", "pass", "Calvin", "McGowan");
 		User userTwo = new User(2, "admin", "pass", "Brian", "Cowzer");
 		service.addUser(user);
-		
+
 		assertEquals("UserService Failed to Add", service.getUserList().size(), 1);
-		
+
 		service.addUser(userTwo);
-		
+
 		assertEquals("UserService Failed to Add", service.getUserList().size(), 2);
-		
+
 		assertEquals("Calvin",service.findByID(1).getUserFName());
 
 	}

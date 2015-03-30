@@ -37,15 +37,16 @@ public class UserEquipmentTest {
 	public static Archive<?> createDeployment()
 	{		
 		return ShrinkWrap.create(WebArchive.class, "test.war")
-				.addPackages(true, 
-						UserEquipmentServiceLocalEJB.class.getPackage(),
-						UserEquipmentServiceLocal.class.getPackage(),
-						UserEquipmentDAO.class.getPackage(),
-						JPAUserEquipmentDAO.class.getPackage(),
-						//UserEquipmentREST.class.getPackage(),
-						UserEquipment.class.getPackage(),
-						DataValidator.class.getPackage())
-						//UserEquipmentId.class.getPackage())
+				.addPackages(true,
+						"ie.dit.onedirectory.dao",
+						"ie.dit.onedirectory.dao.jpa",
+						"ie.dit.onedirectory.entities",
+						"ie.dit.onedirectory.entities.pks",
+						"ie.dit.onedirectory.rest",
+						"ie.dit.onedirectory.services",
+						"ie.dit.onedirectory.services.ejbs",
+						"ie.dit.onedirectory.utilities"
+						)
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
@@ -100,7 +101,7 @@ public class UserEquipmentTest {
 				INITIAL_OS,
 				INITIAL_INPUTMODE
 				);
-		
+
 		em.persist(ec);
 
 		Integer ecID = 13; 
@@ -115,31 +116,31 @@ public class UserEquipmentTest {
 		loadedEC.setManufacturer(UPDATED_MANUFACTURER );
 		updatedEC = em.find(UserEquipment.class, ecID);
 		assertEquals("Update Failed", UPDATED_MANUFACTURER , loadedEC.getManufacturer());
-		
+
 		loadedEC.setAccessCapability(UPDATED_ACCESS_CAPABILITY);
 		updatedEC = em.find(UserEquipment.class, ecID);
 		assertEquals("Update Failed", UPDATED_ACCESS_CAPABILITY , loadedEC.getAccessCapability());
-		
+
 		loadedEC.setModel(UPDATED_MODEL);
 		updatedEC = em.find(UserEquipment.class, ecID);
 		assertEquals("Update Failed", UPDATED_MODEL, loadedEC.getModel());
-		
+
 		loadedEC.setVendorName(UPDATED_VENDORNAME);
 		updatedEC = em.find(UserEquipment.class, ecID);
 		assertEquals("Update Failed", UPDATED_VENDORNAME, loadedEC.getVendorName());
-		
+
 		loadedEC.setUeType(UPDATED_UETYPE);
 		updatedEC = em.find(UserEquipment.class, ecID);
 		assertEquals("Update Failed", UPDATED_MODEL, loadedEC.getModel());
-		
+
 		loadedEC.setOs(UPDATED_OS);
 		updatedEC = em.find(UserEquipment.class, ecID);
 		assertEquals("Update Failed", UPDATED_OS, loadedEC.getOs());
-		
+
 		loadedEC.setInputMode(UPDATED_INPUTMODE);
 		updatedEC = em.find(UserEquipment.class, ecID);
 		assertEquals("Update Failed", UPDATED_INPUTMODE, loadedEC.getInputMode());
-		
+
 		em.remove(updatedEC);
 		UserEquipment shouldBeNull = em.find(UserEquipment.class, ecID);
 		assertNull("Event Cause Failed to delete", shouldBeNull);
@@ -173,7 +174,7 @@ public class UserEquipmentTest {
 				INITIAL_OS,
 				INITIAL_INPUTMODE
 				);
-		
+
 		service.addUserEquipment(ec2);
 		assertEquals("UserEquipmentServiceLocal Failed to Add", service.getAllUserEquipment().size(), 2);
 	}

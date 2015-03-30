@@ -21,8 +21,6 @@ import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.config.LogConfig;
 import com.jayway.restassured.http.ContentType;
 
-
-
 @RunWith(Arquillian.class)
 public class MarketOperatorRESTIT{
 
@@ -47,26 +45,14 @@ public class MarketOperatorRESTIT{
 						.setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 
-		File[] libs = Maven.resolver()
+		File[] libs;
+
+		libs = Maven.resolver()
 				.resolve("com.jayway.restassured:rest-assured:2.4.0")
 				.withTransitivity().as(File.class);
 		archive.addAsLibraries(libs);
 
 		libs = Maven.resolver().resolve("org.apache.poi:poi:3.11")
-				.withTransitivity().as(File.class);
-		archive.addAsLibraries(libs);
-
-		libs = Maven.resolver().resolve("org.apache.commons:commons-io:1.3.2")
-				.withTransitivity().as(File.class);
-		archive.addAsLibraries(libs);
-
-		libs = Maven.resolver()
-				.resolve("commons-logging:commons-logging:1.1.3")
-				.withTransitivity().as(File.class);
-		archive.addAsLibraries(libs);
-
-		libs = Maven.resolver()
-				.resolve("org.glassfish:javax.json:1.0")
 				.withTransitivity().as(File.class);
 		archive.addAsLibraries(libs);
 
@@ -93,8 +79,7 @@ public class MarketOperatorRESTIT{
 	}
 
 	@Test
-	public void testUpload() throws IOException {
-		
+	public void testUpload() throws IOException {	
 		given()
 		.multiPart("selectedFile", new File(TEST_FILE))
 		.expect()

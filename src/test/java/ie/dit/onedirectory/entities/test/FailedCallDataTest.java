@@ -45,12 +45,15 @@ public class FailedCallDataTest {
 		return ShrinkWrap
 				.create(WebArchive.class, "test.war")
 				.addPackages(true,
-						FailedCallDataServiceLocalEJB.class.getPackage(),
-						FailedCallDataServiceLocal.class.getPackage(),
-						FailedCallDataDAO.class.getPackage(),
-						JPAFailedCallDataDAO.class.getPackage(),
-						FailedCallData.class.getPackage(),
-						DataValidator.class.getPackage())
+						"ie.dit.onedirectory.dao",
+						"ie.dit.onedirectory.dao.jpa",
+						"ie.dit.onedirectory.entities",
+						"ie.dit.onedirectory.entities.pks",
+						"ie.dit.onedirectory.rest",
+						"ie.dit.onedirectory.services",
+						"ie.dit.onedirectory.services.ejbs",
+						"ie.dit.onedirectory.utilities"
+						)
 						.addAsResource("test-persistence.xml",
 						"META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
