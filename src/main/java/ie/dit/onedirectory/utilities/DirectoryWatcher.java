@@ -15,6 +15,7 @@ import java.nio.file.WatchService;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
@@ -112,6 +113,11 @@ public class DirectoryWatcher {
 	@Timeout
 	public void onTimeout(Timer timer) {
 		System.out.println("Bean timed out");
+	}
+	
+	@PreDestroy
+	public void onDestroy(){
+		
 	}
 
 }
