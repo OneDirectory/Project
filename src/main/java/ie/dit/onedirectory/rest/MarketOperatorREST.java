@@ -63,7 +63,7 @@ public class MarketOperatorREST {
 		}
 		workbook.close();
 		stream.close();
-		return Response.status(200).entity("success").build();
+		return Response.status(200).entity("Data successfully imported.\n").build();
 	}
 
 }

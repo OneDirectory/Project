@@ -16,6 +16,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -24,10 +25,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
-
-// Darrens hard coded location
-//home/drrn/Project/data.xls
-
 
 @Path("/eventcauses")
 public class EventCauseREST {
@@ -44,7 +41,7 @@ public class EventCauseREST {
 	@POST
 	@Path("/upload")
 	@Consumes("multipart/form-data")
-	public void addEventCauses(@MultipartForm FileUploadForm form) throws IOException{
+	public Response addEventCauses(@MultipartForm FileUploadForm form) throws IOException{
 		HSSFRow row;
 
 		ByteArrayInputStream stream = new ByteArrayInputStream(form.getFileData());
@@ -66,5 +63,6 @@ public class EventCauseREST {
 		}
 		workbook.close();
 		stream.close();
+		return Response.status(200).entity("Data successfully imported.\n").build();
 	}
 }
