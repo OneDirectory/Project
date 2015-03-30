@@ -20,17 +20,13 @@ import ie.dit.onedirectory.utilities.DataValidator;
 import ie.dit.onedirectory.utilities.FileUploadForm;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
@@ -39,9 +35,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -81,7 +75,7 @@ public class FailedCallDataREST {
 	@GET
 	@Path("/model/{model}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection getEventIdAndCauseCodeByModel(
+	public Collection<?> getEventIdAndCauseCodeByModel(
 			@PathParam("model") String modelName) {
 		return service.getEventIdAndCauseCodeByModel(modelName);
 	}
@@ -98,7 +92,7 @@ public class FailedCallDataREST {
 	@GET
 	@Path("/imsi/{imsi}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection getEventCauseByIMSI(@PathParam("imsi") String imsi) {
+	public Collection<?> getEventCauseByIMSI(@PathParam("imsi") String imsi) {
 		return service.getEventIdAndCauseCodeByIMSI(imsi);
 	}
 	
@@ -107,7 +101,7 @@ public class FailedCallDataREST {
 	@GET
 	@Path("/dateIMSI/{dates2}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection getAllIMSIWithCallFailuresBetweenDates(
+	public Collection<?> getAllIMSIWithCallFailuresBetweenDates(
 			@PathParam("dates2")  String datesPassed) throws ParseException {
 		
 		String[] dates2 = datesPassed.split("£");
@@ -170,14 +164,14 @@ public class FailedCallDataREST {
 	@GET
 	@Path("/imsi")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection getAllIMSI() {
+	public Collection<?> getAllIMSI() {
 		return service.getAllIMSI();
 	}
 
 	@GET
 	@Path("/getFailedCallDataByModel/{params}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection getFailedCallDataByModel(
+	public Collection<?> getFailedCallDataByModel(
 			@PathParam("params") String paramsPassed) throws ParseException {
 		String[] params = paramsPassed.split("£");
 		String model = params[0];
@@ -191,27 +185,6 @@ public class FailedCallDataREST {
 		java.sql.Date sqlToDate = new java.sql.Date(to.getTime());
 		return service.getFailedCallDataByModel(model, sqlFromDate, sqlToDate);
 	}
-
-	
-	
-	
-	// TODO - Peter
-	// @GET
-	// @Path("/{model}")
-	// @Produces(MediaType.APPLICATION_JSON)
-	// public Collection<FailedCallData>
-	// getEventCauseByModel(@PathParam("model") String model){
-	// return service.getEventCauseByModel();
-	// }
-
-	// TODO
-	// @GET
-	// @Path("/{imsi}")
-	// @Produces(MediaType.APPLICATION_JSON)
-	// public Collection<FailedCallData> getEventCauseByIMSI(@PathParam("imsi")
-	// String imsi){
-	// return service.getEventCauseByIMSI(imsi);
-	// }
 
 	@POST
 	@Path("/upload")
@@ -284,76 +257,5 @@ public class FailedCallDataREST {
 		return Response.status(200).entity("Data successfully imported.\n").build();
 	}
 
-	@GET
-	@Path("/add")
-	public void addFailedCallData() throws IOException {
-		HSSFRow row;
-		FileInputStream fis = new FileInputStream(new File("/home/drrn/Project/data.xls"));
-				HSSFWorkbook workbook = new HSSFWorkbook(fis);
-
-		HSSFSheet spreadsheet = workbook.getSheetAt(0);
-		Iterator<Row> rowIterator = spreadsheet.iterator();
-		rowIterator.next();
-		while (rowIterator.hasNext()) {
-			row = (HSSFRow) rowIterator.next();
-			Iterator<Cell> cellIterator = row.cellIterator();
-			while (cellIterator.hasNext()) {
-				DataFormatter dataFormatter = new DataFormatter();
-				Date dateTime = HSSFDateUtil.getJavaDate(cellIterator.next()
-						.getNumericCellValue());
-				Integer eventId = Integer.valueOf(dataFormatter
-						.formatCellValue(cellIterator.next()));
-				String failureString = dataFormatter
-						.formatCellValue(cellIterator.next());
-				Integer failureId;
-				if (failureString.equals("(null)")) {
-					break;
-				} else {
-					failureId = Integer.valueOf(failureString);
-				}
-				Integer typeAllocationCode = Integer.valueOf(dataFormatter
-						.formatCellValue(cellIterator.next()));
-				Integer marketId = Integer.valueOf(dataFormatter
-						.formatCellValue(cellIterator.next()));
-				Integer operatorId = Integer.valueOf(dataFormatter
-						.formatCellValue(cellIterator.next()));
-				Integer cellId = Integer.valueOf(dataFormatter
-						.formatCellValue(cellIterator.next()));
-				Integer duration = Integer.valueOf(dataFormatter
-						.formatCellValue(cellIterator.next()));
-				String causeString = dataFormatter.formatCellValue(cellIterator
-						.next());
-				Integer causeCode;
-				if (causeString.equals("(null)")) {
-					break;
-				}else {
-					causeCode = Integer.valueOf(causeString);
-				}
-				String networkElementVersion = dataFormatter
-						.formatCellValue(cellIterator.next());
-				String imsi = dataFormatter
-						.formatCellValue(cellIterator.next());
-				String hier3Id = dataFormatter.formatCellValue(cellIterator
-						.next());
-				String hier32Id = dataFormatter.formatCellValue(cellIterator
-						.next());
-				String hier321Id = dataFormatter.formatCellValue(cellIterator
-						.next());
-				
-				FailedCallData failedCallData = new FailedCallData(dateTime,
-						eventId, failureId, typeAllocationCode, marketId,
-						operatorId, cellId, duration, causeCode,
-						networkElementVersion, imsi, hier3Id, hier32Id,
-						hier321Id);
-				
-				if(validator.isValid(failedCallData)){
-					service.addFailedCalledDatum(failedCallData);
-				}
-				
-				break;
-			}
-		}
-		fis.close();
-	}
 
 }

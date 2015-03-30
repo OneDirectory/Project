@@ -2,15 +2,17 @@ package ie.dit.onedirectory.rest;
 
 import ie.dit.onedirectory.entities.FailureClass;
 import ie.dit.onedirectory.services.FailureClassServiceLocal;
+import ie.dit.onedirectory.utilities.FileUploadForm;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
 import javax.ejb.EJB;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -21,6 +23,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 @Path("/failureclasses")
 public class FailureClassREST {
@@ -34,12 +37,13 @@ public class FailureClassREST {
 		return service.getAllFailureClasses();
 	}
 	
-	@GET
+	@POST
 	@Path("/add")
-	public void addFailureClasses() throws IOException {
+	@Consumes("multipart/form-data")
+	public void addFailureClasses(@MultipartForm FileUploadForm form) throws IOException {
 		HSSFRow row;
-		FileInputStream fis = new FileInputStream(new File("/home/drrn/Project/data.xls"));
-		HSSFWorkbook workbook = new HSSFWorkbook(fis);
+		ByteArrayInputStream stream = new ByteArrayInputStream(form.getFileData());
+		HSSFWorkbook workbook = new HSSFWorkbook(stream);
 		HSSFSheet sheet = workbook.getSheetAt(2);
 		Iterator<Row> rowIterator = sheet.iterator();
 		rowIterator.next();
@@ -53,7 +57,8 @@ public class FailureClassREST {
 				service.addFailureClass(new FailureClass(failureId, description));
 			}
 		}
-		fis.close();
+		workbook.close();
+		stream.close();
 		
 	}
 

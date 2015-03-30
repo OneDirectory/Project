@@ -1,5 +1,8 @@
 package ie.dit.onedirectory.dao.jpa;
 
+import ie.dit.onedirectory.dao.EventCauseDAO;
+import ie.dit.onedirectory.entities.EventCause;
+
 import java.util.Collection;
 
 import javax.ejb.Local;
@@ -7,9 +10,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import ie.dit.onedirectory.dao.EventCauseDAO;
-import ie.dit.onedirectory.entities.EventCause;
 
 @Stateless
 @Local

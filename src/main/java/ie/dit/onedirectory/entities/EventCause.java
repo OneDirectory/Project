@@ -2,7 +2,6 @@ package ie.dit.onedirectory.entities;
 
 import ie.dit.onedirectory.entities.pks.EventCauseId;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,14 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 @IdClass(EventCauseId.class)
 @Entity
 @Table(name = "event_cause")
-public class EventCause implements Serializable {
+public class EventCause {
 	
 	@Id
 	@Column(name="event_id")

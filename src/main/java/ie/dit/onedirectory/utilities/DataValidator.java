@@ -180,7 +180,6 @@ public class DataValidator {
 	
 	@PreDestroy
 	public void onDestroy(){
-		
 	}
 	
 	public ArrayList<EventCause> getValidEventCauseList() {
@@ -188,7 +187,7 @@ public class DataValidator {
 	}
 
 	public void setValidEventCauseList(ArrayList<EventCause> validEventCauseList) {
-		this.validEventCauseList = validEventCauseList;
+		DataValidator.validEventCauseList = validEventCauseList;
 	}
 
 	public ArrayList<FailureClass> getValidFailureClassList() {
@@ -197,7 +196,7 @@ public class DataValidator {
 
 	public void setValidFailureClassList(
 			ArrayList<FailureClass> validFailureClassList) {
-		this.validFailureClassList = validFailureClassList;
+		DataValidator.validFailureClassList = validFailureClassList;
 	}
 
 	public ArrayList<MarketOperator> getValidMarketOperatorList() {
@@ -206,7 +205,7 @@ public class DataValidator {
 
 	public void setValidMarketOperatorList(
 			ArrayList<MarketOperator> validMarketOperatorList) {
-		this.validMarketOperatorList = validMarketOperatorList;
+		DataValidator.validMarketOperatorList = validMarketOperatorList;
 	}
 
 	public ArrayList<UserEquipment> getValidUserEquipmentList() {
@@ -215,7 +214,7 @@ public class DataValidator {
 
 	public void setValidUserEquipmentList(
 			ArrayList<UserEquipment> validUserEquipmentList) {
-		this.validUserEquipmentList = validUserEquipmentList;
+		DataValidator.validUserEquipmentList = validUserEquipmentList;
 	}
 	
 	

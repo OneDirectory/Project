@@ -5,8 +5,6 @@ import ie.dit.onedirectory.services.MarketOperatorServiceLocal;
 import ie.dit.onedirectory.utilities.FileUploadForm;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -40,15 +38,13 @@ public class MarketOperatorREST {
 		return service.getMarketOperators();
 	}
 
-
+	
 	@POST
 	@Path("/upload")
 	@Consumes("multipart/form-data")
-	public Response uploadEventCauses(@MultipartForm FileUploadForm form) throws IOException{
-		//public Response uploadEventCauses(byte[] form) throws IOException{
+	public Response uploadMarketOperators(@MultipartForm FileUploadForm form) throws IOException{
 		HSSFRow row;
 		ByteArrayInputStream stream = new ByteArrayInputStream(form.getFileData());
-		//ByteArrayInputStream stream = new ByteArrayInputStream(form);
 		HSSFWorkbook workbook = new HSSFWorkbook(stream);
 		HSSFSheet spreadsheet = workbook.getSheetAt(4);
 		Iterator<Row> rowIterator = spreadsheet.iterator();
