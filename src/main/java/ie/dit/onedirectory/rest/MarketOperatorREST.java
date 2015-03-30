@@ -18,6 +18,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -32,43 +33,22 @@ public class MarketOperatorREST {
 
 	@EJB
 	MarketOperatorServiceLocal service;
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<MarketOperator> getMarketOperators(){
 		return service.getMarketOperators();
 	}
-	
-	@GET
-	@Path("/add")
-	public void addEventCauses() throws IOException{
-		HSSFRow row;
-		FileInputStream fis = new FileInputStream(new File("/home/drrn/Project/data.xls"));
-		HSSFWorkbook workbook = new HSSFWorkbook(fis);
-		HSSFSheet spreadsheet = workbook.getSheetAt(4);
-		Iterator<Row> rowIterator = spreadsheet.iterator();
-		rowIterator.next();
-		while (rowIterator.hasNext()) {
-			row = (HSSFRow) rowIterator.next();
-			Iterator<Cell> cellIterator = row.cellIterator();
-			while (cellIterator.hasNext()) {
-				DataFormatter dataFormatter = new DataFormatter();
-				Integer marketId = Integer.valueOf(dataFormatter.formatCellValue(cellIterator.next()));
-				Integer operatorId = Integer.valueOf(dataFormatter.formatCellValue(cellIterator.next()));
-				String country = cellIterator.next().getStringCellValue();
-				String operatorName = cellIterator.next().getStringCellValue();
-				service.addMarketOperator(new MarketOperator(marketId, operatorId, country, operatorName));
-			}
-		}
-		fis.close();
-	}
-	
+
+
 	@POST
 	@Path("/upload")
 	@Consumes("multipart/form-data")
-	public void uploadEventCauses(@MultipartForm FileUploadForm form) throws IOException{
+	public Response uploadEventCauses(@MultipartForm FileUploadForm form) throws IOException{
+		//public Response uploadEventCauses(byte[] form) throws IOException{
 		HSSFRow row;
 		ByteArrayInputStream stream = new ByteArrayInputStream(form.getFileData());
+		//ByteArrayInputStream stream = new ByteArrayInputStream(form);
 		HSSFWorkbook workbook = new HSSFWorkbook(stream);
 		HSSFSheet spreadsheet = workbook.getSheetAt(4);
 		Iterator<Row> rowIterator = spreadsheet.iterator();
@@ -87,6 +67,7 @@ public class MarketOperatorREST {
 		}
 		workbook.close();
 		stream.close();
+		return Response.status(200).entity("success").build();
 	}
-	
+
 }

@@ -1,4 +1,24 @@
-package ie.dit.onedirectory.entities.test;
+package ie.dit.onedirectory.services.test;
+
+import static org.junit.Assert.*;
+import ie.dit.onedirectory.services.EventCauseServiceLocal;
+
+import javax.ejb.EJB;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
@@ -31,9 +51,8 @@ import org.junit.runner.RunWith;
 import org.junit.Before;
 import org.junit.After;
 
-
 @RunWith(Arquillian.class)
-public class EventCauseTest {
+public class EventCauseServiceLocalTest {
 
 	@Deployment
 	public static Archive<?> createDeployment()
@@ -61,7 +80,7 @@ public class EventCauseTest {
 
 	@EJB
 	EventCauseServiceLocal service;
-	
+
 	private static String INITIAL_DESCRIPTION = "INITIAL CTXT SETUP-CSFB UNDEFINED MOB FREQ REL";
 	private static String UPDATED_DESCRIPTION = "UE CTXT RELEASE-UNKNOWN OR ALREADY ALLOCATED ENB UE S1AP ID";
 
@@ -76,33 +95,6 @@ public class EventCauseTest {
 		utx.commit();
 	}
 
-	@Test
-	public void EntityTest() throws Exception {
-
-		EventCause ec = new EventCause(13, 47, INITIAL_DESCRIPTION);
-
-		em.persist(ec);
-
-		EventCauseId ecID = new EventCauseId(13, 47); 
-
-		EventCause loadedEC = em.find(EventCause.class, ecID);
-
-		assertEquals("Event Cause Insertion Failed", INITIAL_DESCRIPTION, loadedEC.getDescription());
-
-		loadedEC.setDescription(UPDATED_DESCRIPTION);
-
-		EventCause updatedEC = em.find(EventCause.class, ecID);
-
-		assertEquals("Event Cause Update Failed", UPDATED_DESCRIPTION, loadedEC.getDescription());
-
-		em.remove(updatedEC);
-
-		EventCause shouldBeNull = em.find(EventCause.class, ecID);
-
-		assertNull("Event Cause Failed to delete", shouldBeNull);
-
-	}
-	
 	@Test
 	public void AddEventCauseTest() throws Exception {
 		EventCause ec = new EventCause(13, 47, INITIAL_DESCRIPTION);
@@ -130,5 +122,6 @@ public class EventCauseTest {
 		utx.begin();
 		em.joinTransaction();
 	}	
-	
+
 }
+

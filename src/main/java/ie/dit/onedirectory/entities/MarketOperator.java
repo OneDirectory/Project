@@ -10,9 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+@XmlRootElement
 @IdClass(MarketOperatorId.class)
 @Entity
 @Table(name = "market_operator")
