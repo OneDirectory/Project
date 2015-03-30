@@ -16,6 +16,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -38,9 +39,9 @@ public class FailureClassREST {
 	}
 	
 	@POST
-	@Path("/add")
+	@Path("/upload")
 	@Consumes("multipart/form-data")
-	public void addFailureClasses(@MultipartForm FileUploadForm form) throws IOException {
+	public Response addFailureClasses(@MultipartForm FileUploadForm form) throws IOException {
 		HSSFRow row;
 		ByteArrayInputStream stream = new ByteArrayInputStream(form.getFileData());
 		HSSFWorkbook workbook = new HSSFWorkbook(stream);
@@ -59,7 +60,7 @@ public class FailureClassREST {
 		}
 		workbook.close();
 		stream.close();
-		
+		return Response.status(200).entity("Data successfully imported.\n").build();
 	}
 
 }
