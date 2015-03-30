@@ -1,4 +1,4 @@
-package ie.dit.onedirectory.REST.test;
+package ie.dit.onedirectory.rest.test;
 
 import static com.jayway.restassured.RestAssured.expect;
 import static com.jayway.restassured.RestAssured.config;

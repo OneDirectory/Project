@@ -49,7 +49,7 @@ public class UserEquipmentREST {
 	@POST
 	@Path("/upload")
 	@Consumes("multipart/form-data")
-	public Response addFailureClasses(@MultipartForm FileUploadForm form) throws IOException {
+	public Response uploadFailureClasses(@MultipartForm FileUploadForm form) throws IOException {
 		HSSFRow row;
 		ByteArrayInputStream stream = new ByteArrayInputStream(form.getFileData());
 		HSSFWorkbook workbook = new HSSFWorkbook(stream);
