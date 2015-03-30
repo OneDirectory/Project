@@ -8,19 +8,17 @@
 
 package ie.dit.onedirectory.services.ejbs;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.Date;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
 import ie.dit.onedirectory.dao.FailedCallDataDAO;
 import ie.dit.onedirectory.entities.FailedCallData;
 import ie.dit.onedirectory.services.FailedCallDataServiceLocal;
 import ie.dit.onedirectory.utilities.DataValidator;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Date;
+import java.util.Collection;
+import java.util.Iterator;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -48,7 +46,7 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 		this.dao = dao;
 	}
 
-	public Collection getEventIdAndCauseCodeByModel(String modelName) {
+	public Collection<?> getEventIdAndCauseCodeByModel(String modelName) {
 		return dao.getEventIdAndCauseCodeByModel(modelName);
 	}
 	
@@ -56,15 +54,15 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 		return dao.getAllFailedCallData();
 	}
 	
-	public Collection getFailedCallDataByModel(String model, Date fromDate, Date toDate){
+	public Collection<?> getFailedCallDataByModel(String model, Date fromDate, Date toDate){
 		return dao.getFailedCallDataByModel(model, fromDate, toDate);
 	}
 	
-	public Collection getEventIdAndCauseCodeByIMSI(String imsi) {
+	public Collection<?> getEventIdAndCauseCodeByIMSI(String imsi) {
 		return dao.getEventIdAndCauseCodeByIMSI(imsi);
 	}
 	
-	public Collection getAllIMSI(){
+	public Collection<?> getAllIMSI(){
 		return dao.getAllIMSI();
 	}
 	
@@ -72,11 +70,11 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 		dao.addFailedCalledDatum(failedCallData);
 	}
 	
-	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to) {
+	public Collection<?> getCountBetweenDatesForAllIMSI(Date from, Date to) {
 		return dao.getCountBetweenDatesForAllIMSI(from, to);
 	}
 	
-	public Collection getAllIMSIWithCallFailuresBetweenDates(Date from, Date to) {
+	public Collection<?> getAllIMSIWithCallFailuresBetweenDates(Date from, Date to) {
 		return dao.getAllIMSIWithCallFailuresBetweenDates(from, to);
 	}
 	
@@ -142,6 +140,7 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 				break;
 			}
 		}
+		workbook.close();
 		fis.close();
 	}
 }

@@ -7,6 +7,9 @@
  */
 package ie.dit.onedirectory.dao.jpa;
 
+import ie.dit.onedirectory.dao.FailedCallDataDAO;
+import ie.dit.onedirectory.entities.FailedCallData;
+
 import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
@@ -17,9 +20,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
-
-import ie.dit.onedirectory.dao.FailedCallDataDAO;
-import ie.dit.onedirectory.entities.FailedCallData;
 
 @Stateless
 @Local
@@ -33,7 +33,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		return q.getResultList();
 	}
 
-	public Collection getFailedCallDataByModel(String model, Date fromDate,
+	public Collection<?> getFailedCallDataByModel(String model, Date fromDate,
 			Date toDate) {
 		Query tacQ = entityManager
 				.createQuery("select ue.tac from UserEquipment ue where ue.model = :model");
@@ -46,7 +46,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		query.setParameter("modelTac", tac);
 		query.setParameter("fromDate", fromDate, TemporalType.DATE);
 		query.setParameter("toDate", toDate, TemporalType.DATE);
-		List result = query.getResultList();
+		List<?> result = query.getResultList();
 		return result;
 	}
 
@@ -57,7 +57,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	 * each dropped call.
 	 */
 
-	public Collection getEventIdAndCauseCodeByModel(String modelName) {
+	public Collection<?> getEventIdAndCauseCodeByModel(String modelName) {
 		Query tacQuery = entityManager
 				.createQuery("select ue.tac from UserEquipment ue where "
 						+ "ue.model = :modelName");
@@ -68,7 +68,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 						+ "from FailedCallData fd where fd.userEquipment.tac = :typeAllocationCode "
 						+ "group by fd.eventCause.eventId, fd.eventCause.causeCode");
 		query.setParameter("typeAllocationCode", typeAllocationCode);
-		List result = query.getResultList();
+		List<?> result = query.getResultList();
 		return result;
 	}
 
@@ -78,13 +78,13 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	 * only send back unique combinations.
 	 * 
 	 */
-	public Collection getEventIdAndCauseCodeByIMSI(String imsi) {
+	public Collection<?> getEventIdAndCauseCodeByIMSI(String imsi) {
 		Query query = entityManager
 				.createQuery("select fd.eventCause.causeCode, "
 						+ "fd.eventCause.eventId, fd.eventCause.description from FailedCallData fd where fd.imsi= :imsi group by "
 						+ "fd.eventCause.causeCode,fd.eventCause.eventId");
 		query.setParameter("imsi", imsi);
-		List result = query.getResultList();
+		List<?> result = query.getResultList();
 		return result;
 
 	}
@@ -96,14 +96,14 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	 * 
 	 */
 
-	public Collection getCountBetweenDatesForAllIMSI(Date from, Date to) {
+	public Collection<?> getCountBetweenDatesForAllIMSI(Date from, Date to) {
 		Query query = entityManager
 				.createQuery("select fd.imsi, count(fd.imsi), sum(fd.duration)"
 						+ "from FailedCallData fd where fd.dateTime between :fromDate  and :toDate"
 						+ " group by fd.imsi");
 		query.setParameter("fromDate", from, TemporalType.DATE);
 		query.setParameter("toDate", to, TemporalType.DATE);
-		List result = query.getResultList();
+		List<?> result = query.getResultList();
 		return result;
 	}
 
@@ -112,10 +112,10 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	 * 
 	 */
 
-	public Collection getAllIMSI() {
+	public Collection<?> getAllIMSI() {
 		Query query = entityManager
 				.createQuery("select distinct fd.imsi from FailedCallData fd");
-		Collection result = query.getResultList();
+		Collection<?> result = query.getResultList();
 		return result;
 	}
 
@@ -128,7 +128,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	 * dates.
 	 */
 
-	public Collection getAllIMSIWithCallFailuresBetweenDates(Date from, Date to) {
+	public Collection<?> getAllIMSIWithCallFailuresBetweenDates(Date from, Date to) {
 
 		Query query = entityManager
 				.createQuery("select fd.imsi"
@@ -137,7 +137,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 
 		query.setParameter("fromDate", from, TemporalType.DATE);
 		query.setParameter("toDate", to, TemporalType.DATE);
-		List result = query.getResultList();
+		List<?> result = query.getResultList();
 		return result;
 	}
 
