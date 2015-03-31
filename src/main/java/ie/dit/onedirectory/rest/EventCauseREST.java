@@ -41,7 +41,7 @@ public class EventCauseREST {
 	@POST
 	@Path("/upload")
 	@Consumes("multipart/form-data")
-	public Response addEventCauses(@MultipartForm FileUploadForm form) throws IOException{
+	public Response uploadEventCauses(@MultipartForm FileUploadForm form) throws IOException{
 		HSSFRow row;
 
 		ByteArrayInputStream stream = new ByteArrayInputStream(form.getFileData());

@@ -1,49 +1,30 @@
 package ie.dit.onedirectory.rest.test;
 
-import static com.jayway.restassured.RestAssured.expect;
 import static com.jayway.restassured.RestAssured.config;
-import static com.jayway.restassured.RestAssured.with;
-import ie.dit.onedirectory.utilities.FileUploadForm;
+import static com.jayway.restassured.RestAssured.expect;
 import static com.jayway.restassured.RestAssured.given;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.UserTransaction;
 
 import org.apache.poi.util.IOUtils;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Before;
-
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.config.LogConfig;
-
-import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.config.LogConfig;
 import com.jayway.restassured.http.ContentType;
-
-
 
 @RunWith(Arquillian.class)
 public class MarketOperatorRESTIT{
-
-	@PersistenceContext
-	private EntityManager em;
-
-	@Inject
-	private UserTransaction utx;
 
 	private static final String TEST_FILE = "src/test/resources/data.xls";
 
