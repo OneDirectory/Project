@@ -6,12 +6,16 @@ import static com.jayway.restassured.RestAssured.with;
 import ie.dit.onedirectory.utilities.FileUploadForm;
 import static com.jayway.restassured.RestAssured.given;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 
 import org.apache.poi.util.IOUtils;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -34,6 +38,12 @@ import com.jayway.restassured.http.ContentType;
 
 @RunWith(Arquillian.class)
 public class MarketOperatorRESTIT{
+
+	@PersistenceContext
+	private EntityManager em;
+
+	@Inject
+	private UserTransaction utx;
 
 	private static final String TEST_FILE = "src/test/resources/data.xls";
 
@@ -71,7 +81,7 @@ public class MarketOperatorRESTIT{
 	}
 
 	@Before
-	public void setUp() throws InterruptedException, IOException{
+	public void setUp() throws Exception{
 		RestAssured.config = config()
 				.logConfig(new LogConfig(System.out, true));
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
