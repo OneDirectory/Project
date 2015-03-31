@@ -7,16 +7,10 @@ http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 		<configuration>
 			<!-- <property name="jbossHome">C:\JavaMy\jboss-as-7.1.1.Final</property> -->
 
-<<<<<<< HEAD
-			<property name="jbossHome">/opt/jboss</property>
-			<!-- <property name="jbossHome">/usr/local/jboss</property> -->
-			<!-- <property name="jbossHome">C:\Software\jboss-as-7.1.1.Final</property> -->
-=======
- 			<!--  <property name="jbossHome">/opt/jboss</property>   -->
-			 <property name="jbossHome">/usr/local/jboss</property>
-<!-- 			 <property name="jbossHome">/opt/jboss</property>  -->
+ 			-
+ 			  <property name="jbossHome">/opt/jboss</property>   
+<!-- 			 <property name="jbossHome">/usr/local/jboss</property> -->-->
 		<!-- 	<property name="jbossHome">C:\Software\jboss-as-7.1.1.Final</property> -->
->>>>>>> 27d209debd34c6b183ec5428eee128746ecb7a40
 
 			<!-- peter's location -->
 			<!-- <property name="jbossHome">C:\jboss-as-7.1.1.Final</property> -->
