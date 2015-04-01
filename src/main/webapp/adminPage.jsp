@@ -68,10 +68,7 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<h1>Create New User</h1>
-
-						<form class="form-horizontal" role="form"
-							action="http://localhost:8080/project/rest/user/add"
-							method="POST" onsubmit="return check_form();">
+						<div class="form-horizontal">
 							<div class="form-group">
 								<label class="control-label col-sm-2" for="ID">ID:</label>
 								<div class="col-sm-5">
@@ -104,7 +101,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-1 col-sm-10">
-									<div class="col-sm-10">
+									<div class="col-sm-10" id="types">
 										<label class="radio-inline"><input type="radio"
 											name="role" checked="checked"
 											value="Network Management Engineer">Network
@@ -115,15 +112,16 @@
 											Service Rep</label>
 									</div>
 								</div>
+							</div>
 
 								<div class="form-group">
 									<div class="col-sm-offset-4 col-sm-10">
 										<br>
-										<button type="submit" class="btn btn-primary">Create
+										<button id='regButton' type="submit" class="btn btn-primary">Create
 											User</button>
 									</div>
 								</div>
-						</form>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -174,7 +172,40 @@ $(function(){
 
 	document.getElementById("createUser").style.display='none';
 	document.getElementById("import").style.display='none';
-	
+
+	$('#regButton').click(function(e){
+
+		var id = document.getElementById('id').value;
+		var pass = document.getElementById('password').value;
+		var fName = document.getElementById('fName').value;
+		var lName = document.getElementById('lName').value;
+		var type = $("input[type='radio'][name='role']:checked").val();;
+
+
+		var correct = check_form();
+
+		if(correct==true){
+
+			newUser = {
+					userID: id,
+					userType: type,
+					userFName: fName,
+					userSName: lName,
+					userPassword: pass
+					}
+
+			$.ajax({
+				type: 'POST',
+				url:'http://localhost:8080/project/rest/user/add',
+			    dataType: 'json',
+				data:JSON.stringify(newUser),
+				contentType: "application/json",
+				success: function(data){
+					alert('User successfully added');
+				}	
+			});
+		}
+	});	
 });
 
 function toggle(divId){
@@ -242,8 +273,7 @@ var idTaken = false;
 		alert('Enter a last name');
 		return false;
 	}
-
-	alert("User Added to Database");			
+			
 	return true;
 
 }
@@ -251,7 +281,7 @@ var idTaken = false;
 
 	$(function(){
 
-		
+	var idArray = [];	
     var $users = $('#table');
     
 

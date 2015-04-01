@@ -82,90 +82,16 @@ public class UserREST {
 
 	@POST
 	@Path("/add")
-	@Consumes("application/x-www-form-urlencoded")
-	public Response addUser(@FormParam("ID") int id,
-			@FormParam("password") String pass,
-			@FormParam("firstname") String fName,
-			@FormParam("lastname") String sName, @FormParam("role") String uType) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addUser(User user) {
+		
+		User checkUser = service.findByID(user.getUserID());
 
-		User user = new User(id, uType, pass, fName, sName);
-
-		Response.ResponseBuilder builder;
-
-		try {
-
-			validateUser(user);
+		if (checkUser == null) {
 			service.addUser(user);
-
-			
-			
-			
-			UriBuilder uri = UriBuilder.fromUri("http://localhost:8080/project/adminPage.html");
-			URI location = uri.build();
-			builder = Response.seeOther(location);
-			return builder.build();
-			
-			
-//			builder = Response
-//					.created(URI
-//							.create(location.toString()));
-
-
 		}
-
-		catch (ValidationException e) {
-			// Handle the unique constrain violation
-			Map<String, String> responseObj = new HashMap<String, String>();
-			responseObj.put("userID", "ID Exists already");
-			builder = Response.status(Response.Status.CONFLICT).entity(
-					responseObj);
-		}
-
-		catch (Exception e) {
-
-			Map<String, String> responseObj = new HashMap<String, String>();
-			responseObj.put("error", e.getMessage());
-			builder = Response.status(Response.Status.BAD_REQUEST).entity(
-					responseObj);
-		}
-
-		return builder.build();
-
+		
+			
 	}
 	
-	/**
-	 * @param user which will be an already existing user or null
-	 */
-
-	public void validateUser(User user) {
-
-		if (idAlreadyExists(user.getUserID())) {
-			throw new ValidationException("ID already exists");
-		}
-
-	}
-	
-	
-	
-	/**
-	 * 
-	 * FindById will return a user or a null user.
-	 * 
-	 * @param id the ID of the new user from the client side
-	 * @return true if the user isn't null, that is the ID does
-	 * not already exist in the DB.
-	 */
-
-	public boolean idAlreadyExists(Integer id) {
-		User user = null;
-
-		user = service.findByID(id);
-
-		if (user != null) {
-			return true;
-		} else
-			return false;
-
-	}
-
 }
