@@ -57,10 +57,8 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
-				<li><a href="#" onclick="toggle('briansQuery');">failed
-						data by model</a></li>
-				<li><a href="#" onclick="toggle('johnsQuery');">List Call
-						Failures by IMSI</a></li>
+				<li><a href="#" onclick="toggle('briansQuery');">Total number of Failures per Model</a></li>
+				<li><a href="#" onclick="toggle('johnsQuery');">All IMSIs with Failed Call Data</a></li>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
@@ -80,12 +78,12 @@
 									class="form-control" id="ID" placeholder="Select a model.."
 									autofocus>
 
-								</select>
+								</select><br>
 							</div>
 						</div>
 
 						<div >
-							<input type="datetime-local" id='from' class="form-control"
+							<br><input type="datetime-local" id='from' class="form-control"
 								name="from" placeholder="yyyy-dd-mm hh:mm" autofocus>
 						</div>
 
@@ -109,10 +107,11 @@
 			</div>
 		</div>
 	</div>
-	<table class="table" id='tableBrian' name='table'>
+	<table class="tableSE" width = '500px' id='tableBrian' name='table'>
 
 
 	</table>
+	
 	<!-- /#page-content-wrapper -->
 
 	<div id="johnsQuery">
@@ -143,7 +142,7 @@
 				</div>
 			</div>
 		</div>
-		<div id='tableJohn' width='500px'>
+		<div id='tableJohn' >
 		
 		</div>
 	</div>
@@ -239,15 +238,16 @@ $(function(){
     }
 
     function createButton(){
-        var button=document.createElement(button);
-        button.setAttribute('class', "col-sm-offset-12 col-sm-10");
-        button.setAttribute('position', 'absolute');
-    	button.setAttribute('top', '50%');
-        button.setAttribute('id', 'tableButton');
-        button.setAttribute('class','buttonMy');
-        button.innerHTML='Search Again';
-        button.addEventListener('click', removeData);
-        $table.append(button);
+
+        var butDiv=document.createElement('div');
+ 		butDiv.setAttribute('class', "col-sm-offset-5 col-sm-10");
+ 		var button=document.createElement(button);
+ 		button.setAttribute('id', 'tableButton');
+ 		button.setAttribute('class','btn btn-primary');
+ 		button.innerHTML='Search Again';
+ 		button.addEventListener('click', removeData);
+ 		butDiv.appendChild(button);
+ 		$table.append(butDiv);
 
     }
 
