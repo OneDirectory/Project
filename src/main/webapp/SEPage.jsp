@@ -16,6 +16,13 @@
 <link href="Resources/css/simple-sidebar.css" rel="stylesheet">
 <link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
 <script src="js/selectize.js"></script>
+<script src="Resources/js/jquery-1.6.1.min.js"></script>
+<script src="Resources/js/bootstrap.min.js"></script>
+
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">   
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 
 
@@ -106,7 +113,6 @@
 
 
 	</table>
-	</div>
 	<!-- /#page-content-wrapper -->
 
 	<div id="johnsQuery">
@@ -135,80 +141,19 @@
 					</div>
 
 				</div>
-
-
 			</div>
-			<div style="height:250px; width:800px; overflow:auto;">
-			
-			<table class="table" id='tableJohn' name='table'>
-
-
-			</table>
-</div>
-
 		</div>
+		<div id='tableJohn' width='500px'>
+		
+		</div>
+	</div>
 		<!-- /#wrapper -->
 
-
-
-
-
-
-
-		<script src="Resources/js/jquery-1.6.1.min.js"></script>
-		<script src="Resources/js/bootstrap.min.js"></script>
-
-
-
-		<script>
-
-		var divs = ["johnsQuery","briansQuery"];
-		var visibleDiv = null;
-		 var $tableJohn = $('#tableJohn');
-		 var $table = $('#tableBrian');
-
-		$(function(){
-
-			document.getElementById("johnsQuery").style.display='none';
-
-			document.getElementById("briansQuery").style.display='none';
-			
-
-		});
-
-		function toggle(divId){
-			removeData();
-		 	removeDataJohn();
-			if(visibleDiv === divId) {
-				  visibleDiv = null;
-			} else {
-				    visibleDiv = divId;
-				}
-
-			hideOtherDivs();
-		}
-
-		function hideOtherDivs(){
-			var i, divId, div;
-
-			for(i = 0; i <divs.length; i++){
-				divId = divs[i];
-				div = document.getElementById(divId);
-
-				if(visibleDiv == divId){
-					div.style.display = 'block';
-				}else{
-					div.style.display = 'none';
-				}
-			}
-		}
-
-   
+<script>
 
         $(function(){
 
         var $select = $('#ID');
-
 
         $.ajax({
             type: 'GET',
@@ -227,14 +172,14 @@
             });
         });
 
-    </script>
+ </script>
 
 
 
-		<script>
+<script>
 $(function(){
 
- 		$( "#submitBrian" ).click(function(e) {	
+ 	$( "#submitBrian" ).click(function(e) {	
 
  	removeData();
  	removeDataJohn();
@@ -251,11 +196,9 @@ $(function(){
 		}
 
 	else{
-		myurl= 'http://localhost:8080/project/supportPage3.html';
+		myurl= 'http://localhost:8080/project/SEPage.jsp';
 		isValid=false;
 		}
-
- 
 
         $.ajax({
 
@@ -273,7 +216,7 @@ $(function(){
  	 	 			});
 	 	 			isValid=false;
  	 	 		}
- 	 		else if(isValid && data.length===0){
+ 	 			else if(isValid && data.length===0){
 				alert('No available data for selected dates');
  	 	 		}
             }
@@ -289,13 +232,8 @@ $(function(){
         row.setAttribute('id', 'head');
         var colOne=document.createElement('th');
      
-
-        colOne.innerHTML='Count of failed calls for '+selected;
-        
-
-        row.appendChild(colOne);
-       
-
+        colOne.innerHTML='Count of failed calls for '+selected;     
+        row.appendChild(colOne);     
         $table.append(row);
 
     }
@@ -319,14 +257,10 @@ $(function(){
         $table.empty();
 
     }
-    </script>
+</script>
 
-		<script>
-
-   
-
-	$(function(){
-		
+<script>
+	$(function(){		
 		$( "#submitJohn" ).click(function(e) {
 			
 			removeData();
@@ -355,10 +289,12 @@ $(function(){
 		 	 			createTableJohn();
 		 	 			createButtonJohn();
 		 	 			$.each(data, function(key, value){
-		 	 				$tableJohn.append('<tr><td>'+value+'</td></tr>');
+		 	 				$('#viewImsis').find('tbody').append('<tr><td>'+value+'</td></tr>');
 		 	 	 			});
 			 	 			isValid=false;
+			 	 			$('#viewImsis').dataTable();	
 		 	 	 		}
+	 	 	 		
 		 	 		else if(isValid && data.length===0){
 						alert('No available data for selected dates');
 		 	 	 		}
@@ -368,6 +304,93 @@ $(function(){
 			});
 		});
 	
+	
+	
+ 	function createTableJohn(){
+ 	 	var tableDiv = document.getElementById('tableJohn')
+ 		var divContainer = document.createElement('div');
+ 		divContainer.setAttribute('class', 'table-responsive');
+ 		divContainer.setAttribute('id', 'divContainer');
+ 		var table=document.createElement('table');
+ 		table.setAttribute('class', 'table table-striped');
+ 		table.setAttribute('id', 'viewImsis');
+ 		var header = document.createElement('thead');
+ 		var body = document.createElement('tbody');
+ 		var row = document.createElement('tr');
+ 		var colOne=document.createElement('td');
+ 		colOne.innerHTML = 'IMSI';
+
+ 		row.appendChild(colOne);
+ 		header.appendChild(row);
+ 		table.appendChild(header);
+		table.appendChild(body);
+		divContainer.appendChild(table);
+		tableDiv.appendChild(divContainer);
+ 		
+ 		
+ 	}
+ 	
+ 	function createButtonJohn(){
+ 		var butDiv=document.createElement('div');
+ 		butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
+ 		var button=document.createElement(button);
+ 		button.setAttribute('id', 'tableButton');
+ 		button.setAttribute('class','btn btn-primary');
+ 		button.innerHTML='Search Again';
+ 		button.addEventListener('click', removeDataJohn);
+ 		butDiv.appendChild(button);
+ 		$tableJohn.append(butDiv);
+ 		
+ 	}
+
+ 	function removeDataJohn(){
+ 		var removeHead=document.getElementById('head');
+ 		var removeButton=document.getElementById('tableButton');
+ 		$tableJohn.empty();
+ 		
+ 	}
+
+ 	var divs = ["johnsQuery","briansQuery"];
+	var visibleDiv = null;
+	 var $tableJohn = $('#tableJohn');
+	 var $table = $('#tableBrian');
+
+	$(function(){
+
+		document.getElementById("johnsQuery").style.display='none';
+
+		document.getElementById("briansQuery").style.display='none';
+		
+
+	});
+
+	function toggle(divId){
+		removeData();
+	 	removeDataJohn();
+		if(visibleDiv === divId) {
+			  visibleDiv = null;
+		} else {
+			    visibleDiv = divId;
+			}
+
+		hideOtherDivs();
+	}
+
+	function hideOtherDivs(){
+		var i, divId, div;
+
+		for(i = 0; i <divs.length; i++){
+			divId = divs[i];
+			div = document.getElementById(divId);
+
+			if(visibleDiv == divId){
+				div.style.display = 'block';
+			}else{
+				div.style.display = 'none';
+			}
+		}
+	}
+
 	function validateEntry(from, to){
 		if(from===''){
 			alert('Invalid FROM DateTime');
@@ -396,42 +419,6 @@ $(function(){
 		else
 			return false;
 }
-	
- 	function createTableJohn(){
- 		
- 		var row = document.createElement('tr');
- 		
- 		row.setAttribute('id', 'head');
- 		row.setAttribute('display', 'block');
- 		var colOne=document.createElement('th');
-
- 		colOne.innerHTML='IMSI';
-
- 		row.appendChild(colOne);
-
- 		$tableJohn.append(row);
- 		
- 	}
- 	
- 	function createButtonJohn(){
- 		var butDiv=document.createElement('div');
- 		butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
- 		var button=document.createElement(button);
- 		button.setAttribute('id', 'tableButton');
- 		button.setAttribute('class','btn btn-primary');
- 		button.innerHTML='Search Again';
- 		button.addEventListener('click', removeDataJohn);
- 		butDiv.appendChild(button);
- 		$tableJohn.append(butDiv);
- 		
- 	}
-
- 	function removeDataJohn(){
- 		var removeHead=document.getElementById('head');
- 		var removeButton=document.getElementById('tableButton');
- 		$tableJohn.empty();
- 		
- 	}
  	
 
     </script>
