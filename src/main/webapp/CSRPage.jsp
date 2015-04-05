@@ -14,6 +14,8 @@
 <!-- Custom CSS -->
 <link href="Resources/css/simple-sidebar.css" rel="stylesheet">
 <link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
+<script src="Resources/js/jquery-1.6.1.min.js"></script>
+<script src="Resources/js/bootstrap.min.js"></script>
 </head>
 
 
@@ -48,8 +50,7 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
-				<li><a href="#">About</a></li>
-				<li><a href="#">Search by IMSI</a></li>
+				<li><a href="#">EventID/CauseCode per IMSI</a></li>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
@@ -93,18 +94,9 @@
 		<div id="butDiv"></div>
 	</table>
 
-
-
-
-	<script src="Resources/js/jquery-1.6.1.min.js"></script>
-	<script src="Resources/js/bootstrap.min.js"></script>
-
-	
-
-	<script>
+<script>
 
 var $table = $('#table');
-
 
 	$(function(){
 
@@ -130,15 +122,11 @@ var $table = $('#table');
 	
 </script>
 
-
-
-	<script>
+<script>
 
 $(function(){
 
-
 	$( "#submit" ).click(function(e) {
-
 	
 	removeData();	
 	var x=document.getElementById("ID");

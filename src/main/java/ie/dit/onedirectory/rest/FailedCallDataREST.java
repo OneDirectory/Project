@@ -139,19 +139,7 @@ public class FailedCallDataREST {
 		java.sql.Date sqlDateFrom = new java.sql.Date(from.getTime());
 		java.sql.Date sqlDateTo = new java.sql.Date(to.getTime());
 		
-		ArrayList list = (ArrayList) service.getCountBetweenDatesForAllIMSI(sqlDateFrom, sqlDateTo);
-		
-		int length = list.size();
-		Collection listReturn = new ArrayList();
-		
-		if(length>10){
-			for(int i=indexFrom ; i<indexTo ; i++){
-				listReturn.add(list.get(i));
-			}
-		}
-		
-		return listReturn;
-		
+		return service.getCountBetweenDatesForAllIMSI(sqlDateFrom, sqlDateTo);
 		
 	}
 
