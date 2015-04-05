@@ -17,10 +17,38 @@ body.page1.2 {
 	border-color: #2e6da4;
 	margin: 0 auto;
 }
+.tableSE {
+	font-size: 20px;
+	width: 400px;
+	margin: 0 auto;
+	font-family: verdana, arial, sans-serif;
+	color: #333333;
+	position: relative;
+	top: 80px;
+	right: 40px;
+	left: 40px;
+	border-width: 3px;
+	border-collapse: collapse;
+}
+.tableSE th {
+	border-width: 3px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+
+.tableSE td {
+	border-width: 3px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
 
 .table {
 	font-size: 20px;
-	width: 800px;
+	width: 600px;
 	margin: 0 auto;
 	font-family: verdana, arial, sans-serif;
 	color: #333333;
