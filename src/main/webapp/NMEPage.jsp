@@ -14,6 +14,15 @@
 <!-- Custom CSS -->
 <link href="Resources/css/simple-sidebar.css" rel="stylesheet">
 <link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
+<!-- jQuery -->
+<script src="Resources/js/jquery-1.6.1.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="Resources/js/bootstrap.min.js"></script>
+
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">   
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 
 
@@ -47,10 +56,8 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
-
-				<li><a href="#" onclick="toggle('imsiCount');">Affected IMSI with Count</a></li>
-				<li><a href="#" onclick="toggle('modelCount');">Call Failure by Model</a></li>
-
+				<li><a href="#" onclick="toggle('imsiCount');">Duration/FailureCount per IMSI</a></li>
+				<li><a href="#" onclick="toggle('modelCount');">EventId/CauseCode per Model</a></li>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
@@ -63,125 +70,57 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<h1>Total number of failures per IMSI</h1>
-
 						<label class="control-label col-sm-2" for="ID">FROM:</label><br>
-
 						<div>
 							<input type="datetime-local" id='from' class="form-control"
 								name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
 						</div>
-
 						<label class="control-label col-sm-2" for="ID">TO:</label>
-
 						<div>
 							<input type="datetime-local" id='to' class="form-control"
 								name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
 						</div>
-
-
-
 						<div class="col-sm-offset-4 col-sm-10">
 							<br>
 							<button id="submit" type="submit" class="btn btn-primary">Search</button>
 						</div>
-
-
 					</div>
 				</div>
-				<table class="table" id='table' name='table'></table>
-			</div>
-			
-			
+				<div id='tableForImsiCountDiv' ></div>
+			</div>			
 		</div>
 		<!-- /#page-content-wrapper -->
-
 	</div>
 	<!-- /#wrapper -->
-
 
 	<div id="modelCount">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Call Failures by Model</h1>
-						
+					<h1>Call Failures by Model</h1>					
 						<label class="control-label col-sm-2" for="modelInput">Model: </label>
-
 						<div>
 							<select class="col-sm-5" id="modelInput">
 							</select>
-						</div>
-						
+						</div>						
 						<div class="col-sm-offset-4 col-sm-10">
 							<button id="modelSubmit" type="submit" class="btn btn-primary">Search</button>
-						</div>
-					
+						</div>					
 				</div>
 			</div>
+		</div>		
 		</div>
-		
-		</div>
-				<table class="table" id='tablePeter' name='table'></table>
+				<div id='tableForModelQuery' ></div>
 			</div>
 	</div>
 
-	<!-- jQuery -->
-	<script src="Resources/js/jquery-1.6.1.min.js"></script>
-
-	<!-- Bootstrap Core JavaScript -->
-	<script src="Resources/js/bootstrap.min.js"></script>
+	
 
 <!-- Menu Toggle Script -->
 <script>
-var divs = ["imsiCount","modelCount"];
-var visibleDiv = null;
-var $modelTable = $('#tablePeter')
-var indexFrom=0;
-var indexTo=5
-var fromDate;
-var toDate;
 
-$(function(){
-	
-	
-
-	document.getElementById("imsiCount").style.display='none';
-
-
-	document.getElementById("modelCount").style.display='none';
-	
-
-});
-
-function toggle(divId){
-	removeData();
- 	removeModelData();
-	if(visibleDiv === divId) {
-		  visibleDiv = null;
-	} else {
-		    visibleDiv = divId;
-		}
-
-	hideOtherDivs();
-}
-
-function hideOtherDivs(){
-	var i, divId, div;
-
-	for(i = 0; i <divs.length; i++){
-		divId = divs[i];
-		div = document.getElementById(divId);
-
-		if(visibleDiv == divId){
-			div.style.display = 'block';
-		}else{
-			div.style.display = 'none';
-		}
-	}
-}
 </script>
 	<script>
-	var $table = $('#table');
 
  	$(function(){
 
@@ -213,9 +152,10 @@ function hideOtherDivs(){
  	 			createTable();
  	 			createButton();
  	 			$.each(data, function(key, value){
- 	 				$table.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td></tr>');
+ 	 				$('#viewImsisWithCount').find('tbody').append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td></tr>');
  	 	 			});
 	 	 			isValid=false;
+	 	 			$('#viewImsisWithCount').dataTable();
  	 	 		}
  	 		else if(isValid && data.length===0){
 				alert('No available data for selected dates');
@@ -257,12 +197,20 @@ function hideOtherDivs(){
 
 	
  	function createTable(){
- 		
- 		var row=document.createElement('tr');
- 		row.setAttribute('id', 'head');
- 		var colOne=document.createElement('th');
- 		var colTwo=document.createElement('th');
- 		var colThree=document.createElement('th');
+
+ 		var tableDiv = document.getElementById('tableForImsiCountDiv')
+ 		var divContainer = document.createElement('div');
+ 		divContainer.setAttribute('class', 'table-responsive');
+ 		divContainer.setAttribute('id', 'divContainer');
+ 		var table=document.createElement('table');
+ 		table.setAttribute('class', 'table table-striped');
+ 		table.setAttribute('id', 'viewImsisWithCount');
+ 		var header = document.createElement('thead');
+ 		var body = document.createElement('tbody');
+ 		var row = document.createElement('tr');
+ 		var colOne=document.createElement('td');
+ 		var colTwo=document.createElement('td');
+ 		var colThree=document.createElement('td');
 
  		colOne.innerHTML='IMSI';
  		colTwo.innerHTML='Number Of Failures';
@@ -272,7 +220,11 @@ function hideOtherDivs(){
  		row.appendChild(colTwo);
  		row.appendChild(colThree);
 
- 		$table.append(row);
+ 		header.appendChild(row);
+ 		table.appendChild(header);
+		table.appendChild(body);
+		divContainer.appendChild(table);
+		tableDiv.appendChild(divContainer);
  		
  	}
 
@@ -285,44 +237,15 @@ function hideOtherDivs(){
  		button.innerHTML='Search Again';
  		button.addEventListener('click', removeData);
  		butDiv.appendChild(button);
- 		$table.append(butDiv);
-
- 		// This button added for pagination
- 		// all logic in click method
- 		var moreButton = document.createElement('button');
- 		moreButton.setAttribute('class','btn btn-primary');
- 		moreButton.innerHTML='LoadMore';
- 		moreButton.addEventListener('click', getMoreRecords);
- 		butDiv.appendChild(moreButton)
- 		
+ 		$('#viewImsisWithCount').append(butDiv);
+	
  	}
-
- 	// we increase by 5 both indexes as these are the new limits we require
- 	// that will satisfy our table size
- 	function getMoreRecords(){
- 	 	$table.empty();
- 	 	indexFrom = indexFrom+5;
- 	 	indexTo = indexTo+5;
-
- 	 	$.ajax({
-
- 	 		type: 'GET',
- 	 		url: 'http://localhost:8080/project/rest/failedcalldata/count/'+fromDate+'£'+toDate+'£'+indexFrom+'£'+indexTo,
- 	 		success: function(data){
- 	 	 			createTable();
- 	 	 			createButton();
- 	 	 			$.each(data, function(key, value){
- 	 	 				$table.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td></tr>');
- 	 	 	 		});
- 	 	 	 	} 	 					
- 	 	 });
- 	 }
 
  	function removeData(){
  		var removeHead=document.getElementById('head');
  		var removeButton=document.getElementById('tableButton');
- 		$table.empty();
- 		
+ 		$('#tableForImsiCountDiv').empty();	
+ 			
  	}
  	 	
 	</script>
@@ -349,8 +272,9 @@ function hideOtherDivs(){
 				
 				success:function(data) {
 					$.each(data, function(key, value) {
-						$modelTable.append('<tr><td>' + value[0] + '</td><td>' + value[1] + '</td><td>'+ value[2]+'</td></tr>')
+						$('#viewModelData').append('<tr><td>' + value[0] + '</td><td>' + value[1] + '</td><td>'+ value[2]+'</td></tr>')
 					});
+					$('#viewModelData').dataTable();	
 				}
 			});
 		});
@@ -358,24 +282,34 @@ function hideOtherDivs(){
 	
 	function createModelTable() {
 		
-		var row=document.createElement('tr');
-		row.setAttribute('id', 'head');
-		var colOne=document.createElement('th');
-		var colTwo=document.createElement('th');
-		var colThree=document.createElement('th');
+		var tableDiv = document.getElementById('tableForModelQuery')
+ 		var divContainer = document.createElement('div');
+ 		divContainer.setAttribute('class', 'table-responsive');
+ 		divContainer.setAttribute('id', 'divContainer');
+ 		var table=document.createElement('table');
+ 		table.setAttribute('class', 'table table-striped');
+ 		table.setAttribute('id', 'viewModelData');
+ 		var header = document.createElement('thead');
+ 		var body = document.createElement('tbody');
+ 		var row = document.createElement('tr');
+ 		var colOne=document.createElement('td');
+ 		var colTwo=document.createElement('td');
+ 		var colThree=document.createElement('td');
 		
-
 		colOne.innerHTML='Cause Code';
 		colTwo.innerHTML='Event ID';
 		colThree.innerHTML='Description';
 		
-
 		row.appendChild(colOne);
 		row.appendChild(colTwo);
 		row.appendChild(colThree);
-		
 
-		$modelTable.append(row);
+ 		header.appendChild(row);
+ 		table.appendChild(header);
+		table.appendChild(body);
+		divContainer.appendChild(table);
+		tableDiv.appendChild(divContainer);
+		
 	}
 	
 	function createModelButton() {
@@ -397,7 +331,7 @@ function hideOtherDivs(){
 		
 		var removeHead=document.getElementById('head');
 		var removeButton=document.getElementById('modelTableButton');
-		$modelTable.empty();
+		$('#tableForModelQuery').empty();
 	}
 	</script>
 	
@@ -423,6 +357,49 @@ function hideOtherDivs(){
 	            }
 	        });
 	    });
+
+
+		var divs = ["imsiCount","modelCount"];
+		var visibleDiv = null;
+		var $modelTable = $('#tablePeter')
+		var indexFrom=0;
+		var indexTo=5
+		var fromDate;
+		var toDate;
+
+		$(function(){
+
+			document.getElementById("imsiCount").style.display='none';
+			document.getElementById("modelCount").style.display='none';
+			
+		});
+
+		function toggle(divId){
+			removeData();
+		 	removeModelData();
+			if(visibleDiv === divId) {
+				  visibleDiv = null;
+			} else {
+				    visibleDiv = divId;
+				}
+
+			hideOtherDivs();
+		}
+
+		function hideOtherDivs(){
+			var i, divId, div;
+
+			for(i = 0; i <divs.length; i++){
+				divId = divs[i];
+				div = document.getElementById(divId);
+
+				if(visibleDiv == divId){
+					div.style.display = 'block';
+				}else{
+					div.style.display = 'none';
+				}
+			}
+		}
 	</script>
 	
 </body>
