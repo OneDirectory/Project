@@ -77,6 +77,14 @@ public class UserTest {
 		libs = Maven.resolver().resolve("org.apache.poi:poi:3.11")
 				.withTransitivity().as(File.class);
 		archive.addAsLibraries(libs);
+		
+		libs = Maven.resolver().resolve("org.codehaus.jackson:jackson-core-asl:1.9.13")
+				.withTransitivity().as(File.class);
+		archive.addAsLibraries(libs);
+		
+		libs = Maven.resolver().resolve("org.codehaus.jackson:jackson-mapper-asl:1.9.13")
+				.withTransitivity().as(File.class);
+		archive.addAsLibraries(libs);
 
 		return archive;
 	}
@@ -120,6 +128,7 @@ public class UserTest {
 	public void testFindUserById(){
 		given()
 		.pathParam("userID", 1)
+		.contentType(ContentType.JSON)
 		.expect()
 		.statusCode(204) // expecting no content here as there are no users in fake DB
 		.log().ifError()
@@ -129,15 +138,13 @@ public class UserTest {
 	}
 	@Test
 	public void testAddUser(){
+		User user = new User(1,"Support Engineer","1234","cal","mcg");
 		
 		given()
-		.parameters("userID", 1,
-				"userType", "Support Engineer",
-				"userFName" ,"Calvin",
-				"userSName", "Mc",
-				"userPassword",1234)
+		.contentType("application/json")
+		.body(user)
 		.expect()
-		.statusCode(415) // needs resolved should be 200			
+		.statusCode(204) 	
 		.log().ifError()			
 		.when()														
 		.post("/rest/user/add");	
