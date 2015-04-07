@@ -75,7 +75,7 @@ public class FailedCallDataREST {
 	@GET
 	@Path("/model/{model}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<?> getEventIdAndCauseCodeByModel(
+	public Collection getEventIdAndCauseCodeByModel(
 			@PathParam("model") String modelName) {
 		return service.getEventIdAndCauseCodeByModel(modelName);
 	}
@@ -154,6 +154,13 @@ public class FailedCallDataREST {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<?> getAllIMSI() {
 		return service.getAllIMSI();
+	}
+	
+	@GET
+	@Path("/imsibyfailureclass/{failureId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<String> getAllImsiForFailureClass(@PathParam("failureId") String failureID){
+		return service.getAllImsiForFailureClass(Integer.parseInt(failureID));
 	}
 
 	@GET
