@@ -59,6 +59,7 @@
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
 				<li><a href="#" onclick="toggle('briansQuery');">Total number of Failures per Model</a></li>
 				<li><a href="#" onclick="toggle('johnsQuery');">All IMSIs with Failed Call Data</a></li>
+				<li><a href="#" onclick="toggle('imsisForFailreClassDiv');">All IMSIs for a FailureClass</a></li>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
@@ -146,7 +147,83 @@
 		
 		</div>
 	</div>
+	<div id="imsisForFailreClassDiv" class = 'container-fluid'>
+		<div id="failureClassDiv" class="form-group">
+			<select id="failureClassSelectDiv"></select>
+			<button id="failureClassSelectButton" class="btn btn-primary">SEARCH</button>
+			
+			<div id="imsisTableForFailreClassDiv">
+			</div>
+		
+		</div>
+	</div>
 		<!-- /#wrapper -->
+		
+<script>
+$(function(){
+	
+	$.ajax({
+		type: 'GET',
+		url:'http://localhost:8080/project/rest/failureclasses',
+		contentType:'application/json',
+		success: function(data){
+			var x = document.getElementById("failureClassSelectDiv");
+			$.each(data, function(i, fd){
+				var option = document.createElement('option');
+				option.text = "ID: "+fd.failureId+" - "+"Description: "+ fd.description;
+				x.appendChild(option);
+				});
+			}
+		});
+
+$('#failureClassSelectButton').click(function(e){
+	var x = document.getElementById("failureClassSelectDiv");
+	var selectedOption = x.options[x.selectedIndex].text;
+	var failureID = selectedOption.split('-')[0];
+	var idInt = failureID.split(':')[1].trim();
+
+	$('#imsisTableForFailreClassDiv').empty();
+	createImsiFailureClassTable();
+
+	
+	$.ajax({
+		type: 'GET',
+		url:'http://localhost:8080/project/rest/failedcalldata/imsibyfailureclass/'+idInt,
+		contentType:'application/json',
+		success: function(data){
+			for(var i=0; i<data.length; i++){
+				$('#viewImsisFailureClass').find('tbody').append('<tr><td>'+data[i]+'</td></tr>');
+			}
+			$('#viewImsisFailureClass').dataTable();
+			}	
+});	
+});
+});
+
+function createImsiFailureClassTable(){
+	var div = document.getElementById('imsisTableForFailreClassDiv');
+	var divContainer = document.createElement('div');
+	divContainer.setAttribute('class', 'table-responsive');
+	divContainer.setAttribute('id', 'divContainer');
+	var table=document.createElement('table');
+	table.setAttribute('class', 'tableSE');
+	table.setAttribute('id', 'viewImsisFailureClass');
+	var header = document.createElement('thead');
+	var body = document.createElement('tbody');
+	var row = document.createElement('tr');
+	var colOne=document.createElement('td');
+	colOne.innerHTML = 'IMSI';
+
+	row.appendChild(colOne);
+	header.appendChild(row);
+	table.appendChild(header);
+	table.appendChild(body);
+	divContainer.appendChild(table);
+	div.appendChild(divContainer);
+	
+}
+
+</script>		
 
 <script>
 
@@ -350,7 +427,7 @@ $(function(){
  		
  	}
 
- 	var divs = ["johnsQuery","briansQuery"];
+ 	var divs = ["johnsQuery","briansQuery","imsisForFailreClassDiv"];
 	var visibleDiv = null;
 	 var $tableJohn = $('#tableJohn');
 	 var $table = $('#tableBrian');
@@ -358,8 +435,8 @@ $(function(){
 	$(function(){
 
 		document.getElementById("johnsQuery").style.display='none';
-
 		document.getElementById("briansQuery").style.display='none';
+		document.getElementById("imsisForFailreClassDiv").style.display='none';
 		
 
 	});

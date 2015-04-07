@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Before;
 import org.junit.After;
+import org.junit.Ignore;
 
 
 @RunWith(Arquillian.class)
@@ -101,8 +102,25 @@ public class UserEquipmentTest {
 				INITIAL_OS,
 				INITIAL_INPUTMODE
 				);
+		ec.setAccessCapability(INITIAL_ACCESS_CAPABILITY);
+		ec.setMarketingName(INITIAL_MARKETINGNAME);
+		ec.setManufacturer(INITIAL_MANUFACTURER);
+		ec.setVendorName(INITIAL_VENDORNAME);
+		ec.setOs("os");
+		ec.setUeType("uetype");
+		ec.setInputMode("inputmode");
 
 		em.persist(ec);
+		ArrayList<UserEquipment> list = (ArrayList<UserEquipment>) service.getAllUserEquipment();
+		UserEquipment ue = list.get(0);
+		
+		assertEquals(INITIAL_ACCESS_CAPABILITY, ue.getAccessCapability());
+		assertEquals(INITIAL_MARKETINGNAME, ue.getMarketingName());
+		assertEquals(INITIAL_MANUFACTURER, ue.getManufacturer());
+		assertEquals(INITIAL_VENDORNAME, ue.getVendorName());
+		assertEquals("os", ue.getOs());
+		assertEquals("uetype", ue.getUeType());
+		assertEquals("inputmode", ue.getInputMode());
 
 		Integer ecID = 13; 
 
@@ -141,8 +159,8 @@ public class UserEquipmentTest {
 		updatedEC = em.find(UserEquipment.class, ecID);
 		assertEquals("Update Failed", UPDATED_INPUTMODE, loadedEC.getInputMode());
 
-		em.remove(updatedEC);
-		UserEquipment shouldBeNull = em.find(UserEquipment.class, ecID);
+		em.remove(ue);
+		UserEquipment shouldBeNull = em.find(UserEquipment.class, 13);
 		assertNull("Event Cause Failed to delete", shouldBeNull);
 	}
 
@@ -177,6 +195,47 @@ public class UserEquipmentTest {
 
 		service.addUserEquipment(ec2);
 		assertEquals("UserEquipmentServiceLocal Failed to Add", service.getAllUserEquipment().size(), 2);
+		
+		Integer ecID = 13; 
+
+		UserEquipment loadedEC = em.find(UserEquipment.class, ecID);
+		assertEquals("Insertion Failed", INITIAL_MARKETINGNAME, loadedEC.getMarketingName());
+
+		loadedEC.setMarketingName(UPDATED_MARKETINGNAME);
+		UserEquipment updatedEC = em.find(UserEquipment.class, ecID);
+		assertEquals("Update Failed", UPDATED_MARKETINGNAME, loadedEC.getMarketingName());
+
+		loadedEC.setManufacturer(UPDATED_MANUFACTURER );
+		updatedEC = em.find(UserEquipment.class, ecID);
+		assertEquals("Update Failed", UPDATED_MANUFACTURER , loadedEC.getManufacturer());
+
+		loadedEC.setAccessCapability(UPDATED_ACCESS_CAPABILITY);
+		updatedEC = em.find(UserEquipment.class, ecID);
+		assertEquals("Update Failed", UPDATED_ACCESS_CAPABILITY , loadedEC.getAccessCapability());
+
+		loadedEC.setModel(UPDATED_MODEL);
+		updatedEC = em.find(UserEquipment.class, ecID);
+		assertEquals("Update Failed", UPDATED_MODEL, loadedEC.getModel());
+
+		loadedEC.setVendorName(UPDATED_VENDORNAME);
+		updatedEC = em.find(UserEquipment.class, ecID);
+		assertEquals("Update Failed", UPDATED_VENDORNAME, loadedEC.getVendorName());
+
+		loadedEC.setUeType(UPDATED_UETYPE);
+		updatedEC = em.find(UserEquipment.class, ecID);
+		assertEquals("Update Failed", UPDATED_MODEL, loadedEC.getModel());
+
+		loadedEC.setOs(UPDATED_OS);
+		updatedEC = em.find(UserEquipment.class, ecID);
+		assertEquals("Update Failed", UPDATED_OS, loadedEC.getOs());
+
+		loadedEC.setInputMode(UPDATED_INPUTMODE);
+		updatedEC = em.find(UserEquipment.class, ecID);
+		assertEquals("Update Failed", UPDATED_INPUTMODE, loadedEC.getInputMode());
+
+		em.remove(loadedEC);
+		UserEquipment shouldBeNull = em.find(UserEquipment.class, 13);
+		assertNull("Event Cause Failed to delete", shouldBeNull);
 	}
 
 

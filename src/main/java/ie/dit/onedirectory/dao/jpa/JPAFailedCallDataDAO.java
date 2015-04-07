@@ -128,7 +128,8 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	 * dates.
 	 */
 
-	public Collection<?> getAllIMSIWithCallFailuresBetweenDates(Date from, Date to) {
+	public Collection<?> getAllIMSIWithCallFailuresBetweenDates(Date from,
+			Date to) {
 
 		Query query = entityManager
 				.createQuery("select fd.imsi"
@@ -139,6 +140,14 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		query.setParameter("toDate", to, TemporalType.DATE);
 		List<?> result = query.getResultList();
 		return result;
+	}
+
+	@Override
+	public Collection<String> getAllImsiForFailureClass(Integer failureID) {
+		Query query = entityManager
+				.createQuery("Select distinct f.imsi from FailedCallData f where f.failureClass.failureId =:failureID");
+		query.setParameter("failureID", failureID);
+		return query.getResultList();
 	}
 
 }

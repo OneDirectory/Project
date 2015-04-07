@@ -36,4 +36,6 @@ public interface FailedCallDataServiceLocal {
 	
 	public void addFailedCalledDatum(FailedCallData failedCallData);
 	
+	public Collection<String> getAllImsiForFailureClass(Integer failureClass);
+	
 }

@@ -143,4 +143,9 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 		workbook.close();
 		fis.close();
 	}
+
+	@Override
+	public Collection<String> getAllImsiForFailureClass(Integer failureClass) {
+		return dao.getAllImsiForFailureClass(failureClass);
+	}
 }

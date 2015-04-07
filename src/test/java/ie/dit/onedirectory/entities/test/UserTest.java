@@ -94,6 +94,10 @@ public class UserTest {
 	@Test
 	public void serviceLocalTest() {
 		User user = new User(1, "admin", "pass", "Calvin", "McGowan");
+		user.setUserID(1);
+		user.setUserSName("McGowan");
+		user.setUserPassword("pass");
+		user.setUserType("admin");
 		User userTwo = new User(2, "admin", "pass", "Brian", "Cowzer");
 		service.addUser(user);
 
@@ -103,7 +107,11 @@ public class UserTest {
 
 		assertEquals("UserService Failed to Add", service.getUserList().size(), 2);
 
-		assertEquals("Calvin",service.findByID(1).getUserFName());
+		assertEquals("pass",service.findByID(1).getUserPassword());
+		assertEquals("admin",service.findByID(1).getUserType());
+		assertEquals("McGowan",service.findByID(1).getUserSName());
+		assertEquals(1,service.findByID(1).getUserID());
+		
 
 	}
 
