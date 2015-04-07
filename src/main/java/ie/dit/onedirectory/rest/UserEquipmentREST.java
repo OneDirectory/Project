@@ -33,12 +33,21 @@ public class UserEquipmentREST {
 	@EJB
 	UserEquipmentServiceLocal service;
 	
+	/**
+	 * A get request to the base class url
+	 * @return a json collection of all user equipment
+	 */
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<UserEquipment> getAllUserEquipment(){
 		return service.getAllUserEquipment();
 	}
 	
+	/**
+	 * Get rewuesst with the specified path
+	 * @return a json collection of all models from user equipment
+	 */
 	@GET
 	@Path("/{getAllModelsFromUserEquipment}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -46,6 +55,12 @@ public class UserEquipmentREST {
 		return service.getAllModelsFromUserEquipment();		
 	}
 	
+	/**
+	 * 
+	 * @param form
+	 * @return
+	 * @throws IOException
+	 */
 	@POST
 	@Path("/upload")
 	@Consumes("multipart/form-data")

@@ -52,10 +52,16 @@ public class FailedCallDataREST {
 
 	@EJB
 	FailedCallDataServiceLocal service;
-	
+
 	@EJB
 	DataValidator validator;
-	
+
+	/**
+	 * Get Request
+	 * 
+	 * @return A JSON collection of all failed call data objects
+	 */
+
 	@GET
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -71,7 +77,7 @@ public class FailedCallDataREST {
 	 *         client from the service layer.
 	 * 
 	 */
-	
+
 	@GET
 	@Path("/model/{model}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -95,15 +101,14 @@ public class FailedCallDataREST {
 	public Collection<?> getEventCauseByIMSI(@PathParam("imsi") String imsi) {
 		return service.getEventIdAndCauseCodeByIMSI(imsi);
 	}
-	
 
-	//JF addition
+	// JF addition
 	@GET
 	@Path("/dateIMSI/{dates2}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<?> getAllIMSIWithCallFailuresBetweenDates(
-			@PathParam("dates2")  String datesPassed) throws ParseException {
-		
+			@PathParam("dates2") String datesPassed) throws ParseException {
+
 		String[] dates2 = datesPassed.split("£");
 		String fromDate = dates2[0];
 		String toDate = dates2[1];
@@ -113,34 +118,39 @@ public class FailedCallDataREST {
 		Date to = sdf1.parse(toDate);
 		java.sql.Date sqlDateFrom = new java.sql.Date(from.getTime());
 		java.sql.Date sqlDateTo = new java.sql.Date(to.getTime());
-		return service.getAllIMSIWithCallFailuresBetweenDates(sqlDateFrom, sqlDateTo);
+		return service.getAllIMSIWithCallFailuresBetweenDates(sqlDateFrom,
+				sqlDateTo);
 	}
 
-	
-	// This method has been heavily modified to accommodate a hacky
-	// way of paginating a table. This is not the end result of this
-	// Needs refactored.
+	/**
+	 * The passed string is parsed to get the two dates Two date objects are
+	 * created and converted to sql dates for database access
+	 * 
+	 * @param datesPassed
+	 *            search range requested by a user
+	 * @return A JSON collection of the total count of failed call data for all
+	 *         imsis
+	 * @throws ParseException
+	 */
 	@GET
 	@Path("/count/{dates}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection getCountBetweenDatesForAllIMSI(
 			@PathParam("dates") String datesPassed) throws ParseException {
-		
+
 		String[] dates = datesPassed.split("£");
 		String fromDate = dates[0];
 		String toDate = dates[1];
-		int indexFrom = Integer.parseInt(dates[2]);
-		int indexTo = Integer.parseInt(dates[3]);
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date from = sdf.parse(fromDate);
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		Date to = sdf1.parse(toDate);
 		java.sql.Date sqlDateFrom = new java.sql.Date(from.getTime());
 		java.sql.Date sqlDateTo = new java.sql.Date(to.getTime());
-		
+
 		return service.getCountBetweenDatesForAllIMSI(sqlDateFrom, sqlDateTo);
-		
+
 	}
 
 	/**
@@ -155,14 +165,32 @@ public class FailedCallDataREST {
 	public Collection<?> getAllIMSI() {
 		return service.getAllIMSI();
 	}
-	
+
+	/**
+	 * GET request
+	 * 
+	 * @param failureID
+	 *            passed failure id string parsed to an Integer
+	 * @return A collection of all imsis with a failed call data due to that
+	 *         failureID which represents a failure class
+	 */
 	@GET
 	@Path("/imsibyfailureclass/{failureId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<String> getAllImsiForFailureClass(@PathParam("failureId") String failureID){
+	public Collection<String> getAllImsiForFailureClass(
+			@PathParam("failureId") String failureID) {
 		return service.getAllImsiForFailureClass(Integer.parseInt(failureID));
 	}
 
+	/**
+	 * Passed string is parsed to extract dates and model
+	 * 
+	 * @param paramsPassed
+	 *            passed string of two dates and a model
+	 * @return a collection of failed call data for that model within date
+	 *         range
+	 * @throws ParseException
+	 */
 	@GET
 	@Path("/getFailedCallDataByModel/{params}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -187,8 +215,9 @@ public class FailedCallDataREST {
 	public Response uploadFailedCallData(@MultipartForm FileUploadForm form)
 			throws IOException {
 		HSSFRow row;
-		ByteArrayInputStream stream = new ByteArrayInputStream(form.getFileData());
-		HSSFWorkbook workbook= new HSSFWorkbook(stream);
+		ByteArrayInputStream stream = new ByteArrayInputStream(
+				form.getFileData());
+		HSSFWorkbook workbook = new HSSFWorkbook(stream);
 		HSSFSheet spreadsheet = workbook.getSheetAt(0);
 		Iterator<Row> rowIterator = spreadsheet.iterator();
 		rowIterator.next();
@@ -227,21 +256,21 @@ public class FailedCallDataREST {
 						.next());
 				String hier321Id = dataFormatter.formatCellValue(cellIterator
 						.next());
-				
-				if(validator.validFailureIdAndCauseCodeTypes(failureString, causeString)){
+
+				if (validator.validFailureIdAndCauseCodeTypes(failureString,
+						causeString)) {
 					causeCode = Integer.valueOf(causeString);
 					failureId = Integer.valueOf(failureString);
-				}
-				else {
+				} else {
 					break;
 				}
-				
+
 				FailedCallData failedCallData = new FailedCallData(dateTime,
 						eventId, failureId, typeAllocationCode, marketId,
 						operatorId, cellId, duration, causeCode,
 						networkElementVersion, imsi, hier3Id, hier32Id,
 						hier321Id);
-				if(validator.isValid(failedCallData)){
+				if (validator.isValid(failedCallData)) {
 					service.addFailedCalledDatum(failedCallData);
 				}
 				break;
@@ -249,8 +278,8 @@ public class FailedCallDataREST {
 		}
 		stream.close();
 		workbook.close();
-		return Response.status(200).entity("Data successfully imported.\n").build();
+		return Response.status(200).entity("Data successfully imported.\n")
+				.build();
 	}
-
 
 }

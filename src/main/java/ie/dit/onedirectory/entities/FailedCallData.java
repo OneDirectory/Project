@@ -1,3 +1,9 @@
+/**
+ * Automatically generated pk id for the failed call data entity
+ * Contains relationships with other entities, all many to one.
+ * Each instance is stored in a list of the respective mapped entities.
+ * And uses their FKs as the refernce.
+ */
 package ie.dit.onedirectory.entities;
 
 import java.util.Date;

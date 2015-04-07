@@ -1,3 +1,7 @@
+/**
+ * Destroys the created session and kills the cookie for 
+ * the session.
+ */
 package ie.dit.onedirectory.servlets;
 
 import java.io.IOException;

@@ -1,3 +1,9 @@
+/**
+ * User equipment entity with tac as the PK.
+ * one to many list association with failed call data 
+ * which is mapped by the userEquipment column n failed call data
+ * 
+ */
 package ie.dit.onedirectory.entities;
 
 import java.util.List;

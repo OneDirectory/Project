@@ -1,3 +1,11 @@
+/**
+ * Market operator entity with composite pk made up of
+ * market id and operator id columns.
+ * Mapped to failed call data by the market operator
+ * column in failed call data entity which has a many to one 
+ * relationship with this entity instance.
+ * 
+ */
 package ie.dit.onedirectory.entities;
 
 import ie.dit.onedirectory.entities.pks.MarketOperatorId;

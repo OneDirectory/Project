@@ -1,3 +1,9 @@
+/**
+ * Failure class interface
+ * returns a collection of all failure classes
+ * Add a failure class
+ * 
+ */
 package ie.dit.onedirectory.dao;
 
 import ie.dit.onedirectory.entities.FailureClass;

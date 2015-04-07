@@ -1,3 +1,9 @@
+/**
+ * The event cause entity
+ * EventId and cause code form a composite primary key.
+ * Each entity instance has a list map of all failure call data
+ * records which are mapped to the eventCuase column in failed call data. 
+ */
 package ie.dit.onedirectory.entities;
 
 import ie.dit.onedirectory.entities.pks.EventCauseId;
