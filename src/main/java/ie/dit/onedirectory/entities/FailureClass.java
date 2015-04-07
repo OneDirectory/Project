@@ -1,3 +1,10 @@
+/**
+ * Failure id is the primary key.
+ * Has a one to many relationship with failed call data
+ * and is mapped to it by the failure class column in that 
+ * entity.
+ * 
+ */
 package ie.dit.onedirectory.entities;
 
 import java.util.List;

@@ -1,3 +1,6 @@
+/**
+ * Failure class data access class implements failure class interface
+ */
 package ie.dit.onedirectory.dao.jpa;
 
 import java.util.Collection;
@@ -24,6 +27,10 @@ public class JPAFailureClassDAO implements FailureClassDAO {
 		return q.getResultList();
 	}
 
+	/**
+	 * Persists a passed failure class pojo if not already 
+	 * persisted
+	 */
 	public void addFailureClass(FailureClass failureClass) {
 		if(!entityManager.contains(failureClass)){
 			entityManager.persist(failureClass);

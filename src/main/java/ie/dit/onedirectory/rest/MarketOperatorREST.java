@@ -32,13 +32,23 @@ public class MarketOperatorREST {
 	@EJB
 	MarketOperatorServiceLocal service;
 
+	/**
+	 * Get request to the base class url
+	 * @return a JSON collection of all market operators
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<MarketOperator> getMarketOperators(){
 		return service.getMarketOperators();
 	}
 
-	
+	/**
+	 * 
+	 * 
+	 * @param form
+	 * @return
+	 * @throws IOException
+	 */
 	@POST
 	@Path("/upload")
 	@Consumes("multipart/form-data")

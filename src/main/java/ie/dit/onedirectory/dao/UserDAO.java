@@ -1,6 +1,9 @@
 /**
- * 
+ * User dao interface
  * Provides the link to the service layer
+ * Returns a collection of all users
+ * returns a user by a given id
+ * add a user
  * 
  */
 package ie.dit.onedirectory.dao;

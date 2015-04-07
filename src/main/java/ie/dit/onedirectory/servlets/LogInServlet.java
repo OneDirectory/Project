@@ -1,3 +1,10 @@
+/**
+ * Login in servlet to provide a session login for
+ * a user. Takes an ID and password input request,
+ * Validates the users authenticity.
+ * If valid it creates a session and a cookie for that user
+ * If not redirects back to the login page.
+ */
 package ie.dit.onedirectory.servlets;
 
 import java.io.IOException;

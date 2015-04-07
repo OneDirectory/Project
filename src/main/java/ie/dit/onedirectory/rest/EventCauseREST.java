@@ -32,12 +32,22 @@ public class EventCauseREST {
 	@EJB
 	EventCauseServiceLocal service;
 	
+	/**
+	 * 
+	 * @return a json collection of all event causes with a get request
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<EventCause> getEventCauses(){
 		return service.getEventCauses();
 	}
 	
+	/**
+	 * 
+	 * @param form
+	 * @return
+	 * @throws IOException
+	 */
 	@POST
 	@Path("/upload")
 	@Consumes("multipart/form-data")

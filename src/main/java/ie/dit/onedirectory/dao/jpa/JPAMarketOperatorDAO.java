@@ -1,3 +1,6 @@
+/**
+ * Market operator data access class implements the market operator interface
+ */
 package ie.dit.onedirectory.dao.jpa;
 
 import ie.dit.onedirectory.dao.MarketOperatorDAO;
@@ -19,10 +22,17 @@ public class JPAMarketOperatorDAO implements MarketOperatorDAO{
 	@PersistenceContext
 	EntityManager entityManager;
 
+	/**
+	 * Returns all market operators using entity manager
+	 */
 	public Collection<MarketOperator> getAllMarketOperators() {
 		Query query = entityManager.createQuery("from MarketOperator");
 		return query.getResultList();
 	}
+	
+	/**
+	 * Adds a market operator passed pojo if not already exists
+	 */
 
 	public void addMarketOperator(MarketOperator marketOperator) {
 		if(!entityManager.contains(marketOperator)){

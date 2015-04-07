@@ -28,10 +28,19 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	/**
+	 * Returns collection all failed call data entites in database
+	 */
 	public Collection<FailedCallData> getAllFailedCallData() {
 		Query q = entityManager.createQuery("from FailedCallData");
 		return q.getResultList();
 	}
+	
+	/**
+	 * Gets the tac code from the passed model
+	 * Uses the tac to return a collection of count of failures
+	 * for that model in a given date range
+	 */
 
 	public Collection<?> getFailedCallDataByModel(String model, Date fromDate,
 			Date toDate) {
@@ -119,6 +128,9 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		return result;
 	}
 
+	/**
+	 * Adds a passed failed call data pojo to the database
+	 */
 	public void addFailedCalledDatum(FailedCallData failedCallData) {
 		entityManager.persist(failedCallData);
 	}
@@ -142,6 +154,10 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		return result;
 	}
 
+	/**
+	 * Returns a list of all imsis that have failed call data for a passed
+	 * failure ID which corresponds to a failure class
+	 */
 	@Override
 	public Collection<String> getAllImsiForFailureClass(Integer failureID) {
 		Query query = entityManager
