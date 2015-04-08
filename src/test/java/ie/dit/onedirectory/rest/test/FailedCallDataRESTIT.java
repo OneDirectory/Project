@@ -97,24 +97,81 @@ public class FailedCallDataRESTIT{
 	}
 	
 	@Test
-	public void testGetEventIdAndCauseCodeByModel(){
+	public void testgetEventIdAndCauseCodeByIMSI(){
 		given()
-		.pathParam("modelID", "kkk")
+		.pathParam("imsi", "kkk")
+		.contentType(ContentType.JSON)
 		.expect()
 		.statusCode(200)
 		.log().ifError()
 		.when()
-		.get("/rest/failedcalldata/model/{modelID}");
+		.get("/rest/failedcalldata/imsi/{imsi}");
 	}
+	
+	@Test
+	public void testGetCountBetweenDatesForAllIMSI(){
+		given()
+		.pathParam("dates", "2012-01-01£2013-01-01")
+		.contentType(ContentType.JSON)
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.get("/rest/failedcalldata/count/{dates}");
+		
+	}
+	
+	@Test
+	public void testGetAllIMSIWithCallFailuresBetweenDates(){
+		given()
+		.pathParam("dates", "2012-01-01£2013-01-01")
+		.contentType(ContentType.JSON)
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.get("/rest/failedcalldata/dateIMSI/{dates}");
+		
+	}
+	
+	@Test
+	public void testGetAllIMSI(){
+		
+		expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.get("/rest/failedcalldata/imsi");
+		
+	}
+	
+	@Test
+	public void testGetAllImsiForFailureClass(){
+		given()
+		.pathParam("failureID", "1")
+		.contentType(ContentType.JSON)
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.get("/rest/failedcalldata/imsibyfailureclass/{failureID}");
+		
+	}
+	
+	@Test
+	public void testEventIDCauseCodeByModel(){
+		given()
+		.pathParam("model", "test")
+		.contentType(ContentType.JSON)
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.get("/rest/failedcalldata/model/{model}");
+		
+	}
+	
+	
 
-//	@Test
-//	public void testUpload() throws IOException {	
-//		given()
-//		.multiPart("selectedFile", new File(TEST_FILE))
-//		.expect()
-//		.statusCode(200)
-//		.log().ifError()
-//		.when()
-//		.post("/rest/marketoperators/upload");	
-//	}
+
 }
