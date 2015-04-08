@@ -161,13 +161,26 @@ public class FailedCallDataRESTIT{
 	@Test
 	public void testEventIDCauseCodeByModel(){
 		given()
-		.pathParam("model", "test")
+		.pathParam("model", "restTest")
 		.contentType(ContentType.JSON)
 		.expect()
 		.statusCode(200)
 		.log().ifError()
 		.when()
 		.get("/rest/failedcalldata/model/{model}");
+		
+	}
+	
+	@Test
+	public void testGetFailedCallDataByModel(){
+		given()
+		.pathParam("model", "restTest£2012-01-01£2013-01-01")
+		.contentType(ContentType.JSON)
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.get("/rest/failedcalldata/getFailedCallDataByModel/{model}");
 		
 	}
 	

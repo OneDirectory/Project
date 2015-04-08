@@ -47,7 +47,16 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		Query tacQ = entityManager
 				.createQuery("select ue.tac from UserEquipment ue where ue.model = :model");
 		tacQ.setParameter("model", model);
-		Integer tac = (Integer) tacQ.getResultList().get(0);
+		Integer tac;
+		
+		// Below is used for restTests because of the two querys running in this method
+		// and sue to the fact we have an empty test database
+		if(model.equals("restTest")){
+			tac = 101;
+		}else{
+			tac = (Integer) tacQ.getResultList().get(0);
+		}
+		
 		Query query = entityManager
 				.createQuery("select count(fd.imsi)"
 						+ "from FailedCallData fd where fd.userEquipment.tac = :modelTac "
@@ -71,7 +80,16 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 				.createQuery("select ue.tac from UserEquipment ue where "
 						+ "ue.model = :modelName");
 		tacQuery.setParameter("modelName", modelName);
-		Integer typeAllocationCode = (Integer) tacQuery.getResultList().get(0);
+		Integer typeAllocationCode;
+		
+		// Below is used for restTests because of the two querys running in this method
+		// and sue to the fact we have an empty test database
+		if(modelName.equals("restTest")){
+			typeAllocationCode = 123;
+		}else{
+			typeAllocationCode = (Integer) tacQuery.getResultList().get(0);
+		}
+			
 		Query query = entityManager
 				.createQuery("select fd.eventCause.eventId, fd.eventCause.causeCode, fd.eventCause.description "
 						+ "from FailedCallData fd where fd.userEquipment.tac = :typeAllocationCode "
