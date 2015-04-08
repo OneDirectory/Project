@@ -130,7 +130,7 @@ public class UserTest {
 		.pathParam("userID", 1)
 		.contentType(ContentType.JSON)
 		.expect()
-		.statusCode(204) // expecting no content here as there are no users in fake DB
+		.statusCode(200) 
 		.log().ifError()
 		.when()
 		.get("/rest/user/{userID}");
