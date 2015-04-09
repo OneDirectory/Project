@@ -78,6 +78,10 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 		return dao.getAllIMSIWithCallFailuresBetweenDates(from, to);
 	}
 	
+	public Collection<?> getUniqueCauseCodesForImsi(String imsi){
+		return dao.getUniqueCauseCodesForImsi(imsi);
+	}
+	
 	public void addFromFile(String fileName) throws IOException {
 		HSSFRow row;
 		FileInputStream fis = new FileInputStream(new File(fileName));

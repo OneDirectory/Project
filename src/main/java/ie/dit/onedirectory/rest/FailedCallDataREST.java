@@ -101,6 +101,13 @@ public class FailedCallDataREST {
 	public Collection<?> getEventCauseByIMSI(@PathParam("imsi") String imsi) {
 		return service.getEventIdAndCauseCodeByIMSI(imsi);
 	}
+	
+	@GET
+	@Path("/uniqueCauseCodes/{imsi)")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<?> getUniqueCauseCodesForImsi(@PathParam("imsi")String imsi){
+		return service.getUniqueCauseCodesForImsi(imsi);
+	}
 
 	// JF addition
 	@GET

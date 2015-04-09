@@ -80,5 +80,12 @@ public interface FailedCallDataDAO {
 	 * @return a collection of all imsis with failures due to that failure id
 	 */
 	public Collection<String> getAllImsiForFailureClass(Integer failureClass);
+	
+	/**
+	 * @param imsi
+	 * @returns all unique cause codes for the given imsi
+	 */
+	
+	public Collection<?> getUniqueCauseCodesForImsi(String imsi);
 		
 }

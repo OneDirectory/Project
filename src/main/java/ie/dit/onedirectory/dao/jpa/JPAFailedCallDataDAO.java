@@ -183,5 +183,15 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		query.setParameter("failureID", failureID);
 		return query.getResultList();
 	}
+	
+	/**
+	 * Returns a list of all unique cause codes for a given imsi
+	 */
+	public Collection<?> getUniqueCauseCodesForImsi(String imsi){
+		Query query = entityManager.createQuery("Select f.eventCause.causeCode from FailedCallData f where f.imsi = :imsi"
+				+ "group by f.eventCause.causeCode");
+		query.setParameter("imsi", imsi);
+		return query.getResultList();
+	}
 
 }

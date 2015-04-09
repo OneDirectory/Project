@@ -38,4 +38,6 @@ public interface FailedCallDataServiceLocal {
 	
 	public Collection<String> getAllImsiForFailureClass(Integer failureClass);
 	
+	public Collection<?> getUniqueCauseCodesForImsi(String imsi);
+	
 }
