@@ -39,5 +39,9 @@ public interface FailedCallDataServiceLocal {
 	public Collection<String> getAllImsiForFailureClass(Integer failureClass);
 	
 	public Collection<?> getUniqueCauseCodesForImsi(String imsi);
+
+	public Collection<?> getCountFailedCallsInTimePeriodByImsi(
+			String imsi, Date fromDate, Date toDate);
+
 	
 }

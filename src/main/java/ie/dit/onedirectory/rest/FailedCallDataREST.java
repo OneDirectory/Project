@@ -159,6 +159,31 @@ public class FailedCallDataREST {
 		return service.getCountBetweenDatesForAllIMSI(sqlDateFrom, sqlDateTo);
 
 	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ParseException 
+	 */
+	@GET
+	@Path("/getCountFailedCallsInTimePeriodByImsi/{params}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<?> getCountFailedCallsInTimePeriodByImsi(@PathParam("params") String paramsPassed) throws ParseException {
+		
+		String[] params = paramsPassed.split("£");
+		String imsi = params[0];
+		String fromDate = params[1];
+		String toDate = params[2];
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		Date from = sdf.parse(fromDate);
+		Date to = sdf1.parse(toDate);
+		
+		java.sql.Date sqlFromDate = new java.sql.Date(from.getTime());
+		java.sql.Date sqlToDate = new java.sql.Date(to.getTime());
+		return service.getCountFailedCallsInTimePeriodByImsi(imsi, sqlFromDate, sqlToDate);
+	}
 
 	/**
 	 * @return A a collection of String JSON representations of all IMSIs to the
@@ -215,7 +240,7 @@ public class FailedCallDataREST {
 		java.sql.Date sqlToDate = new java.sql.Date(to.getTime());
 		return service.getFailedCallDataByModel(model, sqlFromDate, sqlToDate);
 	}
-
+	
 	@POST
 	@Path("/upload")
 	@Consumes("multipart/form-data")

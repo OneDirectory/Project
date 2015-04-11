@@ -87,5 +87,16 @@ public interface FailedCallDataDAO {
 	 */
 	
 	public Collection<?> getUniqueCauseCodesForImsi(String imsi);
+
+	/**
+	 * 
+	 * @param imsi
+	 * @param fromDate
+	 * @param toDate
+	 * @return
+	 */
+	
+	public Collection<?> getCountFailedCallsInTimePeriodByImsi(String imsi,
+			Date fromDate, Date toDate);
 		
 }
