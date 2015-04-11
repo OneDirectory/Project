@@ -71,6 +71,8 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12" id='container'>
+						<div class="transbox">
+						<br>
 						<h1>Number of Call Failure by Phone Model</h1>
                     <div class="form-horizontal">
                         
@@ -107,6 +109,7 @@
 							<button id="submitBrian" type="submit" class="btn btn-primary">Search</button>
                             </div>
 						</div>
+					</div>
 					</div>
                     </div>
 
