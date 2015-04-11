@@ -15,7 +15,7 @@
 <!-- Custom CSS -->
 <link href="Resources/css/simple-sidebar.css" rel="stylesheet">
 <link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
-<script src="js/selectize.js"></script>
+<script src="Resources/js/selectize.js"></script>
 <script src="Resources/js/jquery-1.6.1.min.js"></script>
 <script src="Resources/js/bootstrap.min.js"></script>
 
@@ -71,39 +71,44 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12" id='container'>
-						<h1>Search failed data by model</h1>
-
+						<h1>Number of Call Failure by Phone Model</h1>
+                    <div class="form-horizontal">
+                        
 						<div class="form-group" id="myDiv">
-							<div class="col-sm-5">
-								<label class="control-label col-sm-2" for="ID">Model:</label> <select
-									class="form-control" id="ID" placeholder="Select a model.."
+								<label class="control-label col-sm-2" for="ID">Model:</label>
+                            <div class="col-sm-5">
+                            <select class="form-control" id="ID" placeholder="Select a model.."
 									autofocus>
-
 								</select><br>
 							</div>
 						</div>
-
-						<div >
-							<br><input type="datetime-local" id='from' class="form-control"
+                        
+                        
+                        
+						<div class="form-group" >
+                            <label class="control-label col-sm-2" for="ID">FROM: </label>
+                        <div class="col-sm-5">
+							<input type="datetime-local" id='from' class="form-control"
 								name="from" placeholder="yyyy-dd-mm hh:mm" autofocus>
+                        </div>
 						</div>
-
-						<label class="control-label col-sm-2" for="ID">TO:</label>
-
-						<div>
+                        
+                        <div class = "form-group">
+						      <label class="control-label col-sm-2" for="ID">TO: </label>
+                        <div class="col-sm-5">
 							<input type="datetime-local" id='to' class="form-control"
 								name="to" placeholder="yyyy-dd-mm hh:mm" autofocus>
 						</div>
-
-
-
+                        </div>
+                            
+                        <div class="form-group">
 						<div class="col-sm-offset-4 col-sm-10">
 							<br>
 							<button id="submitBrian" type="submit" class="btn btn-primary">Search</button>
+                            </div>
 						</div>
 					</div>
-				</div>
-
+                    </div>
 
 			</div>
 		</div>
@@ -120,20 +125,23 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1>Call Failures</h1>
-
-					<label class="control-label col-sm-2" for="ID">FROM:</label><br>
-
-					<div>
+                    <div class ="form-horizontal">
+                    
+                        <div class ="form-group">
+					       <label class="control-label col-sm-2" for="ID">FROM:</label>
+                            <div class ="col-sm-5">
 						<input type="datetime-local" id='IMSIFrom' class="form-control"
 							name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
-					</div>
-
-					<label class="control-label col-sm-2" for="ID">TO:</label>
-
-					<div>
+					       </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="ID">TO:</label>
+                            <div class="col-sm-5">
 						<input type="datetime-local" id='IMSITo' class="form-control"
 							name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
-					</div>
+					       </div>
+                        </div>
 
 					<div class="col-sm-offset-4 col-sm-10">
 						<br>
@@ -141,22 +149,40 @@
 					</div>
 
 				</div>
+                    </div>
 			</div>
 		</div>
 		<div id='tableJohn' >
 		
 		</div>
 	</div>
-	<div id="imsisForFailreClassDiv" class = 'container-fluid'>
-		<div id="failureClassDiv" class="form-group">
-			<select id="failureClassSelectDiv"></select>
-			<button id="failureClassSelectButton" class="btn btn-primary">SEARCH</button>
-			
+        <div id="imsisForFailreClassDiv">
+            <div class = 'container-fluid'>
+                <div class="row">
+                    <div class="col-lg-12">
+					<h1>All IMSIs for Failure Class</h1>
+                    <div class ="form-horizontal">
+		              <div id="failureClassDiv" class="form-group">
+                          <label class="control-label col-sm-2" for="ID">FAILURE CLASS:</label>
+                      <div class="col-sm-5">
+			               <select class="form-control" id="failureClassSelectDiv"></select>
+                      </div>
+                      </div>
+                      
+                <div class="col-sm-offset-4 col -sm-10">
+			         <button id="failureClassSelectButton" class="btn btn-primary">SEARCH</button>
+			    </div>
+                </div>
+                      
 			<div id="imsisTableForFailreClassDiv">
 			</div>
-		
+                      
+		</div>
 		</div>
 	</div>
+        </div>
+    
+	
 		<!-- /#wrapper -->
 		
 <script>
