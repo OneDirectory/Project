@@ -223,7 +223,7 @@ var $table = $('#causeCodeTable');
 		var x=document.getElementById("causeCodeImsi");
         var selected=x.options[x.selectedIndex].text;
         var row=document.createElement('tr');
-        row.setAttribute('id', 'head');
+        row.setAttribute('id', 'causehead');
         var colOne=document.createElement('th');
      
         colOne.innerHTML='Cause Codes for IMSI: '+selected;     
@@ -237,7 +237,7 @@ var $table = $('#causeCodeTable');
         var butDiv=document.createElement('div');
  		butDiv.setAttribute('class', "col-sm-offset-5 col-sm-10");
  		var button=document.createElement(button);
- 		button.setAttribute('id', 'tableButton');
+ 		button.setAttribute('id', 'causetableButton');
  		button.setAttribute('class','btn btn-primary');
  		button.innerHTML='Search Again';
  		button.addEventListener('click', removeCauseCodeData);
@@ -247,8 +247,8 @@ var $table = $('#causeCodeTable');
     }
 
     function removeCauseCodeData(){
-        var removeHead=document.getElementById('head');
-        var removeButton=document.getElementById('tableButton');
+        var removeHead=document.getElementById('causehead');
+        var removeButton=document.getElementById('causetableButton');
         $table.empty();
 
     }

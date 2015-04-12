@@ -60,8 +60,9 @@
 				<li><a href="#" onclick="toggle('briansQuery');">Total number of Failures per Model</a></li>
 				<li><a href="#" onclick="toggle('johnsQuery');">All IMSIs with Failed Call Data</a></li>
 				<li><a href="#" onclick="toggle('imsisForFailreClassDiv');">All IMSIs for a FailureClass</a></li>
-				<li class="sidebar-brand">Customer Service Rep Enq</li>
+				<li class="sidebar-brand"><a href="#">Customer Service Rep Enq</a></li>
 				<li><a href="#" onclick="toggle('id/causecode');">EventID/CauseCode per IMSI</a></li>
+                <li><a href="#" onclick="toggle('causeCodes');">Cause Codes per IMSI</a>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
@@ -213,7 +214,7 @@
  </div>
 		<!-- /#page-content-wrapper -->
 
-	</div>
+	
 	<!-- /#wrapper -->
 
 
@@ -222,9 +223,134 @@
 		<div id="butDiv"></div>
 	</table>
     
-	
+      <div id="causeCodes">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12" id='container'>
+                        <div class="transbox">
+						<br>
+						<h1>All Cause Codes for IMSI</h1>
+                        <div class="form-horizontal">
+						<div class="form-group" id="myDiv">
+							<label class="control-label col-sm-2" for="ID">IMSI:</label> 
+                            <div class="col-sm-5">
+                            <select class="form-control" id="causeCodeImsi"></select>
+                                </div>
+                            </div>
+
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-10">
+									<br>
+									<button id='causeCodeImsiSubmit' name='submit' class="btn btn-primary">Search</button>
+								</div>
+							</div>
+						</div>
+                        </div>
+					</div>
+				</div>
+			</div>
+            <div id="causeCodeTable"></div>
+		</div>
+    
+	</div>
 		<!-- /#wrapper -->
-		
+
+    
+    
+<script>
+/* adding imsi to select for causecodes*/
+var $table = $('#causeCodeTable');
+
+	$(function(){
+
+    var $select = $('#causeCodeImsi');
+
+	$.ajax({
+		type: 'GET',
+		url:'http://localhost:8080/project/rest/failedcalldata/imsi',
+		success: function(mydata){
+			var data=mydata;
+			var length=data.length;
+			
+			for(var i=0; i<length; i++){
+				var x=data[i];
+				var option=document.createElement('option');	
+				option.text=x;	
+				$select.append(option);			
+				}					
+			}
+		});
+	});
+    
+    
+/*getting cause code by imsi*/
+
+    $('#causeCodeImsiSubmit').click(function(e){
+	var x = document.getElementById("causeCodeImsi");
+	var selectedOption = x.options[x.selectedIndex].text;
+
+	  $.ajax({
+
+            type:'GET',
+             url:'http://localhost:8080/project/rest/failedcalldata/uniqueCauseCodes/'+selectedOption,
+            dataType: 'json',
+            contentType: "application/json",
+
+            success:function(data){
+              if(isValid && data.length>0){
+ 	 			createCauseCodeTable();
+ 	 			createCauseCodeButton();
+ 	 			$.each(data, function(key, value){
+ 	 				$table.append('<tr><td>'+data+'</td></tr>');
+ 	 	 			});
+	 	 			isValid=false;
+ 	 	 		}
+ 	 			else if(isValid && data.length===0){
+				alert('No available data for selected dates');
+ 	 	 		}
+            }
+          });
+       });
+    });
+        
+   
+    function createCauseCodeTable(){
+		var x=document.getElementById("causeCodeImsi");
+        var selected=x.options[x.selectedIndex].text;
+        var row=document.createElement('tr');
+        row.setAttribute('id', 'causehead');
+        var colOne=document.createElement('th');
+     
+        colOne.innerHTML='Cause Codes for IMSI: '+selected;     
+        row.appendChild(colOne);     
+        $table.append(row);
+
+    }
+
+    function createCauseCodeButton(){
+
+        var butDiv=document.createElement('div');
+ 		butDiv.setAttribute('class', "col-sm-offset-5 col-sm-10");
+ 		var button=document.createElement(button);
+ 		button.setAttribute('id', 'causetableButton');
+ 		button.setAttribute('class','btn btn-primary');
+ 		button.innerHTML='Search Again';
+ 		button.addEventListener('click', removeCauseCodeData);
+ 		butDiv.appendChild(button);
+ 		$table.append(butDiv);
+
+    }
+
+    function removeCauseCodeData(){
+        var removeHead=document.getElementById('causehead');
+        var removeButton=document.getElementById('causetableButton');
+        $table.empty();
+
+    }
+
+</script>		    
+    
+
 <script>
 $(function(){
 	
@@ -344,7 +470,9 @@ $(function(){
 
 	$( "#id/causecodesubmit" ).click(function(e) {
 	
-	removeCauseCodeData();	
+	removeData();
+    removeDataJohn();
+    removeCauseCodeData()	
 	var x=document.getElementById("imsiSelect");
 	var selected=x.options[x.selectedIndex].text;
 
@@ -425,6 +553,7 @@ $(function(){
 
  	removeData();
  	removeDataJohn();
+    removeCauseCodeData();
 	var fromDate=$('#from').val();
 	var toDate=$('#to').val();
 	var myurl;
@@ -507,7 +636,8 @@ $(function(){
 		$( "#submitJohn" ).click(function(e) {
 			
 			removeData();
-		 	removeDataJohn();	
+		 	removeDataJohn();
+            removeCauseCodeData()
 			var fromDate=$('#IMSIFrom').val();
 			var toDate=$('#IMSITo').val();
 			var myurl;
@@ -593,7 +723,7 @@ $(function(){
  		
  	}
 
- 	var divs = ["johnsQuery","briansQuery","imsisForFailreClassDiv","id/causecode"];
+ 	var divs = ["johnsQuery","briansQuery","imsisForFailreClassDiv","id/causecode","causeCodes"];
 	var visibleDiv = null;
 	 var $tableJohn = $('#tableJohn');
 	 var $table = $('#tableBrian');
@@ -604,6 +734,7 @@ $(function(){
 		document.getElementById("briansQuery").style.display='none';
 		document.getElementById("imsisForFailreClassDiv").style.display='none';
 		document.getElementById("id/causecode").style.display='none';
+        document.getElementById("causeCodes").style.display='none';
 
 	});
 
