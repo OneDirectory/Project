@@ -83,15 +83,39 @@
 				</div>
 			</div>
 		</div>
+		
+		<div id="failCount">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>Count of Call Failures by IMSI</h1>					
+						<label class="control-label col-sm-2" for="imsiInput">IMSI: </label>
+						<div>
+							<select class="col-sm-5" id="imsiInput">
+							</select>
+						</div>						
+						<div class="col-sm-offset-4 col-sm-10">
+							<button id="countSubmit" type="submit" class="btn btn-primary">Search</button>
+						</div>					
+				</div>
+			</div>
+		</div>		
+		<!--  </div>
+				<div id='tableForCountQuery' ></div>
+			</div> -->
+	</div>
+		
+		
 		<!-- /#page-content-wrapper -->
 
 	</div>
 	<!-- /#wrapper -->
 
-
 	<table class="table" id='table' name='table'>
-
 		<div id="butDiv"></div>
+	</table>
+	<table class="table" id="countTable" name="countTable">
+		<div id="butDiv2"></div>
 	</table>
 
 <script>
@@ -101,7 +125,6 @@ var $table = $('#table');
 	$(function(){
 
     var $select = $('#ID');
-   
 
 	$.ajax({
 		type: 'GET',
@@ -120,6 +143,30 @@ var $table = $('#table');
 		});
 	});
 	
+</script>
+
+<!-- Add all IMSIs to list? -->
+<script>
+var $countTable = $('#countTable');
+
+$(function(){
+	var $select = $('#ID');
+	$.ajax({
+		type: 'GET',
+		url:'http://localhost:8080/project/rest/failedcalldata/imsi',
+		success: function(mydata){
+			var data=mydata;
+			var length=data.length;
+			
+			for(var i=0; i<length; i++){
+				var x=data[i];
+				var option=document.createElement('option');	
+				option.text=x;	
+				$select.append(option);			
+				}					
+			}
+		});
+	});
 </script>
 
 <script>
@@ -199,6 +246,84 @@ function removeData(){
 	$table.empty();
 	
 }
+
+//table for the count
+
+$(function(){
+
+	$( "#countSubmit" ).click(function(e) {
+	
+	removeCountData();	
+	var x=document.getElementById("ID");
+	var selected=x.options[x.selectedIndex].text;
+
+	createCountTable();
+	createCountButton();
+
+	$.ajax({
+
+		type:'GET',
+		url:'http://localhost:8080/project/rest/failedcalldata/getCountFailedCallsInTimePeriodByImsi/'+fromDate+'£'+toDate+'£0£5'+selected,
+		dataType: 'json',
+		contentType: "application/json",
+
+		success:function(data){
+			
+			$.each(data, function(key, value){
+				
+				$table.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td><td>'+selected+'</td></tr>');
+			});
+		}
+	  });
+   });
+});
+
+function createCountTable(){
+	
+	var row=document.createElement('tr');
+	row.setAttribute('id', 'counthead');
+	var colOne=document.createElement('th');
+	var colTwo=document.createElement('th');
+	var colThree=document.createElement('th');
+	var colFour=document.createElement('th');
+
+	colOne.innerHTML='ID';
+	colTwo.innerHTML='IMSI';
+	colThree.innerHTML='Description';
+	colFour.innerHTML ='Count'
+
+	row.appendChild(colOne);
+	row.appendChild(colTwo);
+	row.appendChild(colThree);
+	row.appendChild(colFour);
+
+	$table.append(row);
+	
+}
+
+function createCountButton(){
+
+	var butDiv2=document.createElement('div');
+	butDiv2.setAttribute('class', "col-sm-offset-12 col-sm-10");
+	var countButton=document.createElement(button);
+	countButton.setAttribute('id', 'countTableButton');
+	countButton.setAttribute('class','btn btn-primary');
+	countButton.setAttribute('position', 'absolute');
+	countButton.setAttribute('top', '50%');
+	countButton.innerHTML='Search Again';
+	countButton.addEventListener('click', removeData);
+	butDiv2.appendChild(countButton);
+	$table.append(butDiv2);
+	
+}
+
+
+function removeCountData(){
+	var removeHead=document.getElementById('countHead');
+	var removeButton=document.getElementById('countTableButton');
+	$table.empty();
+}
+
 </script>
 
 
