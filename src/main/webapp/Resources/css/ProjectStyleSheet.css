@@ -71,6 +71,10 @@ div.transbox {
   border:1p;
   opacity:0.85;
   filter:alpha(opacity=60);
+   -moz-border-radius: 15px;
+  border-radius: 15px;
+  border:solid 1px black; 
+  padding:5px;
   }
 
 div.imagebox {
