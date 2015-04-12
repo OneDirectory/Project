@@ -58,6 +58,8 @@
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
 				<li><a href="#" onclick="toggle('imsiCount');">Duration/FailureCount per IMSI</a></li>
 				<li><a href="#" onclick="toggle('modelCount');">EventId/CauseCode per Model</a></li>
+				<li class="sidebar-brand"><a href="/project/SEPage.jsp">Software Engineer</a></li>
+				<li class="sidebar-brand"><a href="/project/CSRPage.jsp">Customer Service Rep.</a></li>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
