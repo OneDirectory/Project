@@ -161,8 +161,7 @@ public class FailedCallDataREST {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * @return A collection of the counts of failed calls for each IMSI
 	 * @throws ParseException 
 	 */
 	@GET
@@ -186,7 +185,7 @@ public class FailedCallDataREST {
 	}
 
 	/**
-	 * @return A a collection of String JSON representations of all IMSIs to the
+	 * @return A collection of String JSON representations of all IMSIs to the
 	 *         client from the service layer.
 	 * 
 	 */
