@@ -63,6 +63,7 @@
 				<li class="sidebar-brand"><a href="#">Customer Service Rep Enq</a></li>
 				<li><a href="#" onclick="toggle('id/causecode');">EventID/CauseCode per IMSI</a></li>
                 <li><a href="#" onclick="toggle('causeCodes');">Cause Codes per IMSI</a>
+                <li><a href="#" onclick="toggle('failCount');">Count of Call Failures per IMSI</a>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
@@ -251,6 +252,38 @@
 			</div>
             <div id="causeCodeTable"></div>
 		</div>
+        
+        	<div id="failCount">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12">
+                    <div class="transbox">
+						<br>
+					<h1>Count of Call Failures by IMSI</h1>	
+                    <div class="form-horizontal">
+                        
+                        <div class="from-group">
+						<label class="control-label col-sm-2" for="imsiInput">IMSI: </label>
+                        <div class="col-sm-5">
+							<select class="form-control" id="imsiInput"></select>
+						</div>	
+                        </div>
+                        
+                        <div class="form-group">
+						<div class="col-sm-offset-4 col-sm-10">
+                            <br>
+							<button id="countSubmit" type="submit" class="btn btn-primary">Search</button>
+						</div>					
+				    </div>
+			     </div>
+                </div> 
+		      </div>	
+		<!--  </div>
+				<div id='tableForCountQuery' ></div>
+			</div> -->
+            </div>
+        </div>
+	</div>
     
 	</div>
 		<!-- /#wrapper -->
@@ -723,7 +756,7 @@ $(function(){
  		
  	}
 
- 	var divs = ["johnsQuery","briansQuery","imsisForFailreClassDiv","id/causecode","causeCodes"];
+ 	var divs = ["johnsQuery","briansQuery","imsisForFailreClassDiv","id/causecode","causeCodes","failCount"];
 	var visibleDiv = null;
 	 var $tableJohn = $('#tableJohn');
 	 var $table = $('#tableBrian');
@@ -735,6 +768,7 @@ $(function(){
 		document.getElementById("imsisForFailreClassDiv").style.display='none';
 		document.getElementById("id/causecode").style.display='none';
         document.getElementById("causeCodes").style.display='none';
+        document.getElementById("failCount").style.display='none';
 
 	});
 
