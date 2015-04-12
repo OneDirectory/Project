@@ -67,25 +67,34 @@
 		<!-- /#sidebar-wrapper -->
 
 		<!-- Page Content -->
-		<div id="imsiCount">
+		 <div id="imsiCount">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
 						<h1>Total number of failures per IMSI</h1>
-						<label class="control-label col-sm-2" for="ID">FROM:</label><br>
-						<div>
+                        <div class="form-horizontal">
+                        <div class="form-group">
+						<label class="control-label col-sm-2" for="ID">From:</label>
+                            <div class="col-sm-5">
 							<input type="datetime-local" id='from' class="form-control"
 								name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
 						</div>
-						<label class="control-label col-sm-2" for="ID">TO:</label>
-						<div>
+                        </div>
+                        
+                        <div class="form-group">
+						<label class="control-label col-sm-2" for="ID">To:</label>
+						<div class="col-sm-5">
 							<input type="datetime-local" id='to' class="form-control"
 								name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
 						</div>
+                        </div>
+                            
+                        <div class="form-group">
 						<div class="col-sm-offset-4 col-sm-10">
 							<br>
 							<button id="submit" type="submit" class="btn btn-primary">Search</button>
 						</div>
+                        </div>
 					</div>
 				</div>
 				<div id='tableForImsiCountDiv' ></div>
@@ -99,17 +108,24 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Call Failures by Model</h1>					
+					<h1>Call Failures by Model</h1>	
+                        <div class="form-horizontal">
+                            <div class="form-group">
 						<label class="control-label col-sm-2" for="modelInput">Model: </label>
-						<div>
-							<select class="col-sm-5" id="modelInput">
+						<div class="col-sm-5">
+							<select class="form-control" id="modelInput">
 							</select>
-						</div>						
+						</div>
+                        </div>
+                        <div class="form-group">
 						<div class="col-sm-offset-4 col-sm-10">
+                            <br>
 							<button id="modelSubmit" type="submit" class="btn btn-primary">Search</button>
-						</div>					
+						</div>
+                        </div>
 				</div>
 			</div>
+            </div>
 		</div>		
 		</div>
 				<div id='tableForModelQuery' ></div>

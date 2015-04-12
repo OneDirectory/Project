@@ -196,7 +196,7 @@
                             <div class="form-group">
 							<label class="control-label col-sm-2" for="ID">IMSI:</label>
                                 <div class="col-sm-5">
-                                <select class="form-control" id="ID"> </select>
+                                <select class="form-control" id="imsiSelect"> </select>
 
 							<div class="form-group">
 								<div class="col-sm-offset-4 col-sm-10">
@@ -217,7 +217,7 @@
 	<!-- /#wrapper -->
 
 
-	<table class="table" id='id/causecodetable' name='table'>
+	<table class="table" id='causeCodeTable' name='table'>
 
 		<div id="butDiv"></div>
 	</table>
@@ -315,6 +315,106 @@ function createImsiFailureClassTable(){
         });
 
  </script>
+ 
+ <!-- Add all IMSIs to list? -->
+<script>
+
+$(function(){
+	var $select = $('#imsiSelect');
+	$.ajax({
+		type: 'GET',
+		url:'http://localhost:8080/project/rest/failedcalldata/imsi',
+		success: function(mydata){
+			var data=mydata;
+			var length=data.length;
+			
+			for(var i=0; i<length; i++){
+				var x=data[i];
+				var option=document.createElement('option');	
+				option.text=x;	
+				$select.append(option);			
+				}					
+			}
+		});
+	});
+</script>
+<script>
+	var $causeCodeTable = $('#causeCodeTable');
+		$(function(){
+
+	$( "#id/causecodesubmit" ).click(function(e) {
+	
+	removeCauseCodeData();	
+	var x=document.getElementById("imsiSelect");
+	var selected=x.options[x.selectedIndex].text;
+
+	createCauseCodeTable();
+	createCauseCodeButton();
+
+	$.ajax({
+
+		type:'GET',
+		url:'http://localhost:8080/project/rest/failedcalldata/imsi/'+selected,
+		dataType: 'json',
+		contentType: "application/json",
+
+		success:function(data){
+			
+			$.each(data, function(key, value){
+				
+				$causeCodeTable.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td><td>'+selected+'</td></tr>');
+			});
+		}
+	  });
+   });
+});
+
+function createCauseCodeTable(){
+	
+	var row=document.createElement('tr');
+	row.setAttribute('id', 'head');
+	var colOne=document.createElement('th');
+	var colTwo=document.createElement('th');
+	var colThree=document.createElement('th');
+	var colFour=document.createElement('th');
+
+	colOne.innerHTML='Cause Code';
+	colTwo.innerHTML='Event ID';
+	colThree.innerHTML='Description';
+	colFour.innerHTML ='IMSI'
+
+	row.appendChild(colOne);
+	row.appendChild(colTwo);
+	row.appendChild(colThree);
+	row.appendChild(colFour);
+
+	$causeCodeTable.append(row);
+	
+}
+
+function createCauseCodeButton(){
+
+	var butDiv=document.createElement('div');
+	butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
+	var button=document.createElement(button);
+	button.setAttribute('id', 'tableButton');
+	button.setAttribute('class','btn btn-primary');
+	button.setAttribute('position', 'absolute');
+	button.setAttribute('top', '50%');
+	button.innerHTML='Search Again';
+	button.addEventListener('click', removeCauseCodeData);
+	butDiv.appendChild(button);
+	$table.append(butDiv);
+	
+}
+
+function removeCauseCodeData(){
+	var removeHead=document.getElementById('head');
+	var removeButton=document.getElementById('tableButton');
+	$table.empty();
+	
+}
+</script>
 
 
 

@@ -83,6 +83,10 @@ div.imagebox {
   margin:30px -10px;
   border:1px  #8c3310;
   }
+ 
+ div.transbox h1 {
+    text-align: center;
+}
 
 div.transbox p {
   margin:30px 40px;
