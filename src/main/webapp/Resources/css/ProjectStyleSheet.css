@@ -21,6 +21,7 @@ body.support_engineer {
 
 label {
      font: normal 23px arial !important;
+     color:aliceblue;
     }
 
 
@@ -67,7 +68,7 @@ div.transbox {
   width:700px;
   height:350px;
   margin:px -10px;
-  background-color:#FFFFFF;
+  background-color:#013F6A;
   border:1p;
   opacity:0.85;
   filter:alpha(opacity=60);
@@ -86,6 +87,7 @@ div.imagebox {
  
  div.transbox h1 {
     text-align: center;
+    color:aliceblue;
 }
 
 div.transbox p {
