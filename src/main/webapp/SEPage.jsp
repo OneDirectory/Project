@@ -60,6 +60,8 @@
 				<li><a href="#" onclick="toggle('briansQuery');">Total number of Failures per Model</a></li>
 				<li><a href="#" onclick="toggle('johnsQuery');">All IMSIs with Failed Call Data</a></li>
 				<li><a href="#" onclick="toggle('imsisForFailreClassDiv');">All IMSIs for a FailureClass</a></li>
+				<li class="sidebar-brand">Customer Service Rep Enq</li>
+				<li><a href="#" onclick="toggle('id/causecode');">EventID/CauseCode per IMSI</a></li>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
@@ -73,7 +75,7 @@
 					<div class="col-lg-12" id='container'>
 						<div class="transbox">
 						<br>
-						<h1>Number of Call Failure by Phone Model</h1>
+						<h1>Number of Call Failures by Phone Model</h1>
                     <div class="form-horizontal">
                         
 						<div class="form-group" id="myDiv">
@@ -184,6 +186,41 @@
 		</div>
 	</div>
         </div>
+        
+      <div id="id/causecode">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1>Search EventId/CauseCode by IMSI</h1>
+						<div class="form-horizontal">
+                            <div class="form-group">
+							<label class="control-label col-sm-2" for="ID">IMSI:</label>
+                                <div class="col-sm-5">
+                                <select class="form-control" id="ID"> </select>
+
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-10">
+									<br>
+									<button id='id/causecodesubmit' type='submit' class="btn btn-primary">Search</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+ </div>
+		<!-- /#page-content-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+
+	<table class="table" id='id/causecodetable' name='table'>
+
+		<div id="butDiv"></div>
+	</table>
     
 	
 		<!-- /#wrapper -->
@@ -456,7 +493,7 @@ $(function(){
  		
  	}
 
- 	var divs = ["johnsQuery","briansQuery","imsisForFailreClassDiv"];
+ 	var divs = ["johnsQuery","briansQuery","imsisForFailreClassDiv","id/causecode"];
 	var visibleDiv = null;
 	 var $tableJohn = $('#tableJohn');
 	 var $table = $('#tableBrian');
@@ -466,7 +503,7 @@ $(function(){
 		document.getElementById("johnsQuery").style.display='none';
 		document.getElementById("briansQuery").style.display='none';
 		document.getElementById("imsisForFailreClassDiv").style.display='none';
-		
+		document.getElementById("id/causecode").style.display='none';
 
 	});
 
