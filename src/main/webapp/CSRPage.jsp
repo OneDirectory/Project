@@ -50,7 +50,9 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
-				<li><a href="#">EventID/CauseCode per IMSI</a></li>
+				<li><a href="#" onclick="toggle('event/cause');">EventID/CauseCode per IMSI</a></li>
+                <li><a href="#" onclick="toggle('failCount');">Count of Call Failures per IMSI</a></li>
+                <li><a href="#" onclick="toggle('causeCodes');">Cause Codes per IMSI</a>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
@@ -58,18 +60,20 @@
 		<!-- /#sidebar-wrapper -->
 
 		<!-- Page Content -->
-		<div id="page-content-wrapper">
+		<div id="event/cause">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12" id='container'>
+                        <div class="transbox">
+						<br>
 						<h1>Search EventId, CauseCode by IMSI</h1>
-
+                    <div class="form-horizontal">
 						<div class="form-group" id="myDiv">
-							<label class="control-label col-sm-2" for="ID">IMSI:</label> <select
-								class="col-sm-5" id="ID">
-
-							</select>
-
+							<label class="control-label col-sm-2" for="ID">IMSI:</label> 
+                             <div class="col-sm-5">
+                            <select class="form-control" id="ID"></select>
+                            </div>
+                         </div>
 
 							<div class="form-group">
 								<div class="col-sm-offset-4 col-sm-10">
@@ -78,31 +82,71 @@
 								</div>
 							</div>
 						</div>
-
+                        </div>
+                        </div>
 					</div>
 				</div>
 			</div>
+        
+        <div id="causeCodes">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12" id='container'>
+                        <div class="transbox">
+						<br>
+						<h1>All Cause Codes for IMSI</h1>
+                        <div class="form-horizontal">
+						<div class="form-group" id="myDiv">
+							<label class="control-label col-sm-2" for="ID">IMSI:</label> 
+                            <div class="col-sm-5">
+                            <select class="form-control" id="causeCodeImsi"></select>
+                                </div>
+                            </div>
+
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-10">
+									<br>
+									<button id='causeCodeImsiSubmit' name='submit' class="btn btn-primary">Search</button>
+								</div>
+							</div>
+						</div>
+                        </div>
+					</div>
+				</div>
+			</div>
+            <div id="causeCodeTable"></div>
 		</div>
 		
 		<div id="failCount">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Count of Call Failures by IMSI</h1>					
+                    <div class="transbox">
+						<br>
+					<h1>Count of Call Failures by IMSI</h1>	
+                    <div class="form-horizontal">
+                        
+                        <div class="from-group">
 						<label class="control-label col-sm-2" for="imsiInput">IMSI: </label>
-						<div>
-							<select class="col-sm-5" id="imsiInput">
-							</select>
-						</div>						
+                        <div class="col-sm-5">
+							<select class="form-control" id="imsiInput"></select>
+						</div>	
+                        </div>
+                        
+                        <div class="form-group">
 						<div class="col-sm-offset-4 col-sm-10">
+                            <br>
 							<button id="countSubmit" type="submit" class="btn btn-primary">Search</button>
 						</div>					
-				</div>
-			</div>
-		</div>		
+				    </div>
+			     </div>
+                </div> 
+		      </div>	
 		<!--  </div>
 				<div id='tableForCountQuery' ></div>
 			</div> -->
+            </div>
+        </div>
 	</div>
 		
 		
@@ -117,6 +161,99 @@
 	<table class="table" id="countTable" name="countTable">
 		<div id="butDiv2"></div>
 	</table>
+    
+<script>
+/* adding imsi to select for causecodes*/
+var $table = $('#causeCodeTable');
+
+	$(function(){
+
+    var $select = $('#causeCodeImsi');
+
+	$.ajax({
+		type: 'GET',
+		url:'http://localhost:8080/project/rest/failedcalldata/imsi',
+		success: function(mydata){
+			var data=mydata;
+			var length=data.length;
+			
+			for(var i=0; i<length; i++){
+				var x=data[i];
+				var option=document.createElement('option');	
+				option.text=x;	
+				$select.append(option);			
+				}					
+			}
+		});
+	});
+    
+    
+/*getting cause code by imsi*/
+
+    $('#causeCodeImsiSubmit').click(function(e){
+	var x = document.getElementById("causeCodeImsi");
+	var selectedOption = x.options[x.selectedIndex].text;
+
+	  $.ajax({
+
+            type:'GET',
+             url:'http://localhost:8080/project/rest/failedcalldata/uniqueCauseCodes/'+selectedOption,
+            dataType: 'json',
+            contentType: "application/json",
+
+            success:function(data){
+              if(isValid && data.length>0){
+ 	 			createCauseCodeTable();
+ 	 			createCauseCodeButton();
+ 	 			$.each(data, function(key, value){
+ 	 				$table.append('<tr><td>'+data+'</td></tr>');
+ 	 	 			});
+	 	 			isValid=false;
+ 	 	 		}
+ 	 			else if(isValid && data.length===0){
+				alert('No available data for selected dates');
+ 	 	 		}
+            }
+          });
+       });
+    });
+        
+   
+    function createCauseCodeTable(){
+		var x=document.getElementById("causeCodeImsi");
+        var selected=x.options[x.selectedIndex].text;
+        var row=document.createElement('tr');
+        row.setAttribute('id', 'head');
+        var colOne=document.createElement('th');
+     
+        colOne.innerHTML='Cause Codes for IMSI: '+selected;     
+        row.appendChild(colOne);     
+        $table.append(row);
+
+    }
+
+    function createCauseCodeButton(){
+
+        var butDiv=document.createElement('div');
+ 		butDiv.setAttribute('class', "col-sm-offset-5 col-sm-10");
+ 		var button=document.createElement(button);
+ 		button.setAttribute('id', 'tableButton');
+ 		button.setAttribute('class','btn btn-primary');
+ 		button.innerHTML='Search Again';
+ 		button.addEventListener('click', removeCauseCodeData);
+ 		butDiv.appendChild(button);
+ 		$table.append(butDiv);
+
+    }
+
+    function removeCauseCodeData(){
+        var removeHead=document.getElementById('head');
+        var removeButton=document.getElementById('tableButton');
+        $table.empty();
+
+    }
+
+</script>		
 
 <script>
 
@@ -144,6 +281,7 @@ var $table = $('#table');
 	});
 	
 </script>
+
 
 <!-- Add all IMSIs to list? -->
 <script>
@@ -323,6 +461,47 @@ function removeCountData(){
 	var removeButton=document.getElementById('countTableButton');
 	$table.empty();
 }
+    
+var divs = ["event/cause","failCount","causeCodes"];
+	var visibleDiv = null;
+	// var $tableJohn = $('#tableJohn');
+	// var $table = $('#tableBrian');
+
+	$(function(){
+
+		document.getElementById("event/cause").style.display='none';
+		document.getElementById("failCount").style.display='none';
+        document.getElementById("causeCodes").style.display='none';
+
+	});
+
+	function toggle(divId){
+		//removeData();
+	 	//removeDataJohn();
+		if(visibleDiv === divId) {
+			  visibleDiv = null;
+		} else {
+			    visibleDiv = divId;
+			}
+
+		hideOtherDivs();
+	}
+
+	function hideOtherDivs(){
+		var i, divId, div;
+
+		for(i = 0; i <divs.length; i++){
+			divId = divs[i];
+			div = document.getElementById(divId);
+
+			if(visibleDiv == divId){
+				div.style.display = 'block';
+			}else{
+				div.style.display = 'none';
+			}
+		}
+	}
+
 
 </script>
 
