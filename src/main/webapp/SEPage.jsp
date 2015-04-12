@@ -90,7 +90,7 @@
                         
                         
 						<div class="form-group" >
-                            <label class="control-label col-sm-2" for="ID">FROM: </label>
+                            <label class="control-label col-sm-2" for="ID">From: </label>
                         <div class="col-sm-5">
 							<input type="datetime-local" id='from' class="form-control"
 								name="from" placeholder="yyyy-dd-mm hh:mm" autofocus>
@@ -98,7 +98,7 @@
 						</div>
                         
                         <div class = "form-group">
-						      <label class="control-label col-sm-2" for="ID">TO: </label>
+						      <label class="control-label col-sm-2" for="ID">To: </label>
                         <div class="col-sm-5">
 							<input type="datetime-local" id='to' class="form-control"
 								name="to" placeholder="yyyy-dd-mm hh:mm" autofocus>
@@ -133,7 +133,7 @@
                     <div class ="form-horizontal">
                     
                         <div class ="form-group">
-					       <label class="control-label col-sm-2" for="ID">FROM:</label>
+					       <label class="control-label col-sm-2" for="ID">From:</label>
                             <div class ="col-sm-5">
 						<input type="datetime-local" id='IMSIFrom' class="form-control"
 							name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
@@ -141,7 +141,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="ID">TO:</label>
+                            <label class="control-label col-sm-2" for="ID">To:</label>
                             <div class="col-sm-5">
 						<input type="datetime-local" id='IMSITo' class="form-control"
 							name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
@@ -168,14 +168,14 @@
 					<h1>All IMSIs for Failure Class</h1>
                     <div class ="form-horizontal">
 		              <div id="failureClassDiv" class="form-group">
-                          <label class="control-label col-sm-2" for="ID">FAILURE CLASS:</label>
+                          <label class="control-label col-sm-2" for="ID">Failure Class:</label>
                       <div class="col-sm-5">
 			               <select class="form-control" id="failureClassSelectDiv"></select>
                       </div>
                       </div>
                       
                 <div class="col-sm-offset-4 col -sm-10">
-			         <button id="failureClassSelectButton" class="btn btn-primary">SEARCH</button>
+			         <button id="failureClassSelectButton" class="btn btn-primary">Search</button>
 			    </div>
                 </div>
                       

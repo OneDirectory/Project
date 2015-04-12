@@ -19,6 +19,10 @@ body.support_engineer {
   background: url(../img/cellular.png);
 }
 
+label {
+     font: normal 23px arial !important;
+    }
+
 
 .brand {
   display: inherit;
