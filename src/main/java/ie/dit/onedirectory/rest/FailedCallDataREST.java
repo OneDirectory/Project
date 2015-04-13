@@ -102,6 +102,7 @@ public class FailedCallDataREST {
 		return service.getEventIdAndCauseCodeByIMSI(imsi);
 	}
 	
+	
 	@GET
 	@Path("/uniqueCauseCodes/{imsi)")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -109,7 +110,7 @@ public class FailedCallDataREST {
 		return service.getUniqueCauseCodesForImsi(imsi);
 	}
 
-	// JF addition
+	
 	@GET
 	@Path("/dateIMSI/{dates2}")
 	@Produces(MediaType.APPLICATION_JSON)
