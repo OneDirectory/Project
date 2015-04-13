@@ -52,7 +52,7 @@
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
 				<li><a href="#" onclick="toggle('createUser');">Add a user</a></li>
-				<li><a href="#" onclick="toggle('import');">Import data</a></li>
+				<li><a href="#" onclick="toggle('importData');">Import data</a></li>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 				
 	
@@ -139,19 +139,46 @@
 		<!-- /#page-content-wrapper -->
 
 
-	</div>
-	<!-- /#wrapper -->
+	<!-- <div id="importData">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1>Import Data File</h1>
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="uploadFile">FILE:</label>
+								<div class="col-sm-5">
+									<input type="file" class="form-control" name="selectedFile"
+										placeholder="File" id="selectedFile" autofocus>
+								</div>
+							</div>
+						
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-10">
+									<br>
+									<button id='addFile' type="submit" class="btn btn-primary">Upload File</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-	<div id="import">
+		</div> -->
+
+<div id="importData">
 		<h1>Import Failed Call Data</h1>
-		<form action="rest/failedcalldata/upload" method="post"
+		<form id="uploadForm" action="rest/failedcalldata/upload" method="post"
 			enctype="multipart/form-data">
 			<p>
 				Please select file: <input type="file" name="selectedFile" />
 			</p>
-			<input type="submit" value="Upload" />
+			<button id="addFile" type="submit" value="btn btn-primary">Add File</button>
 		</form>
 	</div>
+
+	</div>
+	<!-- /#wrapper -->
 
 
 
@@ -163,7 +190,7 @@
 
 	<!-- Menu Toggle Script -->
 	<script>
-var divs = ["createUser","import"];
+var divs = ["createUser","importData"];
 var visibleDiv = null;
 var ids = [];
 
@@ -171,7 +198,7 @@ var ids = [];
 $(function(){
 
 	document.getElementById("createUser").style.display='none';
-	document.getElementById("import").style.display='none';
+	document.getElementById("importData").style.display='none';
 
 	$('#regButton').click(function(e){
 
@@ -206,6 +233,7 @@ $(function(){
 			});
 		}
 	});	
+	
 });
 
 function toggle(divId){

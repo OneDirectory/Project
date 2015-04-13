@@ -144,9 +144,8 @@
 				</div>
 				<div id='tableForModelQuery'></div>
 			</div>
-		</div>
-
-		<div id="topTen">
+			
+			<div id="topTen">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
@@ -178,10 +177,14 @@
 					</div>
 				</div>
 				<div id='tableForTopTen'></div>
-				<div id='graphForTopTen'></div>
+				<!--<div id='graphForTopTen'></div>  -->
 			</div>
 
 		</div>
+			
+		</div>
+
+		
 	</div>
 	<script>
 		$(function() {
@@ -189,6 +192,7 @@
 			$("#submit").click(function(e) {
 				removeData();
 				removeModelData();
+				removeTopTenData();
 				fromDate = $('#from').val();
 				toDate = $('#to').val();
 				var myurl;
@@ -309,6 +313,7 @@
 			$("#modelSubmit").click(function(e) {
 				removeModelData();
 				removeData();
+				removeTopTenData();
 				var x = document.getElementById("modelInput");
 				var selected = x.options[x.selectedIndex].text;
 				createModelTable();
@@ -474,12 +479,11 @@
 							createTopTenTable();
 							createTopTenButton();
 							$.each(data,function(key,value) {
-								$('#topTenMO tr:last').after('<tr><td>'+ value[0]+ '</td><td>'+ value[1]+ '</td><td>'+ 
+								$('#topTenMO').find('tbody').append('<tr><td>'+ value[0]+ '</td><td>'+ value[1]+ '</td><td>'+ 
 										value[2]+ '</td><td>'+ value[3]+ '</td><td>'+ value[4]+ '</td><td>'+ value[5]+ '</td></tr>');
 							});
 							isValid = false;
 							$('#topTenMO').dataTable();
-							$('#topTenMO tr:last').remove();
 							} else if (isValid && data.length === 0) {
 								alert('No available data for selected dates');
 							}
