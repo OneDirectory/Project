@@ -42,7 +42,7 @@
 		<h2>
 			Group one - One Directory <small>Project</small>
 		</h2>
-		<h2>Customer Service Representative Page</h2>
+		<h2>Customer Service Representative</h2>
 	</div>
 
 	<div id="wrapper">
