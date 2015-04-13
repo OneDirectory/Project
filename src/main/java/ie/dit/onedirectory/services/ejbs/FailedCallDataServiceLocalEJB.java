@@ -157,7 +157,12 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 		return dao.getAllImsiForFailureClass(failureClass);
 	}
 
+<<<<<<< HEAD
 	public Collection<?> getCountFailedCallsInTimePeriodByImsi(String imsi,
+=======
+	@Override
+	public Long getCountFailedCallsInTimePeriodByImsi(String imsi,
+>>>>>>> refs/heads/us1516
 			Date fromDate, Date toDate) {
 		return dao.getCountFailedCallsInTimePeriodByImsi(imsi, fromDate, toDate);
 	}
