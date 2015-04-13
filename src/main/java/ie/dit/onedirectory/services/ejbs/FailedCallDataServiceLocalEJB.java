@@ -153,9 +153,12 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 		return dao.getTopTenMarketOperatorCellIDCombinations(fromDate, toDate);
 	}
 
-	@Override
 	public Collection<String> getAllImsiForFailureClass(Integer failureClass) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getAllImsiForFailureClass(failureClass);
+	}
+
+	public Collection<?> getCountFailedCallsInTimePeriodByImsi(String imsi,
+			Date fromDate, Date toDate) {
+		return dao.getCountFailedCallsInTimePeriodByImsi(imsi, fromDate, toDate);
 	}
 }

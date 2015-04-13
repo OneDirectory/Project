@@ -15,7 +15,7 @@
 <!-- Custom CSS -->
 <link href="Resources/css/simple-sidebar.css" rel="stylesheet">
 <link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
-<script src="js/selectize.js"></script>
+<script src="Resources/js/selectize.js"></script>
 <script src="Resources/js/jquery-1.6.1.min.js"></script>
 <script src="Resources/js/bootstrap.min.js"></script>
 
@@ -60,6 +60,10 @@
 				<li><a href="#" onclick="toggle('briansQuery');">Total number of Failures per Model</a></li>
 				<li><a href="#" onclick="toggle('johnsQuery');">All IMSIs with Failed Call Data</a></li>
 				<li><a href="#" onclick="toggle('imsisForFailreClassDiv');">All IMSIs for a FailureClass</a></li>
+				<li class="sidebar-brand"><a href="#">Customer Service Rep Enq</a></li>
+				<li><a href="#" onclick="toggle('id/causecode');">EventID/CauseCode per IMSI</a></li>
+                <li><a href="#" onclick="toggle('causeCodes');">Cause Codes per IMSI</a>
+                <li><a href="#" onclick="toggle('failCount');">Count of Call Failures per IMSI</a>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
@@ -71,39 +75,47 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12" id='container'>
-						<h1>Search failed data by model</h1>
-
+						<div class="transbox">
+						<br>
+						<h1>Number of Call Failures by Phone Model</h1>
+                    <div class="form-horizontal">
+                        
 						<div class="form-group" id="myDiv">
-							<div class="col-sm-5">
-								<label class="control-label col-sm-2" for="ID">Model:</label> <select
-									class="form-control" id="ID" placeholder="Select a model.."
+								<label class="control-label col-sm-2" for="ID">Model:</label>
+                            <div class="col-sm-5">
+                            <select class="form-control" id="ID" placeholder="Select a model.."
 									autofocus>
-
 								</select><br>
 							</div>
 						</div>
-
-						<div >
-							<br><input type="datetime-local" id='from' class="form-control"
+                        
+                        
+                        
+						<div class="form-group" >
+                            <label class="control-label col-sm-2" for="ID">From: </label>
+                        <div class="col-sm-5">
+							<input type="datetime-local" id='from' class="form-control"
 								name="from" placeholder="yyyy-dd-mm hh:mm" autofocus>
+                        </div>
 						</div>
-
-						<label class="control-label col-sm-2" for="ID">TO:</label>
-
-						<div>
+                        
+                        <div class = "form-group">
+						      <label class="control-label col-sm-2" for="ID">To: </label>
+                        <div class="col-sm-5">
 							<input type="datetime-local" id='to' class="form-control"
 								name="to" placeholder="yyyy-dd-mm hh:mm" autofocus>
 						</div>
-
-
-
+                        </div>
+                            
+                        <div class="form-group">
 						<div class="col-sm-offset-4 col-sm-10">
 							<br>
 							<button id="submitBrian" type="submit" class="btn btn-primary">Search</button>
+                            </div>
 						</div>
 					</div>
-				</div>
-
+					</div>
+                    </div>
 
 			</div>
 		</div>
@@ -120,20 +132,23 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1>Call Failures</h1>
-
-					<label class="control-label col-sm-2" for="ID">FROM:</label><br>
-
-					<div>
+                    <div class ="form-horizontal">
+                    
+                        <div class ="form-group">
+					       <label class="control-label col-sm-2" for="ID">From:</label>
+                            <div class ="col-sm-5">
 						<input type="datetime-local" id='IMSIFrom' class="form-control"
 							name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
-					</div>
-
-					<label class="control-label col-sm-2" for="ID">TO:</label>
-
-					<div>
+					       </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="ID">To:</label>
+                            <div class="col-sm-5">
 						<input type="datetime-local" id='IMSITo' class="form-control"
 							name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
-					</div>
+					       </div>
+                        </div>
 
 					<div class="col-sm-offset-4 col-sm-10">
 						<br>
@@ -141,24 +156,234 @@
 					</div>
 
 				</div>
+                    </div>
 			</div>
 		</div>
 		<div id='tableJohn' >
 		
 		</div>
 	</div>
-	<div id="imsisForFailreClassDiv" class = 'container-fluid'>
-		<div id="failureClassDiv" class="form-group">
-			<select id="failureClassSelectDiv"></select>
-			<button id="failureClassSelectButton" class="btn btn-primary">SEARCH</button>
-			
+        <div id="imsisForFailreClassDiv">
+            <div class = 'container-fluid'>
+                <div class="row">
+                    <div class="col-lg-12">
+					<h1>All IMSIs for Failure Class</h1>
+                    <div class ="form-horizontal">
+		              <div id="failureClassDiv" class="form-group">
+                          <label class="control-label col-sm-2" for="ID">Failure Class:</label>
+                      <div class="col-sm-5">
+			               <select class="form-control" id="failureClassSelectDiv"></select>
+                      </div>
+                      </div>
+                      
+                <div class="col-sm-offset-4 col -sm-10">
+			         <button id="failureClassSelectButton" class="btn btn-primary">Search</button>
+			    </div>
+                </div>
+                      
 			<div id="imsisTableForFailreClassDiv">
 			</div>
-		
+                      
+		</div>
 		</div>
 	</div>
+        </div>
+        
+      <div id="id/causecode">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1>Search EventId/CauseCode by IMSI</h1>
+						<div class="form-horizontal">
+                            <div class="form-group">
+							<label class="control-label col-sm-2" for="ID">IMSI:</label>
+                                <div class="col-sm-5">
+                                <select class="form-control" id="imsiSelect"> </select>
+
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-10">
+									<br>
+									<button id='id/causecodesubmit' type='submit' class="btn btn-primary">Search</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+ </div>
+		<!-- /#page-content-wrapper -->
+
+	
+	<!-- /#wrapper -->
+
+
+	<table class="table" id='causeCodeTable' name='table'>
+
+		<div id="butDiv"></div>
+	</table>
+    
+      <div id="causeCodes">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12" id='container'>
+                        <div class="transbox">
+						<br>
+						<h1>All Cause Codes for IMSI</h1>
+                        <div class="form-horizontal">
+						<div class="form-group" id="myDiv">
+							<label class="control-label col-sm-2" for="ID">IMSI:</label> 
+                            <div class="col-sm-5">
+                            <select class="form-control" id="causeCodeImsi"></select>
+                                </div>
+                            </div>
+
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-10">
+									<br>
+									<button id='causeCodeImsiSubmit' name='submit' class="btn btn-primary">Search</button>
+								</div>
+							</div>
+						</div>
+                        </div>
+					</div>
+				</div>
+			</div>
+            <div id="causeCodeTable"></div>
+		</div>
+        
+        	<div id="failCount">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12">
+                    <div class="transbox">
+						<br>
+					<h1>Count of Call Failures by IMSI</h1>	
+                    <div class="form-horizontal">
+                        
+                        <div class="from-group">
+						<label class="control-label col-sm-2" for="imsiInput">IMSI: </label>
+                        <div class="col-sm-5">
+							<select class="form-control" id="imsiInput"></select>
+						</div>	
+                        </div>
+                        
+                        <div class="form-group">
+						<div class="col-sm-offset-4 col-sm-10">
+                            <br>
+							<button id="countSubmit" type="submit" class="btn btn-primary">Search</button>
+						</div>					
+				    </div>
+			     </div>
+                </div> 
+		      </div>	
+		<!--  </div>
+				<div id='tableForCountQuery' ></div>
+			</div> -->
+            </div>
+        </div>
+	</div>
+    
+	</div>
 		<!-- /#wrapper -->
-		
+
+    
+    
+<script>
+/* adding imsi to select for causecodes*/
+var $table = $('#causeCodeTable');
+
+	$(function(){
+
+    var $select = $('#causeCodeImsi');
+
+	$.ajax({
+		type: 'GET',
+		url:'http://localhost:8080/project/rest/failedcalldata/imsi',
+		success: function(mydata){
+			var data=mydata;
+			var length=data.length;
+			
+			for(var i=0; i<length; i++){
+				var x=data[i];
+				var option=document.createElement('option');	
+				option.text=x;	
+				$select.append(option);			
+				}					
+			}
+		});
+	});
+    
+    
+/*getting cause code by imsi*/
+
+    $('#causeCodeImsiSubmit').click(function(e){
+	var x = document.getElementById("causeCodeImsi");
+	var selectedOption = x.options[x.selectedIndex].text;
+
+	  $.ajax({
+
+            type:'GET',
+             url:'http://localhost:8080/project/rest/failedcalldata/uniqueCauseCodes/'+selectedOption,
+            dataType: 'json',
+            contentType: "application/json",
+
+            success:function(data){
+              if(isValid && data.length>0){
+ 	 			createCauseCodeTable();
+ 	 			createCauseCodeButton();
+ 	 			$.each(data, function(key, value){
+ 	 				$table.append('<tr><td>'+data+'</td></tr>');
+ 	 	 			});
+	 	 			isValid=false;
+ 	 	 		}
+ 	 			else if(isValid && data.length===0){
+				alert('No available data for selected dates');
+ 	 	 		}
+            }
+          });
+       });
+    });
+        
+   
+    function createCauseCodeTable(){
+		var x=document.getElementById("causeCodeImsi");
+        var selected=x.options[x.selectedIndex].text;
+        var row=document.createElement('tr');
+        row.setAttribute('id', 'causehead');
+        var colOne=document.createElement('th');
+     
+        colOne.innerHTML='Cause Codes for IMSI: '+selected;     
+        row.appendChild(colOne);     
+        $table.append(row);
+
+    }
+
+    function createCauseCodeButton(){
+
+        var butDiv=document.createElement('div');
+ 		butDiv.setAttribute('class', "col-sm-offset-5 col-sm-10");
+ 		var button=document.createElement(button);
+ 		button.setAttribute('id', 'causetableButton');
+ 		button.setAttribute('class','btn btn-primary');
+ 		button.innerHTML='Search Again';
+ 		button.addEventListener('click', removeCauseCodeData);
+ 		butDiv.appendChild(button);
+ 		$table.append(butDiv);
+
+    }
+
+    function removeCauseCodeData(){
+        var removeHead=document.getElementById('causehead');
+        var removeButton=document.getElementById('causetableButton');
+        $table.empty();
+
+    }
+
+</script>		    
+    
+
 <script>
 $(function(){
 	
@@ -249,6 +474,108 @@ function createImsiFailureClassTable(){
         });
 
  </script>
+ 
+ <!-- Add all IMSIs to list? -->
+<script>
+
+$(function(){
+	var $select = $('#imsiSelect');
+	$.ajax({
+		type: 'GET',
+		url:'http://localhost:8080/project/rest/failedcalldata/imsi',
+		success: function(mydata){
+			var data=mydata;
+			var length=data.length;
+			
+			for(var i=0; i<length; i++){
+				var x=data[i];
+				var option=document.createElement('option');	
+				option.text=x;	
+				$select.append(option);			
+				}					
+			}
+		});
+	});
+</script>
+<script>
+	var $causeCodeTable = $('#causeCodeTable');
+		$(function(){
+
+	$( "#id/causecodesubmit" ).click(function(e) {
+	
+	removeData();
+    removeDataJohn();
+    removeCauseCodeData()	
+	var x=document.getElementById("imsiSelect");
+	var selected=x.options[x.selectedIndex].text;
+
+	createCauseCodeTable();
+	createCauseCodeButton();
+
+	$.ajax({
+
+		type:'GET',
+		url:'http://localhost:8080/project/rest/failedcalldata/imsi/'+selected,
+		dataType: 'json',
+		contentType: "application/json",
+
+		success:function(data){
+			
+			$.each(data, function(key, value){
+				
+				$causeCodeTable.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td><td>'+selected+'</td></tr>');
+			});
+		}
+	  });
+   });
+});
+
+function createCauseCodeTable(){
+	
+	var row=document.createElement('tr');
+	row.setAttribute('id', 'head');
+	var colOne=document.createElement('th');
+	var colTwo=document.createElement('th');
+	var colThree=document.createElement('th');
+	var colFour=document.createElement('th');
+
+	colOne.innerHTML='Cause Code';
+	colTwo.innerHTML='Event ID';
+	colThree.innerHTML='Description';
+	colFour.innerHTML ='IMSI'
+
+	row.appendChild(colOne);
+	row.appendChild(colTwo);
+	row.appendChild(colThree);
+	row.appendChild(colFour);
+
+	$causeCodeTable.append(row);
+	
+}
+
+function createCauseCodeButton(){
+
+	var butDiv=document.createElement('div');
+	butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
+	var button=document.createElement(button);
+	button.setAttribute('id', 'tableButton');
+	button.setAttribute('class','btn btn-primary');
+	button.setAttribute('position', 'absolute');
+	button.setAttribute('top', '50%');
+	button.innerHTML='Search Again';
+	button.addEventListener('click', removeCauseCodeData);
+	butDiv.appendChild(button);
+	$table.append(butDiv);
+	
+}
+
+function removeCauseCodeData(){
+	var removeHead=document.getElementById('head');
+	var removeButton=document.getElementById('tableButton');
+	$table.empty();
+	
+}
+</script>
 
 
 
@@ -259,6 +586,7 @@ $(function(){
 
  	removeData();
  	removeDataJohn();
+    removeCauseCodeData();
 	var fromDate=$('#from').val();
 	var toDate=$('#to').val();
 	var myurl;
@@ -341,7 +669,8 @@ $(function(){
 		$( "#submitJohn" ).click(function(e) {
 			
 			removeData();
-		 	removeDataJohn();	
+		 	removeDataJohn();
+            removeCauseCodeData()
 			var fromDate=$('#IMSIFrom').val();
 			var toDate=$('#IMSITo').val();
 			var myurl;
@@ -427,7 +756,7 @@ $(function(){
  		
  	}
 
- 	var divs = ["johnsQuery","briansQuery","imsisForFailreClassDiv"];
+ 	var divs = ["johnsQuery","briansQuery","imsisForFailreClassDiv","id/causecode","causeCodes","failCount"];
 	var visibleDiv = null;
 	 var $tableJohn = $('#tableJohn');
 	 var $table = $('#tableBrian');
@@ -437,7 +766,9 @@ $(function(){
 		document.getElementById("johnsQuery").style.display='none';
 		document.getElementById("briansQuery").style.display='none';
 		document.getElementById("imsisForFailreClassDiv").style.display='none';
-		
+		document.getElementById("id/causecode").style.display='none';
+        document.getElementById("causeCodes").style.display='none';
+        document.getElementById("failCount").style.display='none';
 
 	});
 

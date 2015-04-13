@@ -97,4 +97,15 @@ public interface FailedCallDataDAO {
 	 */
 	public Collection<?> getTopTenMarketOperatorCellIDCombinations(Date fromDate, Date toDate);
 	
+	/**
+	 * 
+	 * @param imsi
+	 * @param fromDate
+	 * @param toDate
+	 * @return
+	 */
+	
+	public Collection<?> getCountFailedCallsInTimePeriodByImsi(String imsi,
+			Date fromDate, Date toDate);
+		
 }

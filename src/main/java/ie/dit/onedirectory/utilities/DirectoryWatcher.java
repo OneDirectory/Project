@@ -117,7 +117,11 @@ public class DirectoryWatcher {
 	
 	@PreDestroy
 	public void onDestroy(){
-		
+		try{
+		watcher.close();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 	}
 
 }
