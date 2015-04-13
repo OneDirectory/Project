@@ -46,93 +46,133 @@
     if(cookie.getName().equals("user")) userName = cookie.getValue();
     if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
 	}
-}
-%>
-	<div class="page-header">
-		<br>
-		<h2>
-			Group One - One Directory <small>Project</small>
-		</h2>
-		<h2>Network Management Engineer Page</h2>
-	</div>
-
-	<div id="wrapper">
-		<!-- Sidebar -->
-		<div id="sidebar-wrapper">
-			<ul class="sidebar-nav">
-				<li class="sidebar-brand"><a href="#"> Menu </a></li>
-				<li><a href="#" onclick="toggle('imsiCount');">Duration/FailureCount
-						per IMSI</a></li>
-				<li><a href="#" onclick="toggle('modelCount');">EventId/CauseCode
-						per Model</a></li>
-				<li><a href="#" onclick="toggle('topTenImsi');">TopTenIMSIs</a></li>
-				<li class="sidebar-brand"><a href="/project/SEPage.jsp">Software
-						Engineer</a></li>
-				<li class="sidebar-brand"><a href="/project/CSRPage.jsp">Customer
-						Service Rep.</a></li>
-				<li><a href="http://localhost:8080/project/LogoutServlet">Log
-						out</a></li>
-			</ul>
+	}
+	%>
+	<div>
+		<div class="page-header">
 			<br>
+			<h2>
+				Group One - One Directory <small>Project</small>
+			</h2>
+			<h2>Network Management Engineer Page</h2>
 		</div>
-		<!-- /#sidebar-wrapper -->
 
-		<!-- Page Content -->
-		<div id="imsiCount">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-						<h1>Total number of failures per IMSI</h1>
-						<div class="form-horizontal">
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="ID">From:</label>
-								<div class="col-sm-5">
-									<input type="datetime-local" id='from' class="form-control"
-										name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
+		<div id="wrapper">
+			<!-- Sidebar -->
+			<div id="sidebar-wrapper">
+				<ul class="sidebar-nav">
+					<li class="sidebar-brand"><a href="#"> Menu </a></li>
+					<li><a href="#" onclick="toggle('imsiCount');">Duration/FailureCount
+							per IMSI</a></li>
+					<li><a href="#" onclick="toggle('modelCount');">EventId/CauseCode
+							per Model</a></li>
+					<li><a href="#" onclick="toggle('topTen');">Top 10 Market,
+							Operator & Cell ID</a></li>
+							
+				<li><a href="#" onclick="toggle('topTenImsi');">TopTenIMSIs</a></li>
+					<li class="sidebar-brand"><a href="/project/SEPage.jsp">Software
+							Engineer</a></li>
+					<li class="sidebar-brand"><a href="/project/CSRPage.jsp">Customer
+							Service Rep.</a></li>
+					<li><a href="http://localhost:8080/project/LogoutServlet">Log
+							out</a></li>
+				</ul>
+				<br>
+			</div>
+			<!-- /#sidebar-wrapper -->
+
+			<!-- Page Content -->
+			<div id="imsiCount">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-12">
+							<h1>Total number of failures per IMSI</h1>
+							<div class="form-horizontal">
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="ID">From:</label>
+									<div class="col-sm-5">
+										<input type="datetime-local" id='from' class="form-control"
+											name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
+									</div>
 								</div>
-							</div>
 
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="ID">To:</label>
-								<div class="col-sm-5">
-									<input type="datetime-local" id='to' class="form-control"
-										name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="ID">To:</label>
+									<div class="col-sm-5">
+										<input type="datetime-local" id='to' class="form-control"
+											name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
+									</div>
 								</div>
-							</div>
 
-							<div class="form-group">
-								<div class="col-sm-offset-4 col-sm-10">
-									<br>
-									<button id="submit" type="submit" class="btn btn-primary">Search</button>
+								<div class="form-group">
+									<div class="col-sm-offset-4 col-sm-10">
+										<br>
+										<button id="submit" type="submit" class="btn btn-primary">Search</button>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div id='tableForImsiCountDiv'></div>
 				</div>
-			</div>
-			<!-- /#page-content-wrapper -->
-		</div>
-		<!-- /#wrapper -->
 
-		<div id="modelCount">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<h1>Call Failures by Model</h1>
-						<div class="form-horizontal">
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="modelInput">Model:
-								</label>
-								<div class="col-sm-5">
-									<select class="form-control" id="modelInput">
-									</select>
+				<!-- /#page-content-wrapper -->
+			</div>
+			<!-- /#wrapper -->
+
+			<div id="modelCount">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							<h1>Call Failures by Model</h1>
+							<div class="form-horizontal">
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="modelInput">Model:
+									</label>
+									<div class="col-sm-5">
+										<select class="form-control" id="modelInput">
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-4 col-sm-10">
+										<br>
+										<button id="modelSubmit" type="submit" class="btn btn-primary">Search</button>
+									</div>
 								</div>
 							</div>
+						</div>
+					</div>
+				</div>
+				<div id='tableForModelQuery'></div>
+			</div>
+			
+			<div id="topTen">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1>Top Ten Market, Operator, Cell combinations</h1>
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="ID">From:</label>
+								<div class="col-sm-5">
+									<input type="datetime-local" id='fromDate' class="form-control"
+										name="fromDate" placeholder="dd-mm-yyyy hh:mm" autofocus>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="ID">To:</label>
+								<div class="col-sm-5">
+									<input type="datetime-local" id='toDate' class="form-control"
+										name="toDate" placeholder="dd-mm-yyyy hh:mm" autofocus>
+								</div>
+							</div>
+
 							<div class="form-group">
 								<div class="col-sm-offset-4 col-sm-10">
 									<br>
-									<button id="modelSubmit" type="submit" class="btn btn-primary">Search</button>
+									<button id="topTenSubmit" type="submit" class="btn btn-primary">Search</button>
 								</div>
 							</div>
 						</div>
@@ -140,7 +180,8 @@
 				</div>
 			</div>
 		</div>
-		<div id='tableForModelQuery'></div>
+				<div id='tableForTopTen'></div>
+				<div id='graphForTopTen'></div>
 	</div>
 
 	<!-- Top Ten Imsi -->
@@ -176,12 +217,16 @@
 						
 					</div>
 				</div>
+				<div id='tableForTopTenImsi'></div>
 			</div>
+
 		</div>
 	</div>
-	<div id='tableForTopTenImsi'></div>
-	</div>
-	</div>
+			
+			
+		</div>
+
+
 
 
 
@@ -190,125 +235,102 @@
 
 </script>
 	<script>
+		$(function() {
 
- 	$(function(){
+			$("#submit").click(function(e) {
+				removeData();
+				removeModelData();
+				fromDate = $('#from').val();
+				toDate = $('#to').val();
+				var myurl;
+				var isValid = false;
+				if (validateEntry(fromDate, toDate)) {
+					myurl = 'http://localhost:8080/project/rest/failedcalldata/count/'+ fromDate + '£' + toDate + '£0£5';
+					isValid = true;
+				}
+				else {
+					myurl = 'http://localhost:8080/project/NMEPage.html';
+					isValid = false;
+				}
 
- 		$( "#submit" ).click(function(e) {
+				$.ajax({
+					type : 'GET',
+					url : myurl,
+					success : function(data) {
+						if (isValid && data.length > 0) {
+							createTable();
+							createButton();
+							$.each(data,function(key,value) {
+								$('#viewImsisWithCount').find('tbody').append('<tr><td>'+ value[0]+ '</td><td>'+ value[1]+'</td><td>'+ value[2]	+ '</td></tr>');
+							});
+							isValid = false;
+							$('#viewImsisWithCount').dataTable();
+						} else if (isValid&& data.length === 0) {
+								alert('No available data for selected dates');
+						}
+					}
+				});
+			});
+		});
 
- 	removeData();
- 	removeModelData();
-	fromDate=$('#from').val();
-	toDate=$('#to').val();
-	var myurl;
-	var isValid=false;
-	
-	if(validateEntry(fromDate, toDate)){	
-		myurl='http://localhost:8080/project/rest/failedcalldata/count/'+fromDate+'£'+toDate+'£0£5';
-		isValid=true;
+		function validateEntry(from, to) {
+			if (from === '') {
+				alert('Invalid FROM DateTime');
+				return false;
+			} else if (to === '') {
+				alert('Invalid TO DateTime');
+				return false;
+			} else if (isFromGtrTo(from, to)) {
+				alert('FROM date id greater than TO date');
+				return false;
+			}
+
+			else
+				return true;
 		}
 
-	else{
-		myurl= 'http://localhost:8080/project/NMEPage.html';
-		isValid=false;
-		}
+		function isFromGtrTo(from, to) {
 
- 	$.ajax({
- 		type: 'GET',
- 		url: myurl,
- 		success: function(data){
- 	 	
- 	 		if(isValid && data.length>0){
- 	 			createTable();
- 	 			createButton();
- 	 			$.each(data, function(key, value){
- 	 				$('#viewImsisWithCount').find('tbody').append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td></tr>');
- 	 	 			});
-	 	 			isValid=false;
-	 	 			$('#viewImsisWithCount').dataTable();
- 	 	 		}
- 	 		else if(isValid && data.length===0){
-				alert('No available data for selected dates');
- 	 	 		}
- 			}
-
- 		});
- 	});
- 		});
-
-	function validateEntry(from, to){
-		if(from===''){
-			alert('Invalid FROM DateTime');
-			return false;
-		}
-		else if(to===''){
-			alert('Invalid TO DateTime');
-			return false;
-		}
-		else if(isFromGtrTo(from, to)){
-			alert('FROM date id greater than TO date');
-			return false;
-		}
-		
-		else
-			return true;
-	}
-
-	function isFromGtrTo(from, to){
-			
 			var date1 = new Date(from);
 			var date2 = new Date(to);
-			
-			if(date2.getTime()<=date1.getTime())
+
+			if (date2.getTime() <= date1.getTime())
 				return true;
 			else
 				return false;
-	}
+		}
 
-	
- 	function createTable(){
+		function createTable() {
 
- 		var tableDiv = document.getElementById('tableForImsiCountDiv')
- 		var divContainer = document.createElement('div');
- 		divContainer.setAttribute('class', 'table-responsive');
- 		divContainer.setAttribute('id', 'divContainer');
- 		var table=document.createElement('table');
- 		table.setAttribute('class', 'table table-striped');
- 		table.setAttribute('id', 'viewImsisWithCount');
- 		var header = document.createElement('thead');
- 		var body = document.createElement('tbody');
- 		var row = document.createElement('tr');
- 		var colOne=document.createElement('td');
- 		var colTwo=document.createElement('td');
- 		var colThree=document.createElement('td');
+			var tableDiv = document.getElementById('tableForImsiCountDiv')
+			var divContainer = document.createElement('div');
+			divContainer.setAttribute('class', 'table-responsive');
+			divContainer.setAttribute('id', 'divContainer');
+			var table = document.createElement('table');
+			table.setAttribute('class', 'table table-striped');
+			table.setAttribute('id', 'viewImsisWithCount');
+			var header = document.createElement('thead');
+			var body = document.createElement('tbody');
+			var row = document.createElement('tr');
+			var colOne = document.createElement('td');
+			var colTwo = document.createElement('td');
+			var colThree = document.createElement('td');
 
- 		colOne.innerHTML='IMSI';
- 		colTwo.innerHTML='Number Of Failures';
- 		colThree.innerHTML='Duration';
+			colOne.innerHTML = 'IMSI';
+			colTwo.innerHTML = 'Number Of Failures';
+			colThree.innerHTML = 'Duration';
 
- 		row.appendChild(colOne);
- 		row.appendChild(colTwo);
- 		row.appendChild(colThree);
+			row.appendChild(colOne);
+			row.appendChild(colTwo);
+			row.appendChild(colThree);
 
- 		header.appendChild(row);
- 		table.appendChild(header);
-		table.appendChild(body);
-		divContainer.appendChild(table);
-		tableDiv.appendChild(divContainer);
- 		
- 	}
+			header.appendChild(row);
+			table.appendChild(header);
+			table.appendChild(body);
+			divContainer.appendChild(table);
+			tableDiv.appendChild(divContainer);
 
- 	function createButton(){
- 		var butDiv=document.createElement('div');
- 		butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
- 		var button=document.createElement(button);
- 		button.setAttribute('id', 'tableButton');
- 		button.setAttribute('class','btn btn-primary');
- 		button.innerHTML='Search Again';
- 		button.addEventListener('click', removeData);
- 		butDiv.appendChild(button);
- 		$('#viewImsisWithCount').append(butDiv);
-	
- 	}
+		}
 
  	function removeData(){
  		var removeHead=document.getElementById('head');
@@ -318,94 +340,108 @@
  			
  	}
  	 	
+		function createButton() {
+			var butDiv = document.createElement('div');
+			butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
+			var button = document.createElement(button);
+			button.setAttribute('id', 'tableButton');
+			button.setAttribute('class', 'btn btn-primary');
+			button.innerHTML = 'Search Again';
+			button.addEventListener('click', removeData);
+			butDiv.appendChild(button);
+			$('#viewImsisWithCount').append(butDiv);
+
+		}
+
+		function removeData() {
+			var removeHead = document.getElementById('head');
+			var removeButton = document.getElementById('tableButton');
+			$('#tableForImsiCountDiv').empty();
+
+		}
 	</script>
 
 	<!-- US 10 -->
 	<!-- Function to show models -->
 	<script>
-	$(function() {
-		$("#modelSubmit").click(function(e) {
-			
-			removeModelData();
-			removeData();
-			var x = document.getElementById("modelInput");
-			var selected = x.options[x.selectedIndex].text;
-			
-			createModelTable();
-			createModelButton();
-			
-			$.ajax({
-				type:'GET',
-				url:'http://localhost:8080/project/rest/failedcalldata/model/'+selected,
-				dataType:'json',
-				contentType:"application/json",
-				
-				success:function(data) {
-					$.each(data, function(key, value) {
-						$('#viewModelData').append('<tr><td>' + value[0] + '</td><td>' + value[1] + '</td><td>'+ value[2]+'</td></tr>')
-					});
-					$('#viewModelData').dataTable();	
-				}
+		$(function() {
+			$("#modelSubmit").click(function(e) {
+				removeModelData();
+				removeData();
+				var x = document.getElementById("modelInput");
+				var selected = x.options[x.selectedIndex].text;
+				createModelTable();
+				createModelButton();
+				$.ajax({
+					type : 'GET',
+					url : 'http://localhost:8080/project/rest/failedcalldata/model/'+ selected,
+					dataType : 'json',
+					contentType : "application/json",
+					success : function(data) {
+						$.each(data,function(key,value) {
+							$('#viewModelData').append('<tr><td>'+ value[0]+ '</td><td>'+ value[1]+ '</td><td>'+ value[2]+ '</td></tr>')
+						});
+						$('#viewModelData').dataTable();
+					}
+				});
 			});
 		});
-	});
-	
-	function createModelTable() {
-		
-		var tableDiv = document.getElementById('tableForModelQuery')
- 		var divContainer = document.createElement('div');
- 		divContainer.setAttribute('class', 'table-responsive');
- 		divContainer.setAttribute('id', 'divContainer');
- 		var table=document.createElement('table');
- 		table.setAttribute('class', 'table table-striped');
- 		table.setAttribute('id', 'viewModelData');
- 		var header = document.createElement('thead');
- 		var body = document.createElement('tbody');
- 		var row = document.createElement('tr');
- 		var colOne=document.createElement('td');
- 		var colTwo=document.createElement('td');
- 		var colThree=document.createElement('td');
-		
-		colOne.innerHTML='Cause Code';
-		colTwo.innerHTML='Event ID';
-		colThree.innerHTML='Description';
-		
-		row.appendChild(colOne);
-		row.appendChild(colTwo);
-		row.appendChild(colThree);
 
- 		header.appendChild(row);
- 		table.appendChild(header);
-		table.appendChild(body);
-		divContainer.appendChild(table);
-		tableDiv.appendChild(divContainer);
-		
-	}
-	
-	function createModelButton() {
-		
-		var butDiv=document.createElement('div');
-		butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
-		var button=document.createElement(button);
-		button.setAttribute('id', 'modelTableButton');
-		button.setAttribute('class','btn btn-primary');
-		button.setAttribute('position', 'absolute');
-		button.setAttribute('top', '50%');
-		button.innerHTML='Search Again';
-		button.addEventListener('click', removeModelData);
-		butDiv.appendChild(button);
-		$modelTable.append(butDiv);
-	}
-	
-	function removeModelData() {
-		
-		var removeHead=document.getElementById('head');
-		var removeButton=document.getElementById('modelTableButton');
-		$('#tableForModelQuery').empty();
-	}
+		function createModelTable() {
+
+			var tableDiv = document.getElementById('tableForModelQuery')
+			var divContainer = document.createElement('div');
+			divContainer.setAttribute('class', 'table-responsive');
+			divContainer.setAttribute('id', 'divContainer');
+			var table = document.createElement('table');
+			table.setAttribute('class', 'table table-striped');
+			table.setAttribute('id', 'viewModelData');
+			var header = document.createElement('thead');
+			var body = document.createElement('tbody');
+			var row = document.createElement('tr');
+			var colOne = document.createElement('td');
+			var colTwo = document.createElement('td');
+			var colThree = document.createElement('td');
+
+			colOne.innerHTML = 'Cause Code';
+			colTwo.innerHTML = 'Event ID';
+			colThree.innerHTML = 'Description';
+
+			row.appendChild(colOne);
+			row.appendChild(colTwo);
+			row.appendChild(colThree);
+
+			header.appendChild(row);
+			table.appendChild(header);
+			table.appendChild(body);
+			divContainer.appendChild(table);
+			tableDiv.appendChild(divContainer);
+
+		}
+
+		function createModelButton() {
+
+			var butDiv = document.createElement('div');
+			butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
+			var button = document.createElement(button);
+			button.setAttribute('id', 'modelTableButton');
+			button.setAttribute('class', 'btn btn-primary');
+			button.setAttribute('position', 'absolute');
+			button.setAttribute('top', '50%');
+			button.innerHTML = 'Search Again';
+			button.addEventListener('click', removeModelData);
+			butDiv.appendChild(button);
+			$modelTable.append(butDiv);
+		}
+
+		function removeModelData() {
+
+			var removeHead = document.getElementById('head');
+			var removeButton = document.getElementById('modelTableButton');
+			$('#tableForModelQuery').empty();
+		}
 	</script>
-
-
+<!-- function to show top ten imsis -->
 	<script>
 	
 	$( "#topTenImsiButton" ).click(function(e) {
@@ -447,10 +483,6 @@
 
 	 		});
 	 	});
-		
-		
-		
-		
 
 	
 	function createTableTopTenImsi(){
@@ -486,8 +518,6 @@
 	
 	</script>
 
-
-
 	<!-- Function to add phone models to dropdown menu -->
 	<script>
 		$(function(){
@@ -511,48 +541,179 @@
 	        });
 	    });
 
-
-		var divs = ["imsiCount","modelCount","topTenImsi"];
+		var divs = [ "imsiCount", "modelCount", "topTen", "topTenImsi" ];
 		var visibleDiv = null;
 		var $modelTable = $('#tablePeter')
-		var indexFrom=0;
-		var indexTo=5
+		var indexFrom = 0;
+		var indexTo = 5
 		var fromDate;
 		var toDate;
 
-		$(function(){
+		$(function() {
 
 			document.getElementById("imsiCount").style.display='none';
 			document.getElementById("modelCount").style.display='none';
 			document.getElementById("topTenImsi").style.display='none';
-			
+			document.getElementById("topTen").style.display = 'none';
+
 		});
 
-		function toggle(divId){
+		function toggle(divId) {
 			removeData();
-		 	removeModelData();
-			if(visibleDiv === divId) {
-				  visibleDiv = null;
+			removeModelData();
+			removeTopTenData();
+			if (visibleDiv === divId) {
+				visibleDiv = null;
 			} else {
-				    visibleDiv = divId;
-				}
+				visibleDiv = divId;
+			}
 
 			hideOtherDivs();
 		}
 
-		function hideOtherDivs(){
+		function hideOtherDivs() {
 			var i, divId, div;
 
-			for(i = 0; i <divs.length; i++){
+			for (i = 0; i < divs.length; i++) {
 				divId = divs[i];
 				div = document.getElementById(divId);
 
-				if(visibleDiv == divId){
+				if (visibleDiv == divId) {
 					div.style.display = 'block';
-				}else{
+				} else {
 					div.style.display = 'none';
 				}
 			}
+		}
+	</script>
+
+<!-- Function to show top ten MO combos -->
+	<script>
+		$(function() {
+
+			$("#topTenSubmit").click(function(e) {
+				removeData();
+				removeTopTenData();
+				removeModelData();
+				fromDate = $('#fromDate').val();
+				toDate = $('#toDate').val();
+				var myurl;
+				var isValid = false;
+				if (validateEntry(fromDate, toDate)) {
+					myurl = 'http://localhost:8080/project/rest/failedcalldata/topTenMOCombinations/'+ fromDate + '£' + toDate;
+					isValid = true;
+				}
+				else {
+					myurl = 'http://localhost:8080/project/NMEPage.html';
+					isValid = false;
+				}
+				$.ajax({
+					type : 'GET',
+					url : myurl,
+					success : function(data) {
+						if (isValid && data.length > 0) {
+							createTopTenTable();
+							createTopTenButton();
+							$.each(data,function(key,value) {
+								$('#tableForTopTen tr:last')find("tbody").append('<tr><td>'+ value[0]+ '</td><td>'+ value[1]+ '</td><td>'+ 
+										value[2]+ '</td><td>'+ value[3]+ '</td><td>'+ value[4]+ '</td><td>'+ value[5]+ '</td></tr>');
+							});
+							isValid = false;
+							$('#tableForTopTen').dataTable();
+							} else if (isValid && data.length === 0) {
+								alert('No available data for selected dates');
+							}
+					}
+				});
+			});
+		});
+
+		function validateEntry(from, to) {
+			if (from === '') {
+				alert('Invalid FROM DateTime');
+				return false;
+			} else if (to === '') {
+				alert('Invalid TO DateTime');
+				return false;
+			} else if (isFromGtrTo(from, to)) {
+				alert('FROM date id greater than TO date');
+				return false;
+			}
+
+			else
+				return true;
+		}
+
+		function isFromGtrTo(from, to) {
+
+			var date1 = new Date(from);
+			var date2 = new Date(to);
+
+			if (date2.getTime() <= date1.getTime())
+				return true;
+			else
+				return false;
+		}
+
+		function createTopTenTable() {
+
+			var tableDiv = document.getElementById('tableForTopTen')
+			var divContainer = document.createElement('div');
+			divContainer.setAttribute('class', 'table-responsive');
+			divContainer.setAttribute('id', 'divContainer');
+			var table = document.createElement('table');
+			table.setAttribute('class', 'table table-striped');
+			table.setAttribute('id', 'topTenMO');
+			var header = document.createElement('thead');
+			var body = document.createElement('tbody');
+			var row = document.createElement('tr');
+			var colOne = document.createElement('td');
+			var colTwo = document.createElement('td');
+			var colThree = document.createElement('td');
+			var colFour = document.createElement('td');
+			var colFive = document.createElement('td');
+			var colSix = document.createElement('td');
+
+			colOne.innerHTML = 'Number';
+			colTwo.innerHTML = 'Market ID';
+			colThree.innerHTML = 'Country';
+			colFour.innerHTML = 'Operator ID';
+			colFive.innerHTML = 'Operator';
+			colSix.innerHTML = 'Cell ID';
+
+			row.appendChild(colOne);
+			row.appendChild(colTwo);
+			row.appendChild(colThree);
+			row.appendChild(colFour);
+			row.appendChild(colFive);
+			row.appendChild(colSix);
+
+			header.appendChild(row);
+			table.appendChild(header);
+			table.appendChild(body);
+			divContainer.appendChild(table);
+			tableDiv.appendChild(divContainer);
+
+		}
+
+		function createTopTenButton() {
+			var butDiv = document.createElement('div');
+			butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
+			var button = document.createElement(button);
+			button.setAttribute('id', 'topTenTableButton');
+			button.setAttribute('class', 'btn btn-primary');
+			button.innerHTML = 'Search Again';
+			button.addEventListener('click', removeData);
+			butDiv.appendChild(button);
+			$('#topTenMO').append(butDiv);
+
+		}
+
+		function removeTopTenData() {
+			var removeHead = document.getElementById('head');
+			var removeButton = document.getElementById('topTenTableButton');
+			$('#tableForTopTen').empty();
+
 		}
 	</script>
 

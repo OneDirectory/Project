@@ -40,7 +40,7 @@ import org.apache.commons.io.FilenameUtils;
 @TransactionManagement(TransactionManagementType.BEAN)
 public class DirectoryWatcher {
 
-	private static String fileDirectory = "/home/drrn/Project/";
+	private static String fileDirectory = "/Users/Darren/Project/";
 	private WatchService watcher;
 	private Path dir;
 	private WatchKey key;
@@ -117,7 +117,11 @@ public class DirectoryWatcher {
 	
 	@PreDestroy
 	public void onDestroy(){
-		
+		try{
+		watcher.close();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 	}
 
 }
