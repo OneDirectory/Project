@@ -166,18 +166,16 @@ public class FailedCallDataREST {
 	 * @param datesPassed
 	 * @return A Collection of the top ten imsi's that had call failures in a given period
 	 * @throws ParseException
-	 */
-	
+	 */	
 	@GET
 	@Path("/topImsi/{dates3}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection getTopTenIMSIInTimePeriod(
+	public Collection<?> getTopTenIMSIInTimePeriod(
 			@PathParam("dates3") String datesPassed) throws ParseException {
 		
-		String[] dates3 = datesPassed.split("£");
-		String fromDate = dates3[0];
-		String toDate = dates3[1];
-
+		String[] data= datesPassed.split("£");
+		String fromDate = data[0];
+		String toDate = data[1];
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date from = sdf.parse(fromDate);
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");

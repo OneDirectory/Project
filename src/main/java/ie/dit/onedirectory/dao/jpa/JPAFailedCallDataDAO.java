@@ -143,22 +143,30 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	
 	public Collection<?> getTopTenIMSIInTimePeriod(Date from, Date to) {
 		
-		Query query = entityManager.createQuery("select fd.imsi, count(fd.imsi)"
+		Query query = entityManager.createQuery("select fd.imsi, count(fd.imsi) as total"
 				+ " from FailedCallData fd where fd.dateTime between :fromDate and :toDate"
 				+ " group by fd.imsi"
-				+ " order by count(fd.imsi) desc");
+				+ " order by total desc");
 		
 		query.setParameter("fromDate", from, TemporalType.DATE);
 		query.setParameter("toDate", to, TemporalType.DATE);
 		
 		ArrayList<Object> queryList = (ArrayList<Object>) query.getResultList();
-		ArrayList<Object> returnList = new ArrayList<Object>();
 		
-		for(int i = 0; i < 10; i++) {
-			returnList.add(queryList.get(i));
+		if(queryList.size()==0){
+			System.out.println("Empty");
 		}
 		
-		return returnList;
+		return query.getResultList();
+		
+//		ArrayList<Object> queryList = (ArrayList<Object>) query.getResultList();
+//		ArrayList<Object> returnList = new ArrayList<Object>();
+//		System.out.println(queryList.get(0));
+//		
+//		for(int i = 0; i < 10; i++) {
+//			returnList.add(queryList.get(i));
+//		}
+		
 	}
 
 	/**

@@ -19,16 +19,21 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="Resources/js/bootstrap.min.js"></script>
 
-<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">   
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<link
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 
 
 <body class="adminPage">
 
-<%
+	<%
 	String user = null;
 	if(session.getAttribute("user")==null){
 		response.sendRedirect("index.jsp");
@@ -56,86 +61,132 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
-				<li><a href="#" onclick="toggle('imsiCount');">Duration/FailureCount per IMSI</a></li>
-				<li><a href="#" onclick="toggle('modelCount');">EventId/CauseCode per Model</a></li>
-				<li class="sidebar-brand"><a href="/project/SEPage.jsp">Software Engineer</a></li>
-				<li class="sidebar-brand"><a href="/project/CSRPage.jsp">Customer Service Rep.</a></li>
-				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
+				<li><a href="#" onclick="toggle('imsiCount');">Duration/FailureCount
+						per IMSI</a></li>
+				<li><a href="#" onclick="toggle('modelCount');">EventId/CauseCode
+						per Model</a></li>
+				<li><a href="#" onclick="toggle('topTenImsi');">TopTenIMSIs</a></li>
+				<li class="sidebar-brand"><a href="/project/SEPage.jsp">Software
+						Engineer</a></li>
+				<li class="sidebar-brand"><a href="/project/CSRPage.jsp">Customer
+						Service Rep.</a></li>
+				<li><a href="http://localhost:8080/project/LogoutServlet">Log
+						out</a></li>
 			</ul>
 			<br>
 		</div>
 		<!-- /#sidebar-wrapper -->
 
 		<!-- Page Content -->
-		 <div id="imsiCount">
+		<div id="imsiCount">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
 						<h1>Total number of failures per IMSI</h1>
-                        <div class="form-horizontal">
-                        <div class="form-group">
-						<label class="control-label col-sm-2" for="ID">From:</label>
-                            <div class="col-sm-5">
-							<input type="datetime-local" id='from' class="form-control"
-								name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="ID">From:</label>
+								<div class="col-sm-5">
+									<input type="datetime-local" id='from' class="form-control"
+										name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="ID">To:</label>
+								<div class="col-sm-5">
+									<input type="datetime-local" id='to' class="form-control"
+										name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-10">
+									<br>
+									<button id="submit" type="submit" class="btn btn-primary">Search</button>
+								</div>
+							</div>
 						</div>
-                        </div>
-                        
-                        <div class="form-group">
-						<label class="control-label col-sm-2" for="ID">To:</label>
-						<div class="col-sm-5">
-							<input type="datetime-local" id='to' class="form-control"
-								name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
+					</div>
+					<div id='tableForImsiCountDiv'></div>
+				</div>
+			</div>
+			<!-- /#page-content-wrapper -->
+		</div>
+		<!-- /#wrapper -->
+
+		<div id="modelCount">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1>Call Failures by Model</h1>
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="modelInput">Model:
+								</label>
+								<div class="col-sm-5">
+									<select class="form-control" id="modelInput">
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-10">
+									<br>
+									<button id="modelSubmit" type="submit" class="btn btn-primary">Search</button>
+								</div>
+							</div>
 						</div>
-                        </div>
-                            
-                        <div class="form-group">
-						<div class="col-sm-offset-4 col-sm-10">
-							<br>
-							<button id="submit" type="submit" class="btn btn-primary">Search</button>
-						</div>
-                        </div>
 					</div>
 				</div>
-				<div id='tableForImsiCountDiv' ></div>
-			</div>			
+			</div>
 		</div>
-		<!-- /#page-content-wrapper -->
+		<div id='tableForModelQuery'></div>
 	</div>
-	<!-- /#wrapper -->
 
+	<!-- Top Ten Imsi -->
 	<div id="modelCount">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Call Failures by Model</h1>	
-                        <div class="form-horizontal">
-                            <div class="form-group">
-						<label class="control-label col-sm-2" for="modelInput">Model: </label>
-						<div class="col-sm-5">
-							<select class="form-control" id="modelInput">
-							</select>
+					<h1>Top Ten IMSIs</h1>
+					<div class="form-horizontal">
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="ID">From:</label>
+							<div class="col-sm-5">
+								<input type="datetime-local" id='fromTopTenImsiDate' class="form-control"
+									name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
+							</div>
 						</div>
-                        </div>
-                        <div class="form-group">
-						<div class="col-sm-offset-4 col-sm-10">
-                            <br>
-							<button id="modelSubmit" type="submit" class="btn btn-primary">Search</button>
+
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="ID">To:</label>
+							<div class="col-sm-5">
+								<input type="datetime-local" id='toTopTenImsiDate' class="form-control"
+									name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
+							</div>
 						</div>
-                        </div>
+						
+						<div class="form-group">
+							<div class="col-sm-offset-4 col-sm-10">
+								<br>
+								<button id="topTenImsiButton" type="submit"
+									class="btn btn-primary">Search</button>
+							</div>
+						</div>
+						
+					</div>
 				</div>
 			</div>
-            </div>
-		</div>		
 		</div>
-				<div id='tableForModelQuery' ></div>
-			</div>
+	</div>
+	<div id='tableForTopTenImsi'></div>
+	</div>
 	</div>
 
-	
 
-<!-- Menu Toggle Script -->
-<script>
+
+	<!-- Menu Toggle Script -->
+	<script>
 
 </script>
 	<script>
@@ -263,11 +314,12 @@
  		var removeHead=document.getElementById('head');
  		var removeButton=document.getElementById('tableButton');
  		$('#tableForImsiCountDiv').empty();	
+ 		$('#tableForTopTenImsi').empty();
  			
  	}
  	 	
 	</script>
-	
+
 	<!-- US 10 -->
 	<!-- Function to show models -->
 	<script>
@@ -352,7 +404,90 @@
 		$('#tableForModelQuery').empty();
 	}
 	</script>
+
+
+	<script>
 	
+	$( "#topTenImsiButton" ).click(function(e) {
+		
+		fromDate=$('#fromTopTenImsiDate').val();
+		toDate=$('#toTopTenImsiDate').val();
+		var topTenUrl;
+		var isValid=false;
+		
+		if(validateEntry(fromDate, toDate)){	
+			topTenUrl='http://localhost:8080/project/rest/failedcalldata/topImsi/'+fromDate+'£'+toDate;
+			isValid=true;
+			}
+
+		else{
+			topTenUrl= 'http://localhost:8080/project/NMEPage.html';
+			isValid=false;
+			}
+		
+		
+		$.ajax({
+	 		type: 'GET',
+	 		url: topTenUrl,
+	 		success: function(data){
+	 	 	
+	 	 		if(isValid && data.length>0){
+	 	 			createTableTopTenImsi();
+	 	 			createButton();
+	 	 			$.each(data, function(key, value){
+	 	 				$('#tableForTopTenImsiDates').find('tbody').append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');
+	 	 	 			});
+		 	 			isValid=false;
+		 	 			$('#tableForTopTenImsiDates').dataTable();
+	 	 	 		}
+	 	 		else if(isValid && data.length===0){
+					alert('No available data for selected dates');
+	 	 	 		}
+	 			}
+
+	 		});
+	 	});
+		
+		
+		
+		
+
+	
+	function createTableTopTenImsi(){
+		
+		var tableDiv = document.getElementById('tableForTopTenImsi')
+ 		var divContainer = document.createElement('div');
+ 		divContainer.setAttribute('class', 'table-responsive');
+ 		divContainer.setAttribute('id', 'divContainer');
+ 		var table=document.createElement('table');
+ 		table.setAttribute('class', 'table table-striped');
+ 		table.setAttribute('id', 'tableForTopTenImsiDates');
+ 		var header = document.createElement('thead');
+ 		var body = document.createElement('tbody');
+ 		var row = document.createElement('tr');
+ 		var colOne=document.createElement('td');
+ 		var colTwo=document.createElement('td');
+ 
+		
+		colOne.innerHTML='IMSI';
+		colTwo.innerHTML='COUNT';
+	
+		
+		row.appendChild(colOne);
+		row.appendChild(colTwo);
+		
+
+ 		header.appendChild(row);
+ 		table.appendChild(header);
+		table.appendChild(body);
+		divContainer.appendChild(table);
+		tableDiv.appendChild(divContainer);
+	}
+	
+	</script>
+
+
+
 	<!-- Function to add phone models to dropdown menu -->
 	<script>
 		$(function(){
@@ -377,7 +512,7 @@
 	    });
 
 
-		var divs = ["imsiCount","modelCount"];
+		var divs = ["imsiCount","modelCount","topTenImsi"];
 		var visibleDiv = null;
 		var $modelTable = $('#tablePeter')
 		var indexFrom=0;
@@ -389,6 +524,7 @@
 
 			document.getElementById("imsiCount").style.display='none';
 			document.getElementById("modelCount").style.display='none';
+			document.getElementById("topTenImsi").style.display='none';
 			
 		});
 
@@ -419,7 +555,7 @@
 			}
 		}
 	</script>
-	
+
 </body>
 
 </html>
