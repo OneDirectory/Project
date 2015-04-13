@@ -186,66 +186,40 @@
 	<script>
 		$(function() {
 
-			$("#submit")
-					.click(
-							function(e) {
+			$("#submit").click(function(e) {
+				removeData();
+				removeModelData();
+				fromDate = $('#from').val();
+				toDate = $('#to').val();
+				var myurl;
+				var isValid = false;
+				if (validateEntry(fromDate, toDate)) {
+					myurl = 'http://localhost:8080/project/rest/failedcalldata/count/'+ fromDate + '£' + toDate + '£0£5';
+					isValid = true;
+				}
+				else {
+					myurl = 'http://localhost:8080/project/NMEPage.html';
+					isValid = false;
+				}
 
-								removeData();
-								removeModelData();
-								fromDate = $('#from').val();
-								toDate = $('#to').val();
-								var myurl;
-								var isValid = false;
-
-								if (validateEntry(fromDate, toDate)) {
-									myurl = 'http://localhost:8080/project/rest/failedcalldata/count/'
-											+ fromDate + '£' + toDate + '£0£5';
-									isValid = true;
-								}
-
-								else {
-									myurl = 'http://localhost:8080/project/NMEPage.html';
-									isValid = false;
-								}
-
-								$.ajax({
-									type : 'GET',
-											url : myurl,
-											success : function(data) {
-
-												if (isValid && data.length > 0) {
-													createTable();
-													createButton();
-													$
-															.each(
-																	data,
-																	function(
-																			key,
-																			value) {
-																		$(
-																				'#viewImsisWithCount')
-																				.find(
-																						'tbody')
-																				.append(
-																						'<tr><td>'
-																								+ value[0]
-																								+ '</td><td>'
-																								+ value[1]
-																								+ '</td><td>'
-																								+ value[2]
-																								+ '</td></tr>');
-																	});
-													isValid = false;
-													$('#viewImsisWithCount')
-															.dataTable();
-												} else if (isValid
-														&& data.length === 0) {
-													alert('No available data for selected dates');
-												}
-											}
-
-										});
+				$.ajax({
+					type : 'GET',
+					url : myurl,
+					success : function(data) {
+						if (isValid && data.length > 0) {
+							createTable();
+							createButton();
+							$.each(data,function(key,value) {
+								$('#viewImsisWithCount').find('tbody').append('<tr><td>'+ value[0]+ '</td><td>'+ value[1]+'</td><td>'+ value[2]	+ '</td></tr>');
 							});
+							isValid = false;
+							$('#viewImsisWithCount').dataTable();
+						} else if (isValid&& data.length === 0) {
+								alert('No available data for selected dates');
+						}
+					}
+				});
+			});
 		});
 
 		function validateEntry(from, to) {
@@ -332,47 +306,26 @@
 	<!-- Function to show models -->
 	<script>
 		$(function() {
-			$("#modelSubmit")
-					.click(
-							function(e) {
-
-								removeModelData();
-								removeData();
-								var x = document.getElementById("modelInput");
-								var selected = x.options[x.selectedIndex].text;
-
-								createModelTable();
-								createModelButton();
-
-								$
-										.ajax({
-											type : 'GET',
-											url : 'http://localhost:8080/project/rest/failedcalldata/model/'
-													+ selected,
-											dataType : 'json',
-											contentType : "application/json",
-
-											success : function(data) {
-												$
-														.each(
-																data,
-																function(key,
-																		value) {
-																	$(
-																			'#viewModelData')
-																			.append(
-																					'<tr><td>'
-																							+ value[0]
-																							+ '</td><td>'
-																							+ value[1]
-																							+ '</td><td>'
-																							+ value[2]
-																							+ '</td></tr>')
-																});
-												$('#viewModelData').dataTable();
-											}
-										});
-							});
+			$("#modelSubmit").click(function(e) {
+				removeModelData();
+				removeData();
+				var x = document.getElementById("modelInput");
+				var selected = x.options[x.selectedIndex].text;
+				createModelTable();
+				createModelButton();
+				$.ajax({
+					type : 'GET',
+					url : 'http://localhost:8080/project/rest/failedcalldata/model/'+ selected,
+					dataType : 'json',
+					contentType : "application/json",
+					success : function(data) {
+						$.each(data,function(key,value) {
+							$('#viewModelData').append('<tr><td>'+ value[0]+ '</td><td>'+ value[1]+ '</td><td>'+ value[2]+ '</td></tr>')
+						});
+						$('#viewModelData').dataTable();
+					}
+				});
+			});
 		});
 
 		function createModelTable() {
@@ -433,25 +386,21 @@
 	<!-- Function to add phone models to dropdown menu -->
 	<script>
 		$(function() {
-
 			var $select = $('#modelInput');
-
-			$
-					.ajax({
-						type : 'GET',
-						url : 'http://localhost:8080/project/rest/userequipment/getAllModelsFromUserEquipment',
-						success : function(mydata) {
-							var data = mydata;
-							var length = data.length;
-
-							for (var i = 0; i < length; i++) {
-								var x = data[i];
-								var option = document.createElement('option');
-								option.text = x;
-								$select.append(option);
-							}
-						}
-					});
+			$.ajax({
+				type : 'GET',
+				url : 'http://localhost:8080/project/rest/userequipment/getAllModelsFromUserEquipment',
+				success : function(mydata) {
+					var data = mydata;
+					var length = data.length;
+					for (var i = 0; i < length; i++) {
+						var x = data[i];
+						var option = document.createElement('option');
+						option.text = x;
+						$select.append(option);
+					}
+				}
+			});
 		});
 
 		var divs = [ "imsiCount", "modelCount", "topTen" ];
@@ -501,119 +450,42 @@
 	<script>
 		$(function() {
 
-			$("#topTenSubmit")
-					.click(
-							function(e) {
-								removeData();
-								removeTopTenData();
-								removeModelData();
-								fromDate = $('#fromDate').val();
-								toDate = $('#toDate').val();
-								var myurl;
-								var isValid = false;
-
-								if (validateEntry(fromDate, toDate)) {
-									myurl = 'http://localhost:8080/project/rest/failedcalldata/topTenMOCombinations/'
-											+ fromDate + '£' + toDate;
-									isValid = true;
-								}
-
-								else {
-									myurl = 'http://localhost:8080/project/NMEPage.html';
-									isValid = false;
-								}
-
-								$
-										.ajax({
-											type : 'GET',
-											url : myurl,
-											success : function(data) {
-												if (isValid && data.length > 0) {
-													createTopTenTable();
-													createTopTenButton();
-													$
-															.each(
-																	data,
-																	function(
-																			key,
-																			value) {
-																		$(
-																				'#topTenMO tr:last')
-																				.after(
-																						'<tr><td>'
-																								+ value[0]
-																								+ '</td><td>'
-																								+ value[1]
-																								+ '</td><td>'
-																								+ value[2]
-																								+ '</td><td>'
-																								+ value[3]
-																								+ '</td><td>'
-																								+ value[4]
-																								+ '</td><td>'
-																								+ value[5]
-																								+ '</td></tr>');
-																	});
-													isValid = false;
-													$('#topTenMO').dataTable();
-													$('#topTenMO tr:last')
-															.remove();
-													Morris
-															.Bar({
-																element : 'graphForTopTen',
-																data : [ {
-																	y : '2006',
-																	a : 100,
-																	b : 90
-																}, {
-																	y : '2007',
-																	a : 75,
-																	b : 65
-																}, {
-																	y : '2008',
-																	a : 50,
-																	b : 40
-																}, {
-																	y : '2009',
-																	a : 75,
-																	b : 65
-																}, {
-																	y : '2010',
-																	a : 50,
-																	b : 40
-																}, {
-																	y : '2011',
-																	a : 75,
-																	b : 65
-																}, {
-																	y : '2012',
-																	a : 100,
-																	b : 90
-																} ],
-																xkey : 'y',
-																ykeys : [ 'a',
-																		'b' ],
-																labels : [
-																		'Series A',
-																		'Series B' ]
-															});
-
-													var graphData = [];
-													$.each(data, function(key,
-															value) {
-														var entry = [ value[0],
-																value[2],
-																value[3] ];
-														graphData.push(entry);
-													});
-												} else if (isValid
-														&& data.length === 0) {
-													alert('No available data for selected dates');
-												}
-											}
-
-										});
+			$("#topTenSubmit").click(function(e) {
+				removeData();
+				removeTopTenData();
+				removeModelData();
+				fromDate = $('#fromDate').val();
+				toDate = $('#toDate').val();
+				var myurl;
+				var isValid = false;
+				if (validateEntry(fromDate, toDate)) {
+					myurl = 'http://localhost:8080/project/rest/failedcalldata/topTenMOCombinations/'+ fromDate + '£' + toDate;
+					isValid = true;
+				}
+				else {
+					myurl = 'http://localhost:8080/project/NMEPage.html';
+					isValid = false;
+				}
+				$.ajax({
+					type : 'GET',
+					url : myurl,
+					success : function(data) {
+						if (isValid && data.length > 0) {
+							createTopTenTable();
+							createTopTenButton();
+							$.each(data,function(key,value) {
+								$('#topTenMO tr:last').after('<tr><td>'+ value[0]+ '</td><td>'+ value[1]+ '</td><td>'+ 
+										value[2]+ '</td><td>'+ value[3]+ '</td><td>'+ value[4]+ '</td><td>'+ value[5]+ '</td></tr>');
 							});
+							isValid = false;
+							$('#topTenMO').dataTable();
+							$('#topTenMO tr:last').remove();
+							} else if (isValid && data.length === 0) {
+								alert('No available data for selected dates');
+							}
+					}
+				});
+			});
 		});
 
 		function validateEntry(from, to) {
