@@ -74,6 +74,10 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 		return dao.getCountBetweenDatesForAllIMSI(from, to);
 	}
 	
+	public Collection<?> getTopTenIMSIInTimePeriod(Date from, Date to) {
+		return dao.getAllFailedCallData();
+	}
+	
 	public Collection<?> getAllIMSIWithCallFailuresBetweenDates(Date from, Date to) {
 		return dao.getAllIMSIWithCallFailuresBetweenDates(from, to);
 	}
