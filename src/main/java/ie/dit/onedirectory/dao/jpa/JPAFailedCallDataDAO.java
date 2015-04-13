@@ -189,7 +189,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	 */
 	public Collection<?> getUniqueCauseCodesForImsi(String imsi){
 		Query query = entityManager.createQuery("Select f.eventCause.causeCode from FailedCallData f where f.imsi = :imsi"
-				+ "group by f.eventCause.causeCode");
+				+ " group by f.eventCause.causeCode");
 		query.setParameter("imsi", imsi);
 		return query.getResultList();
 	}
@@ -200,8 +200,8 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	public Collection<?> getCountFailedCallsInTimePeriodByImsi(String imsi,
 			Date fromDate, Date toDate) {
 		Query query = entityManager.createQuery("Select f.imsi, f.id, count(f.id), from FailedCallData f" + 
-			"where f.dateTime between :fromDate and :toDate" +
-				"group by f.imsi");
+			" where f.dateTime between :fromDate and :toDate" +
+				" group by f.imsi");
 		query.setParameter("imsi", imsi);
 		return query.getResultList();
 	}
