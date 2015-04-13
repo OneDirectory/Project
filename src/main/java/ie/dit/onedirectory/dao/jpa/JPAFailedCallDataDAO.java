@@ -11,6 +11,7 @@ import ie.dit.onedirectory.dao.FailedCallDataDAO;
 import ie.dit.onedirectory.entities.FailedCallData;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -133,6 +134,32 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		List<?> result = query.getResultList();
 		return result;
 	}
+	
+	/**
+	 * 
+	 * Returns a list of the top ten IMSIs that had call failures in a Time Period
+	 * 
+	 */
+	
+	public Collection<?> getTopTenIMSIInTimePeriod(Date from, Date to) {
+		
+		Query query = entityManager.createQuery("select fd.imsi, count(fd.imsi)"
+				+ " from FailedCallData fd where fd.dateTime between :fromDate and :toDate"
+				+ " group by fd.imsi"
+				+ " order by count(fd.imsi) desc");
+		
+		query.setParameter("fromDate", from, TemporalType.DATE);
+		query.setParameter("toDate", to, TemporalType.DATE);
+		
+		ArrayList<Object> queryList = (ArrayList<Object>) query.getResultList();
+		ArrayList<Object> returnList = new ArrayList<Object>();
+		
+		for(int i = 0; i < 10; i++) {
+			returnList.add(queryList.get(i));
+		}
+		
+		return returnList;
+	}
 
 	/**
 	 * Returns a list of all unique imsis affected by failed call data
@@ -149,6 +176,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	/**
 	 * Adds a passed failed call data pojo to the database
 	 */
+	
 	public void addFailedCalledDatum(FailedCallData failedCallData) {
 		entityManager.persist(failedCallData);
 	}

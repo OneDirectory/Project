@@ -47,6 +47,7 @@ public interface FailedCallDataDAO {
 	 */
 	public Collection<?> getFailedCallDataByModel(String model, Date fromDate, Date toDate);
 	
+	
 	/**
 	 * 
 	 * @param imsi an imsi string
@@ -54,11 +55,13 @@ public interface FailedCallDataDAO {
 	 */
 	public Collection<?> getEventIdAndCauseCodeByIMSI(String imsi);
 	
+	
 	/**
 	 * 
 	 * @return a collection of all imsis
 	 */
 	public Collection<?> getAllIMSI();
+	
 	
 	/**
 	 * 
@@ -67,6 +70,17 @@ public interface FailedCallDataDAO {
 	 * @return the number of call failures for all imsis within date range
 	 */
 	public Collection<?> getCountBetweenDatesForAllIMSI(Date from, Date to);
+	
+	
+	/**
+	 * 
+	 * 
+	 * @param from
+	 * @param to
+	 * @return
+	 */
+	public Collection<?> getTopTenIMSIInTimePeriod(Date from, Date to);
+	
 	
 	/**
 	 * 

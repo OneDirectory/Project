@@ -77,6 +77,8 @@ public class FailedCallDataRESTIT{
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 		RestAssured.basePath = "test";
 		RestAssured.port = 8080;
+		
+		
 
 	}
 
@@ -153,7 +155,7 @@ public class FailedCallDataRESTIT{
 	@Test
 	public void testgetEventIdAndCauseCodeByIMSI(){
 		given()
-		.pathParam("imsi", "kkk")
+		.pathParam("imsi", "344930000000011")
 		.contentType(ContentType.JSON)
 		.expect()
 		.statusCode(200)
