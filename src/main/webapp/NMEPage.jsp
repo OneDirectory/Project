@@ -84,8 +84,7 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-lg-12">
-							<div class="transbox">
-							<br>
+						<div class = "transbox"><br>
 							<h1>Total number of failures per IMSI</h1>
 							<div class="form-horizontal">
 								<div class="form-group">
@@ -110,7 +109,7 @@
 										<button id="submit" type="submit" class="btn btn-primary">Search</button>
 									</div>
 								</div>
-								</div>
+							</div>
 							</div>
 						</div>
 					</div>
@@ -125,8 +124,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-12">
-							<div class="transbox">
-							<br>
+						<div class = "transbox"><br>
 							<h1>Call Failures by Model</h1>
 							<div class="form-horizontal">
 								<div class="form-group">
@@ -143,21 +141,18 @@
 										<button id="modelSubmit" type="submit" class="btn btn-primary">Search</button>
 									</div>
 								</div>
-								</div>
 							</div>
+						</div>
 						</div>
 					</div>
 				</div>
 				<div id='tableForModelQuery'></div>
 			</div>
-		</div>
-
-		<div id="topTen">
+			<div id="topTen">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<div class="transbox">
-						<br>
+					<div class="transbox"><br>
 						<h1>Top Ten Market, Operator, Cell combinations</h1>
 						<div class="form-horizontal">
 							<div class="form-group">
@@ -181,17 +176,22 @@
 									<br>
 									<button id="topTenSubmit" type="submit" class="btn btn-primary">Search</button>
 								</div>
-								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div id='tableForTopTen'></div>
+					<div id='tableForTopTen'></div>
 				<div id='graphForTopTen'></div>
+				</div>
+				
+				</div>
 			</div>
-
 		</div>
+		</div>
+
+		
 	</div>
+	
+	
 	<script>
 		$(function() {
 
@@ -307,6 +307,7 @@
 			var removeHead = document.getElementById('head');
 			var removeButton = document.getElementById('tableButton');
 			$('#tableForImsiCountDiv').empty();
+			$('#tableForTopTen').empty();
 
 		}
 	</script>
