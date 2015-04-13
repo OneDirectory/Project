@@ -40,7 +40,7 @@
 	<div class="page-header">
 		<br>
 		<h2>
-			Group one - One Directory <small>Project</small>
+			Group One - One Directory <small>Project</small>
 		</h2>
 		<h2>Customer Service Representative</h2>
 	</div>
@@ -161,6 +161,7 @@
 						</div>
 					</div>
 					</div>
+					<div id='countImsiTablePeter'></div>
                     </div>
 
 			</div>
@@ -176,7 +177,7 @@
 	<table class="table" id='table' name='table'>
 		<div id="butDiv"></div>
 	</table>
-	<div id='countImsiTablePeter'></div>
+	
     
 <script>
 /* adding imsi to select for causecodes*/
@@ -244,22 +245,8 @@ var $table = $('#causeCodeTable');
 		divContainer.appendChild(table);
 		tableDiv.appendChild(divContainer);
     }
-    function createCauseCodeButton(){
-    	var butDiv=document.createElement('div');
- 		butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
- 		var button=document.createElement(button);
- 		button.setAttribute('id', 'causeCodeTableButton');
- 		button.setAttribute('class','btn btn-primary');
- 		button.innerHTML='Search Again';
- 		button.addEventListener('click', removeCauseCodeData);
- 		butDiv.appendChild(button);
- 		$viewCauseCode.append(butDiv);
-    }
-    function removeCauseCodeData(){
-        var removeHead=document.getElementById('thead');
-        var removeButton=document.getElementById('causeCodeTableButton');
-        $table.empty();
-    }
+
+   
 </script>		
 
 <script>
@@ -366,19 +353,20 @@ function createButton(){
 	
 }
 function removeData(){
-	var removeHead=document.getElementById('head');
-	var removeButton=document.getElementById('tableButton');
+	
 	$table.empty();
+	$('#countImsiTablePeter').empty();
+	$('#causeCodeTable').empty();
+	
 	
 }
 //table for the count for peter's
 $(function(){
 	$( "#countSubmit" ).click(function(e) {
 	
-	removeCountData();	
+		
 	removeData();
-	$('#countImsiTablePeter').empty();
-	//removeCauseCodeData();
+
 	var fromDate=$('#failCountFrom').val();
 	var toDate=$('#failCountTo').val();
 	var x=document.getElementById("imsiInput");
@@ -401,7 +389,7 @@ function createCountTable(){
 	var tableDiv = document.getElementById('countImsiTablePeter')
 		var divContainer = document.createElement('div');
 		divContainer.setAttribute('class', 'table-responsive');
-		divContainer.setAttribute('id', 'divContainer');
+		divContainer.setAttribute('id', 'divContainercountImsiTablePeter');
 		var table=document.createElement('table');
 		table.setAttribute('class', 'table table-striped');
 		table.setAttribute('id', 'countTable');
@@ -419,25 +407,6 @@ function createCountTable(){
 	
 	
 }
-function createCountButton(){
-	var butDiv2=document.createElement('div');
-	butDiv2.setAttribute('class', "col-sm-offset-12 col-sm-10");
-	var countButton=document.createElement("button");
-	countButton.setAttribute('id', 'countTableButton');
-	countButton.setAttribute('class','btn btn-primary');
-	countButton.setAttribute('position', 'absolute');
-	countButton.setAttribute('top', '50%');
-	countButton.innerHTML='Search Again';
-	countButton.addEventListener('click', removeCountData);
-	butDiv2.appendChild(countButton);
-	$countTable.append(butDiv2);
-	
-}
-function removeCountData(){
-	var removeHead=document.getElementById('countHead');
-	var removeButton=document.getElementById('countTableButton');
-	$('#countImsiTablePeter').empty();
-}
     
 var divs = ["event/cause","failCount","causeCodes"];
 	var visibleDiv = null;
@@ -449,10 +418,8 @@ var divs = ["event/cause","failCount","causeCodes"];
         document.getElementById("causeCodes").style.display='none';
 	});
 	function toggle(divId){
-		//removeData();
-	 	//removeDataJohn();
-	 	
-	 	$('#countImsiTablePeter').empty();
+		removeData();
+	 
 		if(visibleDiv === divId) {
 			  visibleDiv = null;
 		} else {
