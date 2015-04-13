@@ -134,6 +134,22 @@
                         </div>
                         
                         <div class="form-group">
+						<label class="control-label col-sm-2" for="ID">From:</label>
+                            <div class="col-sm-5">
+							<input type="datetime-local" id='failCountFrom' class="form-control"
+								name="failCountFrom" placeholder="dd-mm-yyyy hh:mm" autofocus>
+						</div>
+                        </div>
+                        
+                        <div class="form-group">
+						<label class="control-label col-sm-2" for="ID">To:</label>
+						<div class="col-sm-5">
+							<input type="datetime-local" id='failCountTo' class="form-control"
+								name="failCountTo" placeholder="dd-mm-yyyy hh:mm" autofocus>
+						</div>
+                        </div>
+                        
+                        <div class="form-group">
 						<div class="col-sm-offset-4 col-sm-10">
                             <br>
 							<button id="countSubmit" type="submit" class="btn btn-primary">Search</button>
@@ -393,7 +409,11 @@ $(function(){
 	$( "#countSubmit" ).click(function(e) {
 	
 	removeCountData();	
-	var x=document.getElementById("ID");
+	removeData();
+	//removeCauseCodeData();
+	var fromDate=$('#failCountFrom').val();
+	var toDate=$('#failCountTo').val();
+	var x=document.getElementById("imsiInput");
 	var selected=x.options[x.selectedIndex].text;
 
 	createCountTable();
@@ -401,19 +421,17 @@ $(function(){
 
 	$.ajax({
 
-		type:'GET',
-		url:'http://localhost:8080/project/rest/failedcalldata/getCountFailedCallsInTimePeriodByImsi/'+fromDate+'£'+toDate+'£0£5'+selected,
-		dataType: 'json',
-		contentType: "application/json",
+        type:'GET',
+        url: 'http://localhost:8080/project/rest/failedcalldata/getCountFailedCallsInTimePeriodByImsi/'+selected+'£'+fromDate+'£'+toDate,
+        dataType: 'json',
+        contentType: "application/json",
 
-		success:function(data){
-			
-			$.each(data, function(key, value){
-				
-				$table.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td><td>'+selected+'</td></tr>');
-			});
-		}
-	  });
+        success:function(data){
+	 			$.each(data, function(key, value){
+	 				$countTable.append('<tr><td>'+data+'</td></tr>');
+	 	 			});
+        }
+      });
    });
 });
 
@@ -444,15 +462,15 @@ function createCountButton(){
 
 	var butDiv2=document.createElement('div');
 	butDiv2.setAttribute('class', "col-sm-offset-12 col-sm-10");
-	var countButton=document.createElement(button);
+	var countButton=document.createElement("button");
 	countButton.setAttribute('id', 'countTableButton');
 	countButton.setAttribute('class','btn btn-primary');
 	countButton.setAttribute('position', 'absolute');
 	countButton.setAttribute('top', '50%');
 	countButton.innerHTML='Search Again';
-	countButton.addEventListener('click', removeData);
+	countButton.addEventListener('click', removeCountData);
 	butDiv2.appendChild(countButton);
-	$table.append(butDiv2);
+	$countTable.append(butDiv2);
 	
 }
 
