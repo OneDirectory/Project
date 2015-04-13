@@ -11,6 +11,7 @@ import ie.dit.onedirectory.dao.FailedCallDataDAO;
 import ie.dit.onedirectory.entities.FailedCallData;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -134,6 +135,28 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		return result;
 	}
 
+
+	/**
+	 * Returns the top ten market, operator and cellId combinations in a given time period
+	 */
+	
+	public Collection<?> getTopTenMarketOperatorCellIDCombinations(
+			Date fromDate, Date toDate) {
+		Query query = entityManager.createQuery("Select count(fd.imsi) as total, fd.marketOperator.marketId, fd.marketOperator.country," 
+				+ " fd.marketOperator.operatorId, fd.marketOperator.operatorName, fd.cellId from FailedCallData fd" 
+				+ " where fd.dateTime between :fromDate and :toDate"
+				+ " group by fd.marketOperator.marketId, fd.marketOperator.operatorId, fd.cellId"
+				+ " order by total desc");
+		query.setParameter("fromDate", fromDate, TemporalType.DATE);
+		query.setParameter("toDate", toDate, TemporalType.DATE);
+		ArrayList<Object> queryList = (ArrayList<Object>) query.getResultList();
+		ArrayList<Object> returnList = new ArrayList<Object>();
+		for(int i=0; i<10; i++){
+			returnList.add(queryList.get(i));
+		}
+		return returnList;
+	}
+	
 	/**
 	 * Returns a list of all unique imsis affected by failed call data
 	 * 
@@ -193,5 +216,6 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		query.setParameter("imsi", imsi);
 		return query.getResultList();
 	}
+
 
 }

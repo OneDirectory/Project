@@ -58,6 +58,7 @@
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
 				<li><a href="#" onclick="toggle('imsiCount');">Duration/FailureCount per IMSI</a></li>
 				<li><a href="#" onclick="toggle('modelCount');">EventId/CauseCode per Model</a></li>
+				<li><a href="#" onclick="toggle('topTen');">Top Ten Market, Operator and Cell ID combinations</a></li>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
@@ -113,6 +114,31 @@
 				<div id='tableForModelQuery' ></div>
 			</div>
 	</div>
+
+		<div id="topTen">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1>Top Ten Market, Operator, Cell combinations</h1>
+						<label class="control-label col-sm-2" for="ID">FROM:</label><br>
+						<div>
+							<input type="datetime-local" id='fromDate' class="form-control"
+								name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
+						</div>
+						<label class="control-label col-sm-2" for="ID">TO:</label>
+						<div>
+							<input type="datetime-local" id='toDate' class="form-control"
+								name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
+						</div>
+						<div class="col-sm-offset-4 col-sm-10">
+							<br>
+							<button id="topTenSubmit" type="submit" class="btn btn-primary">Search</button>
+						</div>
+					</div>
+				</div>
+				<div id='tableForTopTen' ></div>
+			</div>			
+		</div>
 
 	
 
@@ -359,7 +385,7 @@
 	    });
 
 
-		var divs = ["imsiCount","modelCount"];
+		var divs = ["imsiCount","modelCount", "topTen"];
 		var visibleDiv = null;
 		var $modelTable = $('#tablePeter')
 		var indexFrom=0;
@@ -371,6 +397,7 @@
 
 			document.getElementById("imsiCount").style.display='none';
 			document.getElementById("modelCount").style.display='none';
+			document.getElementById("topTen").style.display='none';
 			
 		});
 
@@ -400,6 +427,147 @@
 				}
 			}
 		}
+	</script>
+	
+	<script>
+
+ 	$(function(){
+
+ 		$( "#topTenSubmit" ).click(function(e) {
+
+ 	removeData();
+ 	removeTopTenData();
+ 	removeModelData();
+	fromDate=$('#fromDate').val();
+	toDate=$('#toDate').val();
+	var myurl;
+	var isValid=false;
+	
+	if(validateEntry(fromDate, toDate)){	
+		myurl='http://localhost:8080/project/rest/failedcalldata/topTenMOCombinations/'+fromDate+'£'+toDate;
+		isValid=true;
+		}
+
+	else{
+		myurl= 'http://localhost:8080/project/NMEPage.html';
+		isValid=false;
+		}
+
+ 	$.ajax({
+ 		type: 'GET',
+ 		url: myurl,
+ 		success: function(data){
+ 	 		if(isValid && data.length>0){
+ 	 			createTopTenTable();
+ 	 			createTopTenButton();
+ 	 			$.each(data, function(key, value){
+ 	 				$('#topTenMO tr:last').after('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td><td>'+value[3]+'</td><td>'+value[4]+'</td><td>'+value[5]+'</td></tr>');
+ 	 			});
+	 	 			isValid=false;
+	 	 			$('#topTenMO').dataTable();
+	 	 			$('#topTenMO tr:last').remove();
+ 	 	 		}
+ 	 		else if(isValid && data.length===0){
+				alert('No available data for selected dates');
+ 	 	 		}
+ 			}
+
+ 		});
+ 	});
+ 		});
+
+ 	
+	function validateEntry(from, to){
+		if(from===''){
+			alert('Invalid FROM DateTime');
+			return false;
+		}
+		else if(to===''){
+			alert('Invalid TO DateTime');
+			return false;
+		}
+		else if(isFromGtrTo(from, to)){
+			alert('FROM date id greater than TO date');
+			return false;
+		}
+		
+		else
+			return true;
+	}
+
+	function isFromGtrTo(from, to){
+			
+			var date1 = new Date(from);
+			var date2 = new Date(to);
+			
+			if(date2.getTime()<=date1.getTime())
+				return true;
+			else
+				return false;
+	}
+
+	
+ 	function createTopTenTable(){
+
+ 		var tableDiv = document.getElementById('tableForTopTen')
+ 		var divContainer = document.createElement('div');
+ 		divContainer.setAttribute('class', 'table-responsive');
+ 		divContainer.setAttribute('id', 'divContainer');
+ 		var table=document.createElement('table');
+ 		table.setAttribute('class', 'table table-striped');
+ 		table.setAttribute('id', 'topTenMO');
+ 		var header = document.createElement('thead');
+ 		var body = document.createElement('tbody');
+ 		var row = document.createElement('tr');
+ 		var colOne=document.createElement('td');
+ 		var colTwo=document.createElement('td');
+ 		var colThree=document.createElement('td');
+ 		var colFour=document.createElement('td');
+ 		var colFive=document.createElement('td');
+ 		var colSix=document.createElement('td');
+
+ 		colOne.innerHTML='Number';
+ 		colTwo.innerHTML='Market ID';
+ 		colThree.innerHTML='Country';
+ 		colFour.innerHTML='Operator ID';
+ 		colFive.innerHTML='Operator';
+ 		colSix.innerHTML='Cell ID';
+
+ 		row.appendChild(colOne);
+ 		row.appendChild(colTwo);
+ 		row.appendChild(colThree);
+ 		row.appendChild(colFour);
+ 		row.appendChild(colFive);
+ 		row.appendChild(colSix);
+
+ 		header.appendChild(row);
+ 		table.appendChild(header);
+		table.appendChild(body);
+		divContainer.appendChild(table);
+		tableDiv.appendChild(divContainer);
+ 		
+ 	}
+
+ 	function createTopTenButton(){
+ 		var butDiv=document.createElement('div');
+ 		butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
+ 		var button=document.createElement(button);
+ 		button.setAttribute('id', 'topTenTableButton');
+ 		button.setAttribute('class','btn btn-primary');
+ 		button.innerHTML='Search Again';
+ 		button.addEventListener('click', removeData);
+ 		butDiv.appendChild(button);
+ 		$('#topTenMO').append(butDiv);
+	
+ 	}
+
+ 	function removeTopTenData(){
+ 		var removeHead=document.getElementById('head');
+ 		var removeButton=document.getElementById('topTenTableButton');
+ 		$('#tableForTopTen').empty();	
+ 			
+ 	}
+ 	 	
 	</script>
 	
 </body>

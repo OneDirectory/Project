@@ -40,4 +40,6 @@ public interface FailedCallDataServiceLocal {
 	
 	public Collection<?> getUniqueCauseCodesForImsi(String imsi);
 	
+	public Collection<?> getTopTenMarketOperatorCellIDCombinations(Date fromDate, Date toDate);
+	
 }
