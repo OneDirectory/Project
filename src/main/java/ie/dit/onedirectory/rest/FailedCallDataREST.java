@@ -162,6 +162,34 @@ public class FailedCallDataREST {
 	}
 	
 	/**
+	 * 
+	 * @param datesPassed
+	 * @return A Collection of the top ten imsi's that had call failures in a given period
+	 * @throws ParseException
+	 */
+	
+	@GET
+	@Path("/topImsi/{dates3}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection getTopTenIMSIInTimePeriod(
+			@PathParam("dates3") String datesPassed) throws ParseException {
+		
+		String[] dates3 = datesPassed.split("£");
+		String fromDate = dates3[0];
+		String toDate = dates3[1];
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date from = sdf.parse(fromDate);
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		Date to = sdf1.parse(toDate);
+		java.sql.Date sqlDateFrom = new java.sql.Date(from.getTime());
+		java.sql.Date sqlDateTo = new java.sql.Date(to.getTime());
+		
+		return service.getTopTenIMSIInTimePeriod(sqlDateFrom, sqlDateTo);
+			
+	}
+	
+	/**
 	 * @return A collection of the counts of failed calls for each IMSI
 	 * @throws ParseException 
 	 */
