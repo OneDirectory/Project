@@ -26,7 +26,7 @@
 </head>
 
 
-<body class="adminPage">
+<body class="support_engineer">
 <%
 	String user = null;
 	if(session.getAttribute("user")==null){
