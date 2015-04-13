@@ -131,6 +131,8 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-12">
+					<div class="transbox">
+						<br>
 					<h1>Call Failures</h1>
                     <div class ="form-horizontal">
                     
@@ -154,7 +156,7 @@
 						<br>
 						<button id="submitJohn" type="submit" class="btn btn-primary">Search</button>
 					</div>
-
+					</div>
 				</div>
                     </div>
 			</div>
@@ -167,6 +169,8 @@
             <div class = 'container-fluid'>
                 <div class="row">
                     <div class="col-lg-12">
+                    <div class="transbox">
+						<br>
 					<h1>All IMSIs for Failure Class</h1>
                     <div class ="form-horizontal">
 		              <div id="failureClassDiv" class="form-group">
@@ -183,7 +187,7 @@
                       
 			<div id="imsisTableForFailreClassDiv">
 			</div>
-                      
+             </div>        
 		</div>
 		</div>
 	</div>
@@ -193,6 +197,8 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
+					<div class="transbox">
+						<br>
 						<h1>Search EventId/CauseCode by IMSI</h1>
 						<div class="form-horizontal">
                             <div class="form-group">
@@ -206,6 +212,7 @@
 									<button id='id/causecodesubmit' type='submit' class="btn btn-primary">Search</button>
 								</div>
 							</div>
+						</div>
 						</div>
 					</div>
 				</div>
