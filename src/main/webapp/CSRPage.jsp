@@ -118,51 +118,53 @@
 		</div>
 		
 		<div id="failCount">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-12">
-                    <div class="transbox">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12" id='container'>
+						<div class="transbox">
 						<br>
-					<h1>Count of Call Failures by IMSI</h1>	
+						<h1>Count of Call Failures by IMSI</h1>
                     <div class="form-horizontal">
                         
-                        <div class="from-group">
-						<label class="control-label col-sm-2" for="imsiInput">IMSI: </label>
-                        <div class="col-sm-5">
-							<select class="form-control" id="imsiInput"></select>
-						</div>	
-                        </div>
-                        
-                        <div class="form-group">
-						<label class="control-label col-sm-2" for="ID">From:</label>
+						<div class="form-group" id="myDiv">
+								<label class="control-label col-sm-2" for="imsiInput">IMSI:</label>
                             <div class="col-sm-5">
+                            <select class="form-control" id="imsiInput" placeholder="Select an IMSI.."
+									autofocus>
+								</select><br>
+							</div>
+						</div>
+                        
+                        
+                        
+						<div class="form-group" >
+                            <label class="control-label col-sm-2" for="ID">From: </label>
+                        <div class="col-sm-5">
 							<input type="datetime-local" id='failCountFrom' class="form-control"
-								name="failCountFrom" placeholder="dd-mm-yyyy hh:mm" autofocus>
-						</div>
+								name="failCountFrom" placeholder="yyyy-dd-mm hh:mm" autofocus>
                         </div>
+						</div>
                         
-                        <div class="form-group">
-						<label class="control-label col-sm-2" for="ID">To:</label>
-						<div class="col-sm-5">
+                        <div class = "form-group">
+						      <label class="control-label col-sm-2" for="ID">To: </label>
+                        <div class="col-sm-5">
 							<input type="datetime-local" id='failCountTo' class="form-control"
-								name="failCountTo" placeholder="dd-mm-yyyy hh:mm" autofocus>
+								name="failCountTo" placeholder="yyyy-dd-mm hh:mm" autofocus>
 						</div>
                         </div>
-                        
+                            
                         <div class="form-group">
 						<div class="col-sm-offset-4 col-sm-10">
-                            <br>
+							<br>
 							<button id="countSubmit" type="submit" class="btn btn-primary">Search</button>
-						</div>					
-				    </div>
-			     </div>
-                </div> 
-		      </div>	
-		<!--  </div>
-				<div id='tableForCountQuery' ></div>
-			</div> -->
-            </div>
-        </div>
+                            </div>
+						</div>
+					</div>
+					</div>
+                    </div>
+
+			</div>
+		</div>
 	</div>
 		
 		
