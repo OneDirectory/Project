@@ -154,7 +154,7 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 	}
 
 	@Override
-	public Collection<?> getCountFailedCallsInTimePeriodByImsi(String imsi,
+	public Long getCountFailedCallsInTimePeriodByImsi(String imsi,
 			Date fromDate, Date toDate) {
 		return dao.getCountFailedCallsInTimePeriodByImsi(imsi, fromDate, toDate);
 	}

@@ -96,7 +96,7 @@ public interface FailedCallDataDAO {
 	 * @return
 	 */
 	
-	public Collection<?> getCountFailedCallsInTimePeriodByImsi(String imsi,
+	public Long getCountFailedCallsInTimePeriodByImsi(String imsi,
 			Date fromDate, Date toDate);
 		
 }

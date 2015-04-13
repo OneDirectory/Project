@@ -167,7 +167,7 @@ public class FailedCallDataREST {
 	@GET
 	@Path("/getCountFailedCallsInTimePeriodByImsi/{params}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<?> getCountFailedCallsInTimePeriodByImsi(@PathParam("params") String paramsPassed) throws ParseException {
+	public Long getCountFailedCallsInTimePeriodByImsi(@PathParam("params") String paramsPassed) throws ParseException {
 		
 		String[] params = paramsPassed.split("£");
 		String imsi = params[0];
