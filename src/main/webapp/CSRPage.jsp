@@ -305,7 +305,7 @@ var $table = $('#table');
 </script>
 
 
-<!-- Add all IMSIs to list? -->
+<!-- Add all IMSIs to list for peters -->
 <script>
 
 $(function(){
@@ -406,7 +406,7 @@ function removeData(){
 	
 }
 
-//table for the count
+//table for the count for peter's
 
 $(function(){
 
