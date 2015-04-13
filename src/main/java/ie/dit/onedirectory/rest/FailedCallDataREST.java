@@ -102,7 +102,7 @@ public class FailedCallDataREST {
 	}
 	
 	@GET
-	@Path("/uniqueCauseCodes/{imsi)")
+	@Path("/uniqueCauseCodes/{imsi}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<?> getUniqueCauseCodesForImsi(@PathParam("imsi")String imsi){
 		return service.getUniqueCauseCodesForImsi(imsi);
