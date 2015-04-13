@@ -200,7 +200,7 @@ var $table = $('#causeCodeTable');
 				$select.append(option);			
 				}					
 			}
-		});
+		})
 	});
     </script>
     
@@ -219,53 +219,56 @@ var $table = $('#causeCodeTable');
             contentType: "application/json",
 
             success:function(data){
-              if(isValid && data.length>0){
  	 			createCauseCodeTable();
  	 			createCauseCodeButton();
  	 			$.each(data, function(key, value){
- 	 				$table.append('<tr><td>'+data+'</td></tr>');
+ 	 				$('#viewCauseCode').find('tbody').append('<tr><td>'+value+'</td></tr>');
  	 	 			});
-	 	 			isValid=false;
- 	 	 		}
- 	 			else if(isValid && data.length===0){
-				alert('No available data for selected dates');
- 	 	 		}
             }
           });
        });
-    });
         
    
     function createCauseCodeTable(){
-		var x=document.getElementById("causeCodeImsi");
-        var selected=x.options[x.selectedIndex].text;
-        var row=document.createElement('tr');
-        row.setAttribute('id', 'causehead');
-        var colOne=document.createElement('th');
-     
-        colOne.innerHTML='Cause Codes for IMSI: '+selected;     
-        row.appendChild(colOne);     
-        $table.append(row);
+    	var tableDiv = document.getElementById('causeCodeTable')
+ 		var divContainer = document.createElement('div');
+ 		divContainer.setAttribute('class', 'table-responsive');
+ 		divContainer.setAttribute('id', 'divContainer');
+ 		var table=document.createElement('table');
+ 		table.setAttribute('class', 'table table-striped');
+ 		table.setAttribute('id', 'viewCauseCode');
+ 		var header = document.createElement('thead');
+ 		var body = document.createElement('tbody');
+ 		var row = document.createElement('tr');
+ 		var colOne=document.createElement('td');
+ 		colOne.innerHTML = 'IMSI';
+
+ 		row.appendChild(colOne);
+ 		header.appendChild(row);
+ 		table.appendChild(header);
+		table.appendChild(body);
+		divContainer.appendChild(table);
+		tableDiv.appendChild(divContainer);
 
     }
 
     function createCauseCodeButton(){
 
-        var butDiv=document.createElement('div');
- 		butDiv.setAttribute('class', "col-sm-offset-5 col-sm-10");
+    	var butDiv=document.createElement('div');
+ 		butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
  		var button=document.createElement(button);
- 		button.setAttribute('id', 'causetableButton');
+ 		button.setAttribute('id', 'causeCodeTableButton');
  		button.setAttribute('class','btn btn-primary');
  		button.innerHTML='Search Again';
  		button.addEventListener('click', removeCauseCodeData);
  		butDiv.appendChild(button);
- 		$table.append(butDiv);
+ 		$viewCauseCode.append(butDiv);
 
     }
 
     function removeCauseCodeData(){
-        var removeHead=document.getElementById('causehead');
-        var removeButton=document.getElementById('causetableButton');
+        var removeHead=document.getElementById('thead');
+        var removeButton=document.getElementById('causeCodeTableButton');
         $table.empty();
 
     }
