@@ -97,7 +97,7 @@
 						<h1>All Cause Codes for IMSI</h1>
                         <div class="form-horizontal">
 						<div class="form-group" id="myDiv">
-							<label class="control-label col-sm-2" for="ID">IMSI:</label> 
+							<label class="control-label col-sm-2" for="causeCodeImsi">IMSI:</label> 
                             <div class="col-sm-5">
                             <select class="form-control" id="causeCodeImsi"></select>
                                 </div>
@@ -186,8 +186,9 @@ var $table = $('#causeCodeTable');
 			}
 		});
 	});
+    </script>
     
-    
+<script>    
 /*getting cause code by imsi*/
 
     $('#causeCodeImsiSubmit').click(function(e){
@@ -288,7 +289,7 @@ var $table = $('#table');
 var $countTable = $('#countTable');
 
 $(function(){
-	var $select = $('#ID');
+	var $select = $('#imsiInput');
 	$.ajax({
 		type: 'GET',
 		url:'http://localhost:8080/project/rest/failedcalldata/imsi',
