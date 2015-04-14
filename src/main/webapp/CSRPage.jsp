@@ -255,7 +255,7 @@ var $table = $('#causeCodeTable');
  		var body = document.createElement('tbody');
  		var row = document.createElement('tr');
  		var colOne=document.createElement('td');
- 		colOne.innerHTML = 'Cause Code';
+ 		colOne.innerHTML = 'List of unique Cause Codes for selected IMSI';
  		row.appendChild(colOne);
  		header.appendChild(row);
  		table.appendChild(header);
