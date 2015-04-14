@@ -83,7 +83,15 @@
 							</div>
 						</div>
                         </div>
+                        <br>
+                        <div id="eventTransboxDiv">
+	                        <table class="table" id='table' name='table'>   
+	                        </table>
+	                        <div id="butDiv">
+		                        </div>
                         </div>
+                        </div>
+                        
 					</div>
 				</div>
 			</div>
@@ -113,8 +121,13 @@
                         </div>
 					</div>
 				</div>
+				<br>
+				<div id="transboxDiv">
+            	<div id="causeCodeTable">
+            	</div>
 			</div>
-            <div id="causeCodeTable"></div>
+			
+            </div>
 		</div>
 		
 		<div id="failCount">
@@ -161,7 +174,10 @@
 						</div>
 					</div>
 					</div>
-					<div id='countImsiTablePeter'></div>
+					<br>
+					<div id="failTransboxDiv">
+						<div id='countImsiTablePeter'></div>
+                    </div>
                     </div>
 
 			</div>
@@ -173,10 +189,8 @@
 
 	</div>
 	<!-- /#wrapper -->
-
-	<table class="table" id='table' name='table'>
-		<div id="butDiv"></div>
-	</table>
+	
+	
 	
     
 <script>
@@ -205,6 +219,8 @@ var $table = $('#causeCodeTable');
 <script>    
 /*getting cause code by imsi*/
     $('#causeCodeImsiSubmit').click(function(e){
+    var $table = $('#causeCodeTable');
+    $table.empty();
 	var x = document.getElementById("causeCodeImsi");
 	var selectedOption = x.options[x.selectedIndex].text;
 	  $.ajax({
@@ -226,6 +242,8 @@ var $table = $('#causeCodeTable');
         
    
     function createCauseCodeTable(){
+    	var box= document.getElementById('transboxDiv');
+    	box.setAttribute("class","transboxTable");
     	var tableDiv = document.getElementById('causeCodeTable')
  		var divContainer = document.createElement('div');
  		divContainer.setAttribute('class', 'table-responsive');
@@ -237,7 +255,7 @@ var $table = $('#causeCodeTable');
  		var body = document.createElement('tbody');
  		var row = document.createElement('tr');
  		var colOne=document.createElement('td');
- 		colOne.innerHTML = 'IMSI';
+ 		colOne.innerHTML = 'Cause Code';
  		row.appendChild(colOne);
  		header.appendChild(row);
  		table.appendChild(header);
@@ -336,6 +354,8 @@ $(function(){
 
 
 function createEventTable(){
+	var box= document.getElementById('eventTransboxDiv');
+	box.setAttribute("class","transboxTable");
 	var row=document.createElement('tr');
 	row.setAttribute('id', 'head');
 	var colOne=document.createElement('th');
@@ -415,6 +435,8 @@ $(function(){
    });
 });
 function createCountTable(){
+	var box= document.getElementById('failTransboxDiv');
+	box.setAttribute("class","transboxTable");
 	var tableDiv = document.getElementById('countImsiTablePeter')
 		var divContainer = document.createElement('div');
 		divContainer.setAttribute('class', 'table-responsive');
@@ -426,7 +448,7 @@ function createCountTable(){
 		var body = document.createElement('tbody');
 		var row = document.createElement('tr');
 		var colOne=document.createElement('td');
-		colOne.innerHTML = 'COUNT';
+		colOne.innerHTML = 'Number of call failures';
 		row.appendChild(colOne);
 		header.appendChild(row);
 		table.appendChild(header);
