@@ -108,7 +108,7 @@ public class FailedCallDataREST {
 		return service.getUniqueCauseCodesForImsi(imsi);
 	}
 
-	// JF addition
+	
 	@GET
 	@Path("/dateIMSI/{dates2}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -240,7 +240,7 @@ public class FailedCallDataREST {
 	}
 
 	@GET
-	@Path("/topTenMOCombinations/{dates:.+}")
+	@Path("/topTenMOCombinations/{dates}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<?> getTopTenMarketOperatorCellIDCombinations(
 			@PathParam("dates") String dateString) throws ParseException{

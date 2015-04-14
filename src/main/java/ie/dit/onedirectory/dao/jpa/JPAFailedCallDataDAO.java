@@ -154,11 +154,21 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		ArrayList<Object> queryList = (ArrayList<Object>) query.getResultList();
 		ArrayList<Object> returnList = new ArrayList<Object>();
 		
-		for(int i = 0; i < 10; i++) {
-			returnList.add(queryList.get(i));
+		if(queryList.size()>10){
+			for(int i = 0; i < 10; i++) {
+				returnList.add(queryList.get(i));
+			}
+		}else if(queryList.size()>0){
+			for(int i = 0; i < queryList.size(); i++){
+				returnList.add(queryList.get(i));
+			}
+		}else{
+			returnList = queryList;
 		}
 		
+		
 		return returnList;
+	
 	}
 
 

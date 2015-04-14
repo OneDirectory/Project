@@ -27,12 +27,14 @@ import javax.ws.rs.core.UriBuilder;
 
 import static com.jayway.restassured.RestAssured.*;
 
+
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.config.LogConfig;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.parsing.Parser;
 //import com.jayway.restassured.module.jsv.JsonSchemaValidator.*;
 import com.jayway.restassured.matcher.RestAssuredMatchers.*;
+
 import static org.hamcrest.Matchers.*;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -108,51 +110,23 @@ public class UserTest {
 	private UserServiceLocal service;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception{
+
 		RestAssured.config = config()
 				.logConfig(new LogConfig(System.out, true));
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 		RestAssured.basePath = "test";
 		RestAssured.port = 8080;
-	}
 
+	}
+	
 	@Test
 	public void testEndPoint() {
 		expect().statusCode(200).contentType(ContentType.JSON).log().ifError()
 				.when().get("/rest/user");
 	}
 
-	/*
-	@Test
-	public void testGetAllUsers() throws NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException {
-		User user = new User(1,"1111","CSR","J","f");
-		 utx.begin();
-		  em.joinTransaction();
-		  em.persist(user);  
-		  utx.commit();
-		  em.clear();
-		  utx.begin();
-		   em.joinTransaction();
-		
-		
-		given()
-		.expect()
-		.statusCode(200)
-		.contentType(ContentType.JSON)
-		.body("userType", equalTo("CSR"))
-		.log().ifError()
-		.when()
-		.get("/rest/user");
-		
-		utx.begin();
-	    em.joinTransaction();
-	    System.out.println("Dumping old records...");
-	    em.createQuery("delete from User").executeUpdate();
-	    utx.commit();
-		
-
-	}
-	*/
+	
 	
 	@Test
 	public void testFindUserById(){
@@ -163,9 +137,10 @@ public class UserTest {
 		.statusCode(200) 
 		.log().ifError()
 		.when()
-		.get("/rest/user/{userID}");
-		
+		.get("/rest/user/{userID}");	
 	}
+	
+	
 	@Test
 	public void testAddUser(){
 		User user = new User(1,"Support Engineer","1234","cal","mcg");
