@@ -143,30 +143,25 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	
 	public Collection<?> getTopTenIMSIInTimePeriod(Date from, Date to) {
 		
-		Query query = entityManager.createQuery("select fd.imsi, count(fd.imsi)"
+		Query query = entityManager.createQuery("select  count(fd.imsi) as total, fd.imsi"
 				+ " from FailedCallData fd where fd.dateTime between :fromDate and :toDate"
 				+ " group by fd.imsi"
-				+ " order by count(fd.imsi) desc");
+				+ " order by total desc");
 		
 		query.setParameter("fromDate", from, TemporalType.DATE);
 		query.setParameter("toDate", to, TemporalType.DATE);
 		
 		ArrayList<Object> queryList = (ArrayList<Object>) query.getResultList();
 		ArrayList<Object> returnList = new ArrayList<Object>();
-		
-		if(queryList.size()>10){
-			for(int i = 0; i < 10; i++) {
-				returnList.add(queryList.get(i));
+
+		int i=0;
+		for(Object object: queryList){
+			returnList.add(object);
+			i++;
+			if(i==10){
+				break;
 			}
-		}else if(queryList.size()>0){
-			for(int i = 0; i < queryList.size(); i++){
-				returnList.add(queryList.get(i));
-			}
-		}else{
-			returnList = queryList;
 		}
-		
-		
 		return returnList;
 	
 	}
@@ -187,8 +182,13 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		query.setParameter("toDate", toDate, TemporalType.DATE);
 		ArrayList<Object> queryList = (ArrayList<Object>) query.getResultList();
 		ArrayList<Object> returnList = new ArrayList<Object>();
-		for(int i=0; i<10; i++){
-			returnList.add(queryList.get(i));
+		int i=0;
+		for(Object object: queryList){
+			returnList.add(object);
+			i++;
+			if(i==10){
+				break;
+			}
 		}
 		return returnList;
 	}

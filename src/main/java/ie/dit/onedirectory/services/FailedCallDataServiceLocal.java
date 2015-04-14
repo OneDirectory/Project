@@ -16,7 +16,6 @@ import javax.ejb.Local;
 
 @Local
 public interface FailedCallDataServiceLocal {
-
 	
 	public Collection<?> getAllIMSIWithCallFailuresBetweenDates(Date from, Date to);
 	
@@ -27,6 +26,8 @@ public interface FailedCallDataServiceLocal {
 	public Collection<?> getAllIMSI();
 	
 	public Collection<?> getCountBetweenDatesForAllIMSI(Date from, Date to);
+	
+	public Collection<?> getTopTenIMSIInTimePeriod(Date from, Date to);
 	
 	public Collection<FailedCallData> getAllFailedCallData();
 
@@ -42,7 +43,6 @@ public interface FailedCallDataServiceLocal {
 
 	public Long getCountFailedCallsInTimePeriodByImsi(
 			String imsi, Date fromDate, Date toDate);
-
 	
 	public Collection<?> getTopTenMarketOperatorCellIDCombinations(Date fromDate, Date toDate);
 	
