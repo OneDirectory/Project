@@ -18,7 +18,9 @@
 <script src="Resources/js/jquery-1.6.1.min.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="Resources/js/bootstrap.min.js"></script>
-
+<style>
+	#graphForTopTen { width: 250px; height: 150px; }
+</style>
 <link
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
 	rel="stylesheet">
