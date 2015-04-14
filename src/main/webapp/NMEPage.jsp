@@ -422,7 +422,7 @@
 			});
 		});
 
-		var divs = [ "imsiCount", "modelCount", "topTen" ];
+		var divs = ["imsiCount", "modelCount", "topTen", "briansQuery", "johnsQuery", "imsisForFailreClassDiv", "id/causecode", "causeCodes", "failCount"];
 		var visibleDiv = null;
 		var $modelTable = $('#tablePeter')
 		var indexFrom = 0;
@@ -431,11 +431,15 @@
 		var toDate;
 
 		$(function() {
-
 			document.getElementById("imsiCount").style.display = 'none';
 			document.getElementById("modelCount").style.display = 'none';
 			document.getElementById("topTen").style.display = 'none';
-
+			document.getElementById("briansQuery").style.display = 'none';
+			document.getElementById("johnsQuery").style.display = 'none';
+			document.getElementById("imsisForFailreClassDiv").style.display = 'none';
+			document.getElementById("id/causecode").style.display = 'none';
+			document.getElementById("causeCodes").style.display = 'none';
+			document.getElementById("failCount").style.display = 'none';
 		});
 
 		function toggle(divId) {

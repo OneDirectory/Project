@@ -514,7 +514,7 @@ $(function(){
 	});
 </script>
 
-//table for the count for peter's
+<!-- //table for the count for peter's -->
 <script>
 $(function(){
 
