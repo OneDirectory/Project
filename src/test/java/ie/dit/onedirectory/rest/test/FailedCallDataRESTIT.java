@@ -88,7 +88,7 @@ public class FailedCallDataRESTIT{
 		.when()
 		.get("/rest/failedcalldata/get");
 	}
-	
+
 
 
 
@@ -210,7 +210,7 @@ public class FailedCallDataRESTIT{
 		.when()
 		.get("/rest/failedcalldata/getFailedCallDataByModel/{model}");
 	}
-	
+
 	@Test
 	public void testTopTenMOCombinations() {
 		given()
@@ -224,7 +224,7 @@ public class FailedCallDataRESTIT{
 	}
 
 	@Test 
-	public void testUploadFailedCallData() {
+	public void testUploadFailedCallData() throws IOException {
 		given()
 		.multiPart("selectedFile", new File(TEST_FILE))
 		.expect()
@@ -233,5 +233,5 @@ public class FailedCallDataRESTIT{
 		.when()
 		.post("/rest/failedcalldata/upload");	
 	}
-	
+
 }
