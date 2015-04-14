@@ -69,16 +69,16 @@
 						<h1>Search EventId, CauseCode by IMSI</h1>
                     <div class="form-horizontal">
 						<div class="form-group" id="myDiv">
-							<label class="control-label col-sm-2" for="ID">IMSI:</label> 
+							<label class="control-label col-sm-2" for="eventImsi">IMSI:</label> 
                              <div class="col-sm-5">
-                            <select class="form-control" id="ID"></select>
+                            <select class="form-control" id="eventImsi"></select>
                             </div>
                          </div>
 
 							<div class="form-group">
 								<div class="col-sm-offset-4 col-sm-10">
 									<br>
-									<button id='submit' name='submit' class="btn btn-primary">Search</button>
+									<button id='eventSubmit' name='submit' class="btn btn-primary">Search</button>
 								</div>
 							</div>
 						</div>
@@ -222,7 +222,7 @@ var $table = $('#causeCodeTable');
  	 			createCauseCodeTable();
 //  	 			createCauseCodeButton();
  	 			$.each(data, function(key, value){
- 	 				alert(value);
+ 	 				//alert(value);
  	 				$('#viewCauseCode').find('tbody').append('<tr><td>'+value+'</td></tr>');
  	 	 			});
  	 			$('#viewCauseCode').dataTable();
@@ -278,12 +278,12 @@ var $table = $('#causeCodeTable');
 </script>		
 
 <script>
-
+// add imsi to event/id dropdown
 var $table = $('#table');
 
 	$(function(){
 
-    var $select = $('#ID');
+    var $select = $('#eventImsi');
 
 	$.ajax({
 		type: 'GET',
@@ -329,17 +329,17 @@ $(function(){
 </script>
 
 <script>
-
+// ajax for event/id
 $(function(){
 
-	$( "#submit" ).click(function(e) {
+	$( "#eventSubmit" ).click(function(e) {
 	
 	removeData();	
-	var x=document.getElementById("ID");
+	var x=document.getElementById("eventImsi");
 	var selected=x.options[x.selectedIndex].text;
 
-	createTable();
-	createButton();
+	createEventTable();
+	createEventButton();
 
 	$.ajax({
 
@@ -360,7 +360,7 @@ $(function(){
 });
 
 
-function createTable(){
+function createEventTable(){
 	
 	var row=document.createElement('tr');
 	row.setAttribute('id', 'head');
@@ -383,7 +383,7 @@ function createTable(){
 	
 }
 
-function createButton(){
+function createEventButton(){
 
 	var butDiv=document.createElement('div');
 	butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
@@ -399,7 +399,7 @@ function createButton(){
 	
 }
 
-function removeData(){
+function removeEventData(){
 	var removeHead=document.getElementById('head');
 	var removeButton=document.getElementById('tableButton');
 	$table.empty();

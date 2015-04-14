@@ -193,31 +193,33 @@
 	</div>
         </div>
         
-      <div id="id/causecode">
+      <div id="event/cause">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-lg-12">
-					<div class="transbox">
+					<div class="col-lg-12" id='container'>
+                        <div class="transbox">
 						<br>
-						<h1>Search EventId/CauseCode by IMSI</h1>
-						<div class="form-horizontal">
-                            <div class="form-group">
-							<label class="control-label col-sm-2" for="ID">IMSI:</label>
-                                <div class="col-sm-5">
-                                <select class="form-control" id="imsiSelect"> </select>
+						<h1>Search EventId, CauseCode by IMSI</h1>
+                    <div class="form-horizontal">
+						<div class="form-group" id="myDiv">
+							<label class="control-label col-sm-2" for="ID">IMSI:</label> 
+                             <div class="col-sm-5">
+                            <select class="form-control" id="ID"></select>
+                            </div>
+                         </div>
 
 							<div class="form-group">
 								<div class="col-sm-offset-4 col-sm-10">
 									<br>
-									<button id='id/causecodesubmit' type='submit' class="btn btn-primary">Search</button>
+									<button id='submit' name='submit' class="btn btn-primary">Search</button>
 								</div>
 							</div>
 						</div>
-						</div>
+                        </div>
+                        </div>
 					</div>
 				</div>
 			</div>
-		</div>
     </div>
  </div>
 		<!-- /#page-content-wrapper -->
@@ -594,85 +596,7 @@ function removeCountData(){
 
 </script>
 
-<script>
-	var $causeCodeTable = $('#causeCodeTable');
-		$(function(){
 
-	$( "#id/causecodesubmit" ).click(function(e) {
-	
-	removeData();
-    removeDataJohn();
-    removeCauseCodeData()	
-	var x=document.getElementById("imsiSelect");
-	var selected=x.options[x.selectedIndex].text;
-
-	createCauseCodeTable();
-	createCauseCodeButton();
-
-	$.ajax({
-
-		type:'GET',
-		url:'http://localhost:8080/project/rest/failedcalldata/imsi/'+selected,
-		dataType: 'json',
-		contentType: "application/json",
-
-		success:function(data){
-			
-			$.each(data, function(key, value){
-				
-				$causeCodeTable.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td><td>'+selected+'</td></tr>');
-			});
-		}
-	  });
-   });
-});
-
-function createCauseCodeTable(){
-	
-	var row=document.createElement('tr');
-	row.setAttribute('id', 'head');
-	var colOne=document.createElement('th');
-	var colTwo=document.createElement('th');
-	var colThree=document.createElement('th');
-	var colFour=document.createElement('th');
-
-	colOne.innerHTML='Cause Code';
-	colTwo.innerHTML='Event ID';
-	colThree.innerHTML='Description';
-	colFour.innerHTML ='IMSI'
-
-	row.appendChild(colOne);
-	row.appendChild(colTwo);
-	row.appendChild(colThree);
-	row.appendChild(colFour);
-
-	$causeCodeTable.append(row);
-	
-}
-
-function createCauseCodeButton(){
-
-	var butDiv=document.createElement('div');
-	butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
-	var button=document.createElement(button);
-	button.setAttribute('id', 'tableButton');
-	button.setAttribute('class','btn btn-primary');
-	button.setAttribute('position', 'absolute');
-	button.setAttribute('top', '50%');
-	button.innerHTML='Search Again';
-	button.addEventListener('click', removeCauseCodeData);
-	butDiv.appendChild(button);
-	$table.append(butDiv);
-	
-}
-
-function removeCauseCodeData(){
-	var removeHead=document.getElementById('head');
-	var removeButton=document.getElementById('tableButton');
-	$table.empty();
-	
-}
-</script>
 
 
 
