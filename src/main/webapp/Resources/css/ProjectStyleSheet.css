@@ -20,7 +20,7 @@ body.support_engineer {
 }
 
 label {
-     font: normal 23px arial !important;
+     font: normal 17px arial !important;
      color:aliceblue;
     }
 
@@ -78,6 +78,20 @@ div.transbox {
   padding:5px;
   }
   
+  div.createUserTransbox {
+  width:700px;
+  height:px;
+  margin:px -10px;
+  background-color:#013F6A;
+  border:1p;
+  opacity:0.85;
+  filter:alpha(opacity=60);
+   -moz-border-radius: 15px;
+  border-radius: 15px;
+  border:solid 1px black; 
+  padding:5px;
+  }
+  
   div.transboxTable{
   	width:500px;
   height:px;
@@ -114,6 +128,10 @@ div.imagebox {
   }
  
  div.transbox h1 {
+    text-align: center;
+    color:aliceblue;
+}
+ div.createUserTransbox h1 {
     text-align: center;
     color:aliceblue;
 }

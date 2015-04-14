@@ -21,6 +21,8 @@ import ie.dit.onedirectory.utilities.FileUploadForm;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -288,7 +290,7 @@ public class FailedCallDataREST {
 	@Path("/upload")
 	@Consumes("multipart/form-data")
 	public Response uploadFailedCallData(@MultipartForm FileUploadForm form)
-			throws IOException {
+			throws IOException, URISyntaxException {
 		HSSFRow row;
 		ByteArrayInputStream stream = new ByteArrayInputStream(
 				form.getFileData());
@@ -353,8 +355,7 @@ public class FailedCallDataREST {
 		}
 		stream.close();
 		workbook.close();
-		return Response.status(200).entity("Data successfully imported.\n")
-				.build();
+		return Response.temporaryRedirect(new URI("../adminPage.jsp")).build();
 	}
 
 }

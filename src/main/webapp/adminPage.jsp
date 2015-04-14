@@ -52,7 +52,7 @@
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
 				<li><a href="#" onclick="toggle('createUser');">Add a user</a></li>
-				<li><a href="#" onclick="toggle('import');">Import data</a></li>
+				<li><a href="#" onclick="toggle('importData');">Import data</a></li>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 				
 	
@@ -67,6 +67,7 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
+						<div class="createUserTransbox">
 						<h1>Create New User</h1>
 						<div class="form-horizontal">
 							<div class="form-group">
@@ -102,14 +103,22 @@
 							<div class="form-group">
 								<div class="col-sm-offset-1 col-sm-10">
 									<div class="col-sm-10" id="types">
-										<label class="radio-inline"><input type="radio"
-											name="role" checked="checked"
-											value="Network Management Engineer">Network
-											Management Engineer</label> <label class="radio-inline"><input
-											type="radio" name="role" value="Support Engineer">Support
-											Engineer</label> <label class="radio-inline"><input
-											type="radio" name="role" value="Customer Service Rep">Customer
-											Service Rep</label>
+										<br>
+										<label class="radio-inline">
+											<input type="radio" name="role" checked="checked"
+											value="Network Management Engineer">
+											Network Management Engineer
+										</label>
+										<br>
+										<label class="radio-inline">
+											<input type="radio" name="role" value="Support Engineer">
+											Support Engineer
+										</label>
+										<br>
+										<label class="radio-inline">
+											<input type="radio" name="role" value="Customer Service Rep">
+											Customer Service Rep
+										</label>
 									</div>
 								</div>
 							</div>
@@ -122,38 +131,51 @@
 									</div>
 								</div>
 						</div>
+						</div>
+						<br>
+						<div class="transboxTable">
+							<table class="table" id='table' name='table'>
+								<tr>
+									<th>UserID</th>
+									<th>Name</th>
+									<th>UserType</th>
+				
+								</tr>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
-
-			<table class="table" id='table' name='table'>
-				<tr>
-					<th>UserID</th>
-					<th>Name</th>
-					<th>UserType</th>
-
-				</tr>
-			</table>
-
 		</div>
 		<!-- /#page-content-wrapper -->
 
-
-	</div>
-	<!-- /#wrapper -->
-
-	<div id="import">
-		<h1>Import Failed Call Data</h1>
-		<form action="rest/failedcalldata/upload" method="post"
-			enctype="multipart/form-data">
-			<p>
-				Please select file: <input type="file" name="selectedFile" />
-			</p>
-			<input type="submit" value="Upload" />
-		</form>
-	</div>
-
-
+		<div id="import">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="createUserTransbox">
+							<h1>Import Failed Call Data</h1>
+							<div class="form-horizontal">
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="pwd">
+									Please select file: 
+									</label>
+									<div class="col-sm-5">
+										<form action="rest/failedcalldata/upload" method="post"
+										enctype="multipart/form-data">
+											<br>
+											<input type="file" name="selectedFile" />
+											<br>
+											<input type="submit" value="Upload" />
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	<!-- jQuery -->
 	<script src="Resources/js/jquery-1.6.1.min.js"></script>
@@ -163,7 +185,7 @@
 
 	<!-- Menu Toggle Script -->
 	<script>
-var divs = ["createUser","import"];
+var divs = ["createUser","importData"];
 var visibleDiv = null;
 var ids = [];
 
@@ -171,7 +193,7 @@ var ids = [];
 $(function(){
 
 	document.getElementById("createUser").style.display='none';
-	document.getElementById("import").style.display='none';
+	document.getElementById("importData").style.display='none';
 
 	$('#regButton').click(function(e){
 
@@ -206,6 +228,7 @@ $(function(){
 			});
 		}
 	});	
+	
 });
 
 function toggle(divId){
