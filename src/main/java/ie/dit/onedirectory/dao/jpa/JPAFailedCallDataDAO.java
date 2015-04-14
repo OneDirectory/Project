@@ -134,6 +134,35 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		List<?> result = query.getResultList();
 		return result;
 	}
+	
+	/**
+	 * 
+	 * Returns a list of the top ten IMSIs that had call failures in a Time Period
+	 * 
+	 */
+	
+	public Collection<?> getTopTenIMSIInTimePeriod(Date from, Date to) {
+		
+		Query query = entityManager.createQuery("select  count(fd.imsi) as total, fd.imsi"
+				+ " from FailedCallData fd where fd.dateTime between :fromDate and :toDate"
+				+ " group by fd.imsi"
+				+ " order by total desc");
+		
+		query.setParameter("fromDate", from, TemporalType.DATE);
+		query.setParameter("toDate", to, TemporalType.DATE);
+		
+		ArrayList<Object> queryList = (ArrayList<Object>) query.getResultList();
+		ArrayList<Object> returnList = new ArrayList<Object>();
+		int i=0;
+		for(Object object: queryList){
+			returnList.add(object);
+			i++;
+			if(i==10){
+				break;
+			}
+		}
+		return returnList;
+	}
 
 
 	/**
@@ -151,8 +180,13 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		query.setParameter("toDate", toDate, TemporalType.DATE);
 		ArrayList<Object> queryList = (ArrayList<Object>) query.getResultList();
 		ArrayList<Object> returnList = new ArrayList<Object>();
-		for(int i=0; i<10; i++){
-			returnList.add(queryList.get(i));
+		int i=0;
+		for(Object object: queryList){
+			returnList.add(object);
+			i++;
+			if(i==10){
+				break;
+			}
 		}
 		return returnList;
 	}
@@ -172,6 +206,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	/**
 	 * Adds a passed failed call data pojo to the database
 	 */
+	
 	public void addFailedCalledDatum(FailedCallData failedCallData) {
 		entityManager.persist(failedCallData);
 	}

@@ -67,27 +67,83 @@ public class FailedCallDataRESTIT{
 
 		return archive;
 	}
-	
-	@PersistenceContext
-	private EntityManager em;
-
-	@Inject
-	private UserTransaction utx;
-
-	@EJB
-	private FailedCallDataServiceLocal service;
 
 	@Before
 	public void setUp() throws Exception{
+
+		// Set up rest assured connection
 		RestAssured.config = config()
 				.logConfig(new LogConfig(System.out, true));
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 		RestAssured.basePath = "test";
 		RestAssured.port = 8080;
+		
+		
+
 	}
 
+	// Populate the Event Cause Table
 	@Test
-	public void testEndPoint() {
+	public void eventCauseUploadTest() throws IOException {
+		given()
+		.multiPart("selectedFile", new File(TEST_FILE))
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.post("/rest/eventcauses/upload");
+	}
+
+	// Populate the Failure table
+	@Test
+	public void testFailureUpload() throws IOException {
+		given()
+		.multiPart("selectedFile", new File(TEST_FILE))
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.post("/rest/failureclasses/upload");
+	}
+
+	// Populate the Market Operator table
+	@Test
+	public void testMarktetOperatorUpload() throws IOException {
+		given()
+		.multiPart("selectedFile", new File(TEST_FILE))
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.post("/rest/marketoperators/upload");
+	}
+
+	// Populate the User Equipment Table
+	@Test
+	public void testUserEquipmentUpload() throws IOException {
+		given()
+		.multiPart("selectedFile", new File(TEST_FILE))
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.post("/rest/userequipment/upload");
+	}
+
+	// Populate the Failed Call Data Table
+	@Test
+	public void testFailedCallDataUpload() {
+		given()
+		.multiPart("selectedFile", new File(TEST_FILE))
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.post("/rest/failedcalldata/upload");
+	}
+	
+	@Test
+	public void testFailedCallDateGet() {
 		expect()
 		.statusCode(200)
 		.contentType(ContentType.JSON)
@@ -95,11 +151,11 @@ public class FailedCallDataRESTIT{
 		.when()
 		.get("/rest/failedcalldata/get");
 	}
-	
+
 	@Test
 	public void testgetEventIdAndCauseCodeByIMSI(){
 		given()
-		.pathParam("imsi", "kkk")
+		.pathParam("imsi", "344930000000011")
 		.contentType(ContentType.JSON)
 		.expect()
 		.statusCode(200)
@@ -107,7 +163,7 @@ public class FailedCallDataRESTIT{
 		.when()
 		.get("/rest/failedcalldata/imsi/{imsi}");
 	}
-	
+
 	@Test
 	public void testGetCountBetweenDatesForAllIMSI(){
 		given()
@@ -118,9 +174,9 @@ public class FailedCallDataRESTIT{
 		.log().ifError()
 		.when()
 		.get("/rest/failedcalldata/count/{dates}");
-		
+
 	}
-	
+
 	@Test
 	public void testGetAllIMSIWithCallFailuresBetweenDates(){
 		given()
@@ -131,20 +187,20 @@ public class FailedCallDataRESTIT{
 		.log().ifError()
 		.when()
 		.get("/rest/failedcalldata/dateIMSI/{dates}");
-		
+
 	}
-	
+
 	@Test
 	public void testGetAllIMSI(){
-		
+
 		expect()
 		.statusCode(200)
 		.log().ifError()
 		.when()
 		.get("/rest/failedcalldata/imsi");
-		
+
 	}
-	
+
 	@Test
 	public void testGetAllImsiForFailureClass(){
 		given()
@@ -155,9 +211,9 @@ public class FailedCallDataRESTIT{
 		.log().ifError()
 		.when()
 		.get("/rest/failedcalldata/imsibyfailureclass/{failureID}");
-		
+
 	}
-	
+
 	@Test
 	public void testEventIDCauseCodeByModel(){
 		given()
@@ -168,9 +224,9 @@ public class FailedCallDataRESTIT{
 		.log().ifError()
 		.when()
 		.get("/rest/failedcalldata/model/{model}");
-		
+
 	}
-	
+
 	@Test
 	public void testGetFailedCallDataByModel(){
 		given()
@@ -181,10 +237,7 @@ public class FailedCallDataRESTIT{
 		.log().ifError()
 		.when()
 		.get("/rest/failedcalldata/getFailedCallDataByModel/{model}");
-		
-	}
-	
-	
 
+	}
 
 }
