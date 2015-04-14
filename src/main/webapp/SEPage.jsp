@@ -26,7 +26,7 @@
 </head>
 
 
-<body class="support_engineer">
+<body class="adminPage">
 <%
 	String user = null;
 	if(session.getAttribute("user")==null){
@@ -81,7 +81,7 @@
                     <div class="form-horizontal">
                         
 						<div class="form-group" id="myDiv">
-								<label class="control-label col-sm-2" for="ID">Model:</label>
+								<label class="control-label col-sm-2" for="ID">Model</label>
                             <div class="col-sm-5">
                             <select class="form-control" id="ID" placeholder="Select a model.."
 									autofocus>
@@ -131,7 +131,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="transbox">
+                    <div class="transbox">
 						<br>
 					<h1>Call Failures</h1>
                     <div class ="form-horizontal">
@@ -156,8 +156,9 @@
 						<br>
 						<button id="submitJohn" type="submit" class="btn btn-primary">Search</button>
 					</div>
-					</div>
+
 				</div>
+                    </div>
                     </div>
 			</div>
 		</div>
@@ -169,7 +170,7 @@
             <div class = 'container-fluid'>
                 <div class="row">
                     <div class="col-lg-12">
-                    <div class="transbox">
+                        <div class="transbox">
 						<br>
 					<h1>All IMSIs for Failure Class</h1>
                     <div class ="form-horizontal">
@@ -187,39 +188,37 @@
                       
 			<div id="imsisTableForFailreClassDiv">
 			</div>
-             </div>        
+               </div>       
 		</div>
 		</div>
 	</div>
         </div>
         
-      <div id="event/cause">
+      <div id="id/causecode">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-lg-12" id='container'>
+					<div class="col-lg-12">
                         <div class="transbox">
 						<br>
-						<h1>Search EventId, CauseCode by IMSI</h1>
-                    <div class="form-horizontal">
-						<div class="form-group" id="myDiv">
-							<label class="control-label col-sm-2" for="ID">IMSI:</label> 
-                             <div class="col-sm-5">
-                            <select class="form-control" id="ID"></select>
-                            </div>
-                         </div>
+						<h1>Search EventId/CauseCode by IMSI</h1>
+						<div class="form-horizontal">
+                            <div class="form-group">
+							<label class="control-label col-sm-2" for="ID">IMSI:</label>
+                                <div class="col-sm-5">
+                                <select class="form-control" id="imsiSelect"> </select>
 
 							<div class="form-group">
 								<div class="col-sm-offset-4 col-sm-10">
 									<br>
-									<button id='submit' name='submit' class="btn btn-primary">Search</button>
+									<button id='id/causecodesubmit' type='submit' class="btn btn-primary">Search</button>
 								</div>
 							</div>
 						</div>
-                        </div>
-                        </div>
 					</div>
 				</div>
+                </div>        
 			</div>
+		</div>
     </div>
  </div>
 		<!-- /#page-content-wrapper -->
@@ -321,10 +320,10 @@ var $table = $('#causeCodeTable');
 				$select.append(option);			
 				}					
 			}
-		})
+		});
 	});
-    </script>
     
+    </script>
     
 <script>    
 /*getting cause code by imsi*/
@@ -344,7 +343,7 @@ var $table = $('#causeCodeTable');
  	 			createCauseCodeTable();
 //  	 			createCauseCodeButton();
  	 			$.each(data, function(key, value){
- 	 				alert(value);
+ 	 				//alert(value);
  	 				$('#viewCauseCode').find('tbody').append('<tr><td>'+value+'</td></tr>');
  	 	 			});
  	 			$('#viewCauseCode').dataTable();
@@ -353,7 +352,7 @@ var $table = $('#causeCodeTable');
        });
         
    
-     function createCauseCodeTable(){
+    function createCauseCodeTable(){
     	var tableDiv = document.getElementById('causeCodeTable')
  		var divContainer = document.createElement('div');
  		divContainer.setAttribute('class', 'table-responsive');
@@ -397,9 +396,7 @@ var $table = $('#causeCodeTable');
 
     }
 
-</script>		    
-    
-
+</script>		
 <script>
 $(function(){
 	
@@ -491,11 +488,11 @@ function createImsiFailureClassTable(){
 
  </script>
  
-<!-- Add all IMSIs to list for peters -->
+ <!-- Add all IMSIs to list? -->
 <script>
 
 $(function(){
-	var $select = $('#imsiInput');
+	var $select = $('#imsiSelect');
 	$.ajax({
 		type: 'GET',
 		url:'http://localhost:8080/project/rest/failedcalldata/imsi',
@@ -513,90 +510,85 @@ $(function(){
 		});
 	});
 </script>
-
-//table for the count for peter's
 <script>
-$(function(){
+	var $causeCodeTable = $('#causeCodeTable');
+		$(function(){
 
-	$( "#countSubmit" ).click(function(e) {
+	$( "#id/causecodesubmit" ).click(function(e) {
 	
-	removeCountData();	
 	removeData();
-	$('#countImsiTablePeter').empty();
-	//removeCauseCodeData();
-	var fromDate=$('#failCountFrom').val();
-	var toDate=$('#failCountTo').val();
-	var x=document.getElementById("imsiInput");
+    removeDataJohn();
+    removeCauseCodeData()	
+	var x=document.getElementById("imsiSelect");
 	var selected=x.options[x.selectedIndex].text;
 
-	createCountTable();
-	
+	createCauseCodeTable();
+	createCauseCodeButton();
 
 	$.ajax({
 
-        type:'GET',
-        url: 'http://localhost:8080/project/rest/failedcalldata/getCountFailedCallsInTimePeriodByImsi/'+selected+'£'+fromDate+'£'+toDate,
-        dataType: 'json',
-        contentType: "application/json",
-        success:function(data){
-        	$('#countTable').find('tbody').append('<tr><td>'+data+'</td></tr>'); 	 		
-        }
-      });
-	
+		type:'GET',
+		url:'http://localhost:8080/project/rest/failedcalldata/imsi/'+selected,
+		dataType: 'json',
+		contentType: "application/json",
+
+		success:function(data){
+			
+			$.each(data, function(key, value){
+				
+				$causeCodeTable.append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td><td>'+value[2]+'</td><td>'+selected+'</td></tr>');
+			});
+		}
+	  });
    });
 });
 
-function createCountTable(){
-	var tableDiv = document.getElementById('countImsiTablePeter')
-		var divContainer = document.createElement('div');
-		divContainer.setAttribute('class', 'table-responsive');
-		divContainer.setAttribute('id', 'divContainer');
-		var table=document.createElement('table');
-		table.setAttribute('class', 'table table-striped');
-		table.setAttribute('id', 'countTable');
-		var header = document.createElement('thead');
-		var body = document.createElement('tbody');
-		var row = document.createElement('tr');
-		var colOne=document.createElement('td');
-		colOne.innerHTML = 'COUNT';
-
-		row.appendChild(colOne);
-		header.appendChild(row);
-		table.appendChild(header);
-		table.appendChild(body);
-		divContainer.appendChild(table);
-		tableDiv.appendChild(divContainer);
-
+function createCauseCodeTable(){
 	
+	var row=document.createElement('tr');
+	row.setAttribute('id', 'head');
+	var colOne=document.createElement('th');
+	var colTwo=document.createElement('th');
+	var colThree=document.createElement('th');
+	var colFour=document.createElement('th');
+
+	colOne.innerHTML='Cause Code';
+	colTwo.innerHTML='Event ID';
+	colThree.innerHTML='Description';
+	colFour.innerHTML ='IMSI'
+
+	row.appendChild(colOne);
+	row.appendChild(colTwo);
+	row.appendChild(colThree);
+	row.appendChild(colFour);
+
+	$causeCodeTable.append(row);
 	
 }
 
-function createCountButton(){
+function createCauseCodeButton(){
 
-	var butDiv2=document.createElement('div');
-	butDiv2.setAttribute('class', "col-sm-offset-12 col-sm-10");
-	var countButton=document.createElement("button");
-	countButton.setAttribute('id', 'countTableButton');
-	countButton.setAttribute('class','btn btn-primary');
-	countButton.setAttribute('position', 'absolute');
-	countButton.setAttribute('top', '50%');
-	countButton.innerHTML='Search Again';
-	countButton.addEventListener('click', removeCountData);
-	butDiv2.appendChild(countButton);
-	$countTable.append(butDiv2);
+	var butDiv=document.createElement('div');
+	butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
+	var button=document.createElement(button);
+	button.setAttribute('id', 'tableButton');
+	button.setAttribute('class','btn btn-primary');
+	button.setAttribute('position', 'absolute');
+	button.setAttribute('top', '50%');
+	button.innerHTML='Search Again';
+	button.addEventListener('click', removeCauseCodeData);
+	butDiv.appendChild(button);
+	$table.append(butDiv);
 	
 }
 
-
-function removeCountData(){
-	var removeHead=document.getElementById('countHead');
-	var removeButton=document.getElementById('countTableButton');
-	$('#countImsiTablePeter').empty();
+function removeCauseCodeData(){
+	var removeHead=document.getElementById('head');
+	var removeButton=document.getElementById('tableButton');
+	$table.empty();
+	
 }
-
 </script>
-
-
 
 
 
