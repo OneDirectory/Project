@@ -103,6 +103,7 @@ public class FailedCallDataREST {
 		return service.getEventIdAndCauseCodeByIMSI(imsi);
 	}
 	
+	
 	@GET
 	@Path("/uniqueCauseCodes/{imsi}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -110,7 +111,7 @@ public class FailedCallDataREST {
 		return service.getUniqueCauseCodesForImsi(imsi);
 	}
 
-	// JF addition
+	
 	@GET
 	@Path("/dateIMSI/{dates2}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -159,6 +160,32 @@ public class FailedCallDataREST {
 
 		return service.getCountBetweenDatesForAllIMSI(sqlDateFrom, sqlDateTo);
 
+	}
+	
+	/**
+	 * 
+	 * @param datesPassed
+	 * @return A Collection of the top ten imsi's that had call failures in a given period
+	 * @throws ParseException
+	 */	
+	@GET
+	@Path("/topImsi/{dates3}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<?> getTopTenIMSIInTimePeriod(
+			@PathParam("dates3") String datesPassed) throws ParseException {
+		
+		String[] data= datesPassed.split("£");
+		String fromDate = data[0];
+		String toDate = data[1];
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date from = sdf.parse(fromDate);
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		Date to = sdf1.parse(toDate);
+		java.sql.Date sqlDateFrom = new java.sql.Date(from.getTime());
+		java.sql.Date sqlDateTo = new java.sql.Date(to.getTime());
+		
+		return service.getTopTenIMSIInTimePeriod(sqlDateFrom, sqlDateTo);
+			
 	}
 	
 	/**
@@ -242,7 +269,7 @@ public class FailedCallDataREST {
 	}
 
 	@GET
-	@Path("/topTenMOCombinations/{dates:.+}")
+	@Path("/topTenMOCombinations/{dates}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<?> getTopTenMarketOperatorCellIDCombinations(
 			@PathParam("dates") String dateString) throws ParseException{
@@ -255,7 +282,6 @@ public class FailedCallDataREST {
 		Date to = sdf1.parse(toDate);
 		java.sql.Date sqlDateFrom = new java.sql.Date(from.getTime());
 		java.sql.Date sqlDateTo = new java.sql.Date(to.getTime());
-
 		return service.getTopTenMarketOperatorCellIDCombinations(sqlDateFrom, sqlDateTo);
 		
 	}
@@ -330,8 +356,6 @@ public class FailedCallDataREST {
 		stream.close();
 		workbook.close();
 		return Response.temporaryRedirect(new URI("../adminPage.jsp")).build();
-//		return Response.status(200).entity("Data successfully imported.\n")
-//				.build();
 	}
 
 }

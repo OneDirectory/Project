@@ -67,27 +67,20 @@ public class FailedCallDataRESTIT{
 
 		return archive;
 	}
-	
-	@PersistenceContext
-	private EntityManager em;
-
-	@Inject
-	private UserTransaction utx;
-
-	@EJB
-	private FailedCallDataServiceLocal service;
 
 	@Before
 	public void setUp() throws Exception{
+
 		RestAssured.config = config()
 				.logConfig(new LogConfig(System.out, true));
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 		RestAssured.basePath = "test";
 		RestAssured.port = 8080;
+
 	}
 
 	@Test
-	public void testEndPoint() {
+	public void testFailedCallDateGet() {
 		expect()
 		.statusCode(200)
 		.contentType(ContentType.JSON)
@@ -96,10 +89,25 @@ public class FailedCallDataRESTIT{
 		.get("/rest/failedcalldata/get");
 	}
 	
-	@Test
-	public void testgetEventIdAndCauseCodeByIMSI(){
+
+
+
+	@Test 
+	public void testGetEventIdAndCauseCodeByModel() {
 		given()
-		.pathParam("imsi", "kkk")
+		.pathParam("model", "restTest")
+		.contentType(ContentType.JSON)
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.get("/rest/failedcalldata/model/{model}");
+	}
+
+	@Test
+	public void testGetEventCauseByIMSI() {
+		given()
+		.pathParam("imsi", "344930000000011" )
 		.contentType(ContentType.JSON)
 		.expect()
 		.statusCode(200)
@@ -107,9 +115,33 @@ public class FailedCallDataRESTIT{
 		.when()
 		.get("/rest/failedcalldata/imsi/{imsi}");
 	}
-	
+
 	@Test
-	public void testGetCountBetweenDatesForAllIMSI(){
+	public void testGetUniqueCauseCodesForImsi() {
+		given()
+		.pathParam("imsi", "344930000000011" )
+		.contentType(ContentType.JSON)
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.get("/rest/failedcalldata/uniqueCauseCodes/{imsi}");
+	}
+
+	@Test
+	public void testGetAllIMSIWithCallFailuresBetweenDates() {
+		given()
+		.pathParam("dates2", "2012-01-01£2013-01-01")
+		.contentType(ContentType.JSON)
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.get("/rest/failedcalldata/dateIMSI/{dates2}");
+	}
+
+	@Test
+	public void testGetCountBetweenDatesForAllIMSI() {
 		given()
 		.pathParam("dates", "2012-01-01£2013-01-01")
 		.contentType(ContentType.JSON)
@@ -118,33 +150,42 @@ public class FailedCallDataRESTIT{
 		.log().ifError()
 		.when()
 		.get("/rest/failedcalldata/count/{dates}");
-		
 	}
-	
+
 	@Test
-	public void testGetAllIMSIWithCallFailuresBetweenDates(){
+	public void testGetCountFailedCallsInTimePeriodByImsi() {
 		given()
-		.pathParam("dates", "2012-01-01£2013-01-01")
+		.pathParam("params", "344930000000011£2012-01-01£2013-01-01")
 		.contentType(ContentType.JSON)
 		.expect()
 		.statusCode(200)
 		.log().ifError()
 		.when()
-		.get("/rest/failedcalldata/dateIMSI/{dates}");
-		
+		.get("/rest/failedcalldata/getCountFailedCallsInTimePeriodByImsi/{params}");
 	}
-	
+
+	@Test
+	public void testGetEventIdAndCauseCodeByIMSI(){
+		given()
+		.pathParam("imsi", "344930000000011")
+		.contentType(ContentType.JSON)
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.get("/rest/failedcalldata/imsi/{imsi}");
+	}
+
 	@Test
 	public void testGetAllIMSI(){
-		
 		expect()
 		.statusCode(200)
 		.log().ifError()
 		.when()
 		.get("/rest/failedcalldata/imsi");
-		
+
 	}
-	
+
 	@Test
 	public void testGetAllImsiForFailureClass(){
 		given()
@@ -155,22 +196,9 @@ public class FailedCallDataRESTIT{
 		.log().ifError()
 		.when()
 		.get("/rest/failedcalldata/imsibyfailureclass/{failureID}");
-		
+
 	}
-	
-	@Test
-	public void testEventIDCauseCodeByModel(){
-		given()
-		.pathParam("model", "restTest")
-		.contentType(ContentType.JSON)
-		.expect()
-		.statusCode(200)
-		.log().ifError()
-		.when()
-		.get("/rest/failedcalldata/model/{model}");
-		
-	}
-	
+
 	@Test
 	public void testGetFailedCallDataByModel(){
 		given()
@@ -181,10 +209,29 @@ public class FailedCallDataRESTIT{
 		.log().ifError()
 		.when()
 		.get("/rest/failedcalldata/getFailedCallDataByModel/{model}");
-		
 	}
 	
+	@Test
+	public void testTopTenMOCombinations() {
+		given()
+		.pathParam("dates", "2012-01-01£2013-01-01")
+		.contentType(ContentType.JSON)
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.get("/rest/failedcalldata/topTenMOCombinations/{dates}");
+	}
+
+	@Test 
+	public void testUploadFailedCallData() {
+		given()
+		.multiPart("selectedFile", new File(TEST_FILE))
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.post("/rest/failedcalldata/upload");	
+	}
 	
-
-
 }

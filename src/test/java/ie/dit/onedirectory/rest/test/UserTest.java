@@ -27,10 +27,15 @@ import javax.ws.rs.core.UriBuilder;
 
 import static com.jayway.restassured.RestAssured.*;
 
+
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.config.LogConfig;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.parsing.Parser;
+//import com.jayway.restassured.module.jsv.JsonSchemaValidator.*;
+import com.jayway.restassured.matcher.RestAssuredMatchers.*;
+
+import static org.hamcrest.Matchers.*;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -85,6 +90,12 @@ public class UserTest {
 		libs = Maven.resolver().resolve("org.codehaus.jackson:jackson-mapper-asl:1.9.13")
 				.withTransitivity().as(File.class);
 		archive.addAsLibraries(libs);
+		
+		libs = Maven.resolver().resolve("org.hamcrest:hamcrest-all:1.3")
+				.withTransitivity().as(File.class);
+		archive.addAsLibraries(libs);
+		
+	
 
 		return archive;
 	}
@@ -99,30 +110,23 @@ public class UserTest {
 	private UserServiceLocal service;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception{
+
 		RestAssured.config = config()
 				.logConfig(new LogConfig(System.out, true));
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 		RestAssured.basePath = "test";
 		RestAssured.port = 8080;
-	}
 
+	}
+	
 	@Test
 	public void testEndPoint() {
 		expect().statusCode(200).contentType(ContentType.JSON).log().ifError()
 				.when().get("/rest/user");
 	}
 
-	@Test
-	public void testGetAllUsers() {
-		given()
-		.expect()
-		.statusCode(200)
-		.log().ifError()
-		.when()
-		.get("/rest/user");
-
-	}
+	
 	
 	@Test
 	public void testFindUserById(){
@@ -133,9 +137,10 @@ public class UserTest {
 		.statusCode(200) 
 		.log().ifError()
 		.when()
-		.get("/rest/user/{userID}");
-		
+		.get("/rest/user/{userID}");	
 	}
+	
+	
 	@Test
 	public void testAddUser(){
 		User user = new User(1,"Support Engineer","1234","cal","mcg");

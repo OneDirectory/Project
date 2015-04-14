@@ -69,21 +69,29 @@
 						<h1>Search EventId, CauseCode by IMSI</h1>
                     <div class="form-horizontal">
 						<div class="form-group" id="myDiv">
-							<label class="control-label col-sm-2" for="ID">IMSI:</label> 
+							<label class="control-label col-sm-2" for="eventImsi">IMSI:</label> 
                              <div class="col-sm-5">
-                            <select class="form-control" id="ID"></select>
+                            <select class="form-control" id="eventImsi"></select>
                             </div>
                          </div>
 
 							<div class="form-group">
 								<div class="col-sm-offset-4 col-sm-10">
 									<br>
-									<button id='submit' name='submit' class="btn btn-primary">Search</button>
+									<button id='eventSubmit' name='submit' class="btn btn-primary">Search</button>
 								</div>
 							</div>
 						</div>
                         </div>
+                        <br>
+                        <div id="eventTransboxDiv">
+	                        <table class="table" id='table' name='table'>   
+	                        </table>
+	                        <div id="butDiv">
+		                        </div>
                         </div>
+                        </div>
+                        
 					</div>
 				</div>
 			</div>
@@ -113,8 +121,13 @@
                         </div>
 					</div>
 				</div>
+				<br>
+				<div id="transboxDiv">
+            	<div id="causeCodeTable">
+            	</div>
 			</div>
-            <div id="causeCodeTable"></div>
+			
+            </div>
 		</div>
 		
 		<div id="failCount">
@@ -161,7 +174,10 @@
 						</div>
 					</div>
 					</div>
-					<div id='countImsiTablePeter'></div>
+					<br>
+					<div id="failTransboxDiv">
+						<div id='countImsiTablePeter'></div>
+                    </div>
                     </div>
 
 			</div>
@@ -173,10 +189,8 @@
 
 	</div>
 	<!-- /#wrapper -->
-
-	<table class="table" id='table' name='table'>
-		<div id="butDiv"></div>
-	</table>
+	
+	
 	
     
 <script>
@@ -205,6 +219,8 @@ var $table = $('#causeCodeTable');
 <script>    
 /*getting cause code by imsi*/
     $('#causeCodeImsiSubmit').click(function(e){
+    var $table = $('#causeCodeTable');
+    $table.empty();
 	var x = document.getElementById("causeCodeImsi");
 	var selectedOption = x.options[x.selectedIndex].text;
 	  $.ajax({
@@ -216,7 +232,7 @@ var $table = $('#causeCodeTable');
  	 			createCauseCodeTable();
 //  	 			createCauseCodeButton();
  	 			$.each(data, function(key, value){
- 	 				alert(value);
+ 	 				//alert(value);
  	 				$('#viewCauseCode').find('tbody').append('<tr><td>'+value+'</td></tr>');
  	 	 			});
  	 			$('#viewCauseCode').dataTable();
@@ -226,6 +242,8 @@ var $table = $('#causeCodeTable');
         
    
     function createCauseCodeTable(){
+    	var box= document.getElementById('transboxDiv');
+    	box.setAttribute("class","transboxTable");
     	var tableDiv = document.getElementById('causeCodeTable')
  		var divContainer = document.createElement('div');
  		divContainer.setAttribute('class', 'table-responsive');
@@ -237,7 +255,7 @@ var $table = $('#causeCodeTable');
  		var body = document.createElement('tbody');
  		var row = document.createElement('tr');
  		var colOne=document.createElement('td');
- 		colOne.innerHTML = 'IMSI';
+ 		colOne.innerHTML = 'Cause Code';
  		row.appendChild(colOne);
  		header.appendChild(row);
  		table.appendChild(header);
@@ -250,9 +268,15 @@ var $table = $('#causeCodeTable');
 </script>		
 
 <script>
+
+// add imsi to event/id dropdown
+
 var $table = $('#table');
 	$(function(){
-    var $select = $('#ID');
+
+
+    var $select = $('#eventImsi');
+
 	$.ajax({
 		type: 'GET',
 		url:'http://localhost:8080/project/rest/failedcalldata/imsi',
@@ -296,14 +320,21 @@ $(function(){
 </script>
 
 <script>
+
+// ajax for event/id
+
 $(function(){
-	$( "#submit" ).click(function(e) {
+
+
+	$( "#eventSubmit" ).click(function(e) {
 	
 	removeData();	
-	var x=document.getElementById("ID");
+	var x=document.getElementById("eventImsi");
 	var selected=x.options[x.selectedIndex].text;
-	createTable();
-	createButton();
+
+	createEventTable();
+	createEventButton();
+
 	$.ajax({
 		type:'GET',
 		url:'http://localhost:8080/project/rest/failedcalldata/imsi/'+selected,
@@ -319,8 +350,12 @@ $(function(){
 	  });
    });
 });
-function createTable(){
-	
+
+
+
+function createEventTable(){
+	var box= document.getElementById('eventTransboxDiv');
+	box.setAttribute("class","transboxTable");
 	var row=document.createElement('tr');
 	row.setAttribute('id', 'head');
 	var colOne=document.createElement('th');
@@ -338,7 +373,9 @@ function createTable(){
 	$table.append(row);
 	
 }
-function createButton(){
+
+
+function createEventButton(){
 	var butDiv=document.createElement('div');
 	butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
 	var button=document.createElement(button);
@@ -354,6 +391,18 @@ function createButton(){
 }
 function removeData(){
 	
+	$table.empty();
+	$('#countImsiTablePeter').empty();
+	$('#causeCodeTable').empty();
+	
+	
+}
+	
+
+
+function removeEventData(){
+	var removeHead=document.getElementById('head');
+	var removeButton=document.getElementById('tableButton');
 	$table.empty();
 	$('#countImsiTablePeter').empty();
 	$('#causeCodeTable').empty();
@@ -386,6 +435,8 @@ $(function(){
    });
 });
 function createCountTable(){
+	var box= document.getElementById('failTransboxDiv');
+	box.setAttribute("class","transboxTable");
 	var tableDiv = document.getElementById('countImsiTablePeter')
 		var divContainer = document.createElement('div');
 		divContainer.setAttribute('class', 'table-responsive');
@@ -397,7 +448,7 @@ function createCountTable(){
 		var body = document.createElement('tbody');
 		var row = document.createElement('tr');
 		var colOne=document.createElement('td');
-		colOne.innerHTML = 'COUNT';
+		colOne.innerHTML = 'Number of call failures';
 		row.appendChild(colOne);
 		header.appendChild(row);
 		table.appendChild(header);
@@ -407,6 +458,8 @@ function createCountTable(){
 	
 	
 }
+
+
     
 var divs = ["event/cause","failCount","causeCodes"];
 	var visibleDiv = null;

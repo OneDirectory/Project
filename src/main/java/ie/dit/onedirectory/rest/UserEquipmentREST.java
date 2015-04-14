@@ -45,11 +45,11 @@ public class UserEquipmentREST {
 	}
 	
 	/**
-	 * Get rewuesst with the specified path
+	 * A get request with the specified path
 	 * @return a json collection of all models from user equipment
 	 */
 	@GET
-	@Path("/{getAllModelsFromUserEquipment}")
+	@Path("/getAllModelsFromUserEquipment")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<UserEquipment> getAllModelsFromUserEquipment(){
 		return service.getAllModelsFromUserEquipment();		
