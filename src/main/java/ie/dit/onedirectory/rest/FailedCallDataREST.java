@@ -353,8 +353,11 @@ public class FailedCallDataREST {
 				break;
 			}
 		}
+		
 		stream.close();
+		
 		workbook.close();
+		
 		return Response.temporaryRedirect(new URI("../adminPage.jsp")).build();
 	}
 

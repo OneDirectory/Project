@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.transaction.UserTransaction;
 
 import ie.dit.onedirectory.dao.EventCauseDAO;
@@ -52,7 +53,7 @@ public class EventCauseTest {
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
-
+	
 	@PersistenceContext
 	private EntityManager em;
 

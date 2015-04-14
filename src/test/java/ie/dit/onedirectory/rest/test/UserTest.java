@@ -27,7 +27,6 @@ import javax.ws.rs.core.UriBuilder;
 
 import static com.jayway.restassured.RestAssured.*;
 
-
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.config.LogConfig;
 import com.jayway.restassured.http.ContentType;
@@ -36,6 +35,7 @@ import com.jayway.restassured.parsing.Parser;
 import com.jayway.restassured.matcher.RestAssuredMatchers.*;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -144,5 +144,10 @@ public class UserTest {
 		.post("/rest/user/add");	
 	}
 	 */
+	
+	@Test
+	public void test() {
+		assertTrue(true);
+	}
 
 }

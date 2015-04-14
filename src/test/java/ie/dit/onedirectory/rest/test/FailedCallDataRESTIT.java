@@ -3,11 +3,13 @@ package ie.dit.onedirectory.rest.test;
 import static com.jayway.restassured.RestAssured.config;
 import static com.jayway.restassured.RestAssured.expect;
 import static com.jayway.restassured.RestAssured.given;
+import static org.junit.Assert.*;
 import ie.dit.onedirectory.services.FailedCallDataServiceLocal;
 import ie.dit.onedirectory.services.UserServiceLocal;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -78,7 +80,7 @@ public class FailedCallDataRESTIT{
 		RestAssured.port = 8080;
 
 	}
-
+	
 	@Test
 	public void testFailedCallDateGet() {
 		expect()
@@ -198,6 +200,19 @@ public class FailedCallDataRESTIT{
 		.get("/rest/failedcalldata/imsibyfailureclass/{failureID}");
 
 	}
+	
+	@Test 
+	public void testUploadFailedCallData() throws URISyntaxException, IOException {
+		String location = given()
+				.multiPart("selectedFile", new File(TEST_FILE))
+				.expect()
+				.statusCode(307)
+				.log().ifError()
+				.when()
+				.post("/rest/failedcalldata/upload").getHeader("Location");	
+
+		//assertTrue(location.contains("../adminPage.jsp"));
+	}
 
 	@Test
 	public void testGetFailedCallDataByModel(){
@@ -223,15 +238,6 @@ public class FailedCallDataRESTIT{
 		.get("/rest/failedcalldata/topTenMOCombinations/{dates}");
 	}
 
-	@Test 
-	public void testUploadFailedCallData() throws IOException {
-		given()
-		.multiPart("selectedFile", new File(TEST_FILE))
-		.expect()
-		.statusCode(307)
-		.log().ifError()
-		.when()
-		.post("/rest/failedcalldata/upload");	
-	}
+
 
 }
