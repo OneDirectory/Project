@@ -4,11 +4,11 @@
 
 body.index {
 	
- background: url(../img/cellular.png);
+ background: url(../img/world.jpg);
 }
 
 body.adminPage {
- background: url(../img/cellular.png);
+ background: url(../img/face.jpg);
 }
 
 body.importPage {
@@ -16,7 +16,7 @@ body.importPage {
 }
 
 body.support_engineer {
-  background: url(../img/cellular.png);
+  background: url(../img/fibre.jpg);
 }
 
 label {
@@ -76,6 +76,20 @@ div.transbox {
   border-radius: 15px;
   border:solid 1px black; 
   padding:5px;
+  }
+  
+  div.transboxindex {
+  width:500px;
+  height:350px;
+  margin:px -10px;
+  background-color:#013F6A;
+  border:1p;
+  opacity:0.85;
+  filter:alpha(opacity=60);
+    -moz-border-radius: 15px;
+ border-radius: 15px;
+    border:solid 1px black; 
+    padding:5px;
   }
 
 div.imagebox {

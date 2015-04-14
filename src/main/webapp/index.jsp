@@ -25,8 +25,9 @@
 	<!--<div class="container" "col-md-4 col-md-offset-4">-->
 	<form action="http://localhost:8080/project/LoginServlet" id='form' method="post" onsubmit="return check_form();">
 		<div class="col-md-4 col-md-offset-2">
-
-			<h2 class="form-signin-heading">Please sign in</h2>
+			<div class="transboxindex">
+							<br>
+			<h2>Please sign in</h2>
 			<br> <input id="id" name="id" type="number" placeholder="UserID"
 				class="form-control" required autofocus> <br> <input
 				name="pass" id="pass" type="password" placeholder="Password"
@@ -35,6 +36,7 @@
 			<button class="btn btn-lg btn-primary btn-block" name="submit"
 				id="submit" value="Login">Log In</button>
 			<br>
+			</div>
 			</div>
 	</form>
 
