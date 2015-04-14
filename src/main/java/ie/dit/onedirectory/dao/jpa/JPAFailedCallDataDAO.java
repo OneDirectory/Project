@@ -220,13 +220,15 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	/**
 	 * Returns a count of failed calls for a particular imsi between two points in time
 	 */
-	public Collection<?> getCountFailedCallsInTimePeriodByImsi(String imsi,
+	public Long getCountFailedCallsInTimePeriodByImsi(String imsi,
 			Date fromDate, Date toDate) {
-		Query query = entityManager.createQuery("Select f.imsi, f.id, count(f.id), from FailedCallData f" + 
-			" where f.dateTime between :fromDate and :toDate" +
-				" group by f.imsi");
+		Query query = entityManager.createQuery("Select count(f.id) from FailedCallData f" + 
+			" where f.imsi = :imsi" + 
+				" and f.dateTime between :fromDate and :toDate");
 		query.setParameter("imsi", imsi);
-		return query.getResultList();
+		query.setParameter("fromDate", fromDate, TemporalType.DATE);
+		query.setParameter("toDate", toDate, TemporalType.DATE);
+		return (Long) query.getSingleResult();
 	}
 
 }

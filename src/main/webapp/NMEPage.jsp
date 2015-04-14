@@ -68,12 +68,21 @@
 							per Model</a></li>
 					<li><a href="#" onclick="toggle('topTen');">Top 10 Market,
 							Operator & Cell ID</a></li>
-					<li class="sidebar-brand"><a href="/project/SEPage.jsp">Software
+					<li class="sidebar-brand"><a href="#"> Software Engineer </a></li>
+					<!-- Fix these links! -->
+					<li><a href="#" onclick="toggle('briansQuery');">Total number of Failures per Model</a></li>
+					<li><a href="#" onclick="toggle('johnsQuery');">All IMSIs with Failed Call Data</a></li>
+					<li><a href="#" onclick="toggle('imsisForFailreClassDiv');">All IMSIs for a FailureClass</a></li>
+					<li class="sidebar-brand"><a href="#"> Customer Service Rep. </a></li>
+					<!-- Fix these links! -->
+					<li><a href="#" onclick="toggle('id/causecode');">EventID/CauseCode per IMSI</a></li>
+               		<li><a href="#" onclick="toggle('causeCodes');">Cause Codes per IMSI</a>
+                	<li><a href="#" onclick="toggle('failCount');">Count of Call Failures per IMSI</a>
+					<!--   <li class="sidebar-brand"><a href="/project/SEPage.jsp">Software
 							Engineer</a></li>
 					<li class="sidebar-brand"><a href="/project/CSRPage.jsp">Customer
-							Service Rep.</a></li>
-					<li><a href="http://localhost:8080/project/LogoutServlet">Log
-							out</a></li>
+							Service Rep.</a></li> -->
+					<li><a href="http://localhost:8080/project/LogoutServlet"> Log out </a></li>
 				</ul>
 				<br>
 			</div>
@@ -84,6 +93,7 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-lg-12">
+						<div class = "transbox"><br>
 							<h1>Total number of failures per IMSI</h1>
 							<div class="form-horizontal">
 								<div class="form-group">
@@ -109,12 +119,12 @@
 									</div>
 								</div>
 							</div>
+							</div>
 						</div>
 					</div>
 					<div id='tableForImsiCountDiv'></div>
 				</div>
 
-				<!-- /#page-content-wrapper -->
 			</div>
 			<!-- /#wrapper -->
 
@@ -122,6 +132,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-12">
+						<div class = "transbox"><br>
 							<h1>Call Failures by Model</h1>
 							<div class="form-horizontal">
 								<div class="form-group">
@@ -140,15 +151,17 @@
 								</div>
 							</div>
 						</div>
+						</div>
 					</div>
 				</div>
 				<div id='tableForModelQuery'></div>
 			</div>
-			
+
 			<div id="topTen">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
+					<div class="transbox"><br>
 						<h1>Top Ten Market, Operator, Cell combinations</h1>
 						<div class="form-horizontal">
 							<div class="form-group">
@@ -178,14 +191,20 @@
 				</div>
 				<div id='tableForTopTen'></div>
 				<!--<div id='graphForTopTen'></div>  -->
+					<div id='tableForTopTen'></div>
+				<div id='graphForTopTen'></div>
+				</div>
+				
+				</div>
 			</div>
+		</div>
+		<!-- /#page-content-wrapper -->
 
-		</div>
-			
-		</div>
 
 		
 	</div>
+	
+	
 	<script>
 		$(function() {
 
@@ -302,6 +321,7 @@
 			var removeHead = document.getElementById('head');
 			var removeButton = document.getElementById('tableButton');
 			$('#tableForImsiCountDiv').empty();
+			$('#tableForTopTen').empty();
 
 		}
 	</script>
