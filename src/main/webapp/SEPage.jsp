@@ -26,7 +26,7 @@
 </head>
 
 
-<body class="support_engineer">
+<body class="adminPage">
 <%
 	String user = null;
 	if(session.getAttribute("user")==null){
@@ -60,10 +60,7 @@
 				<li><a href="#" onclick="toggle('briansQuery');">Total number of Failures per Model</a></li>
 				<li><a href="#" onclick="toggle('johnsQuery');">All IMSIs with Failed Call Data</a></li>
 				<li><a href="#" onclick="toggle('imsisForFailreClassDiv');">All IMSIs for a FailureClass</a></li>
-				<li class="sidebar-brand"><a href="#">Customer Service Rep Enq</a></li>
-				<li><a href="#" onclick="toggle('id/causecode');">EventID/CauseCode per IMSI</a></li>
-                <li><a href="#" onclick="toggle('causeCodes');">Cause Codes per IMSI</a>
-                <li><a href="#" onclick="toggle('failCount');">Count of Call Failures per IMSI</a>
+				<li class="sidebar-brand"><a href="CSRPage.jsp">Customer Service Rep Enq</a></li>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
@@ -81,7 +78,7 @@
                     <div class="form-horizontal">
                         
 						<div class="form-group" id="myDiv">
-								<label class="control-label col-sm-2" for="ID">Model:</label>
+								<label class="control-label col-sm-2" for="ID">Model</label>
                             <div class="col-sm-5">
                             <select class="form-control" id="ID" placeholder="Select a model.."
 									autofocus>
@@ -114,8 +111,8 @@
                             </div>
 						</div>
 					</div>
-					</div>
-                    </div>
+				</div>
+                </div>
 
 			</div>
 		</div>
@@ -131,7 +128,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="transbox">
+                    <div class="transbox">
 						<br>
 					<h1>Call Failures</h1>
                     <div class ="form-horizontal">
@@ -156,8 +153,9 @@
 						<br>
 						<button id="submitJohn" type="submit" class="btn btn-primary">Search</button>
 					</div>
-					</div>
+
 				</div>
+                    </div>
                     </div>
 			</div>
 		</div>
@@ -169,7 +167,7 @@
             <div class = 'container-fluid'>
                 <div class="row">
                     <div class="col-lg-12">
-                    <div class="transbox">
+                        <div class="transbox">
 						<br>
 					<h1>All IMSIs for Failure Class</h1>
                     <div class ="form-horizontal">
@@ -187,112 +185,27 @@
                       
 			<div id="imsisTableForFailreClassDiv">
 			</div>
-             </div>        
+               </div>       
 		</div>
 		</div>
 	</div>
         </div>
         
-      <div id="id/causecode">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-					<div class="transbox">
-						<br>
-						<h1>Search EventId/CauseCode by IMSI</h1>
-						<div class="form-horizontal">
-                            <div class="form-group">
-							<label class="control-label col-sm-2" for="ID">IMSI:</label>
-                                <div class="col-sm-5">
-                                <select class="form-control" id="imsiSelect"> </select>
 
-							<div class="form-group">
-								<div class="col-sm-offset-4 col-sm-10">
-									<br>
-									<button id='id/causecodesubmit' type='submit' class="btn btn-primary">Search</button>
-								</div>
-							</div>
-						</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-    </div>
- </div>
 		<!-- /#page-content-wrapper -->
 
 	
 	<!-- /#wrapper -->
 
 
-	<table class="table" id='causeCodeTable' name='table'>
-
-		<div id="butDiv"></div>
-	</table>
-    
-      <div id="causeCodes">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12" id='container'>
-                        <div class="transbox">
-						<br>
-						<h1>All Cause Codes for IMSI</h1>
-                        <div class="form-horizontal">
-						<div class="form-group" id="myDiv">
-							<label class="control-label col-sm-2" for="ID">IMSI:</label> 
-                            <div class="col-sm-5">
-                            <select class="form-control" id="causeCodeImsi"></select>
-                                </div>
-                            </div>
-
-							<div class="form-group">
-								<div class="col-sm-offset-4 col-sm-10">
-									<br>
-									<button id='causeCodeImsiSubmit' name='submit' class="btn btn-primary">Search</button>
-								</div>
-							</div>
-						</div>
-                        </div>
-					</div>
-				</div>
-			</div>
-            <div id="causeCodeTable"></div>
-		</div>
-        
-        	<div id="failCount">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-12">
-                    <div class="transbox">
-						<br>
-					<h1>Count of Call Failures by IMSI</h1>	
-                    <div class="form-horizontal">
-                        
-                        <div class="from-group">
-						<label class="control-label col-sm-2" for="imsiInput">IMSI: </label>
-                        <div class="col-sm-5">
-							<select class="form-control" id="imsiInput"></select>
-						</div>	
-                        </div>
-                        
-                        <div class="form-group">
-						<div class="col-sm-offset-4 col-sm-10">
-                            <br>
-							<button id="countSubmit" type="submit" class="btn btn-primary">Search</button>
-						</div>					
-				    </div>
-			     </div>
-                </div> 
-		      </div>	
-		<!--  </div>
-				<div id='tableForCountQuery' ></div>
-			</div> -->
-            </div>
-        </div>
+	
+                           
+        	
+                     
+						
 	</div>
     
-	</div>
+
 		<!-- /#wrapper -->
 
     
@@ -319,10 +232,10 @@ var $table = $('#causeCodeTable');
 				$select.append(option);			
 				}					
 			}
-		})
+		});
 	});
-    </script>
     
+    </script>
     
 <script>    
 /*getting cause code by imsi*/
@@ -342,7 +255,7 @@ var $table = $('#causeCodeTable');
  	 			createCauseCodeTable();
 //  	 			createCauseCodeButton();
  	 			$.each(data, function(key, value){
- 	 				alert(value);
+ 	 				//alert(value);
  	 				$('#viewCauseCode').find('tbody').append('<tr><td>'+value+'</td></tr>');
  	 	 			});
  	 			$('#viewCauseCode').dataTable();
@@ -351,7 +264,7 @@ var $table = $('#causeCodeTable');
        });
         
    
-     function createCauseCodeTable(){
+    function createCauseCodeTable(){
     	var tableDiv = document.getElementById('causeCodeTable')
  		var divContainer = document.createElement('div');
  		divContainer.setAttribute('class', 'table-responsive');
@@ -395,9 +308,7 @@ var $table = $('#causeCodeTable');
 
     }
 
-</script>		    
-    
-
+</script>		
 <script>
 $(function(){
 	
@@ -489,11 +400,11 @@ function createImsiFailureClassTable(){
 
  </script>
  
-<!-- Add all IMSIs to list for peters -->
+ <!-- Add all IMSIs to list? -->
 <script>
 
 $(function(){
-	var $select = $('#imsiInput');
+	var $select = $('#imsiSelect');
 	$.ajax({
 		type: 'GET',
 		url:'http://localhost:8080/project/rest/failedcalldata/imsi',
@@ -511,89 +422,6 @@ $(function(){
 		});
 	});
 </script>
-
-//table for the count for peter's
-<script>
-$(function(){
-
-	$( "#countSubmit" ).click(function(e) {
-	
-	removeCountData();	
-	removeData();
-	$('#countImsiTablePeter').empty();
-	//removeCauseCodeData();
-	var fromDate=$('#failCountFrom').val();
-	var toDate=$('#failCountTo').val();
-	var x=document.getElementById("imsiInput");
-	var selected=x.options[x.selectedIndex].text;
-
-	createCountTable();
-	
-
-	$.ajax({
-
-        type:'GET',
-        url: 'http://localhost:8080/project/rest/failedcalldata/getCountFailedCallsInTimePeriodByImsi/'+selected+'£'+fromDate+'£'+toDate,
-        dataType: 'json',
-        contentType: "application/json",
-        success:function(data){
-        	$('#countTable').find('tbody').append('<tr><td>'+data+'</td></tr>'); 	 		
-        }
-      });
-	
-   });
-});
-
-function createCountTable(){
-	var tableDiv = document.getElementById('countImsiTablePeter')
-		var divContainer = document.createElement('div');
-		divContainer.setAttribute('class', 'table-responsive');
-		divContainer.setAttribute('id', 'divContainer');
-		var table=document.createElement('table');
-		table.setAttribute('class', 'table table-striped');
-		table.setAttribute('id', 'countTable');
-		var header = document.createElement('thead');
-		var body = document.createElement('tbody');
-		var row = document.createElement('tr');
-		var colOne=document.createElement('td');
-		colOne.innerHTML = 'COUNT';
-
-		row.appendChild(colOne);
-		header.appendChild(row);
-		table.appendChild(header);
-		table.appendChild(body);
-		divContainer.appendChild(table);
-		tableDiv.appendChild(divContainer);
-
-	
-	
-}
-
-function createCountButton(){
-
-	var butDiv2=document.createElement('div');
-	butDiv2.setAttribute('class', "col-sm-offset-12 col-sm-10");
-	var countButton=document.createElement("button");
-	countButton.setAttribute('id', 'countTableButton');
-	countButton.setAttribute('class','btn btn-primary');
-	countButton.setAttribute('position', 'absolute');
-	countButton.setAttribute('top', '50%');
-	countButton.innerHTML='Search Again';
-	countButton.addEventListener('click', removeCountData);
-	butDiv2.appendChild(countButton);
-	$countTable.append(butDiv2);
-	
-}
-
-
-function removeCountData(){
-	var removeHead=document.getElementById('countHead');
-	var removeButton=document.getElementById('countTableButton');
-	$('#countImsiTablePeter').empty();
-}
-
-</script>
-
 <script>
 	var $causeCodeTable = $('#causeCodeTable');
 		$(function(){
@@ -853,7 +681,7 @@ $(function(){
  		
  	}
 
- 	var divs = ["johnsQuery","briansQuery","imsisForFailreClassDiv","id/causecode","causeCodes","failCount"];
+ 	var divs = ["johnsQuery","briansQuery","imsisForFailreClassDiv"];
 	var visibleDiv = null;
 	 var $tableJohn = $('#tableJohn');
 	 var $table = $('#tableBrian');
@@ -863,9 +691,6 @@ $(function(){
 		document.getElementById("johnsQuery").style.display='none';
 		document.getElementById("briansQuery").style.display='none';
 		document.getElementById("imsisForFailreClassDiv").style.display='none';
-		document.getElementById("id/causecode").style.display='none';
-        document.getElementById("causeCodes").style.display='none';
-        document.getElementById("failCount").style.display='none';
 
 	});
 

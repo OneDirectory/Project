@@ -267,7 +267,7 @@ public class FailedCallDataREST {
 	}
 
 	@GET
-	@Path("/topTenMOCombinations/{dates:.+}")
+	@Path("/topTenMOCombinations/{dates}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<?> getTopTenMarketOperatorCellIDCombinations(
 			@PathParam("dates") String dateString) throws ParseException{
@@ -280,7 +280,6 @@ public class FailedCallDataREST {
 		Date to = sdf1.parse(toDate);
 		java.sql.Date sqlDateFrom = new java.sql.Date(from.getTime());
 		java.sql.Date sqlDateTo = new java.sql.Date(to.getTime());
-
 		return service.getTopTenMarketOperatorCellIDCombinations(sqlDateFrom, sqlDateTo);
 		
 	}

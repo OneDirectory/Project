@@ -30,51 +30,225 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 
-<script>
+
+<body class="adminPage">
+	<%
+		String user = null;
+		if(session.getAttribute("user")==null){
+			response.sendRedirect("index.jsp");
+		}else user = (String) session.getAttribute("user");
+		String userName = null;
+		String sessionID = null;
+		Cookie[] cookies = request.getCookies();
+		if(cookies !=null){
+		for(Cookie cookie : cookies){
+	    if(cookie.getName().equals("user")) userName = cookie.getValue();
+	    if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+		}
+	}
+	%>
+	
+	
+		<div class="page-header">
+			<br>
+			<h2>
+				Group One - One Directory <small>Project</small>
+			</h2>
+			<h2>Network Management Engineer Page</h2>
+		</div>
+
+		<div id="wrapper">
+			<!-- Sidebar -->
+			<div id="sidebar-wrapper">
+				<ul class="sidebar-nav">
+					<li class="sidebar-brand"><a href="#"> Menu </a></li>
+					<li><a href="#" onclick="toggle('imsiCount');">Duration/FailureCount per IMSI</a></li>
+					<li><a href="#" onclick="toggle('modelCount');">EventId/CauseCode per Model</a></li>
+					<li><a href="#" onclick="toggle('topTen');">Top 10 Market,Operator & Cell ID</a></li>
+					<li><a href="#" onclick="toggle('topTenImsi');">Top 10 IMSIs</a></li>
+					<li class="sidebar-brand"><a href="SEPage.jsp">Software Engineer</a></li>
+					<li class="sidebar-brand"><a href="CSRPage.jsp">Customer Service Rep</a></li>
+					<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
+				</ul>
+				<br>
+			</div>
+			<!-- /#sidebar-wrapper -->
+			
+		<!-- Page Content -->
+		<div id="imsiCount">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12" id='container'>
+					<div class = "transbox"><br>
+					<br>
+						<h1>Total number of failures per IMSI</h1>
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="ID">From:</label>
+								<div class="col-sm-5">
+									<input type="datetime-local" id='from' class="form-control"
+										name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="ID">To:</label>
+								<div class="col-sm-5">
+									<input type="datetime-local" id='to' class="form-control"
+										name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-10">
+									<br>
+									<button id="submit" type="submit" class="btn btn-primary">Search</button>
+								</div>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+				<div id='tableForImsiCountDiv'></div>
+			</div>
+
+		</div>
+
+		<div id="modelCount">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class = "transbox"><br>
+							<h1>Call Failures by Model</h1>
+							<div class="form-horizontal">
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="modelInput">Model:
+									</label>
+									<div class="col-sm-5">
+										<select class="form-control" id="modelInput">
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-4 col-sm-10">
+										<br>
+										<button id="modelSubmit" type="submit" class="btn btn-primary">Search</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id='tableForModelQuery'>
+			</div>
+		</div>
+
+		<div id="topTen">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+					<div class="transbox"><br>
+						<h1>Top Ten Market, Operator, Cell Combinations</h1>
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="ID">From:</label>
+								<div class="col-sm-5">
+									<input type="datetime-local" id='fromDate' class="form-control"
+										name="fromDate" placeholder="dd-mm-yyyy hh:mm" autofocus>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="ID">To:</label>
+								<div class="col-sm-5">
+									<input type="datetime-local" id='toDate' class="form-control"
+										name="toDate" placeholder="dd-mm-yyyy hh:mm" autofocus>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-10">
+									<br>
+									<button id="topTenSubmit" type="submit" class="btn btn-primary">Search</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id='tableForTopTen'>
+					</div>
+					<div id='graphForTopTen'>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="topTenImsi">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+					<div class="transbox">
+						<h1>Top Ten IMSIs in Time Period</h1>
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="ID">From:</label>
+								<div class="col-sm-5">
+									<input type="datetime-local" id='fromTopTenImsiDate' class="form-control"
+										name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="ID">To:</label>
+								<div class="col-sm-5">
+									<input type="datetime-local" id='toTopTenImsiDate' class="form-control"
+										name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="col-sm-offset-4 col-sm-10">
+									<br>
+									<button id="topTenImsiButton" type="submit"
+										class="btn btn-primary">Search</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id='tableForTopTenImsiDates'>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		</div>
+
+		
+		<script>
+
+		var divs = [ "imsiCount", "modelCount", "topTen", "topTenImsi" ];
+		var visibleDiv = null;
+		console.log(divs);
 	 	function removeData(){
 	 		var removeHead=document.getElementById('head');
 	 		var removeButton=document.getElementById('tableButton');
 	 		$('#tableForImsiCountDiv').empty();	
 	 		$('#tableForModelQuery').empty();
 	 		$('#tableForTopTen').empty();	
-	 		$('#tableForTopTenImsi').empty();
+	 		$('#tableForTopTenImsiDates').empty();
 	 	}
-	
-		$(function(){
-		    var $select = $('#modelInput');
-		    $.ajax({
-		        type: 'GET',
-	    	    url:'http://localhost:8080/project/rest/userequipment/getAllModelsFromUserEquipment',
-	        	success: function(mydata){
-	            	var data=mydata;
-	            	var length=data.length;
-		            for(var i=0; i<length; i++){
-		                var x=data[i];
-	    	            var option=document.createElement('option');	
-	        	        option.text=x;	
-	            	    $select.append(option);			
-	                }					
-	            }
-	        });
-	    });
-
-	    var divs = [ "imsiCount", "modelCount", "topTen", "topTenImsi" ];
-		var visibleDiv = null;
-		var $modelTable = $('#tablePeter') 
-		var indexFrom = 0;
-		var indexTo = 5
-		var fromDate;
-		var toDate;
-
+	 	
 		$(function() {
 			document.getElementById("imsiCount").style.display='none';
 			document.getElementById("modelCount").style.display='none';
 			document.getElementById("topTenImsi").style.display='none';
 			document.getElementById("topTen").style.display = 'none';
 		});
-
-
+		
 		function toggle(divId) {
+			console.log("it is there");
 			removeData();
 			if (visibleDiv === divId) {
 				visibleDiv = null;
@@ -98,6 +272,31 @@
 				}
 			}
 		}
+		  
+
+
+		
+</script>
+	
+	<script>
+		$(function(){
+		    var $select = $('#modelInput');
+		    $.ajax({
+		        type: 'GET',
+	    	    url:'http://localhost:8080/project/rest/userequipment/getAllModelsFromUserEquipment',
+	        	success: function(mydata){
+	            	var data=mydata;
+	            	var length=data.length;
+		            for(var i=0; i<length; i++){
+		                var x=data[i];
+	    	            var option=document.createElement('option');	
+	        	        option.text=x;	
+	            	    $select.append(option);			
+	                }					
+	            }
+	        });
+	    });
+		
 		$(function() {
 			$("#submit").click(function(e) {
 				removeData();
@@ -175,11 +374,11 @@
 					type : 'GET',
 					url : myurl,
 					success : function(data) {
-						if (isValid && data.length > 0) {
+						if (isValid && data.length>0) {
 							createTopTenTable();
 							createTopTenButton();
 							$.each(data,function(key,value) {
-								$('#topTenMO tr:last')find("tbody").append('<tr><td>'+ value[0]+ '</td><td>'+ value[1]+ '</td><td>'+ 
+								$('#topTenMO tr:last').find("tbody").append('<tr><td>'+ value[0]+ '</td><td>'+ value[1]+ '</td><td>'+ 
 										value[2]+ '</td><td>'+ value[3]+ '</td><td>'+ value[4]+ '</td><td>'+ value[5]+ '</td></tr>');
 							});
 							isValid = false;
@@ -194,8 +393,12 @@
 
 		$( function(){
 			$("#topTenImsiButton").click(function(e) {
+				removeData();
 				fromDate=$('#fromTopTenImsiDate').val();
 				toDate=$('#toTopTenImsiDate').val();
+				
+				
+				
 				var topTenUrl;
 				var isValid=false;
 				if(validateEntry(fromDate, toDate)){	
@@ -211,13 +414,13 @@
 		 			url: topTenUrl,
 		 			success: function(data){
 		 		 		if(isValid && data.length>0){
-		 	 				createTableTopTenImsi();
+		 		 			createTableTopTenImsi();
 		 	 				createTopTenImsiButton();
 		 	 				$.each(data, function(key, value){
-		 	 					$('#tableForTopTenImsiDates').find('tbody').append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');
+		 	 					$('#topTenImsiTable tr:last').find('tbody').append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');
 		 	 	 			});
 			 	 			isValid=false;
-			 	 			$('#tableForTopTenImsiDates').dataTable();
+			 	 			$('#topTenImsiTable').dataTable();
 		 	 	 		}
 		 	 			else if(isValid && data.length===0){
 							alert('No available data for selected dates');
@@ -361,20 +564,20 @@
 		}
 
 		function createTableTopTenImsi(){
-			var tableDiv = document.getElementById('tableForTopTenImsi')
+			var tableDiv = document.getElementById('tableForTopTenImsiDates')
 	 		var divContainer = document.createElement('div');
 	 		divContainer.setAttribute('class', 'table-responsive');
 	 		divContainer.setAttribute('id', 'divContainer');
 	 		var table=document.createElement('table');
 	 		table.setAttribute('class', 'table table-striped');
-	 		table.setAttribute('id', 'tableForTopTenImsiDates');
+	 		table.setAttribute('id', 'topTenImsiTable');
 	 		var header = document.createElement('thead');
 	 		var body = document.createElement('tbody');
 	 		var row = document.createElement('tr');
 	 		var colOne=document.createElement('td');
 	 		var colTwo=document.createElement('td');
-			colOne.innerHTML='IMSI';
-			colTwo.innerHTML='COUNT';
+			colOne.innerHTML='Count';
+			colTwo.innerHTML='IMSI';
 			row.appendChild(colOne);
 			row.appendChild(colTwo);
 	 		header.appendChild(row);
@@ -408,7 +611,7 @@
 			button.innerHTML = 'Search Again';
 			button.addEventListener('click', removeData);
 			butDiv.appendChild(button);
-			$modelTable.append(butDiv);
+			$("viewModelData").append(butDiv);
 		}
 
 		function createTopTenButton() {
@@ -423,230 +626,26 @@
 			$('#topTenMO').append(butDiv);
 		}
 
-		function createTopTenIMSIButton() {
+		function createTopTenImsiButton() {
 			var butDiv = document.createElement('div');
 			butDiv.setAttribute('class', "col-sm-offset-12 col-sm-10");
 			var button = document.createElement(button);
-			button.setAttribute('id', 'topTenTableButton');
+			button.setAttribute('id', 'topTenTableImsiButton');
 			button.setAttribute('class', 'btn btn-primary');
 			button.innerHTML = 'Search Again';
 			button.addEventListener('click', removeData);
 			butDiv.appendChild(button);
-			$('#tableForTopTenImsiDates').append(butDiv);
+			$('#topTenImsi').append(butDiv);
 		}
 
 </script>
 
 
-<body class="adminPage">
 
-	<%
-	String user = null;
-	if(session.getAttribute("user")==null){
-		response.sendRedirect("index.jsp");
-	}else user = (String) session.getAttribute("user");
-	String userName = null;
-	String sessionID = null;
-	Cookie[] cookies = request.getCookies();
-	if(cookies !=null){
-	for(Cookie cookie : cookies){
-    if(cookie.getName().equals("user")) userName = cookie.getValue();
-    if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
-	}
-	}
-	%>
-	<div>
-		<div class="page-header">
-			<br>
-			<h2>
-				Group One - One Directory <small>Project</small>
-			</h2>
-			<h2>Network Management Engineer Page</h2>
-		</div>
+<script>
 
-		<div id="wrapper">
-			<!-- Sidebar -->
-			<div id="sidebar-wrapper">
-				<ul class="sidebar-nav">
-					<li class="sidebar-brand"><a href="#"> Menu </a></li>
-					<li><a href="#" onclick="toggle('imsiCount');">Duration/FailureCount per IMSI</a></li>
-					<li><a href="#" onclick="toggle('modelCount');">EventId/CauseCode per Model</a></li>
-					<li><a href="#" onclick="toggle('topTen');">Top 10 Market, Operator & Cell ID with Call Failures</a></li>
-					<li><a href="#" onclick="toggle('topTenImsi');">Top Ten IMSIs with Call Failures</a></li>
-					<li class="sidebar-brand"><a href="#"> Software Engineer </a></li>
-					<!-- Fix these links! -->
-					<li><a href="#" onclick="toggle('briansQuery');">Total number of Call Failures per Model</a></li>
-					<li><a href="#" onclick="toggle('johnsQuery');">All IMSIs with Call Failures</a></li>
-					<li><a href="#" onclick="toggle('imsisForFailreClassDiv');">All	IMSIs per FailureClass</a></li>
-					<li class="sidebar-brand"><a href="#"> Customer Service	Rep. </a></li>
-					<!-- Fix these links! -->
-					<li><a href="#" onclick="toggle('id/causecode');">Event ID & Cause Codes per IMSI</a></li>
-					<li><a href="#" onclick="toggle('causeCodes');">Cause Codes per IMSI</a></li>
-					<li><a href="#" onclick="toggle('failCount');">Count of	Call Failures per IMSI</a></li>
-					<!--   <li class="sidebar-brand"><a href="/project/SEPage.jsp">Software
-							Engineer</a></li>
-					<li class="sidebar-brand"><a href="/project/CSRPage.jsp">Customer
-							Service Rep.</a></li> -->
-					<li><a href="http://localhost:8080/project/LogoutServlet">
-							Log out
-						</a>
-					</li>
-				</ul>
-				<br>
-			</div>
-			<!-- /#sidebar-wrapper -->
 
-		<!-- Page Content -->
-		<div id="imsiCount">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-					<div class = "transbox"><br>
-						<h1>Total number of failures per IMSI</h1>
-						<div class="form-horizontal">
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="ID">From:</label>
-								<div class="col-sm-5">
-									<input type="datetime-local" id='from' class="form-control"
-										name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="ID">To:</label>
-								<div class="col-sm-5">
-									<input type="datetime-local" id='to' class="form-control"
-										name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="col-sm-offset-4 col-sm-10">
-									<br>
-									<button id="submit" type="submit" class="btn btn-primary">Search</button>
-								</div>
-							</div>
-						</div>
-						</div>
-					</div>
-				</div>
-				<div id='tableForImsiCountDiv'></div>
-			</div>
-
-			<!-- /#page-content-wrapper -->
-		</div>
-			<!-- /#wrapper -->
-
-		<div id="modelCount">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class = "transbox"><br>
-							<h1>Call Failures by Model</h1>
-							<div class="form-horizontal">
-								<div class="form-group">
-									<label class="control-label col-sm-2" for="modelInput">Model:
-									</label>
-									<div class="col-sm-5">
-										<select class="form-control" id="modelInput">
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-offset-4 col-sm-10">
-										<br>
-										<button id="modelSubmit" type="submit" class="btn btn-primary">Search</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div id='tableForModelQuery'>
-			</div>
-		</div>
-
-		<div id="topTen">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-					<div class="transbox"><br>
-						<h1>Top Ten Market, Operator, Cell combinations</h1>
-						<div class="form-horizontal">
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="ID">From:</label>
-								<div class="col-sm-5">
-									<input type="datetime-local" id='fromDate' class="form-control"
-										name="fromDate" placeholder="dd-mm-yyyy hh:mm" autofocus>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="ID">To:</label>
-								<div class="col-sm-5">
-									<input type="datetime-local" id='toDate' class="form-control"
-										name="toDate" placeholder="dd-mm-yyyy hh:mm" autofocus>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<div class="col-sm-offset-4 col-sm-10">
-									<br>
-									<button id="topTenSubmit" type="submit" class="btn btn-primary">Search</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div id='tableForTopTen'>
-					</div>
-					<div id='graphForTopTen'>
-					</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div id="topTenImsi">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<h1>Top Ten IMSIs</h1>
-						<div class="form-horizontal">
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="ID">From:</label>
-								<div class="col-sm-5">
-									<input type="datetime-local" id='fromTopTenImsiDate' class="form-control"
-										name="from" placeholder="dd-mm-yyyy hh:mm" autofocus>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="ID">To:</label>
-								<div class="col-sm-5">
-									<input type="datetime-local" id='toTopTenImsiDate' class="form-control"
-										name="to" placeholder="dd-mm-yyyy hh:mm" autofocus>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<div class="col-sm-offset-4 col-sm-10">
-									<br>
-									<button id="topTenImsiButton" type="submit"
-										class="btn btn-primary">Search</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div id='tableForTopTenImsi'>
-					</div>
-				</div>
-			</div>
-		</div>
+</script>
 		
-
-		</div><!--End of Wrapper -->
-	</div>
-
 </body>
 </html>
