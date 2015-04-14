@@ -140,7 +140,9 @@
 					</div>
 				</div>
 			</div>
-			<div id='tableForModelQuery'>
+			<div class="transbox">
+				<div id='tableForModelQuery'>
+				</div>
 			</div>
 		</div>
 
