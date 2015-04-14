@@ -68,20 +68,8 @@
 							per Model</a></li>
 					<li><a href="#" onclick="toggle('topTen');">Top 10 Market,
 							Operator & Cell ID</a></li>
-					<li class="sidebar-brand"><a href="#"> Software Engineer </a></li>
-					<!-- Fix these links! -->
-					<li><a href="#" onclick="toggle('briansQuery');">Total number of Failures per Model</a></li>
-					<li><a href="#" onclick="toggle('johnsQuery');">All IMSIs with Failed Call Data</a></li>
-					<li><a href="#" onclick="toggle('imsisForFailreClassDiv');">All IMSIs for a FailureClass</a></li>
-					<li class="sidebar-brand"><a href="#"> Customer Service Rep. </a></li>
-					<!-- Fix these links! -->
-					<li><a href="#" onclick="toggle('id/causecode');">EventID/CauseCode per IMSI</a></li>
-               		<li><a href="#" onclick="toggle('causeCodes');">Cause Codes per IMSI</a>
-                	<li><a href="#" onclick="toggle('failCount');">Count of Call Failures per IMSI</a>
-					<!--   <li class="sidebar-brand"><a href="/project/SEPage.jsp">Software
-							Engineer</a></li>
-					<li class="sidebar-brand"><a href="/project/CSRPage.jsp">Customer
-							Service Rep.</a></li> -->
+					<li class="sidebar-brand"><a href="SEPage.jsp"> Software Engineer Queries </a></li>
+					<li class="sidebar-brand"><a href="CSRPage.jsp"> Customer Service Rep Queries </a></li>
 					<li><a href="http://localhost:8080/project/LogoutServlet"> Log out </a></li>
 				</ul>
 				<br>

@@ -369,7 +369,14 @@ function createEventButton(){
 	$table.append(butDiv);
 	
 }
-
+function removeData(){
+	
+	$table.empty();
+	$('#countImsiTablePeter').empty();
+	$('#causeCodeTable').empty();
+	
+	
+}
 	
 
 
@@ -429,6 +436,8 @@ function createCountTable(){
 	
 	
 }
+
+
     
 var divs = ["event/cause","failCount","causeCodes"];
 	var visibleDiv = null;

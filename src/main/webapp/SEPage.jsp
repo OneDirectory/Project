@@ -60,10 +60,7 @@
 				<li><a href="#" onclick="toggle('briansQuery');">Total number of Failures per Model</a></li>
 				<li><a href="#" onclick="toggle('johnsQuery');">All IMSIs with Failed Call Data</a></li>
 				<li><a href="#" onclick="toggle('imsisForFailreClassDiv');">All IMSIs for a FailureClass</a></li>
-				<li class="sidebar-brand"><a href="#">Customer Service Rep Enq</a></li>
-				<li><a href="#" onclick="toggle('id/causecode');">EventID/CauseCode per IMSI</a></li>
-                <li><a href="#" onclick="toggle('causeCodes');">Cause Codes per IMSI</a>
-                <li><a href="#" onclick="toggle('failCount');">Count of Call Failures per IMSI</a>
+				<li class="sidebar-brand"><a href="CSRPage.jsp">Customer Service Rep Enq</a></li>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 			</ul>
 			<br>
@@ -193,108 +190,23 @@
 	</div>
         </div>
         
-      <div id="event/cause">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12" id='container'>
-                        <div class="transbox">
-						<br>
-						<h1>Search EventId, CauseCode by IMSI</h1>
-                    <div class="form-horizontal">
-						<div class="form-group" id="myDiv">
-							<label class="control-label col-sm-2" for="ID">IMSI:</label> 
-                             <div class="col-sm-5">
-                            <select class="form-control" id="ID"></select>
-                            </div>
-                         </div>
-
-							<div class="form-group">
-								<div class="col-sm-offset-4 col-sm-10">
-									<br>
-									<button id='submit' name='submit' class="btn btn-primary">Search</button>
-								</div>
-							</div>
-						</div>
-                        </div>
-                        </div>
-					</div>
-				</div>
-			</div>
-    </div>
- </div>
+     
+                        
+					
 		<!-- /#page-content-wrapper -->
 
 	
 	<!-- /#wrapper -->
 
 
-	<table class="table" id='causeCodeTable' name='table'>
-
-		<div id="butDiv"></div>
-	</table>
-    
-      <div id="causeCodes">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12" id='container'>
-                        <div class="transbox">
-						<br>
-						<h1>All Cause Codes for IMSI</h1>
-                        <div class="form-horizontal">
-						<div class="form-group" id="myDiv">
-							<label class="control-label col-sm-2" for="ID">IMSI:</label> 
-                            <div class="col-sm-5">
-                            <select class="form-control" id="causeCodeImsi"></select>
-                                </div>
-                            </div>
-
-							<div class="form-group">
-								<div class="col-sm-offset-4 col-sm-10">
-									<br>
-									<button id='causeCodeImsiSubmit' name='submit' class="btn btn-primary">Search</button>
-								</div>
-							</div>
-						</div>
-                        </div>
-					</div>
-				</div>
-			</div>
-            <div id="causeCodeTable"></div>
-		</div>
-        
-        	<div id="failCount">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-12">
-                    <div class="transbox">
-						<br>
-					<h1>Count of Call Failures by IMSI</h1>	
-                    <div class="form-horizontal">
-                        
-                        <div class="from-group">
-						<label class="control-label col-sm-2" for="imsiInput">IMSI: </label>
-                        <div class="col-sm-5">
-							<select class="form-control" id="imsiInput"></select>
-						</div>	
-                        </div>
-                        
-                        <div class="form-group">
-						<div class="col-sm-offset-4 col-sm-10">
-                            <br>
-							<button id="countSubmit" type="submit" class="btn btn-primary">Search</button>
-						</div>					
-				    </div>
-			     </div>
-                </div> 
-		      </div>	
-		<!--  </div>
-				<div id='tableForCountQuery' ></div>
-			</div> -->
-            </div>
-        </div>
+	
+                           
+        	
+                     
+						
 	</div>
     
-	</div>
+
 		<!-- /#wrapper -->
 
     
@@ -777,7 +689,7 @@ $(function(){
  		
  	}
 
- 	var divs = ["johnsQuery","briansQuery","imsisForFailreClassDiv","id/causecode","causeCodes","failCount"];
+ 	var divs = ["johnsQuery","briansQuery","imsisForFailreClassDiv"];
 	var visibleDiv = null;
 	 var $tableJohn = $('#tableJohn');
 	 var $table = $('#tableBrian');
@@ -787,9 +699,6 @@ $(function(){
 		document.getElementById("johnsQuery").style.display='none';
 		document.getElementById("briansQuery").style.display='none';
 		document.getElementById("imsisForFailreClassDiv").style.display='none';
-		document.getElementById("id/causecode").style.display='none';
-        document.getElementById("causeCodes").style.display='none';
-        document.getElementById("failCount").style.display='none';
 
 	});
 
