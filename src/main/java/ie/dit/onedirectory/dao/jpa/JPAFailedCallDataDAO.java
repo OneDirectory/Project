@@ -153,6 +153,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		
 		ArrayList<Object> queryList = (ArrayList<Object>) query.getResultList();
 		ArrayList<Object> returnList = new ArrayList<Object>();
+
 		int i=0;
 		for(Object object: queryList){
 			returnList.add(object);
@@ -162,6 +163,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 			}
 		}
 		return returnList;
+	
 	}
 
 
