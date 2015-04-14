@@ -12,7 +12,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 
 
-@ArquillianSuiteDeployment
+//@ArquillianSuiteDeployment
 public class ArquillianDeployment {
 /*
 	@Deployment(testable = true)
