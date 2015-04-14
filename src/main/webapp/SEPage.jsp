@@ -78,7 +78,7 @@
                     <div class="form-horizontal">
                         
 						<div class="form-group" id="myDiv">
-								<label class="control-label col-sm-2" for="ID">Model</label>
+								<label class="control-label col-sm-2" for="ID">Model:</label>
                             <div class="col-sm-5">
                             <select class="form-control" id="ID" placeholder="Select a model.."
 									autofocus>
