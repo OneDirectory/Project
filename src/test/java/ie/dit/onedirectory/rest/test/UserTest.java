@@ -51,9 +51,8 @@ import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
 public class UserTest {
-	
-	private static final String USER_TEST_FILE = "src/test/resources/testAddUser.html";
 
+	private static final String USER_TEST_FILE = "src/test/resources/testAddUser.html";
 
 	@Deployment
 	public static WebArchive createDeployment() {
@@ -68,10 +67,10 @@ public class UserTest {
 						"ie.dit.onedirectory.services",
 						"ie.dit.onedirectory.services.ejbs",
 						"ie.dit.onedirectory.utilities")
-				.addAsResource("test-persistence.xml",
-						"META-INF/persistence.xml")
-				.setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
-				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+						.addAsResource("test-persistence.xml",
+								"META-INF/persistence.xml")
+								.setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
+								.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 		File[] libs;
 
 		libs = Maven.resolver()
@@ -82,32 +81,21 @@ public class UserTest {
 		libs = Maven.resolver().resolve("org.apache.poi:poi:3.11")
 				.withTransitivity().as(File.class);
 		archive.addAsLibraries(libs);
-		
+
 		libs = Maven.resolver().resolve("org.codehaus.jackson:jackson-core-asl:1.9.13")
 				.withTransitivity().as(File.class);
 		archive.addAsLibraries(libs);
-		
+
 		libs = Maven.resolver().resolve("org.codehaus.jackson:jackson-mapper-asl:1.9.13")
 				.withTransitivity().as(File.class);
 		archive.addAsLibraries(libs);
-		
+
 		libs = Maven.resolver().resolve("org.hamcrest:hamcrest-all:1.3")
 				.withTransitivity().as(File.class);
 		archive.addAsLibraries(libs);
-		
-	
 
 		return archive;
 	}
-	
-	@PersistenceContext
-	private EntityManager em;
-
-	@Inject
-	private UserTransaction utx;
-
-	@EJB
-	private UserServiceLocal service;
 
 	@Before
 	public void setUp() throws Exception{
@@ -119,15 +107,16 @@ public class UserTest {
 		RestAssured.port = 8080;
 
 	}
-	
+
+	/*
 	@Test
 	public void testEndPoint() {
 		expect().statusCode(200).contentType(ContentType.JSON).log().ifError()
 				.when().get("/rest/user");
 	}
 
-	
-	
+
+
 	@Test
 	public void testFindUserById(){
 		given()
@@ -139,12 +128,12 @@ public class UserTest {
 		.when()
 		.get("/rest/user/{userID}");	
 	}
-	
-	
+
+
 	@Test
 	public void testAddUser(){
 		User user = new User(1,"Support Engineer","1234","cal","mcg");
-		
+
 		given()
 		.contentType("application/json")
 		.body(user)
@@ -154,4 +143,6 @@ public class UserTest {
 		.when()														
 		.post("/rest/user/add");	
 	}
+	 */
+
 }

@@ -228,7 +228,7 @@ public class FailedCallDataRESTIT{
 		given()
 		.multiPart("selectedFile", new File(TEST_FILE))
 		.expect()
-		.statusCode(200)
+		.statusCode(307)
 		.log().ifError()
 		.when()
 		.post("/rest/failedcalldata/upload");	
