@@ -46,6 +46,7 @@ label {
     background-size: cover;
     position:static;
     height:150px; 
+    text-align: center;
 }
 
 .navbar-inverse {
@@ -119,7 +120,11 @@ div.transbox {
     border:solid 1px black; 
     padding:5px;
   }
-
+    
+    
+  div.transboxindex h2{
+      color:aliceblue;
+  }
 div.imagebox {
   width:375px;
   height:360px;

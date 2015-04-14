@@ -80,7 +80,7 @@
 						<div class="form-group" id="myDiv">
 								<label class="control-label col-sm-2" for="ID">Model</label>
                             <div class="col-sm-5">
-                            <select class="form-control" id="ID" placeholder="Select a model.."
+                            <select class="form-control" id="ID" placeholder="Select a model"
 									autofocus>
 								</select><br>
 							</div>
@@ -130,7 +130,7 @@
 				<div class="col-lg-12">
                     <div class="transbox">
 						<br>
-					<h1>Call Failures</h1>
+					<h1>All IMSIs with Call Failures between:</h1>
                     <div class ="form-horizontal">
                     
                         <div class ="form-group">
