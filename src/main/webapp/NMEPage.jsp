@@ -64,7 +64,7 @@
 					<li class="sidebar-brand"><a href="#"> Menu </a></li>
 					<li><a href="#" onclick="toggle('imsiCount');">Duration/FailureCount per IMSI</a></li>
 					<li><a href="#" onclick="toggle('modelCount');">EventId/CauseCode per Model</a></li>
-					<li><a href="#" onclick="toggle('topTen');">Top 10 Market,Operator & Cell ID</a></li>
+					<li><a href="#" onclick="toggle('topTen');">Top 10 Market, Operator & Cell ID</a></li>
 					<li><a href="#" onclick="toggle('topTenImsi');">Top 10 IMSIs</a></li>
 					<li class="sidebar-brand"><a href="SEPage.jsp">Software Engineer</a></li>
 					<li class="sidebar-brand"><a href="CSRPage.jsp">Customer Service Rep</a></li>
@@ -378,7 +378,7 @@
 							createTopTenTable();
 							createTopTenButton();
 							$.each(data,function(key,value) {
-								$('#topTenMO tr:last').find("tbody").append('<tr><td>'+ value[0]+ '</td><td>'+ value[1]+ '</td><td>'+ 
+								$('#topTenMO').find("tbody").append('<tr><td>'+ value[0]+ '</td><td>'+ value[1]+ '</td><td>'+ 
 										value[2]+ '</td><td>'+ value[3]+ '</td><td>'+ value[4]+ '</td><td>'+ value[5]+ '</td></tr>');
 							});
 							isValid = false;
@@ -417,7 +417,7 @@
 		 		 			createTableTopTenImsi();
 		 	 				createTopTenImsiButton();
 		 	 				$.each(data, function(key, value){
-		 	 					$('#topTenImsiTable tr:last').find('tbody').append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');
+		 	 					$('#topTenImsiTable').find('tbody').append('<tr><td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');
 		 	 	 			});
 			 	 			isValid=false;
 			 	 			$('#topTenImsiTable').dataTable();

@@ -51,11 +51,9 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
-				<li><a href="#" onclick="toggle('createUser');">Add a user</a></li>
-				<li><a href="#" onclick="toggle('importData');">Import data</a></li>
+				<li><a href="#" onclick="toggle('createUser');">Add User</a></li>
+				<li><a href="#" onclick="toggle('import');">Import Data</a></li>
 				<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
-				
-	
 				
 			</ul>
 			<br>
@@ -176,6 +174,7 @@
 				</div>
 			</div>
 		</div>
+		</div>
 
 	<!-- jQuery -->
 	<script src="Resources/js/jquery-1.6.1.min.js"></script>
@@ -185,7 +184,7 @@
 
 	<!-- Menu Toggle Script -->
 	<script>
-var divs = ["createUser","importData"];
+var divs = ["createUser","import"];
 var visibleDiv = null;
 var ids = [];
 
@@ -193,7 +192,7 @@ var ids = [];
 $(function(){
 
 	document.getElementById("createUser").style.display='none';
-	document.getElementById("importData").style.display='none';
+	document.getElementById("import").style.display='none';
 
 	$('#regButton').click(function(e){
 
