@@ -40,8 +40,10 @@ public interface FailedCallDataServiceLocal {
 	
 	public Collection<?> getUniqueCauseCodesForImsi(String imsi);
 
-	public Collection<?> getCountFailedCallsInTimePeriodByImsi(
+	public Long getCountFailedCallsInTimePeriodByImsi(
 			String imsi, Date fromDate, Date toDate);
 
+	
+	public Collection<?> getTopTenMarketOperatorCellIDCombinations(Date fromDate, Date toDate);
 	
 }

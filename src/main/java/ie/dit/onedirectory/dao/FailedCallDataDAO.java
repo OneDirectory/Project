@@ -102,6 +102,15 @@ public interface FailedCallDataDAO {
 	
 	public Collection<?> getUniqueCauseCodesForImsi(String imsi);
 
+	
+	/**
+	 * 
+	 * @param fromDate
+	 * @param toDate
+	 * @return the top ten market operator cellid combinations in a given time period
+	 */
+	public Collection<?> getTopTenMarketOperatorCellIDCombinations(Date fromDate, Date toDate);
+	
 	/**
 	 * 
 	 * @param imsi
@@ -110,7 +119,7 @@ public interface FailedCallDataDAO {
 	 * @return
 	 */
 	
-	public Collection<?> getCountFailedCallsInTimePeriodByImsi(String imsi,
+	public Long getCountFailedCallsInTimePeriodByImsi(String imsi,
 			Date fromDate, Date toDate);
 		
 }

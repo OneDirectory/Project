@@ -161,6 +161,28 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 		return returnList;
 	}
 
+
+	/**
+	 * Returns the top ten market, operator and cellId combinations in a given time period
+	 */
+	
+	public Collection<?> getTopTenMarketOperatorCellIDCombinations(
+			Date fromDate, Date toDate) {
+		Query query = entityManager.createQuery("Select count(fd.imsi) as total, fd.marketOperator.marketId, fd.marketOperator.country," 
+				+ " fd.marketOperator.operatorId, fd.marketOperator.operatorName, fd.cellId from FailedCallData fd" 
+				+ " where fd.dateTime between :fromDate and :toDate"
+				+ " group by fd.marketOperator.marketId, fd.marketOperator.operatorId, fd.cellId"
+				+ " order by total desc");
+		query.setParameter("fromDate", fromDate, TemporalType.DATE);
+		query.setParameter("toDate", toDate, TemporalType.DATE);
+		ArrayList<Object> queryList = (ArrayList<Object>) query.getResultList();
+		ArrayList<Object> returnList = new ArrayList<Object>();
+		for(int i=0; i<10; i++){
+			returnList.add(queryList.get(i));
+		}
+		return returnList;
+	}
+	
 	/**
 	 * Returns a list of all unique imsis affected by failed call data
 	 * 
@@ -217,7 +239,7 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	 */
 	public Collection<?> getUniqueCauseCodesForImsi(String imsi){
 		Query query = entityManager.createQuery("Select f.eventCause.causeCode from FailedCallData f where f.imsi = :imsi"
-				+ "group by f.eventCause.causeCode");
+				+ " group by f.eventCause.causeCode");
 		query.setParameter("imsi", imsi);
 		return query.getResultList();
 	}
@@ -225,13 +247,15 @@ public class JPAFailedCallDataDAO implements FailedCallDataDAO {
 	/**
 	 * Returns a count of failed calls for a particular imsi between two points in time
 	 */
-	public Collection<?> getCountFailedCallsInTimePeriodByImsi(String imsi,
+	public Long getCountFailedCallsInTimePeriodByImsi(String imsi,
 			Date fromDate, Date toDate) {
-		Query query = entityManager.createQuery("Select f.imsi, f.id, count(f.id), from FailedCallData f" + 
-			"where f.dateTime between :fromDate and :toDate" +
-				"group by f.imsi");
+		Query query = entityManager.createQuery("Select count(f.id) from FailedCallData f" + 
+			" where f.imsi = :imsi" + 
+				" and f.dateTime between :fromDate and :toDate");
 		query.setParameter("imsi", imsi);
-		return query.getResultList();
+		query.setParameter("fromDate", fromDate, TemporalType.DATE);
+		query.setParameter("toDate", toDate, TemporalType.DATE);
+		return (Long) query.getSingleResult();
 	}
 
 }

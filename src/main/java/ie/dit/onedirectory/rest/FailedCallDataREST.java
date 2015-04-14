@@ -23,7 +23,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -103,7 +102,7 @@ public class FailedCallDataREST {
 	}
 	
 	@GET
-	@Path("/uniqueCauseCodes/{imsi)")
+	@Path("/uniqueCauseCodes/{imsi}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<?> getUniqueCauseCodesForImsi(@PathParam("imsi")String imsi){
 		return service.getUniqueCauseCodesForImsi(imsi);
@@ -167,7 +166,7 @@ public class FailedCallDataREST {
 	@GET
 	@Path("/getCountFailedCallsInTimePeriodByImsi/{params}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<?> getCountFailedCallsInTimePeriodByImsi(@PathParam("params") String paramsPassed) throws ParseException {
+	public Long getCountFailedCallsInTimePeriodByImsi(@PathParam("params") String paramsPassed) throws ParseException {
 		
 		String[] params = paramsPassed.split("£");
 		String imsi = params[0];
@@ -238,6 +237,25 @@ public class FailedCallDataREST {
 		java.sql.Date sqlFromDate = new java.sql.Date(from.getTime());
 		java.sql.Date sqlToDate = new java.sql.Date(to.getTime());
 		return service.getFailedCallDataByModel(model, sqlFromDate, sqlToDate);
+	}
+
+	@GET
+	@Path("/topTenMOCombinations/{dates:.+}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<?> getTopTenMarketOperatorCellIDCombinations(
+			@PathParam("dates") String dateString) throws ParseException{
+		String[] dates = dateString.split("£");
+		String fromDate = dates[0];
+		String toDate = dates[1];
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date from = sdf.parse(fromDate);
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		Date to = sdf1.parse(toDate);
+		java.sql.Date sqlDateFrom = new java.sql.Date(from.getTime());
+		java.sql.Date sqlDateTo = new java.sql.Date(to.getTime());
+
+		return service.getTopTenMarketOperatorCellIDCombinations(sqlDateFrom, sqlDateTo);
+		
 	}
 	
 	@POST

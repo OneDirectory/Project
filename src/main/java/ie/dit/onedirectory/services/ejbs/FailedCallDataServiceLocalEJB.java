@@ -148,13 +148,16 @@ public class FailedCallDataServiceLocalEJB implements FailedCallDataServiceLocal
 		fis.close();
 	}
 
-	@Override
+	public Collection<?> getTopTenMarketOperatorCellIDCombinations(
+			Date fromDate, Date toDate) {
+		return dao.getTopTenMarketOperatorCellIDCombinations(fromDate, toDate);
+	}
+
 	public Collection<String> getAllImsiForFailureClass(Integer failureClass) {
 		return dao.getAllImsiForFailureClass(failureClass);
 	}
 
-	@Override
-	public Collection<?> getCountFailedCallsInTimePeriodByImsi(String imsi,
+	public Long getCountFailedCallsInTimePeriodByImsi(String imsi,
 			Date fromDate, Date toDate) {
 		return dao.getCountFailedCallsInTimePeriodByImsi(imsi, fromDate, toDate);
 	}
