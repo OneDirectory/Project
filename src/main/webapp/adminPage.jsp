@@ -67,6 +67,7 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
+						<div class="createUserTransbox">
 						<h1>Create New User</h1>
 						<div class="form-horizontal">
 							<div class="form-group">
@@ -102,14 +103,22 @@
 							<div class="form-group">
 								<div class="col-sm-offset-1 col-sm-10">
 									<div class="col-sm-10" id="types">
-										<label class="radio-inline"><input type="radio"
-											name="role" checked="checked"
-											value="Network Management Engineer">Network
-											Management Engineer</label> <label class="radio-inline"><input
-											type="radio" name="role" value="Support Engineer">Support
-											Engineer</label> <label class="radio-inline"><input
-											type="radio" name="role" value="Customer Service Rep">Customer
-											Service Rep</label>
+										<br>
+										<label class="radio-inline">
+											<input type="radio" name="role" checked="checked"
+											value="Network Management Engineer">
+											Network Management Engineer
+										</label>
+										<br>
+										<label class="radio-inline">
+											<input type="radio" name="role" value="Support Engineer">
+											Support Engineer
+										</label>
+										<br>
+										<label class="radio-inline">
+											<input type="radio" name="role" value="Customer Service Rep">
+											Customer Service Rep
+										</label>
 									</div>
 								</div>
 							</div>
@@ -122,65 +131,51 @@
 									</div>
 								</div>
 						</div>
+						</div>
+						<br>
+						<div class="transboxTable">
+							<table class="table" id='table' name='table'>
+								<tr>
+									<th>UserID</th>
+									<th>Name</th>
+									<th>UserType</th>
+				
+								</tr>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
-
-			<table class="table" id='table' name='table'>
-				<tr>
-					<th>UserID</th>
-					<th>Name</th>
-					<th>UserType</th>
-
-				</tr>
-			</table>
-
 		</div>
 		<!-- /#page-content-wrapper -->
 
-
-	<!-- <div id="importData">
+		<div id="import">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<h1>Import Data File</h1>
-						<div class="form-horizontal">
-							<div class="form-group">
-								<label class="control-label col-sm-2" for="uploadFile">FILE:</label>
-								<div class="col-sm-5">
-									<input type="file" class="form-control" name="selectedFile"
-										placeholder="File" id="selectedFile" autofocus>
-								</div>
-							</div>
-						
-							<div class="form-group">
-								<div class="col-sm-offset-4 col-sm-10">
-									<br>
-									<button id='addFile' type="submit" class="btn btn-primary">Upload File</button>
+						<div class="createUserTransbox">
+							<h1>Import Failed Call Data</h1>
+							<div class="form-horizontal">
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="pwd">
+									Please select file: 
+									</label>
+									<div class="col-sm-5">
+										<form action="rest/failedcalldata/upload" method="post"
+										enctype="multipart/form-data">
+											<br>
+											<input type="file" name="selectedFile" />
+											<br>
+											<input type="submit" value="Upload" />
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
-		</div> -->
-
-<div id="importData">
-		<h1>Import Failed Call Data</h1>
-		<form id="uploadForm" action="rest/failedcalldata/upload" method="post"
-			enctype="multipart/form-data">
-			<p>
-				Please select file: <input type="file" name="selectedFile" />
-			</p>
-			<button id="addFile" type="submit" value="btn btn-primary">Add File</button>
-		</form>
-	</div>
-
-	</div>
-	<!-- /#wrapper -->
-
-
+		</div>
 
 	<!-- jQuery -->
 	<script src="Resources/js/jquery-1.6.1.min.js"></script>
