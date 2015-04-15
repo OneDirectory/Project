@@ -5,18 +5,26 @@
 body.index {
 	
  background: url(../img/world.jpg);
+ background-repeat: no-repeat;
+ background-attachment: fixed;
 }
 
 body.adminPage {
  background: url(../img/face.jpg);
+ background-repeat: no-repeat;
+ background-attachment: fixed;
 }
 
 body.importPage {
   background: url(../img/cellular.png);
+  background-repeat: no-repeat;
+ background-attachment: fixed;
 }
 
 body.support_engineer {
   background: url(../img/fibre.jpg);
+  background-repeat: no-repeat;
+ background-attachment: fixed;
 }
 
 label {
