@@ -531,28 +531,6 @@
 				graphValues.push({label: graphKey, data: graphValue})
 			});
 			
-  			/* $.plot($("#graphForTopTen"), graphValues, {
-  		         series: {
-  		            pie: {
-  			       		show: true
-  		            }
-  		         },
- 				grid: {
-  			    	hoverable: true
-  			  	},
-  			   	legend: {
-  			    	labelBoxBorderColor: "none"
-  			 	}
-  		    });
-  			$('#graphForTopTen').bind("plothover", piehover);
-  			
-  			function pieHover(event, pos, obj) {
-  			    if (!obj)
-  			        return;
-  			    percent = parseFloat(obj.series.percent).toFixed(2);
-  			    $("#pieHover").html('<span style="font-weight: bold; color: '+obj.series.color+'">'+obj.series.label+' ('+percent+'%)</span>');
-  			} */
-
   		    $.plot($("#graphForTopTen"), graphValues, {
   		        series: {
   		            pie: {

@@ -85,6 +85,11 @@ label {
 	padding: 5px; 
 }
 
+#pieHover {
+	background-color:white;
+	width: 500px;
+}
+
 #graphForTopTen { 
 	width: 500px; 
 	height: 500px; 
