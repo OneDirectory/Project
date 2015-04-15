@@ -108,14 +108,15 @@ public class UserTest {
 
 	}
 
-	/*
+	
 	@Test
 	public void testEndPoint() {
-		expect().statusCode(200).contentType(ContentType.JSON).log().ifError()
-				.when().get("/rest/user");
+		expect()
+		.statusCode(200)
+		.contentType(ContentType.JSON)
+		.log().ifError()
+		.when().get("/rest/user");
 	}
-
-
 
 	@Test
 	public void testFindUserById(){
@@ -143,7 +144,6 @@ public class UserTest {
 		.when()														
 		.post("/rest/user/add");	
 	}
-	 */
 	
 	@Test
 	public void test() {
