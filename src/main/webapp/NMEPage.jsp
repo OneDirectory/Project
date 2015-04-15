@@ -65,7 +65,7 @@
 					<li><a href="#" onclick="toggle('modelCount');">EventId/CauseCode per Model</a></li>
 					<li><a href="#" onclick="toggle('topTen');">Top 10 Market, Operator & Cell ID</a></li>
 					<li><a href="#" onclick="toggle('topTenImsi');">Top 10 IMSIs</a></li>
-					<li class="sidebar-brand"><a href="SEPage.jsp">Software Engineer</a></li>
+					<li class="sidebar-brand"><a href="SEPage.jsp">Support Engineer</a></li>
 					<li class="sidebar-brand"><a href="CSRPage.jsp">Customer Service Rep</a></li>
 					<li><a href="http://localhost:8080/project/LogoutServlet">Log out</a></li>
 				</ul>
@@ -139,7 +139,9 @@
 					</div>
 				</div>
 			</div>
-			<div id='tableForModelQuery'>
+			<div class="transbox">
+				<div id='tableForModelQuery'>
+				</div>
 			</div>
 		</div>
 
