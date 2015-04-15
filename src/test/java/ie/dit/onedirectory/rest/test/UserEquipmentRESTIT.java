@@ -28,7 +28,7 @@ import com.jayway.restassured.http.ContentType;
 public class UserEquipmentRESTIT {
 
 	private static final String TEST_FILE = "src/test/resources/data.xls";
-
+	
 	@Deployment
 	public static WebArchive createDeployment() {
 		WebArchive archive = ShrinkWrap
@@ -61,7 +61,8 @@ public class UserEquipmentRESTIT {
 
 		return archive;
 	}
-	
+	 
+
 	@Before
 	public void setUp() throws Exception{
 
@@ -72,7 +73,7 @@ public class UserEquipmentRESTIT {
 		RestAssured.port = 8080;
 
 	}
-	
+
 	@Test
 	public void testEndPoint() {
 		expect()
@@ -82,7 +83,7 @@ public class UserEquipmentRESTIT {
 		.when()
 		.get("/rest/userequipment");
 	}
-	
+
 	@Test
 	public void testGetAllModelsFromUserEquipment() {
 		expect()
@@ -103,5 +104,5 @@ public class UserEquipmentRESTIT {
 		.when()
 		.post("/rest/userequipment/upload");	
 	}
-	
+
 }

@@ -28,6 +28,7 @@ public class FailureClassRESTIT {
 
 	private static final String TEST_FILE = "src/test/resources/data.xls";
 
+	
 	@Deployment
 	public static WebArchive createDeployment() {
 		WebArchive archive = ShrinkWrap
@@ -60,6 +61,7 @@ public class FailureClassRESTIT {
 
 		return archive;
 	}
+	
 	
 	@Before
 	public void setUp() throws Exception{

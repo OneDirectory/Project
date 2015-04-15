@@ -54,6 +54,7 @@ public class EventCauseTest {
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 	
+	
 	@PersistenceContext
 	private EntityManager em;
 

@@ -46,6 +46,7 @@ public class EventCauseRESTIT {
 
 	private static final String TEST_FILE = "src/test/resources/data.xls";
 
+	
 	@Deployment
 	public static WebArchive createDeployment() {
 		WebArchive archive = ShrinkWrap
@@ -78,6 +79,7 @@ public class EventCauseRESTIT {
 
 		return archive;
 	}
+	
 
 	@Before
 	public void setUp() throws Exception{

@@ -50,6 +50,7 @@ public class UserTest {
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 		
 	}
+	
 
 	@PersistenceContext
 	private EntityManager em;

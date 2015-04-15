@@ -54,6 +54,7 @@ public class UserTest {
 
 	private static final String USER_TEST_FILE = "src/test/resources/testAddUser.html";
 
+
 	@Deployment
 	public static WebArchive createDeployment() {
 		WebArchive archive = ShrinkWrap
@@ -97,6 +98,8 @@ public class UserTest {
 		return archive;
 	}
 
+
+
 	@Before
 	public void setUp() throws Exception{
 
@@ -108,7 +111,7 @@ public class UserTest {
 
 	}
 
-	
+
 	@Test
 	public void testEndPoint() {
 		expect()
@@ -117,7 +120,7 @@ public class UserTest {
 		.log().ifError()
 		.when().get("/rest/user");
 	}
-
+/*
 	@Test
 	public void testFindUserById(){
 		given()
@@ -129,7 +132,7 @@ public class UserTest {
 		.when()
 		.get("/rest/user/{userID}");	
 	}
-
+*/
 
 	@Test
 	public void testAddUser(){
@@ -144,7 +147,7 @@ public class UserTest {
 		.when()														
 		.post("/rest/user/add");	
 	}
-	
+
 	@Test
 	public void test() {
 		assertTrue(true);

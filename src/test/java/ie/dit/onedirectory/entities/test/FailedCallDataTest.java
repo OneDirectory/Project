@@ -59,6 +59,7 @@ public class FailedCallDataTest {
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 
 	}
+	
 
 	@PersistenceContext
 	private EntityManager em;

@@ -71,6 +71,7 @@ public class EventCauseServiceLocalTest {
 						.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
+	
 
 	@PersistenceContext
 	private EntityManager em;

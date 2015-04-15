@@ -33,6 +33,7 @@ public class FileUploadFormTest {
 						.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 	
+	
 	@Test
 	public void testSetAndGetFileData() {
 		
@@ -43,7 +44,7 @@ public class FileUploadFormTest {
 		
 		byte[] data2 = form.getFileData();
 		
-		assertTrue(true);
+		assertEquals(data, data2);
 	}
 
 }
