@@ -9,25 +9,24 @@
 <meta name="author" content="">
 
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <!-- Bootstrap Core CSS -->
 <link href="Resources/css/bootstrap1.min.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="Resources/css/simple-sidebar.css" rel="stylesheet">
 <link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
 <!-- jQuery -->
-<script src="Resources/js/jquery-1.6.1.min.js"></script>
+<!-- <script src="Resources/js/jquery-1.6.1.min.js"></script> -->
+
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
+	rel="stylesheet">
 <!-- Bootstrap Core JavaScript -->
 <script src="Resources/js/bootstrap.min.js"></script>
-
-<link
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
-	rel="stylesheet">
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript"
-	src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript"
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript"	src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<!-- Flot pie chart -->
+<script type="text/javascript" src="Resources/js/jquery.flot.js"></script>
+<script type="text/javascript" src="Resources/js/jquery.flot.pie.js"></script>
 </head>
 
 
@@ -273,9 +272,6 @@
 			}
 		}
 		  
-
-
-		
 </script>
 	
 	<script>
@@ -376,13 +372,22 @@
 					success : function(data) {
 						if (isValid && data.length>0) {
 							createTopTenTable();
-							createTopTenButton();
+							createTopTenButton();	
 							$.each(data,function(key,value) {
 								$('#topTenMO').find("tbody").append('<tr><td>'+ value[0]+ '</td><td>'+ value[1]+ '</td><td>'+ 
 										value[2]+ '</td><td>'+ value[3]+ '</td><td>'+ value[4]+ '</td><td>'+ value[5]+ '</td></tr>');
 							});
 							isValid = false;
 							$('#topTenMO').dataTable();
+						    var values = [
+								{ label: "IE",  data: 19.5, color: "#4572A7"},
+							  	{ label: "Safari",  data: 4.5, color: "#80699B"},
+							  	{ label: "Firefox",  data: 36.6, color: "#AA4643"},
+							  	{ label: "Opera",  data: 2.3, color: "#3D96AE"},
+							  	{ label: "Chrome",  data: 36.3, color: "#89A54E"},
+							  	{ label: "Other",  data: 0.8, color: "#3D96AE"}
+							];
+						    createTopTenGraph(values);
 							} else if (isValid && data.length === 0) {
 								alert('No available data for selected dates');
 							}
@@ -457,6 +462,22 @@
 				return false;
 		}
 
+		function createTopTenGraph(values){
+			var graphDiv = document.getElementById('graphForTopTen');
+			
+			console.log(values[0]);
+  			$.plot($("#graphForTopTen"), values, {
+  		         series: {
+  		            pie: {
+  		                show: true
+  		            }
+  		         },
+  		         legend: {
+  		            labelBoxBorderColor: "none"
+  		         }
+  		    });
+		}
+		
 		function createTable() {
 
 			var tableDiv = document.getElementById('tableForImsiCountDiv')

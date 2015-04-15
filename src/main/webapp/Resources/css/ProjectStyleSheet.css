@@ -64,6 +64,24 @@ label {
     background-color: #013F6A;
 }
 
+/*For flot pie chart*/
+.legend table, .legend > div { 
+	height: 82px !important; 
+	opacity: 1 !important; 
+	left: 170px; top: 10px; 
+	width: 116px !important; 
+	}
+.legend table { 
+	border: 1px solid #555; 
+	padding: 5px; 
+}
+
+#graphForTopTen { 
+	width: 250px; 
+	height: 150px; 
+}
+
+
 div.transbox {
   width:700px;
   height:350px;
