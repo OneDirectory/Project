@@ -9,12 +9,30 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
+<!-- jQuery -->
+	<script src="Resources/js/jquery-1.6.1.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="Resources/js/bootstrap.min.js"></script>
+
 
 <!-- Bootstrap Core CSS -->
 <link href="Resources/css/bootstrap1.min.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="Resources/css/simple-sidebar.css" rel="stylesheet">
 <link href="Resources/css/ProjectStyleSheet.css" rel="stylesheet">
+
+<link
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
 </head>
 
 <body>
@@ -131,15 +149,10 @@
 						</div>
 						</div>
 						<br>
-						<div class="transboxTable">
-							<table class="table" id='table' name='table'>
-								<tr>
-									<th>UserID</th>
-									<th>Name</th>
-									<th>UserType</th>
-				
-								</tr>
-							</table>
+						<div class="transboxUser">
+							<div id='tableForUsers'>
+							
+							</div>
 						</div>
 					</div>
 				</div>
@@ -176,11 +189,7 @@
 		</div>
 		</div>
 
-	<!-- jQuery -->
-	<script src="Resources/js/jquery-1.6.1.min.js"></script>
-
-	<!-- Bootstrap Core JavaScript -->
-	<script src="Resources/js/bootstrap.min.js"></script>
+	
 
 	<!-- Menu Toggle Script -->
 	<script>
@@ -223,6 +232,7 @@ $(function(){
 				contentType: "application/json",
 				success: function(data){
 					alert('User successfully added');
+					fillUpUserTable();
 				}	
 			});
 		}
@@ -304,7 +314,8 @@ var idTaken = false;
 	$(function(){
 
 	var idArray = [];	
-    var $users = $('#table');
+	$('#tableForUsers').find('tbody').empty();
+	createTable();
     
 
 	$.ajax({
@@ -312,16 +323,70 @@ var idTaken = false;
 		url:'http://localhost:8080/project/rest/user',
 		success: function(users){
 			$.each(users, function(i, user){
-			$users.append('<tr><td>'+user.userID+'</td><td>'+user.userFName+' '+user.userSName+'</td><td>'+user.userType+'</td></tr>');
+				$('#table').find('tbody').append('<tr><td>'+user.userID+'</td><td>'+user.userFName+' '+user.userSName+'</td><td>'+user.userType+'</td></tr>');
 				ids[i] = user.userID;
 			});
+			$('#table').dataTable();
 			}
 
 		});
 
 	});
 
+	function fillUpUserTable(){
+
+		$('#tableForUsers').find('tbody').empty();
+		createTable();
+
+		$.ajax({
+			type: 'GET',
+			url:'http://localhost:8080/project/rest/user',
+			success: function(users){
+				$.each(users, function(i, user){
+					$('#table').find('tbody').append('<tr><td>'+user.userID+'</td><td>'+user.userFName+' '+user.userSName+'</td><td>'+user.userType+'</td></tr>');
+					ids[i] = user.userID;
+				});
+				$('#table').dataTable();
+				}
+			});
+	}
+
 </script>
+<script>
+function createTable(){
+	var tableDiv = document.getElementById('tableForUsers')
+	var divContainer = document.createElement('div');
+	divContainer.setAttribute('class', 'table-responsive');
+	divContainer.setAttribute('id', 'divContainer');
+	var table = document.createElement('table');
+	table.setAttribute('class', 'table table-striped');
+	table.setAttribute('id', 'table');
+	var header = document.createElement('thead');
+	var body = document.createElement('tbody');
+	var row = document.createElement('tr');
+	var colOne = document.createElement('td');
+	var colTwo = document.createElement('td');
+	var colThree = document.createElement('td');
+
+	colOne.innerHTML = 'UserId';
+	colTwo.innerHTML = 'Name';
+	colThree.innerHTML = 'Type';
+
+	row.appendChild(colOne);
+	row.appendChild(colTwo);
+	row.appendChild(colThree);
+
+	header.appendChild(row);
+	table.appendChild(header);
+	table.appendChild(body);
+	divContainer.appendChild(table);
+	tableDiv.appendChild(divContainer);
+}
+
+
+</script>
+
+
 </body>
 
 </html>
