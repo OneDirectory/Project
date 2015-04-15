@@ -154,6 +154,19 @@ public class FailedCallDataRESTIT{
 		.get("/rest/failedcalldata/count/{dates}");
 	}
 
+	
+	@Test
+	public void testGetTopTenIMSIInTimePeriod() {
+		given()
+		.pathParam("dates3", "2012-01-01£2013-01-01")
+		.contentType(ContentType.JSON)
+		.expect()
+		.statusCode(200)
+		.log().ifError()
+		.when()
+		.get("/rest/failedcalldata/topImsi/{dates3}");
+	}
+	
 	@Test
 	public void testGetCountFailedCallsInTimePeriodByImsi() {
 		given()
