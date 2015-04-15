@@ -66,10 +66,10 @@ label {
 
 /*For flot pie chart*/
 .legend table, .legend > div { 
-	height: 82px !important; 
+	height: 200px !important; 
 	opacity: 1 !important; 
-	left: 170px; top: 10px; 
-	width: 116px !important; 
+	left: 600px; top: 10px; 
+	width: 400px !important; 
 	}
 .legend table { 
 	border: 1px solid #555; 
@@ -77,8 +77,8 @@ label {
 }
 
 #graphForTopTen { 
-	width: 250px; 
-	height: 150px; 
+	width: 500px; 
+	height: 500px; 
 }
 
 

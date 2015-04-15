@@ -176,8 +176,8 @@
 					</div>
 					<div id='tableForTopTen'>
 					</div>
-					<div id='graphForTopTen'>
-					</div>
+					<div id="pieHover"></div>
+					<div id='graphForTopTen'></div>
 					</div>
 				</div>
 			</div>
@@ -236,6 +236,8 @@
 	 		$('#tableForImsiCountDiv').empty();	
 	 		$('#tableForModelQuery').empty();
 	 		$('#tableForTopTen').empty();	
+	 		$('#graphForTopTen').empty();	
+	 		$('#pieHover').empty();
 	 		$('#tableForTopTenImsiDates').empty();
 	 	}
 	 	
@@ -379,15 +381,7 @@
 							});
 							isValid = false;
 							$('#topTenMO').dataTable();
-						    var values = [
-								{ label: "IE",  data: 19.5, color: "#4572A7"},
-							  	{ label: "Safari",  data: 4.5, color: "#80699B"},
-							  	{ label: "Firefox",  data: 36.6, color: "#AA4643"},
-							  	{ label: "Opera",  data: 2.3, color: "#3D96AE"},
-							  	{ label: "Chrome",  data: 36.3, color: "#89A54E"},
-							  	{ label: "Other",  data: 0.8, color: "#3D96AE"}
-							];
-						    createTopTenGraph(values);
+						    createTopTenGraph(data);
 							} else if (isValid && data.length === 0) {
 								alert('No available data for selected dates');
 							}
@@ -462,22 +456,6 @@
 				return false;
 		}
 
-		function createTopTenGraph(values){
-			var graphDiv = document.getElementById('graphForTopTen');
-			
-			console.log(values[0]);
-  			$.plot($("#graphForTopTen"), values, {
-  		         series: {
-  		            pie: {
-  		                show: true
-  		            }
-  		         },
-  		         legend: {
-  		            labelBoxBorderColor: "none"
-  		         }
-  		    });
-		}
-		
 		function createTable() {
 
 			var tableDiv = document.getElementById('tableForImsiCountDiv')
@@ -543,6 +521,60 @@
 
 		}
 
+		function createTopTenGraph(data){
+			var graphValues=[];
+			$.each(data, function(key, value){
+				graphKey = value[2] + ', ' + value[4] + ', Cell: ' + value[5] + ', Total Failures: ' + value[0];
+				graphValue = value[0];
+				graphValues.push({label: graphKey, data: graphValue})
+			});
+			
+  			/* $.plot($("#graphForTopTen"), graphValues, {
+  		         series: {
+  		            pie: {
+  			       		show: true
+  		            }
+  		         },
+ 				grid: {
+  			    	hoverable: true
+  			  	},
+  			   	legend: {
+  			    	labelBoxBorderColor: "none"
+  			 	}
+  		    });
+  			$('#graphForTopTen').bind("plothover", piehover);
+  			
+  			function pieHover(event, pos, obj) {
+  			    if (!obj)
+  			        return;
+  			    percent = parseFloat(obj.series.percent).toFixed(2);
+  			    $("#pieHover").html('<span style="font-weight: bold; color: '+obj.series.color+'">'+obj.series.label+' ('+percent+'%)</span>');
+  			} */
+
+  		    $.plot($("#graphForTopTen"), graphValues, {
+  		        series: {
+  		            pie: {
+  		                show: true
+  		            }
+  		        },
+  		        grid: {
+  		            hoverable: true
+  		        },
+  		        legend: {
+  		            labelBoxBorderColor: "none"
+  		        }
+  		    });
+  		    $("#graphForTopTen").bind("plothover", pieHover);
+  		 
+	  		function pieHover(event, pos, obj) {
+	  		    if (!obj)
+	  		        return;
+	  		    percent = parseFloat(obj.series.percent).toFixed(2);
+	  		    $("#pieHover").html('<span style="font-weight: bold; color: '+obj.series.color+'">'+obj.series.label+' ('+percent+'%)</span>');
+	  		}
+  			
+		}
+		
 		function createTopTenTable() {
 
 			var tableDiv = document.getElementById('tableForTopTen')
