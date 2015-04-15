@@ -109,9 +109,11 @@
 						</div>
 					</div>
 				</div>
-				<div id='tableForImsiCountDiv'></div>
+				<br>
+				<div id="transboxCountTableDiv">
+					<div id='tableForImsiCountDiv'></div>
+				</div>
 			</div>
-
 		</div>
 
 		<div id="modelCount">
@@ -139,10 +141,11 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="transbox">
+				<!-- <br>
+				<div class="createUserTransbox">  -->
 				<div id='tableForModelQuery'>
-				</div>
+				<!--  </div> -->
+			</div>
 			</div>
 		</div>
 
@@ -177,7 +180,10 @@
 							</div>
 						</div>
 					</div>
-					<div id='tableForTopTen'>
+					<br>
+					<div class="transboxTable">
+						<div id='tableForTopTen'>
+						</div>
 					</div>
 					<div id='graphForTopTen'>
 					</div>
@@ -218,7 +224,10 @@
 							</div>
 						</div>
 					</div>
-					<div id='tableForTopTenImsiDates'>
+					<br>
+					<div class="transboxTable">
+						<div id='tableForTopTenImsiDates'>
+						</div>
 					</div>
 					</div>
 				</div>
